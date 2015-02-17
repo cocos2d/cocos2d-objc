@@ -10,7 +10,8 @@
 #import "CCAnimationManager_Private.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteFrameCache.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 
 @implementation CCAnimationManager (FrameAnimation)
 
@@ -152,12 +153,14 @@
 }
 
 
-- (void)addAnimationsWithFile:(NSString *)plist node:(CCNode*)node {
+- (void)addAnimationsWithFile:(NSString *)plistFile node:(CCNode*)node {
+    NSError *err = nil;
     
-    NSString *path     = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
     
-	NSAssert1( dict, @"Animation file could not be found: %@", plist);
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
     
 	[self addAnimationsWithDictionary:dict node:node];
 }

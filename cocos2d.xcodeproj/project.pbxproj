@@ -945,27 +945,21 @@
 		E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
 		E525F42E42D4753126DB7834 /* CCNode+RecursiveDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F1624D4A68D607257564 /* CCNode+RecursiveDescription.h */; };
 		E525F438C1815DEFBA6D4D1B /* CCFileMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */; };
-		E525F43B60DC28D1CCBFB917 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */; };
 		E525F43CF6B991E5DF8C872F /* CCNode+RecursiveDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F1624D4A68D607257564 /* CCNode+RecursiveDescription.h */; };
 		E525F542BD4A2593B01B08D0 /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F637FF4A7F1A25E2FCC4 /* CCFile_Private.h */; };
 		E525F6004BFBD9ED271C0157 /* CCFileLocatorDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F2572403F4013B2CB1D1 /* CCFileLocatorDatabase.h */; };
-		E525F68F63777B9BC24FE8BA /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */; };
 		E525F6DA8219EB9F002899E7 /* CCFileLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F475A7121047E8E2FFDE /* CCFileLocator.m */; };
 		E525F7A457E633F80E21CDCB /* CCFileMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */; };
-		E525F80E977C3BBE006A6902 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */; };
 		E525F8FE1F141E04EC2752B0 /* CCFileLocatorDatabaseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FA936D7079B9B4FF45B4 /* CCFileLocatorDatabaseProtocol.h */; };
 		E525F9045267E4D7585C9923 /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F0F38A5CC562F538F40C /* CCFile.h */; };
 		E525F9CE961347409717F05F /* CCFileLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F475A7121047E8E2FFDE /* CCFileLocator.m */; };
 		E525FA4D5F23AFBCF4FC6AC2 /* CCFileLocatorDatabaseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FA936D7079B9B4FF45B4 /* CCFileLocatorDatabaseProtocol.h */; };
 		E525FA755CF93D0FC7557E12 /* CCFileMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FDBD47CF5AE9B0D41370 /* CCFileMetaData.h */; };
 		E525FA9ECA8C7F751ADB56AF /* CCNode+RecursiveDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2E3FCD22166F754606D /* CCNode+RecursiveDescription.m */; };
-		E525FAE62D515ED78AFBFA1E /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */; };
 		E525FB5260243DDB72D184FC /* CCNode+RecursiveDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F1624D4A68D607257564 /* CCNode+RecursiveDescription.h */; };
 		E525FB58147A0CB8D84908FC /* CCFileLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F475A7121047E8E2FFDE /* CCFileLocator.m */; };
-		E525FC3175FC804CDD67BDB8 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */; };
 		E525FCC2CF72D3667DE4D71B /* CCPackageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FF8C7C018BF691F36044 /* CCPackageHelper.h */; };
 		E525FD0AE79B61E0BD5EB4E1 /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F0F38A5CC562F538F40C /* CCFile.h */; };
-		E525FD31A72B65683F3E1939 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */; };
 		E525FD8AEC52F93616611BF1 /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F637FF4A7F1A25E2FCC4 /* CCFile_Private.h */; };
 		E525FDA7B507E04BB91F234B /* CCNode+RecursiveDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2E3FCD22166F754606D /* CCNode+RecursiveDescription.m */; };
 		E525FDDD741BA508C227F090 /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F637FF4A7F1A25E2FCC4 /* CCFile_Private.h */; };
@@ -1173,8 +1167,6 @@
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C9BF0E109A5900AE9530 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		50BAF3970F33CCD8003F654C /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
-		50C508C40F7C194400799124 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
-		50C508C50F7C194400799124 /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
 		50CFAC371023660000175934 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		50CFAC381023660000175934 /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXXMLParser.m; sourceTree = "<group>"; };
 		50D2AC9110E90DFA0068ECEB /* CCTiledMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMapLayer.h; sourceTree = "<group>"; };
@@ -1688,8 +1680,6 @@
 				E0C54DC911F9CF2700B9E4CB /* ccUtils.h */,
 				D33C9CE31A2FAC33004070CA /* CCFile.h */,
 				D33C9CE41A2FAC33004070CA /* CCFile.m */,
-				50C508C40F7C194400799124 /* CCFileUtils.h */,
-				50C508C50F7C194400799124 /* CCFileUtils.m */,
 				B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */,
 				B75C2E7B17C5908B002B0E0D /* NSAttributedString+CCAdditions.m */,
 				B7E7761F1857A159004221AA /* CCColor.h */,
@@ -2493,7 +2483,6 @@
 				E525F43CF6B991E5DF8C872F /* CCNode+RecursiveDescription.h in Headers */,
 				E525F6004BFBD9ED271C0157 /* CCFileLocatorDatabase.h in Headers */,
 				E525F3A066BDE8475066B6AE /* CCFileLocator.h in Headers */,
-				E525FC3175FC804CDD67BDB8 /* CCFileUtils.h in Headers */,
 				E525F542BD4A2593B01B08D0 /* CCFile_Private.h in Headers */,
 				E525FD0AE79B61E0BD5EB4E1 /* CCFile.h in Headers */,
 				E525F8FE1F141E04EC2752B0 /* CCFileLocatorDatabaseProtocol.h in Headers */,
@@ -2686,7 +2675,6 @@
 				7A59478719E3732200F65F90 /* CCSlider.h in Headers */,
 				E525FB5260243DDB72D184FC /* CCNode+RecursiveDescription.h in Headers */,
 				E525F20E7A6C64087689A600 /* CCFileLocatorDatabase.h in Headers */,
-				E525FD31A72B65683F3E1939 /* CCFileUtils.h in Headers */,
 				E525FD8AEC52F93616611BF1 /* CCFile_Private.h in Headers */,
 				E525F9045267E4D7585C9923 /* CCFile.h in Headers */,
 				E525FA4D5F23AFBCF4FC6AC2 /* CCFileLocatorDatabaseProtocol.h in Headers */,
@@ -2757,7 +2745,6 @@
 				D2FEB64B194F6C9E00FC0574 /* CCBReader.h in Headers */,
 				D2FEB64C194F6C9E00FC0574 /* CCEffectPixellate.h in Headers */,
 				14B84C931A700B55002C4D20 /* CCAppController.h in Headers */,
-				D2FEB64D194F6C9E00FC0574 /* CCActionManager.h in Headers */,
 				D2FEB64E194F6C9E00FC0574 /* CCTiledMap.h in Headers */,
 				BC9F4E9819DB644600B25F01 /* CCPackageManager.h in Headers */,
 				BC9F4E9919DB644900B25F01 /* CCPackageManagerDelegate.h in Headers */,
@@ -2849,7 +2836,6 @@
 				D2FEB6B6194F6C9E00FC0574 /* UITouch+CC.h in Headers */,
 				D2FEB6B7194F6C9E00FC0574 /* CCBKeyframe.h in Headers */,
 				E525F42E42D4753126DB7834 /* CCNode+RecursiveDescription.h in Headers */,
-				E525F80E977C3BBE006A6902 /* CCFileUtils.h in Headers */,
 				E525FDDD741BA508C227F090 /* CCFile_Private.h in Headers */,
 				E525F2D10ACCAB26403D8A23 /* CCFile.h in Headers */,
 			);
@@ -3196,7 +3182,6 @@
 				E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */,
 				E525FA9ECA8C7F751ADB56AF /* CCNode+RecursiveDescription.m in Sources */,
 				E525F091005B1446458856E4 /* CCFileLocatorDatabase.m in Sources */,
-				E525FAE62D515ED78AFBFA1E /* CCFileUtils.m in Sources */,
 				E525F6DA8219EB9F002899E7 /* CCFileLocator.m in Sources */,
 				E525F14AA900A39A508ED9F0 /* CCFile.m in Sources */,
 				E525F438C1815DEFBA6D4D1B /* CCFileMetaData.m in Sources */,
@@ -3336,7 +3321,6 @@
 				7A5948D319E375BE00F65F90 /* CCSlider.m in Sources */,
 				E525FDA7B507E04BB91F234B /* CCNode+RecursiveDescription.m in Sources */,
 				E525F08A8E837CDF4B664FD8 /* CCFileLocatorDatabase.m in Sources */,
-				E525F68F63777B9BC24FE8BA /* CCFileUtils.m in Sources */,
 				E525FB58147A0CB8D84908FC /* CCFileLocator.m in Sources */,
 				E525F352B250D548DC95FB42 /* CCFile.m in Sources */,
 				E525F7A457E633F80E21CDCB /* CCFileMetaData.m in Sources */,
@@ -3382,7 +3366,6 @@
 				D2FEB6D6194F6C9E00FC0574 /* CCTMXXMLParser.m in Sources */,
 				D2FEB6D7194F6C9E00FC0574 /* CCSprite.m in Sources */,
 				D2FEB6D8194F6C9E00FC0574 /* CCTiledMap.m in Sources */,
-				D2FEB6D9194F6C9E00FC0574 /* CCFileUtils.m in Sources */,
 				14B84C961A700B55002C4D20 /* CCAppController.m in Sources */,
 				D2FEB6DB194F6C9E00FC0574 /* CCTouch.m in Sources */,
 				D2EC6039199D9F82001A15E9 /* CCRendererGLSupport.m in Sources */,
@@ -3477,7 +3460,6 @@
 				D2FEB73F194F6C9E00FC0574 /* CCPhysicsBody.m in Sources */,
 				D241610C1958F72B003673BD /* CCEffectRenderer.m in Sources */,
 				E525FE49195C8830B8334169 /* CCNode+RecursiveDescription.m in Sources */,
-				E525F43B60DC28D1CCBFB917 /* CCFileUtils.m in Sources */,
 				E525F9CE961347409717F05F /* CCFileLocator.m in Sources */,
 				E525F00C8847F4DD7C818D76 /* CCFile.m in Sources */,
 			);

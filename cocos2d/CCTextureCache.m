@@ -35,7 +35,7 @@
 #import "CCTexture_Private.h"
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCFile_Private.h"
 #import "CCImage.h"
 
@@ -150,10 +150,6 @@ static CCTextureCache *sharedTextureCache;
 	NSAssert(target != nil, @"TextureCache: target can't be nil");
 	NSAssert(selector != NULL, @"TextureCache: selector can't be NULL");
 
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
-
 	// optimization
 	__block CCTexture * tex;
 		
@@ -211,10 +207,6 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
-
 	__block CCTexture * tex = nil;
 
 	dispatch_sync(_dictQueue, ^{
@@ -222,7 +214,7 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
-        CCFile *file = [CCFileUtils fileNamed:path];
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:path error:nil];
         
 		if( ! file ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
@@ -231,7 +223,7 @@ static CCTextureCache *sharedTextureCache;
 
 		NSString *lowerCase = [file.absoluteFilePath lowercaseString];
 
-		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
+		// All images are handled by CoreGraphics except PVR files which are handled by Cocos2D.
 
         if([lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"]){
             tex = [self addPVRImage:path];
@@ -355,10 +347,6 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
-
 	__block CCTexture * tex;
 	
 	dispatch_sync(_dictQueue, ^{
@@ -369,7 +357,7 @@ static CCTextureCache *sharedTextureCache;
 		return((id)tex.proxy);
 	}
     
-	tex = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:path] options:nil];
+	tex = [[CCTexture alloc] initPVRWithCCFile:[[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:path error:nil] options:nil];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
 			[_textures setObject: tex forKey:path];

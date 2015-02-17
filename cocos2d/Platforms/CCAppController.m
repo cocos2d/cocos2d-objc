@@ -15,7 +15,7 @@
 #import "CCAppDelegate.h"
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "ccUtils.h"
 #import "CCDirector_Private.h"
 
@@ -180,9 +180,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
         // Set the UI scale factor to show things at "native" size.
         director.UIScaleFactor = 0.5;
-
-        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+        
+        // TODO
+//        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+//        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
     }
 
     [director setProjection:CCDirectorProjection2D];
@@ -202,9 +203,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
     director.contentScaleFactor = scaleFactor;
     director.UIScaleFactor = (float)(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
-
-    // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
+    
+    // TODO
+//    // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+//    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
 
     director.designSize = fixed;
     [director setProjection:CCDirectorProjectionCustom];

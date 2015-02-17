@@ -35,7 +35,7 @@
 #import "CCImage_Private.h"
 
 #import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator.h"
 
 #import "CCTexture_Private.h"
 #import "CCTextureCache.h"
@@ -398,12 +398,13 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     NSMutableDictionary *opts = [options mutableCopy];
     opts[CCImageOptionFlipVertical] = @(YES);
     
-    return [self initCubemapFromImagesPosX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posXFilePath] options:opts]
-        negX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negXFilePath] options:opts]
-        posY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posYFilePath] options:opts]
-        negY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negYFilePath] options:opts]
-        posZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posZFilePath] options:opts]
-        negZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negZFilePath] options:opts]
+    CCFileLocator *locator = [CCFileLocator sharedFileLocator];
+    return [self initCubemapFromImagesPosX:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:posXFilePath error:nil] options:opts]
+        negX:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:negXFilePath error:nil] options:opts]
+        posY:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:posYFilePath error:nil] options:opts]
+        negY:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:negYFilePath error:nil] options:opts]
+        posZ:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:posZFilePath error:nil] options:opts]
+        negZ:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:negZFilePath error:nil] options:opts]
         options:opts
     ];
 }

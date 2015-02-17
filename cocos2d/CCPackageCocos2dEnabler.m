@@ -1,7 +1,7 @@
 #import "CCPackageCocos2dEnabler.h"
 #import "CCTextureCache.h"
 #import "CCPackage.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCSpriteFrameCache.h"
 #import "CCPackage_private.h"
 #import "CCPackageHelper.h"
@@ -9,11 +9,11 @@
 
 @implementation CCPackageCocos2dEnabler
 
-- (BOOL)isPackagInSearchPath:(CCPackage *)package
+- (BOOL)isPackageInSearchPath:(CCPackage *)package
 {
     NSString *newPackagePath = package.installRelURL.path;
 
-    return [[CCFileUtils sharedFileUtils].searchPath containsObject:newPackagePath];
+    return [[CCFileLocator sharedFileLocator].searchPaths containsObject:newPackagePath];
 }
 
 - (void)enablePackages:(NSArray *)packages
@@ -43,14 +43,14 @@
     {
         NSAssert(aPackage.installRelURL != nil, @"aPackage.installRelURL must not be nil for package %@", aPackage);
 
-        NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
+        NSMutableArray *newSearchPath = [[CCFileLocator sharedFileLocator].searchPaths mutableCopy];
 
         if (![newSearchPath containsObject:aPackage.installFullURL.path])
         {
             aPackage.status = CCPackageStatusInstalledEnabled;
 
             [newSearchPath insertObject:aPackage.installFullURL.path atIndex:0];
-            [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
+            [CCFileLocator sharedFileLocator].searchPaths = newSearchPath;
             searchPathChanged = YES;
         }
     }
@@ -60,20 +60,21 @@
 
 - (void)reloadCocos2dFiles
 {
-    [[CCFileUtils sharedFileUtils] purgeCachedEntries];
+    [[CCFileLocator sharedFileLocator] purgeCache];
     [CCSpriteFrameCache purgeSharedSpriteFrameCache];
     [CCTextureCache purgeSharedTextureCache];
-
-    [[CCFileUtils sharedFileUtils] loadFileNameLookupsInAllSearchPathsWithName:@"fileLookup.plist"];
-
-    [[CCSpriteFrameCache sharedSpriteFrameCache] loadSpriteFrameLookupsInAllSearchPathsWithName:@"spriteFrameFileList.plist"];
+    
+    // TODO this should be unecessary by the time v4 is complete.
+//    [[CCFileUtils sharedFileUtils] loadFileNameLookupsInAllSearchPathsWithName:@"fileLookup.plist"];
+//
+//    [[CCSpriteFrameCache sharedSpriteFrameCache] loadSpriteFrameLookupsInAllSearchPathsWithName:@"spriteFrameFileList.plist"];
 }
 
 - (void)removePackagesFromSearchPath:(NSArray *)packages
 {
     for (CCPackage *aPackage in packages)
     {
-        NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
+        NSMutableArray *newSearchPath = [[CCFileLocator sharedFileLocator].searchPaths mutableCopy];
         NSString *packagePathToRemove = aPackage.installFullURL.path;
 
         [aPackage setValue:@(CCPackageStatusInstalledDisabled) forKey:NSStringFromSelector(@selector(status))];
@@ -83,7 +84,7 @@
             [newSearchPath removeObject:packagePathToRemove];
         }
 
-        [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
+        [CCFileLocator sharedFileLocator].searchPaths = newSearchPath;
     }
 }
 

@@ -49,7 +49,7 @@
 #import "CCDeviceInfo.h"
 #import "CCTransition.h"
 #import "Platforms/CCNS.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCImage.h"
 #import "ccUtils.h"
 #import "CCDeprecated.h"
@@ -325,7 +325,7 @@ CCDirectorStack()
 	[CCLabelBMFont purgeCachedData];
 	if ([[CCDirector currentDirector] view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
-	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
+	[[CCFileLocator sharedFileLocator] purgeCache];
 }
 
 #pragma mark Director - Scene OpenGL Helper
@@ -407,8 +407,6 @@ CCDirectorStack()
 
 		// update projection
 		[self setProjection:_projection];
-		
-		[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	}
 }
 
@@ -673,7 +671,7 @@ CCDirectorStack()
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];
-	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
+	[[CCFileLocator sharedFileLocator] purgeCache];
 
 	// OpenGL view
 
@@ -934,7 +932,7 @@ static const float CCFPSLabelItemHeight = 32;
 		_SPFLabel = nil;
 		_drawsLabel = nil;
 		
-		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
+		[[CCFileLocator sharedFileLocator] purgeCache];
 	}
 
 	unsigned char *data;

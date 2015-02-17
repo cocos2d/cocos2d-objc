@@ -63,12 +63,8 @@
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    // The testbed uses a different directory dictionary than is created by the default CCFileUtils constructor- it uses the file utils one
-    [CCBReader configureCCFileUtils];
-    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
-
     // Testbed needs special directory search paths:
-    sharedFileUtils.searchPath = @[
+    [CCFileLocator sharedFileLocator].searchPaths = @[
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],

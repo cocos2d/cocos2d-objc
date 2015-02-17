@@ -57,7 +57,7 @@
 #import "ccMacros.h"
 
 #import "CCParticleSystemBase_Private.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCRendererBasicTypes.h"
 #import "CCTextureCache.h"
 #import "CCColor.h"
@@ -98,10 +98,13 @@
 
 -(id) initWithFile:(NSString *)plistFile
 {
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plistFile];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-
-	NSAssert( dict != nil, @"Particles: file not found");
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+    
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
 	
 	return [self initWithDictionary:dict path:[plistFile stringByDeletingLastPathComponent]];
 }

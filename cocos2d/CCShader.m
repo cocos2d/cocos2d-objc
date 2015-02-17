@@ -30,7 +30,8 @@
 #import "CCTexture_private.h"
 #import "CCMetalSupport_Private.h"
 
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 #import "CCCache.h"
 #import "CCRenderDispatch.h"
 #import "CCDeviceInfo.h"
@@ -227,13 +228,14 @@ CompileShaderSources(GLenum type, NSArray *sources)
 #endif
 	{
 		NSString *fragmentName = [shaderName stringByAppendingPathExtension:@"fsh"];
-		NSString *fragmentPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fragmentName];
-		NSAssert(fragmentPath, @"Failed to find '%@'.", fragmentName);
-		NSString *fragmentSource = [NSString stringWithContentsOfFile:fragmentPath encoding:NSUTF8StringEncoding error:nil];
-		
+        CCFile *fragmentFile = [[CCFileLocator sharedFileLocator] fileNamed:fragmentName error:nil];
+        NSString *fragmentSource = [fragmentFile loadString:nil];
+		NSAssert(fragmentSource, @"Failed to load '%@'.", fragmentName);
+        
 		NSString *vertexName = [shaderName stringByAppendingPathExtension:@"vsh"];
-		NSString *vertexPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:vertexName];
-		NSString *vertexSource = (vertexPath ? [NSString stringWithContentsOfFile:vertexPath encoding:NSUTF8StringEncoding error:nil] : CCDefaultVShader);
+        CCFile *vertexFile = [[CCFileLocator sharedFileLocator] fileNamed:vertexName error:nil];
+		NSString *vertexSource = (vertexFile ? [vertexFile loadString:nil] : CCDefaultVShader);
+		NSAssert(vertexSource, @"Failed to load '%@'.", vertexName);
 		
 		CCShader *shader = [[CCShader alloc] initWithVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
 		shader.debugName = shaderName;

@@ -37,7 +37,7 @@
 
 - (void) setUp
 {
-	[[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
+//	[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
 }
 
 -(void) setupComet
