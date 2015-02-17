@@ -45,14 +45,7 @@
         _cutoffRadius = 0.0f;
         _halfRadius = 0.5f;
         
-        if (type == CCLightDirectional)
-        {
-            _depth = 1.0f;
-        }
-        else
-        {
-            _depth = 100.0f;
-        }
+        _depth = 100.0f;
     }
     
     return self;
