@@ -42,9 +42,10 @@
 #pragma mark EaseAction
 
 
-@implementation CCActionEase
-
-@synthesize inner=_inner;
+@implementation CCActionEase {
+    @protected
+	CCActionInterval *_inner;
+}
 
 +(instancetype) actionWithAction: (CCActionInterval*) action
 {
@@ -70,7 +71,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[_inner startWithTarget:_target];
+	[_inner startWithTarget:self.target];
 }
 
 -(void) stop
@@ -136,8 +137,11 @@
 #pragma mark EaseRate
 
 
-@implementation CCActionEaseRate
-@synthesize rate=_rate;
+@implementation CCActionEaseRate {
+    @protected
+    float _rate;
+}
+
 +(instancetype) actionWithAction: (CCActionInterval*) action rate:(float)rate
 {
 	return [[self alloc] initWithAction: action rate:rate];
@@ -205,7 +209,10 @@
 #pragma mark EaseElastic actions
 
 
-@implementation CCActionEaseElastic
+@implementation CCActionEaseElastic {
+    @protected
+    float _period;
+}
 
 @synthesize period = _period;
 

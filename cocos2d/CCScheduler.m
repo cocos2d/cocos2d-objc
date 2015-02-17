@@ -32,9 +32,9 @@
 
 
 // cocos2d imports
-#import "CCScheduler.h"
+#import "CCScheduler_Private.h"
 #import <objc/message.h>
-#import "CCAction.h"
+#import "CCAction_Private.h"
 
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
@@ -453,50 +453,50 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(id)init
 {
-	if((self = [super init])){
-		_timeScale = 1.0;
-		_maxTimeStep = 1.0/10.0;
-		
-		CFBinaryHeapCallBacks callbacks = {
-			.version = 0,
-			.retain = NULL,
-			.release = NULL,
-			.copyDescription = NULL,
-			.compare = CompareTimers,
-		};
-		
-		_heap = CFBinaryHeapCreate(NULL, 0, &callbacks, NULL);
-		_scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-		
-		// All targets except nil should be implicitly paused initially.
-		CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
-		nilTarget.paused = NO;
-		
-		_updates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
-		_fixedUpdates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
+    if((self = [super init])){
+        _timeScale = 1.0;
+        _maxTimeStep = 1.0/10.0;
+        
+        CFBinaryHeapCallBacks callbacks = {
+            .version = 0,
+            .retain = NULL,
+            .release = NULL,
+            .copyDescription = NULL,
+            .compare = CompareTimers,
+        };
+        
+        _heap = CFBinaryHeapCreate(NULL, 0, &callbacks, NULL);
+        _scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+        
+        // All targets except nil should be implicitly paused initially.
+        CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
+        nilTarget.paused = NO;
+        
+        _updates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
+        _fixedUpdates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
         _scheduledTargetsWithActions = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableSet class]];
-		
-		// Annoyance to avoid a retain cycle.
+        
+        // Annoyance to avoid a retain cycle.
         __block __typeof(self) _self = self;
-		
-		// Schedule a timer to run the fixedUpdate: methods.
-		_fixedUpdateTimer = [[self scheduleBlock:^(CCTimer *timer){
-			if(timer.invokeTime > 0.0){
-				CCScheduler *scheduler = _self;
-				InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
-                
-                //TODO: also invoke fixed update actions:
-                
-				scheduler->_lastFixedUpdateTime = timer.invokeTime;
-			}
+        
+        // Schedule a timer to run the fixedUpdate: methods.
+        _fixedUpdateTimer = [[self scheduleBlock:^(CCTimer *timer){
+            if(timer.invokeTime > 0.0){
+                CCScheduler *scheduler = _self;
+                InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+                if(_self.actionsRunInFixedMode){
+                    [_self updateActions:timer.repeatInterval];
+                }
+                scheduler->_lastFixedUpdateTime = timer.invokeTime;
+            }
             
-		} forTarget:self withDelay:0] retain];
-
-		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-		_fixedUpdateTimer.repeatInterval = 1.0/60.0;
-	}
-	
-	return self;
+        } forTarget:self withDelay:0] retain];
+        
+        _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
+        _fixedUpdateTimer.repeatInterval = 1.0/60.0;
+    }
+    
+    return self;
 }
 
 -(void)dealloc
@@ -691,13 +691,15 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(void)update:(CCTime)dt
 {
-	CCTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
-	[self updateTo:_currentTime + clampedDelta];
-	
-	InvokeMethods(_updates, @selector(update:), clampedDelta);
-    [self updateActions:dt];
+    CCTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
+    [self updateTo:_currentTime + clampedDelta];
     
-	_lastUpdateTime = _currentTime;
+    InvokeMethods(_updates, @selector(update:), clampedDelta);
+    if(!self.actionsRunInFixedMode) {
+        [self updateActions:dt];
+    }
+    
+    _lastUpdateTime = _currentTime;
 }
 
 #pragma mark Scheduling CCActions
@@ -726,7 +728,7 @@ CompareTimers(const void *a, const void *b, void *context)
 -(void)removeAction:(CCAction*) action fromTarget:(NSObject<CCSchedulableTarget> *)target;
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    [scheduledTarget.actions removeObject:target];
+    [scheduledTarget.actions removeObject:action];
 }
 
 -(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target
@@ -740,12 +742,12 @@ CompareTimers(const void *a, const void *b, void *context)
     [_scheduledTargetsWithActions removeObject:scheduledTarget];
 }
 
--(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target
+-(void)removeActionByName:(NSString *)name target:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     
     for (CCAction *action in [scheduledTarget.actions copy]) {
-        if (action.tag == tag){
+        if ([action.name isEqualToString:name]){
             [scheduledTarget removeAction:action];
         }
     }
@@ -755,11 +757,11 @@ CompareTimers(const void *a, const void *b, void *context)
     }
 }
 
--(CCAction*)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target
+-(CCAction*)getActionByName:(NSString *)name target:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     for (CCAction *action in scheduledTarget.actions) {
-        if (action.tag == tag) return action;
+        if ([action.name isEqualToString:name]) return action;
     }
     return nil;
 }

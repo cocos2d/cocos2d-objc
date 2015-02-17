@@ -24,10 +24,9 @@
 
 #import "CCScheduler.h"
 
-@class CCScheduler;
-
-
 @interface CCScheduler()
+
+@property (nonatomic) BOOL actionsRunInFixedMode;
 
 -(void) update:(CCTime)dt;
 
@@ -46,9 +45,9 @@
 #pragma mark Actions
 -(void)addAction:(CCAction *)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused;
 -(void)removeAction:(CCAction*) action fromTarget:(NSObject<CCSchedulableTarget> *)target;
--(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target;
+-(void)removeActionByName:(NSString *)name target:(NSObject<CCSchedulableTarget> *)target;
 -(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target;
--(CCAction *)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target;
+-(CCAction *)getActionByName:(NSString *)name target:(NSObject<CCSchedulableTarget> *)target;
 -(NSArray *)actionsForTarget:(NSObject<CCSchedulableTarget> *)target;
 
 @end

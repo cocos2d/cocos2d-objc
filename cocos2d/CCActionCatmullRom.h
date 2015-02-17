@@ -75,9 +75,7 @@ extern "C" {
  and require a CCPointArray object as input. Except for those actions you should refrain from using this class.
  [It may be refactored](https://github.com/cocos2d/cocos2d-swift/issues/1089).
  */
-@interface CCPointArray : NSObject <NSCopying> {
-	NSMutableArray	*_controlPoints;
-}
+@interface CCPointArray : NSObject <NSCopying>
 
 /*+ Array that contains the control points. */
 @property (nonatomic,readwrite,strong) NSMutableArray *controlPoints;
@@ -189,13 +187,7 @@ extern "C" {
  *
  * @note CCPointArray stores a series of CGPoint objects encoded as NSValue in a NSMutableArray.
  */
-@interface CCActionCardinalSplineTo : CCActionInterval {
-	CCPointArray	*_points;
-	CGFloat			_deltaT;
-	CGFloat			_tension;
-	CGPoint			_previousPosition;
-	CGPoint			_accumulatedDiff;
-}
+@interface CCActionCardinalSplineTo : CCActionInterval
 
 // Purposefully undocumented: Code doesn't handle a changing points array after the action was initially created.
 /* The array of control points associated with the cardinal spline. */

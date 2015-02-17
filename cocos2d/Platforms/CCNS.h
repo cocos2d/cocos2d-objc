@@ -26,11 +26,9 @@
 
 #import "ccTypes.h"
 
-#if __CC_PLATFORM_ANDROID || __CC_PLATFORM_IOS
-
-#if 1
-//#ifndef __CC_CG_STRING_UTILS
+#ifndef __CC_CG_STRING_UTILS
 #define __CC_CG_STRING_UTILS
+
 
 static inline NSString *CCNSStringFromCGPoint(CGPoint point);
 static inline NSString *CCNSStringFromCGSize(CGSize size);
@@ -102,6 +100,8 @@ static inline NSString *CCNSStringFromCGSize(CGSize size)
     return [NSString stringWithFormat:@"{%g, %g}", size.width, size.height];
 }
 
+#if __CC_PLATFORM_ANDROID || __CC_PLATFORM_IOS
+
 #define CCRectFromString(__r__)		CCCGRectFromString(__r__)
 #define CCPointFromString(__p__)	CCCGPointFromString(__p__)
 #define CCSizeFromString(__s__)		CCCGSizeFromString(__s__)
@@ -109,7 +109,6 @@ static inline NSString *CCNSStringFromCGSize(CGSize size)
 #define CCNSRectToCGRect
 #define CCNSPointToCGPoint
 
-#endif
 
 #elif __CC_PLATFORM_MAC
 
@@ -119,6 +118,7 @@ static inline NSString *CCNSStringFromCGSize(CGSize size)
 #define CCNSSizeToCGSize			NSSizeToCGSize
 #define CCNSRectToCGRect			NSRectToCGRect
 #define CCNSPointToCGPoint			NSPointToCGPoint
+
 #endif
 
-
+#endif //__CC_CG_STRING_UTILS

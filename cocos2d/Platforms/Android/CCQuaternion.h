@@ -156,9 +156,9 @@ extern "C" {
                                   *(float32x4_t *)&quaternion);
         float32x2_t v2 = vpadd_f32(vget_low_f32(v), vget_high_f32(v));
         v2 = vpadd_f32(v2, v2);
-        return sqrt(vget_lane_f32(v2, 0));
+        return sqrtf(vget_lane_f32(v2, 0));
 #else
-        return sqrt(quaternion.q[0] * quaternion.q[0] +
+        return sqrtf(quaternion.q[0] * quaternion.q[0] +
                     quaternion.q[1] * quaternion.q[1] +
                     quaternion.q[2] * quaternion.q[2] +
                     quaternion.q[3] * quaternion.q[3]);

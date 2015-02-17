@@ -41,7 +41,14 @@
 #import "CCScene.h"
 #import "CCAction.h"
 
-#pragma mark - Node
+
+@interface CCAnimationManager()
+
+- (void) addToScheduler;
+- (void) removeFromScheduler;
+
+@end
+
 
 @implementation CCNode {
 	// Rotation angle.
@@ -171,7 +178,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
-    [_animationManager performSelector:@selector(cleanup)];
+    [_animationManager removeFromScheduler];
 }
 
 - (NSString*) description
@@ -1045,10 +1052,12 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     CCDirector* director = [CCDirector currentDirector];
     
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
-#warning [CCDirector sharedDirector].actionManager.fixedMode = hasPhysicsNode;
+    if(self.physicsNode != nil){
+        self.scene.scheduler.actionsRunInFixedMode = YES;
+    }
 
     if(_animationManager) {
-        [_animationManager performSelector:@selector(onEnter)];
+        [_animationManager addToScheduler];
     }
     
     // Add queued actions or scheduled code, if needed:
@@ -1113,16 +1122,16 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	[self.scheduler removeAction:action fromTarget:self];
 }
 
--(void) stopActionByTag:(NSInteger)aTag
+-(void) stopActionByName:(NSString *)name
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[self.scheduler removeActionByTag:aTag target:self];
+	NSAssert(name, @"Name is nil.");
+	[self.scheduler removeActionByName:name target:self];
 }
 
--(CCAction*) getActionByTag:(NSInteger) aTag
+-(CCAction*) getActionByName:(NSString *)name
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[self.scheduler getActionByTag:aTag target:self];
+	NSAssert(name, @"Name is nil.");
+	return 	[self.scheduler getActionByName:name target:self];
 }
 
 -(NSArray *) actions
@@ -1132,14 +1141,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(CCAnimationManager*)animationManager
 {
-    if(_animationManager)
-    {
-        return _animationManager;
-    }
-    else
-    {
-        return _parent.animationManager;
-    }
+    return _animationManager ?: _parent.animationManager;
 }
 
 #pragma mark CCNode - Scheduler
@@ -1251,15 +1253,10 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	BOOL isRunning = self.active;
 	
-	if(isRunning && !wasRunning){
-        // Should also resume actions
-		[self.scheduler setPaused:NO target:self];
-//		[_actionManager resumeTarget:self];
-        [_animationManager setPaused:NO];
-	} else if(!isRunning && wasRunning){
-		[self.scheduler setPaused:YES target:self];
-//		[_actionManager pauseTarget:self];
-        [_animationManager setPaused:YES];
+    // Resume or pause scheduled update methods, CCActions, and animations if the pause state has changed
+	if(isRunning != wasRunning){
+		[self.scheduler setPaused:!isRunning target:self];
+        [_animationManager setPaused:!isRunning];
 	}
 }
 

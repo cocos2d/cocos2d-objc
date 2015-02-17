@@ -87,10 +87,6 @@
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
-/** Called when projection is resized (due to layoutSubviews on the view). This is important to respond to in order to setup your scene with the proper dimensions (which only exist after the first call to layoutSubviews) so that you can set your scene as early as possible to avoid startup flicker
-  - */
--(void) directorDidReshapeProjection:(CCDirector*)director;
-
 #endif // __CC_PLATFORM_IOS
 
 @end
@@ -224,8 +220,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @returns The director for the currently active CCView */
 +(CCDirector*)currentDirector;
-+(CCDirector*)sharedDirector __attribute__((deprecated));
-
 
 /** @name Accessing OpenGL Thread */
 
@@ -261,7 +255,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
 /// @see CCView
-@property(nonatomic, weak) CC_VIEW<CCView> *view;
+@property(nonatomic, retain) CC_VIEW<CCView> *view;
 /** Sets an OpenGL projection
  @see CCDirectorProjection
  @see projectionMatrix */

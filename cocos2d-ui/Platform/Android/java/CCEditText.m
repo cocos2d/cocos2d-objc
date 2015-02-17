@@ -15,6 +15,12 @@
     CCEditTextCompletionBlock _completionBlock;
 }
 
+-(id)initWithContext:(AndroidContext *)context
+{
+    self = [super initWithContext:context];
+    return self;
+}
+
 - (BOOL)onKeyPreIme:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event {
     if (keyCode == AndroidKeyEventKeycodeBack || [event action] == AndroidKeyEventActionUp) {
         if (_completionBlock != nil) {

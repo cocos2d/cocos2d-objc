@@ -25,9 +25,14 @@
  */
 
 #import "CCActionTween.h"
+#import "CCAction_Private.h"
 
 
-@implementation CCActionTween
+@implementation CCActionTween {
+	NSString		*_key;
+	float			_from, _to;
+	float			_delta;
+}
 
 + (id)actionWithDuration:(CCTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
 

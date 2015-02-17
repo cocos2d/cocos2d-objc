@@ -30,6 +30,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector_Private.h"
 #import "CCAnimationManager_Private.h"
+#import "CCScheduler_Private.h"
 
 #import "CCFileUtils.h"
 #import "CGPointExtension.h"
@@ -42,7 +43,7 @@
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCProtocols.h"
-#import "CCScheduler.h"
+
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -1398,7 +1399,7 @@ SelectorNameForProperty(objc_property_t property)
     
     if(animationManager.fixedTimestep)
     {
-//TODO        node.actionManager.fixedMode = YES;
+        node.scene.scheduler.actionsRunInFixedMode = YES;
     }
     
     // Read animated properties

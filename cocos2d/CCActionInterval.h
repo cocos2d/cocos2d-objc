@@ -92,9 +92,8 @@
  - Tweening any node property (of type float or double):
     - CCActionTween
  */
-@interface CCActionInterval: CCActionFiniteTime <NSCopying> {
-	CCTime	_elapsed;
-	BOOL	_firstTick;
+@interface CCActionInterval: CCActionFiniteTime {
+    CCActionInterval *_inner;
 }
 
 /** 
@@ -170,11 +169,7 @@
  
  @note In order to spawn multiple actions at the same time from within the sequence, use CCActionSpawn.
  */
-@interface CCActionSequence : CCActionInterval <NSCopying> {
-	CCActionFiniteTime *_actions[2];
-	CCTime _split;
-	int _last;
-}
+@interface CCActionSequence : CCActionInterval
 
 /** @name Creating a Sequence Action */
 
@@ -223,13 +218,7 @@
  *  This action will repeat the specified action a number of times.
  *  If you wish to repeat an action forever, use CCActionRepeatForever.
  */
-@interface CCActionRepeat : CCActionInterval <NSCopying> {
-	NSUInteger _times;
-	NSUInteger _total;
-	CCTime _nextDt;
-	BOOL _isActionInstant;
-	CCActionFiniteTime *_innerAction;
-}
+@interface CCActionRepeat : CCActionInterval
 
 // Inner action
 @property (nonatomic,readwrite,strong) CCActionFiniteTime *innerAction;
@@ -283,10 +272,7 @@
  
  @note It is not meaningful to use CCActionSpawn with just one action.
  */
-@interface CCActionSpawn : CCActionInterval <NSCopying> {
-	CCActionFiniteTime *_one;
-	CCActionFiniteTime *_two;
-}
+@interface CCActionSpawn : CCActionInterval
 
 /** @name Creating a Spawn Action */
 
@@ -342,20 +328,7 @@
  Otherwise both the physics body and the action will alter the node's rotation property, overriding each other's changes.
  This leads to unpredictable behavior.
  */
-@interface CCActionRotateTo : CCActionInterval <NSCopying> {
-	float _dstAngleX;
-	float _startAngleX;
-	float _diffAngleX;
-  
-	float _dstAngleY;
-	float _startAngleY;
-	float _diffAngleY;
-    
-    bool _rotateX;
-    bool _rotateY;
-    
-    bool _simple;
-}
+@interface CCActionRotateTo : CCActionInterval
 
 /** @name Creating a Rotate Action */
 
@@ -451,12 +424,7 @@
  Otherwise both the physics body and the action will alter the node's rotation property, overriding each other's changes.
  This leads to unpredictable behavior.
  */
-@interface CCActionRotateBy : CCActionInterval <NSCopying> {
-	float _angleX;
-	float _startAngleX;
-	float _angleY;
-	float _startAngleY;
-}
+@interface CCActionRotateBy : CCActionInterval
 
 /** @name Creating a Rotate Action */
 
@@ -513,11 +481,7 @@
  @warning Move actions shouldn't be used to move nodes with a dynamic CCPhysicsBody as both the physics body and the action
  will alter the node's position property, overriding each other's changes. This leads to unpredictable behavior.
  */
-@interface CCActionMoveBy : CCActionInterval <NSCopying> {
-	CGPoint _positionDelta;
-	CGPoint _startPos;
-	CGPoint _previousPos;
-}
+@interface CCActionMoveBy : CCActionInterval
 
 /** @name Creating a Move Action */
 
@@ -551,9 +515,7 @@
  @warning Move actions shouldn't be used to move nodes with a dynamic CCPhysicsBody as both the physics body and the action
  will alter the node's position property, overriding each other's changes. This leads to unpredictable behavior.
  */
-@interface CCActionMoveTo : CCActionMoveBy {
-	CGPoint _endPosition;
-}
+@interface CCActionMoveTo : CCActionMoveBy
 
 /** @name Creating a Move Action */
 
@@ -583,16 +545,7 @@
 /**
  *  This action skews the target to the specified angles. Skewing changes the rectangular shape of the node to that of a parallelogram.
  */
-@interface CCActionSkewTo : CCActionInterval <NSCopying> {
-	float _skewX;
-	float _skewY;
-	float _startSkewX;
-	float _startSkewY;
-	float _endSkewX;
-	float _endSkewY;
-	float _deltaX;
-	float _deltaY;
-}
+@interface CCActionSkewTo : CCActionInterval
 
 /** @name Creating a Skew Action */
 
@@ -623,8 +576,7 @@
 /**
  *  This action skews a target by the specified skewX and skewY degrees values. Skewing changes the rectangular shape of the node to that of a parallelogram.
  */
-@interface CCActionSkewBy : CCActionSkewTo <NSCopying> {
-}
+@interface CCActionSkewBy : CCActionSkewTo
 
 /** @name Creating a Skew Action */
 
@@ -644,13 +596,7 @@
 
 // purposefully undocumented: jump action is pretty much useless, especially when using it for game logic.
 // Rounding errors will not make it come back down to the exact same height as before.
-@interface CCActionJumpBy : CCActionInterval <NSCopying> {
-	CGPoint _startPosition;
-	CGPoint _delta;
-	CCTime	_height;
-	NSUInteger _jumps;
-	CGPoint _previousPos;
-}
+@interface CCActionJumpBy : CCActionInterval
 
 // purposefully undocumented: see note above @interface
 + (id)actionWithDuration:(CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
@@ -662,8 +608,7 @@
 
 
 // purposefully undocumented: see note above in CCActionJumpBy interface
-@interface CCActionJumpTo : CCActionJumpBy <NSCopying>
-
+@interface CCActionJumpTo : CCActionJumpBy
 @end
 
 
@@ -680,11 +625,7 @@ typedef struct _ccBezierConfig {
 /**
  *  This action that moves the target with a cubic Bezier curve by a certain distance.
  */
-@interface CCActionBezierBy : CCActionInterval <NSCopying> {
-	ccBezierConfig _config;
-	CGPoint _startPosition;
-	CGPoint _previousPosition;
-}
+@interface CCActionBezierBy : CCActionInterval
 
 /** @name Creating a Bezier Path Move Action */
 
@@ -716,10 +657,7 @@ typedef struct _ccBezierConfig {
 
  See CCActionBezierBy for more information.
  */
-@interface CCActionBezierTo : CCActionBezierBy {
-	ccBezierConfig _toConfig;
-}
-
+@interface CCActionBezierTo : CCActionBezierBy
 @end
 
 
@@ -728,16 +666,7 @@ typedef struct _ccBezierConfig {
  *
  *  @note This action is not reversible.
  */
-@interface CCActionScaleTo : CCActionInterval <NSCopying> {
-	float _scaleX;
-	float _scaleY;
-	float _startScaleX;
-	float _startScaleY;
-	float _endScaleX;
-	float _endScaleY;
-	float _deltaX;
-	float _deltaY;
-}
+@interface CCActionScaleTo : CCActionInterval
 
 /** @name Creating a Scale Action */
 
@@ -791,18 +720,14 @@ typedef struct _ccBezierConfig {
  
  @note Unlike CCActionScaleTo, this action can be reversed.
  */
-@interface CCActionScaleBy : CCActionScaleTo <NSCopying>
-
+@interface CCActionScaleBy : CCActionScaleTo
 @end
 
 
 /**
  *  This action performs a blinks effect on the target by altering its `visible` property periodically.
  */
-@interface CCActionBlink : CCActionInterval <NSCopying> {
-	NSUInteger _times;
-	BOOL _originalState;
-}
+@interface CCActionBlink : CCActionInterval
 
 /** @name Creating a Blink Action */
 
@@ -834,8 +759,7 @@ typedef struct _ccBezierConfig {
  
  See CCActionFadeTo for more information.
  */
-@interface CCActionFadeIn : CCActionInterval <NSCopying>
-
+@interface CCActionFadeIn : CCActionInterval
 @end
 
 
@@ -844,8 +768,7 @@ typedef struct _ccBezierConfig {
 
  See CCActionFadeTo for more information.
 */
-@interface CCActionFadeOut : CCActionInterval <NSCopying>
-
+@interface CCActionFadeOut : CCActionInterval
 @end
 
 
@@ -854,10 +777,7 @@ typedef struct _ccBezierConfig {
 
  @note If you want the children to fade too use [CCNode cascadeOpacityEnabled] to enable this behavior in the node.
  */
-@interface CCActionFadeTo : CCActionInterval <NSCopying> {
-	CGFloat _toOpacity;
-	CGFloat _fromOpacity;
-}
+@interface CCActionFadeTo : CCActionInterval
 
 /** @name Creating a Fade Action */
 
@@ -889,10 +809,7 @@ typedef struct _ccBezierConfig {
  *
  *  @note This action is not reversible.
  */
-@interface CCActionTintTo : CCActionInterval <NSCopying> {
-	CCColor* _to;
-	CCColor* _from;
-}
+@interface CCActionTintTo : CCActionInterval
 
 /** @name Creating a Colorize Action */
 
@@ -923,10 +840,7 @@ typedef struct _ccBezierConfig {
  *  This action tints (colorizes) the target from current color to the specified color.
  *  @note Contrary to CCActionTintTo, this action is reversible.
  */
-@interface CCActionTintBy : CCActionInterval <NSCopying> {
-	CGFloat _deltaR, _deltaG, _deltaB;
-	CGFloat _fromR, _fromG, _fromB;
-}
+@interface CCActionTintBy : CCActionInterval
 
 /** @name Creating a Colorize Action */
 
@@ -963,8 +877,7 @@ typedef struct _ccBezierConfig {
  
     id delay = [CCActionDelay actionWithDuration:2.0];
  */
-@interface CCActionDelay : CCActionInterval <NSCopying>
-
+@interface CCActionDelay : CCActionInterval
 @end
 
 /**
@@ -973,9 +886,7 @@ typedef struct _ccBezierConfig {
  *  @note This action can not be used in a CCActionSequence. Not all actions are reversible.
  *  Use it as the default "reversed" method of your own actions, but using it outside the "reversed" scope is not recommended.
  */
-@interface CCActionReverse : CCActionInterval <NSCopying> {
-	CCActionFiniteTime * _other;
-}
+@interface CCActionReverse : CCActionInterval
 
 /** @name Creating a Reverse Action */
 
@@ -1007,13 +918,7 @@ typedef struct _ccBezierConfig {
  
  @note This action can only be run on CCSprite nodes.
  */
-@interface CCActionAnimate : CCActionInterval <NSCopying> {
-	NSMutableArray		*_splitTimes;
-	NSInteger			_nextFrame;
-	CCAnimation			*_animation;
-	id					_origFrame;
-	NSUInteger			_executedLoops;
-}
+@interface CCActionAnimate : CCActionInterval
 
 // Animation used for the sprite.
 @property (readwrite,nonatomic,strong) CCAnimation * animation;

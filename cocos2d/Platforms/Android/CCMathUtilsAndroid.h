@@ -24,8 +24,8 @@
 extern "C" {
 #endif
     
-    static inline float CCMathDegreesToRadians(float degrees) { return degrees * (M_PI / 180); };
-    static inline float CCMathRadiansToDegrees(float radians) { return radians * (180 / M_PI); };
+    static inline float CCMathDegreesToRadians(float degrees) { return (float)(degrees * (M_PI / 180)); };
+    static inline float CCMathRadiansToDegrees(float radians) { return (float)(radians * (180 / M_PI)); };
     
     GLKVector3 CCMathProject(GLKVector3 object, GLKMatrix4 model, GLKMatrix4 projection, int *viewport);
     GLKVector3 CCMathUnproject(GLKVector3 window, GLKMatrix4 model, GLKMatrix4 projection, int *viewport, bool *success);

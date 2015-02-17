@@ -279,33 +279,7 @@
 
 
 		case CCDirectorProjection3D: {
-//			float zeye = [self getZEye];
-//
-//			kmGLMatrixMode(KM_GL_PROJECTION);
-//			kmGLLoadIdentity();
-//
-//			kmMat4 matrixPerspective, matrixLookup;
-//
-//			// issue #1334
-//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, MAX(zeye*2,1500) );
-////			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
-//
-//
-//			kmGLMultMatrix(&matrixPerspective);
-//
-//
-//			kmGLMatrixMode(KM_GL_MODELVIEW);
-//			kmGLLoadIdentity();
-//			kmVec3 eye, center, up;
-//
-//			float eyeZ = size.height * zeye / size.height;
-//
-//			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
-//			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
-//			kmVec3Fill( &up, 0, 1, 0);
-//			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-//			kmGLMultMatrix(&matrixLookup);
-//			break;
+
 		}
 
 		case CCDirectorProjectionCustom:
