@@ -84,6 +84,12 @@
     [self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
 }
 
+-(void) setupTiled091Test
+{
+    self.subTitle = @"Tilemap generated in new Tiled version 0.9.1.\nBase 64 encoded gzip data";
+    [self testForMapNamed:@"TileMaps/tiled-v091.tmx"];
+}
+
 -(void) setupTilemap3Test
 {
     [self testForMapNamed:@"TileMaps/orthogonal-testLarge.tmx"];
