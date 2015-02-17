@@ -162,7 +162,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 {
     NSError *err = nil;
     
-    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:plistFile error:&err];
     NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
     
     NSDictionary *dict = [file loadPlist:&err];
@@ -358,7 +358,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
         NSError *err = nil;
         
-        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:plistFile error:&err];
         NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
         
         NSDictionary *dict = [file loadPlist:&err];

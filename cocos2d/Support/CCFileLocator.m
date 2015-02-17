@@ -29,6 +29,7 @@
 #import "CCFile_Private.h"
 #import "CCFileLocatorDatabaseProtocol.h"
 #import "CCFileMetaData.h"
+#import "ccUtils.h"
 
 // Options are only used internally for now
 static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
@@ -55,40 +56,6 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
 @end
 
 
-#pragma mark - CCFileLocatorSearchData helper class
-
-@interface CCFileLocatorSearchData : NSObject
-
-@property (nonatomic, copy) NSString *filename;
-@property (nonatomic, copy) NSNumber *contentScale;
-
-- (instancetype)initWithFilename:(NSString *)filename contentScale:(NSNumber *)contentScale;
-
-@end
-
-@implementation CCFileLocatorSearchData
-
-- (instancetype)initWithFilename:(NSString *)filename contentScale:(NSNumber *)contentScale
-{
-    self = [super init];
-
-    if (self)
-    {
-        self.filename = filename;
-        self.contentScale = contentScale;
-    }
-
-    return self;
-}
-
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"%@, scale %@", _filename, _contentScale];
-}
-
-@end
-
-
 #pragma mark - CCFileLocator
 
 @interface CCFileLocator ()
@@ -106,10 +73,11 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
 
     if (self)
     {
+        self.searchPaths = @[[[NSBundle mainBundle] resourcePath]];
         self.untaggedContentScale = 4;
         self.deviceContentScale = 4;
         self.cache = [NSMutableDictionary dictionary];
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(purgeCache)
                                                      name:NSCurrentLocaleDidChangeNotification
@@ -245,10 +213,7 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
 
     NSString *localizedFileName = [self localizedFilenameWithMetaData:metaData];
 
-    fileLocatorResolvedMetaData.filename = localizedFileName
-        ? localizedFileName
-        : metaData.filename;
-
+    fileLocatorResolvedMetaData.filename = localizedFileName ?: metaData.filename;
     fileLocatorResolvedMetaData.useUIScale = metaData.useUIScale;
 
     return fileLocatorResolvedMetaData;
@@ -276,81 +241,54 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
 
 - (CCFile *)findFilename:(NSString *)filename inSearchPath:(NSString *)searchPath options:(NSDictionary *)options
 {
-    NSArray *searchVariants = [self contentScaleVariantsWithFilename:filename options:options];
-
-    TraceLog(@"* Searching for content scale variants: %@", searchVariants);
-
-    for (CCFileLocatorSearchData *fileLocatorSearchData in searchVariants)
-    {
-        NSURL *fileURL = [NSURL fileURLWithPath:[searchPath stringByAppendingPathComponent:fileLocatorSearchData.filename]];
+    __block CCFile *ret = nil;
+    
+    [self tryVariantsForFilename:filename options:options block:^(NSString *variantName, CGFloat contentScale, BOOL tagged) {
+        NSURL *fileURL = [NSURL fileURLWithPath:[searchPath stringByAppendingPathComponent:variantName]];
 
         BOOL isDirectory = NO;
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fileURL.path isDirectory:&isDirectory] && !isDirectory)
         {
             TraceLog(@"SUCCESS: File exists! Filename: \"%@\" in search path: \"%@\"", fileLocatorSearchData.filename, searchPath);
-            return [[CCFile alloc] initWithName:filename url:fileURL contentScale:[fileLocatorSearchData.contentScale floatValue]];
+            ret = [[CCFile alloc] initWithName:filename url:fileURL contentScale:contentScale];
         }
-    }
-    return nil;
+    }];
+    
+    return ret;
 }
 
-- (CCFileLocatorSearchData *)contentScaleFilenameWithBasefilename:(NSString *)baseFilename contentScale:(NSNumber *)contentScale
+- (NSString *)contentScaleFilenameWithBasefilename:(NSString *)baseFilename contentScale:(int)contentScale
 {
-    NSString *filename = [[NSString stringWithFormat:@"%@-%dx",
-                           [baseFilename stringByDeletingPathExtension],
-                           [contentScale unsignedIntegerValue]] stringByAppendingPathExtension:[baseFilename pathExtension]];
-
-    return [[CCFileLocatorSearchData alloc] initWithFilename:filename contentScale:contentScale];
+    NSString *base = [baseFilename stringByDeletingPathExtension];
+    NSString *ext = [baseFilename pathExtension];
+    return [NSString stringWithFormat:@"%@-%dx.%@", base, contentScale, ext];
 }
 
-- (NSArray *)contentScaleVariantsWithFilename:(NSString *)filename options:(NSDictionary *)options
+- (void)tryVariantsForFilename:(NSString *)filename options:(NSDictionary *)options block:(void (^)(NSString *name, CGFloat contentScale, BOOL tagged))block
 {
-    NSMutableArray *searchVariantFilenames = [NSMutableArray arrayWithCapacity:4];
-
-    if (options[CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH])
+    if ([options[CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH] boolValue])
     {
-        return @[[[CCFileLocatorSearchData alloc] initWithFilename:filename contentScale:@(_untaggedContentScale)]];
+        block(filename, _untaggedContentScale, NO);
     }
-
-    if (_deviceContentScale >= 3)
+    else
     {
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@4]];
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@2]];
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@1]];
-    }
-
-    if (_deviceContentScale == 2)
-    {
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@2]];
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@4]];
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@1]];
-    }
-
-    if (_deviceContentScale == 1)
-    {
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@1]];
-        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@2]];
-    }
-
-    [self insertUntaggedFilename:filename intoSearchVariantFilenames:searchVariantFilenames];
-
-    return searchVariantFilenames;
-}
-
-- (void)insertUntaggedFilename:(NSString *)filename intoSearchVariantFilenames:(NSMutableArray *)filenames
-{
-    for (NSUInteger i = 0; i < filenames.count - 1; ++i)
-    {
-        CCFileLocatorSearchData *filenameData = filenames[i];
-        if ([filenameData.contentScale unsignedIntegerValue] == _untaggedContentScale)
+        int contentScale = CCNextPOT(ceil(self.deviceContentScale));
+        
+        // First try the highest-res explicit variant.
+        block([self contentScaleFilenameWithBasefilename:filename contentScale:contentScale], contentScale, YES);
+        
+        // Then the untagged variant.
+        block(filename, self.untaggedContentScale, NO);
+        
+        // Then the lower-res explicit variants.
+        while(true)
         {
-            CCFileLocatorSearchData *filenameDataToInsert = [[CCFileLocatorSearchData alloc] initWithFilename:filename
-                                                                                                 contentScale:@(_untaggedContentScale)];
-
-            [filenames insertObject:filenameDataToInsert atIndex:i+1];
-            return;
-        };
+            contentScale /= 2;
+            if(contentScale < 1) break;
+            
+            block([self contentScaleFilenameWithBasefilename:filename contentScale:contentScale], contentScale, YES);
+        }
     }
 }
 

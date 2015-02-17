@@ -23,7 +23,7 @@
  */
 
 
-#import <Foundation/Foundation.h>
+#import "ccTypes.h"
 
 @class CCFile;
 @protocol CCFileLocatorDatabaseProtocol;
@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, CCFileLocatorError){
  
  @since 4.0
  */
-@property (nonatomic, assign) NSUInteger deviceContentScale;
+@property (nonatomic, assign) CGFloat deviceContentScale;
 
 /**
  Returns a singleton instance of the file utils.
