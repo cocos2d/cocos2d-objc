@@ -35,7 +35,6 @@
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-<<<<<<< HEAD
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCLabelBMFont.h"
@@ -48,10 +47,7 @@
 #import "Support/uthash.h"
 #import "CCLabelBMFont_Private.h"
 #import "CCSprite_Private.h"
-=======
-#import "CCLabelBMFont_Private.h"
 
-#import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
 #import "CCFileUtils.h"
@@ -405,7 +401,6 @@
 }
 
 @end
->>>>>>> 78ed946... Fix CCLabelBMFonts.
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -812,8 +807,6 @@ void FNTConfigRemoveCache( void )
 	// Offset of the texture atlas.
 	CGPoint _imageOffset;
 	
-    CCTexture *_texture;
-    
     CCBMFontCharacterSequence *_characterSprites;
 }
 
@@ -935,6 +928,7 @@ void FNTConfigRemoveCache( void )
     }
     [self setContentSize:[_characterSprites boundSize]];
     
+    
     [_characterSprites setAlignment:[self alignment]];
     [self setContentSize:[_characterSprites boundSize]];
     
@@ -954,7 +948,7 @@ void FNTConfigRemoveCache( void )
             [fc setPosition:pos];
         }
     }
-
+    
     if ([self enableDebugDrawing])
     {
         [self debugDraw];
@@ -1009,7 +1003,7 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
-	CGFloat contentScale = 1.0/_texture.contentScale;
+	CGFloat contentScale = 1.0/self.texture.contentScale;
     [_characterSprites setCommonHeight:_configuration->_commonHeight];
 
     CCBMFontCharacter *previousChar = nil;
@@ -1049,7 +1043,7 @@ void FNTConfigRemoveCache( void )
 		rect.origin.y += _imageOffset.y;
         
         CCBMFontCharacter *fontChar = [_characterSprites createNewCharacterForSequenceWithParent:self];
-        [fontChar setTexture:_texture];
+        [fontChar setTexture:self.texture];
         [fontChar setTextureRect:rect];
         [fontChar updateDisplayedColor:_displayColor];
         [fontChar updateDisplayedOpacity:_displayColor.a];
@@ -1071,7 +1065,6 @@ void FNTConfigRemoveCache( void )
         
         previousChar = fontChar;
 	}
-    
 	[self setContentSize:CC_SIZE_SCALE([_characterSprites boundSize], contentScale)];
     
     if ([self enableDebugDrawing])

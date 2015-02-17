@@ -143,7 +143,7 @@ NSDictionary *testConfigSet(int config)
 
 - (void)testFontWrapping:(NSDictionary *)testConfig
 {
-    CGSize screenSize = [[CCDirector currentDirector] viewSize];
+    CGSize screenSize = [[CCDirector sharedDirector] viewSize];
     float baseWidth = screenSize.width / 2.0f;
     float currentWidth = baseWidth * [testConfig[@"Width"] floatValue];
     CCTextAlignment align = [testConfig[@"Alignment"] unsignedIntegerValue];
@@ -185,7 +185,7 @@ NSDictionary *testConfigSet(int config)
 
 - (void)setupBMFontStylingTest
 {
-    CGSize screenSize = [[CCDirector currentDirector] viewSize];
+    CGSize screenSize = [[CCDirector sharedDirector] viewSize];
     float currentWidth = screenSize.width / 2.0f;
     
     NSString *highlightString = @"even if the sound";
@@ -213,7 +213,7 @@ NSDictionary *testConfigSet(int config)
 
 - (void)setupBMFontStyling2Test
 {
-    CGSize screenSize = [[CCDirector currentDirector] viewSize];
+    CGSize screenSize = [[CCDirector sharedDirector] viewSize];
     float currentWidth = screenSize.width / 2.0f;
     
     NSString *boldString = @"boldly go";
