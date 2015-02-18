@@ -77,7 +77,9 @@
         controlChar = [NSString stringWithFormat:@"%@ cr", controlChar];
     }
     controlChar = [controlChar stringByPaddingToLength:9 withString:@" " startingAtIndex:0];
-    return [NSString stringWithFormat:@"\'%C\' %@ - %@", _characterValue, controlChar, CCNSStringFromCGPoint([self position])];
+    CGPoint pos = [self position];
+    CGSize sz = [self contentSize];
+    return [NSString stringWithFormat:@"\'%C\' %@ {%0.1f, %0.1f} %0.1fx%0.1f", _characterValue, controlChar, pos.x, pos.y, sz.width, sz.height];
 }
 
 @end
@@ -509,7 +511,7 @@ void FNTConfigRemoveCache( void )
 	NSMutableString *validCharsString = [[NSMutableString alloc] initWithCapacity:512];
     
 	if( ! contents ) {
-		NSLog(@"cocos2d: Error parsing FNTfile %@: %@", fntFile, error);
+		CCLOGWARN(@"cocos2d: Error parsing FNTfile %@: %@", fntFile, error);
 		return nil;
 	}
     
@@ -996,7 +998,6 @@ void FNTConfigRemoveCache( void )
 	
 	CGFloat contentScale = 1.0/_texture.contentScale;
     [_characterSprites setCommonHeight:_configuration->_commonHeight];
-
     CCBMFontCharacter *previousChar = nil;
 	for(NSUInteger i = 0; i<stringLen; i++)
     {
