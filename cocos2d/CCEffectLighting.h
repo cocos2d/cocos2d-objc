@@ -41,13 +41,13 @@
  *  @param groups         The light groups this effect belongs to.
  *  @param specularColor  The specular color of this effect.
  *  @param shininess      The overall shininess of the effect.
- *  @param intensity      The overall contribution of lighting to the affected node.
+ *  @param contribution   The overall contribution of lighting to the affected node.
  *
  *  @return The CCEffectLighting object.
  *  @since v3.4 and later
  *  @see CCColor
  */
-+(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess intensity:(float)intensity;
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess contribution:(float)contribution;
 
 /**
  *  Initializes a CCEffectLighting object.
@@ -76,13 +76,13 @@
  *  @param groups         The light groups this effect belongs to.
  *  @param specularColor  The specular color of this effect.
  *  @param shininess      The overall shininess of the effect.
- *  @param intensity      The overall contribution of lighting to the affected node.
+ *  @param contribution   The overall contribution of lighting to the affected node.
  *
  *  @return The CCEffectLighting object.
  *  @since v3.4 and later
  *  @see CCColor
  */
--(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess intensity:(float)intensity;
+-(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess contribution:(float)contribution;
 
 /// -----------------------------------------------------------------------
 /// @name Lighting Properties
@@ -115,12 +115,12 @@
 @property (nonatomic, assign) float shininess;
 
 /**
- *  The overall intensity of the lighting effect's contributtion to the affected node. 
+ *  The overall contribution of the lighting effect to the affected node's final color.
  *  This value is in the range [0..1] where 0 results in no lighting and 1 results in 
  *  full lighting.
  *  @since v3.4 and later
  */
-@property (nonatomic, assign) float intensity;
+@property (nonatomic, assign) float contribution;
 
 @end
 

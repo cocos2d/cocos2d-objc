@@ -366,25 +366,26 @@
     setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, orientation does.");
 }
 
--(void)setupLightingEffectIntensityTest
+-(void)setupLightingEffectContributionTest
 {
-    self.subTitle = @"Lighting Intensity Test";
+    self.subTitle = @"Lighting Contribution Test";
     
     [self.contentNode.scene.lights flushGroupNames];
   
     NSString *normalMapImage = @"Images/powered_normals.png";
     NSString *diffuseImage = @"Images/powered.png";
     
-    void (^setupBlock)(CGPoint position, float lightingIntensity, NSString *title) = ^void(CGPoint position, float lightingIntensity, NSString *title)
+    void (^setupBlock)(CGPoint position, float lightingContribution, float diffuseAndSpecularIntensity, NSString *title) = ^void(CGPoint position, float lightingContribution, float diffuseAndSpecularIntensity, NSString *title)
     {
         CCLightNode *light = [[CCLightNode alloc] init];
         light.type = CCLightPoint;
         light.groups = @[title];
         light.positionType = CCPositionTypeNormalized;
-        light.position = ccp(0.7f, 0.85f);
+        light.position = ccp(0.75f, 0.8f);
         light.anchorPoint = ccp(0.5f, 0.5f);
-        light.intensity = 1.0f;
+        light.intensity = diffuseAndSpecularIntensity;
         light.ambientIntensity = 0.2f;
+        light.specularIntensity = diffuseAndSpecularIntensity;
         light.cutoffRadius = 0.0f;
         light.depth = 50.0f;
         
@@ -393,21 +394,21 @@
         CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
         lightingEffect.groups = @[title];
         lightingEffect.shininess = 0.1f;
-        lightingEffect.intensity = lightingIntensity;
+        lightingEffect.contribution = lightingContribution;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.5f, 0.5f);
         sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
         sprite.effect = lightingEffect;
-        sprite.scale = 0.5f;
+        sprite.scale = 0.25f;
         
         CCNode *root = [[CCNode alloc] init];
         root.positionType = CCPositionTypeNormalized;
         root.position = position;
         root.anchorPoint = ccp(0.5f, 0.5f);
         root.contentSizeType = CCSizeTypePoints;
-        root.contentSize = CGSizeMake(200.0f, 200.0f);
+        root.contentSize = CGSizeMake(200.0f, 120.0f);
         
         CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector sharedDirector].UIScaleFactor];
         label.color = [CCColor whiteColor];
@@ -427,12 +428,23 @@
     const float step = (1.0f - 2.0f * border) / steps;
     float xPos = border;
     
-    setupBlock(ccp(xPos, 0.5f), 0.0f, @"Intensity = 0.0\nNo lighting"); xPos += step;
-    setupBlock(ccp(xPos, 0.5f), 0.2f, @"Intensity = 0.2\n20% lighting"); xPos += step;
-    setupBlock(ccp(xPos, 0.5f), 0.4f, @"Intensity = 0.4\n40% lighting"); xPos += step;
-    setupBlock(ccp(xPos, 0.5f), 0.6f, @"Intensity = 0.6\n60% lighting"); xPos += step;
-    setupBlock(ccp(xPos, 0.5f), 0.8f, @"Intensity = 0.8\n80% lighting"); xPos += step;
-    setupBlock(ccp(xPos, 0.5f), 1.0f, @"Intensity = 1.0\nFull lighting");
+    setupBlock(ccp(xPos, 0.65f), 0.0f, 1.0f, @"Contribution = 0.0\nNo lighting");
+    setupBlock(ccp(xPos, 0.25f), 0.0f, 0.0f, @"Ambient Only\nContribution = 0.0\nNo lighting"); xPos += step;
+
+    setupBlock(ccp(xPos, 0.65f), 0.2f, 1.0f, @"Contribution = 0.2\n20% lighting");
+    setupBlock(ccp(xPos, 0.25f), 0.2f, 0.0f, @"Ambient Only\nContribution = 0.2\n20% lighting"); xPos += step;
+
+    setupBlock(ccp(xPos, 0.65f), 0.4f, 1.0f, @"Contribution = 0.4\n40% lighting");
+    setupBlock(ccp(xPos, 0.25f), 0.4f, 0.0f, @"Ambient Only\nContribution = 0.4\n40% lighting"); xPos += step;
+
+    setupBlock(ccp(xPos, 0.65f), 0.6f, 1.0f, @"Contribution = 0.6\n60% lighting");
+    setupBlock(ccp(xPos, 0.25f), 0.6f, 0.0f, @"Ambient Only\nContribution = 0.6\n60% lighting"); xPos += step;
+
+    setupBlock(ccp(xPos, 0.65f), 0.8f, 1.0f, @"Contribution = 0.8\n80% lighting");
+    setupBlock(ccp(xPos, 0.25f), 0.8f, 0.0f, @"Ambient Only\nContribution = 0.8\n80% lighting"); xPos += step;
+
+    setupBlock(ccp(xPos, 0.65f), 1.0f, 1.0f, @"Contribution = 1.0\nFull lighting");
+    setupBlock(ccp(xPos, 0.25f), 1.0f, 0.0f, @"Ambient Only\nContribution = 1.0\nFull lighting"); xPos += step;
 }
 
 -(void)setupLightingRenderTextureTest
