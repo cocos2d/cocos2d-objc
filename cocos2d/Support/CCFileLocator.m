@@ -266,6 +266,14 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
 {
     NSString *base = [baseFilename stringByDeletingPathExtension];
     NSString *ext = [baseFilename pathExtension];
+    
+    // Need to handle multiple extensions. (ex: .pvr.gz)
+    while([base pathExtension].length > 0)
+    {
+        ext = [NSString stringWithFormat:@"%@.%@", [base pathExtension], ext];
+        base = [base stringByDeletingPathExtension];
+    }
+    
     return [NSString stringWithFormat:@"%@-%dx.%@", base, contentScale, ext];
 }
 
