@@ -34,10 +34,12 @@ static const NSUInteger CCEffectLightingMaxLightCount = 8;
 static CCLightKey CCLightKeyMake(NSArray *lights);
 static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 static float conditionShininess(float shininess);
+static float conditionIntensity(float intensity);
 
 
 @interface CCEffectLighting ()
 @property (nonatomic, strong) NSNumber *conditionedShininess;
+@property (nonatomic, strong) NSNumber *conditionedIntensity;
 @property (nonatomic, assign) CCLightGroupMask groupMask;
 @property (nonatomic, assign) BOOL groupMaskDirty;
 @property (nonatomic, copy) NSArray *closestLights;
@@ -93,6 +95,8 @@ static float conditionShininess(float shininess);
         [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:@"u_specularExponent" value:[NSNumber numberWithFloat:5.0f]]];
         [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
     }
+    
+    [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:@"u_overallIntensity" value:[NSNumber numberWithFloat:1.0f]]];
     
     NSArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:interface.closestLights normalMap:interface.needsNormalMap specular:interface.needsSpecular];
     NSArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:interface.closestLights];
@@ -193,10 +197,10 @@ static float conditionShininess(float shininess);
             [effectBody appendString:@"specularSum += lightSpecularColor * pow(specularTerm, u_specularExponent);\n"];
         }
     }
-    [effectBody appendString:@"vec3 resultColor = diffuseSum * inputValue.rgb;\n"];
+    [effectBody appendString:@"vec3 resultColor = clamp(diffuseSum + vec3(1.0 - u_overallIntensity), vec3(0), vec3(1)) * inputValue.rgb;\n"];
     if (needsSpecular)
     {
-        [effectBody appendString:@"resultColor += specularSum * u_specularColor.rgb * inputValue.a;\n"];
+        [effectBody appendString:@"resultColor += specularSum * u_overallIntensity * u_specularColor.rgb * inputValue.a;\n"];
     }
     [effectBody appendString:@"return vec4(resultColor, inputValue.a);\n"];
     
@@ -338,6 +342,8 @@ static float conditionShininess(float shininess);
             passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakInterface.specularColor.glkVector4];
         }
         
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_overallIntensity"]] = weakInterface.conditionedIntensity;
+        
     } copy]];
     
     return @[pass0];
@@ -355,6 +361,11 @@ static float conditionShininess(float shininess);
 
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
+    return [self initWithGroups:groups specularColor:specularColor shininess:shininess intensity:1.0f];
+}
+
+-(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess intensity:(float)intensity
+{
     if((self = [super init]))
     {
         self.effectImpl = [[CCEffectLightingImpl alloc] initWithInterface:self];
@@ -365,6 +376,7 @@ static float conditionShininess(float shininess);
         _specularColor = specularColor;
         _shininess = shininess;
         _conditionedShininess = [NSNumber numberWithFloat:conditionShininess(shininess)];
+        _conditionedIntensity = [NSNumber numberWithFloat:conditionIntensity(intensity)];
     }
     return self;
 }
@@ -373,6 +385,11 @@ static float conditionShininess(float shininess);
 +(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
     return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
+}
+
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess intensity:(float)intensity
+{
+    return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess intensity:intensity];
 }
 
 - (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
@@ -427,6 +444,12 @@ static float conditionShininess(float shininess);
     _conditionedShininess = [NSNumber numberWithFloat:conditionShininess(shininess)];
 }
 
+-(void)setIntensity:(float)intensity
+{
+    _intensity = intensity;
+    _conditionedIntensity = [NSNumber numberWithFloat:conditionIntensity(intensity)];
+}
+
 @end
 
 
@@ -463,5 +486,11 @@ float conditionShininess(float shininess)
     NSCAssert((shininess >= 0.0f) && (shininess <= 1.0f), @"Supplied shininess out of range [0..1].");
     shininess = clampf(shininess, 0.0f, 1.0f);
     return ((shininess * 99.0f) + 1.0f);
+}
+
+float conditionIntensity(float intensity)
+{
+    NSCAssert((intensity >= 0.0f) && (intensity <= 1.0f), @"Supplied intensity out of range [0..1].");
+    return clampf(intensity, 0.0f, 1.0f);
 }
 

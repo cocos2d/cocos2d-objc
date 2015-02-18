@@ -366,6 +366,75 @@
     setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, orientation does.");
 }
 
+-(void)setupLightingEffectIntensityTest
+{
+    self.subTitle = @"Lighting Intensity Test";
+    
+    [self.contentNode.scene.lights flushGroupNames];
+  
+    NSString *normalMapImage = @"Images/powered_normals.png";
+    NSString *diffuseImage = @"Images/powered.png";
+    
+    void (^setupBlock)(CGPoint position, float lightingIntensity, NSString *title) = ^void(CGPoint position, float lightingIntensity, NSString *title)
+    {
+        CCLightNode *light = [[CCLightNode alloc] init];
+        light.type = CCLightPoint;
+        light.groups = @[title];
+        light.positionType = CCPositionTypeNormalized;
+        light.position = ccp(0.7f, 0.85f);
+        light.anchorPoint = ccp(0.5f, 0.5f);
+        light.intensity = 1.0f;
+        light.ambientIntensity = 0.2f;
+        light.cutoffRadius = 0.0f;
+        light.depth = 50.0f;
+        
+        CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
+        
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.groups = @[title];
+        lightingEffect.shininess = 0.1f;
+        lightingEffect.intensity = lightingIntensity;
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.5f, 0.5f);
+        sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+        sprite.effect = lightingEffect;
+        sprite.scale = 0.5f;
+        
+        CCNode *root = [[CCNode alloc] init];
+        root.positionType = CCPositionTypeNormalized;
+        root.position = position;
+        root.anchorPoint = ccp(0.5f, 0.5f);
+        root.contentSizeType = CCSizeTypePoints;
+        root.contentSize = CGSizeMake(200.0f, 200.0f);
+        
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector sharedDirector].UIScaleFactor];
+        label.color = [CCColor whiteColor];
+        label.positionType = CCPositionTypeNormalized;
+        label.position = ccp(0.5f, 1.0f);
+        label.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:root];
+        [root addChild:label];
+        [root addChild:sprite];
+        [root addChild:light];
+        [light addChild:lightSprite];
+    };
+    
+    const int steps = 5;
+    const float border = 0.10f;
+    const float step = (1.0f - 2.0f * border) / steps;
+    float xPos = border;
+    
+    setupBlock(ccp(xPos, 0.5f), 0.0f, @"Intensity = 0.0\nNo lighting"); xPos += step;
+    setupBlock(ccp(xPos, 0.5f), 0.2f, @"Intensity = 0.2\n20% lighting"); xPos += step;
+    setupBlock(ccp(xPos, 0.5f), 0.4f, @"Intensity = 0.4\n40% lighting"); xPos += step;
+    setupBlock(ccp(xPos, 0.5f), 0.6f, @"Intensity = 0.6\n60% lighting"); xPos += step;
+    setupBlock(ccp(xPos, 0.5f), 0.8f, @"Intensity = 0.8\n80% lighting"); xPos += step;
+    setupBlock(ccp(xPos, 0.5f), 1.0f, @"Intensity = 1.0\nFull lighting");
+}
+
 -(void)setupLightingRenderTextureTest
 {
     self.subTitle = @"Lighting + Render Texture Test";
