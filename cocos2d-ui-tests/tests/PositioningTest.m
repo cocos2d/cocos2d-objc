@@ -83,7 +83,7 @@ extern const NSString *CARD_NAME[];
     self.subTitle = @"Move cards around";
     
     // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards_classic.plist"];
 
     // add cards with normalized positioning
     for (int count = 0; count < NUMBER_OF_CARDS; count ++)

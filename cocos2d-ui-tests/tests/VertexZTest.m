@@ -75,7 +75,7 @@ const NSString *CARD_NAME[] =
 		[self addButtons];
 
     // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards_classic.plist"];
 
     // add a card node to hold the cards
     _cardNode = [CCNode node];
@@ -104,7 +104,7 @@ const NSString *CARD_NAME[] =
 		[self addButtons];
 
     // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards_classic.plist"];
 
     // add a card node to hold the cards
     _cardNode = [CCNode node];
