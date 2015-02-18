@@ -505,7 +505,7 @@ void FNTConfigRemoveCache( void )
 {
     NSError *err = nil;
     
-    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:fntFile error:&err];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:fntFile error:&err];
     NSAssert(err == nil, @"Error finding %@: %@", fntFile, err);
     
     NSString *contents = [file loadString:&err];
