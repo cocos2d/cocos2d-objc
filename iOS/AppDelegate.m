@@ -28,12 +28,54 @@
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
 #import "AppController.h"
+#import "CCDirector_Private.h"
+#import "MainMenu.h"
+#import "CCPackageConstants.h"
 
 @implementation AppDelegate
+{
+    UIWindow *_window;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [AppController setupApplication];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    CCViewiOSGL *view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+    CCDirectorIOS *director = (CCDirectorIOS *)view.director;
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        director.contentScaleFactor *= 2;
+        director.UIScaleFactor *= 0.5;
+    }
+    
+    CCFileLocator *locator = [CCFileLocator sharedFileLocator];
+    locator.untaggedContentScale = 4;
+    locator.deviceContentScale = director.contentScaleFactor;
+    
+    locator.searchPaths = @[
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+        [[NSBundle mainBundle] resourcePath],
+    ];
+
+    // Register spritesheets.
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
+    
+    [CCDirector pushCurrentDirector:director];
+    [director presentScene:[MainMenu scene]];
+    [CCDirector popCurrentDirector];
+    
+    _window.rootViewController = director;
+    [_window makeKeyAndVisible];
+    
+    [director startRunLoop];
     
     return YES;
 }

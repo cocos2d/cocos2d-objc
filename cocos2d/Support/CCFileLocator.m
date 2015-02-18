@@ -140,7 +140,7 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     CCFile *cachedFile = _cache[filename];
     if (cachedFile)
     {
-        TraceLog(@"SUCCESS: Cache hit for \”%@\” -> %@", filename, cachedFile);
+        TraceLog(@"SUCCESS: Cache hit for \"%@\" -> %@", filename, cachedFile);
         return cachedFile;
     };
 
@@ -252,7 +252,11 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
         {
             TraceLog(@"SUCCESS: File exists! Filename: \"%@\" in search path: \"%@\"", fileLocatorSearchData.filename, searchPath);
             ret = [[CCFile alloc] initWithName:filename url:fileURL contentScale:contentScale];
+            
+            return YES;
         }
+        
+        return NO;
     }];
     
     return ret;
@@ -265,7 +269,7 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     return [NSString stringWithFormat:@"%@-%dx.%@", base, contentScale, ext];
 }
 
-- (void)tryVariantsForFilename:(NSString *)filename options:(NSDictionary *)options block:(void (^)(NSString *name, CGFloat contentScale, BOOL tagged))block
+- (void)tryVariantsForFilename:(NSString *)filename options:(NSDictionary *)options block:(BOOL (^)(NSString *name, CGFloat contentScale, BOOL tagged))block
 {
     if ([options[CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH] boolValue])
     {
@@ -275,19 +279,21 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     {
         int contentScale = CCNextPOT(ceil(self.deviceContentScale));
         
-        // First try the highest-res explicit variant.
-        block([self contentScaleFilenameWithBasefilename:filename contentScale:contentScale], contentScale, YES);
+        // First try the highest-res tagged variant.
+        NSString *name = [self contentScaleFilenameWithBasefilename:filename contentScale:contentScale];
+        if(block(name, contentScale, YES)) return;
         
         // Then the untagged variant.
-        block(filename, self.untaggedContentScale, NO);
+        if(block(filename, self.untaggedContentScale, NO)) return;
         
-        // Then the lower-res explicit variants.
+        // Then the lower-res tagged variants.
         while(true)
         {
             contentScale /= 2;
             if(contentScale < 1) break;
             
-            block([self contentScaleFilenameWithBasefilename:filename contentScale:contentScale], contentScale, YES);
+            name = [self contentScaleFilenameWithBasefilename:filename contentScale:contentScale];
+            if(block(name, contentScale, YES)) return;
         }
     }
 }
