@@ -218,19 +218,7 @@
 
 - (void)align:(CCTextAlignment)alignment
 {
-    // TODO: debug - remove me
     CCLabelBMFont *lbl = (CCLabelBMFont *)[_firstCharacter parent];
-    NSString *alignStr = @"left";
-    switch (alignment) {
-        case CCTextAlignmentCenter:
-            alignStr = @"center";
-            break;
-        case CCTextAlignmentRight:
-            alignStr = @"right";
-            break;
-        default:
-            break;
-    }
     NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
     CCBMFontCharacter *lineStart = _firstCharacter;
     CGSize sz = [lbl contentSize];
@@ -996,8 +984,8 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
-	CGFloat contentScale = 1.0/_texture.contentScale;
-    [_characterSprites setCommonHeight:_configuration->_commonHeight];
+	CGFloat contentScale = 1.0/self.texture.contentScale;
+    [_characterSprites setCommonHeight:contentScale * _configuration->_commonHeight];
     CCBMFontCharacter *previousChar = nil;
 	for(NSUInteger i = 0; i<stringLen; i++)
     {
@@ -1102,7 +1090,13 @@ void FNTConfigRemoveCache( void )
 
 #pragma mark LabelBMFont - Alignment
 - (void)setWidth:(float)width {
+    float oldWidth = _width;
     _width = width;
+    if (_width != oldWidth)
+    {
+        [_characterSprites removeAllCharacters];
+        [self createFontChars];
+    }
     [self updateLabel];
 }
 
