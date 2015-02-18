@@ -268,6 +268,8 @@
 		E525F0C6F4B0C3F0BCAD1CA1 /* CCFileLocatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F93DE6657D8B7D99485D /* CCFileLocatorTests.m */; };
 		E525FAC4141DA9B33B972BC0 /* CCFileLocatorDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F98589D25C8CCF99E8B6 /* CCFileLocatorDatabaseTests.m */; };
 		E525FB731133965ECDFF5BBE /* FileSystemTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F53CBA0B423333E6D62A /* FileSystemTestCase.m */; };
+		F6B163A11A947A1500C064A6 /* Xolonium.bmfont in Resources */ = {isa = PBXBuildFile; fileRef = F6B163A01A947A1500C064A6 /* Xolonium.bmfont */; };
+		F6B163A21A947A1500C064A6 /* Xolonium.bmfont in Resources */ = {isa = PBXBuildFile; fileRef = F6B163A01A947A1500C064A6 /* Xolonium.bmfont */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -538,6 +540,7 @@
 		E525FCB52B23A4F29E8D6D64 /* CCPackagesTestFixturesAndHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackagesTestFixturesAndHelpers.h; sourceTree = "<group>"; };
 		E525FE52BE5D10499A27CE7C /* CCSpriteFrameCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCacheTests.m; sourceTree = "<group>"; };
 		E525FF94F200689F83438E37 /* CCPackagesTestFixturesAndHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackagesTestFixturesAndHelpers.m; sourceTree = "<group>"; };
+		F6B163A01A947A1500C064A6 /* Xolonium.bmfont */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Xolonium.bmfont; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -919,6 +922,7 @@
 				D4AFE9101977100000261299 /* tuffy_bold_italic-charmap.png */,
 				D4AFE9111977100000261299 /* west_england-64.fnt */,
 				D4AFE9121977100000261299 /* west_england-64.png */,
+				F6B163A01A947A1500C064A6 /* Xolonium.bmfont */,
 			);
 			name = Fonts;
 			path = Resources/Fonts;
@@ -1174,6 +1178,7 @@
 				D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */,
 				B7E2621117E7D34D007067F0 /* Default@2x.png in Resources */,
 				D4AFE93F1977100000261299 /* markerFelt-hd.png in Resources */,
+				F6B163A11A947A1500C064A6 /* Xolonium.bmfont in Resources */,
 				D4AFE93E1977100000261299 /* markerFelt-hd.fnt in Resources */,
 				D4AFE9321977100000261299 /* futura-48.png in Resources */,
 				B7E2621217E7D34D007067F0 /* Icon-72.png in Resources */,
@@ -1264,6 +1269,7 @@
 				D344723D19E73AD1000093A3 /* bitmapFontTest5.png in Resources */,
 				D344723E19E73AD1000093A3 /* boundsTestFont.fnt in Resources */,
 				D344723F19E73AD1000093A3 /* boundsTestFont.png in Resources */,
+				F6B163A21A947A1500C064A6 /* Xolonium.bmfont in Resources */,
 				D344724019E73AD1000093A3 /* font-issue1343-hd.fnt in Resources */,
 				D344724119E73AD1000093A3 /* font-issue1343-hd.png in Resources */,
 				D344724219E73AD1000093A3 /* font-issue1343.fnt in Resources */,

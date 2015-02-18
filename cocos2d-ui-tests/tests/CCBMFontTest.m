@@ -254,13 +254,9 @@ NSDictionary *testConfigSet(int config)
 
 - (void)setupBMFontScaledWidthTest
 {
-    CGSize screenSize = [[CCDirector sharedDirector] viewSize];
+    CGSize screenSize = [[CCDirector currentDirector] viewSize];
     float currentWidth = screenSize.width / 2.0f;
     const CGSize pad = CGSizeMake(5.0f, 5.0f);
-    
-#if __CC_PLATFORM_MAC
-    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:2.0f];
-#endif
     
     CCNodeGradient *background = [CCNodeGradient nodeWithColor:[CCColor darkGrayColor] fadingTo:[CCColor blueColor]];
     [background setAnchorPoint:ccp(0.5f, 0.5f)];

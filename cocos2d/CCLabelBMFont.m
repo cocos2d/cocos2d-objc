@@ -984,7 +984,7 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
-	CGFloat contentScale = 1.0/self.texture.contentScale;
+	CGFloat contentScale = 1.0/_texture.contentScale;
     [_characterSprites setCommonHeight:contentScale * _configuration->_commonHeight];
     CCBMFontCharacter *previousChar = nil;
 	for(NSUInteger i = 0; i<stringLen; i++)
