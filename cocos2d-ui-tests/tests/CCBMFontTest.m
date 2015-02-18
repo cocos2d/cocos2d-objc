@@ -226,6 +226,7 @@ NSDictionary *testConfigSet(int config)
     {
         NSArray *highlightChars = [label characterSpritesForRange:boldRange];
         CCEffectBloom *boldEffect = [CCEffectBloom effectWithBlurRadius:1 intensity:0.5 luminanceThreshold:0.1];
+        boldEffect.padding = CGSizeMake(3.0f, 3.0f);
         for (CCSprite *fontSprite in highlightChars)
         {
             [fontSprite setEffect:boldEffect];
