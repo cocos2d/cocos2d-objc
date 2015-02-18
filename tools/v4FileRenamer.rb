@@ -11,7 +11,7 @@ end
 
 # Ignore these suffixes
 SUFFIX_BLACKLIST = [
-	"-tablet",
+	"-ipad",
 ]
 
 # Ignore these directories
@@ -43,8 +43,8 @@ end
 
 SUFFIXES = {
 	"-hd" => "-2x",
-	"-tablet" => "-2x",
-	"-tablethd" => "-4x",
+	"-ipad" => "-2x",
+	"-ipadhd" => "-4x",
 }
 
 def find_suffix(base)
