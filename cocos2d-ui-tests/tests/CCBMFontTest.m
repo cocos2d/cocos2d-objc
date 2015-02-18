@@ -77,19 +77,19 @@ static const int TEST_STRING_COUNT = sizeof(TEST_STRINGS)/sizeof(*TEST_STRINGS);
     [super pressedNext:sender];
 }
 
-//-(void)setupBMFont01Test {[self testFont:@"din.fnt"];}
-//-(void)setupBMFont02Test {[self testFont:@"arial-unicode-26.fnt"];}
-//-(void)setupBMFont03Test {[self testFont:@"arial16.fnt"];}
-//-(void)setupBMFont04Test {[self testFont:@"bitmapFontTest.fnt"];}
-//-(void)setupBMFont06Test {[self testFont:@"bitmapFontTest3.fnt"];}
-//-(void)setupBMFont07Test {[self testFont:@"bitmapFontTest4.fnt"];}
-//-(void)setupBMFont08Test {[self testFont:@"bitmapFontTest5.fnt"];}
-//-(void)setupBMFont09Test {[self testFont:@"boundsTestFont.fnt"];}
-//-(void)setupBMFont10Test {[self testFont:@"font-issue1343.fnt"];}
-//-(void)setupBMFont11Test {[self testFont:@"futura-48.fnt"];}
-//-(void)setupBMFont12Test {[self testFont:@"konqa32.fnt"];}
-//-(void)setupBMFont14Test {[self testFont:@"markerFelt.fnt"];}
-//-(void)setupBMFont15Test {[self testFont:@"west_england-64.fnt"];}
+-(void)setupBMFont01Test {[self testFont:@"din.fnt"];}
+-(void)setupBMFont02Test {[self testFont:@"arial-unicode-26.fnt"];}
+-(void)setupBMFont03Test {[self testFont:@"arial16.fnt"];}
+-(void)setupBMFont04Test {[self testFont:@"bitmapFontTest.fnt"];}
+-(void)setupBMFont06Test {[self testFont:@"bitmapFontTest3.fnt"];}
+-(void)setupBMFont07Test {[self testFont:@"bitmapFontTest4.fnt"];}
+-(void)setupBMFont08Test {[self testFont:@"bitmapFontTest5.fnt"];}
+-(void)setupBMFont09Test {[self testFont:@"boundsTestFont.fnt"];}
+-(void)setupBMFont10Test {[self testFont:@"font-issue1343.fnt"];}
+-(void)setupBMFont11Test {[self testFont:@"futura-48.fnt"];}
+-(void)setupBMFont12Test {[self testFont:@"konqa32.fnt"];}
+-(void)setupBMFont14Test {[self testFont:@"markerFelt.fnt"];}
+-(void)setupBMFont15Test {[self testFont:@"west_england-64.fnt"];}
 
 NSDictionary *testConfigSet(int config)
 {
@@ -164,24 +164,24 @@ NSDictionary *testConfigSet(int config)
     [self setSubTitle:explanation];
 }
 
-//- (void)setupBMFontWrap00Test { [self testFontWrapping:testConfigSet(0)]; }
-//- (void)setupBMFontWrap01Test { [self testFontWrapping:testConfigSet(1)]; }
-//- (void)setupBMFontWrap02Test { [self testFontWrapping:testConfigSet(2)]; }
-//- (void)setupBMFontWrap03Test { [self testFontWrapping:testConfigSet(3)]; }
-//- (void)setupBMFontWrap04Test { [self testFontWrapping:testConfigSet(4)]; }
-//- (void)setupBMFontWrap05Test { [self testFontWrapping:testConfigSet(5)]; }
-//- (void)setupBMFontWrap06Test { [self testFontWrapping:testConfigSet(6)]; }
-//- (void)setupBMFontWrap07Test { [self testFontWrapping:testConfigSet(7)]; }
-//- (void)setupBMFontWrap08Test { [self testFontWrapping:testConfigSet(8)]; }
-//- (void)setupBMFontWrap09Test { [self testFontWrapping:testConfigSet(9)]; }
-//- (void)setupBMFontWrap10Test { [self testFontWrapping:testConfigSet(10)]; }
-//- (void)setupBMFontWrap11Test { [self testFontWrapping:testConfigSet(11)]; }
-//- (void)setupBMFontWrap12Test { [self testFontWrapping:testConfigSet(12)]; }
-//- (void)setupBMFontWrap13Test { [self testFontWrapping:testConfigSet(13)]; }
-//- (void)setupBMFontWrap14Test { [self testFontWrapping:testConfigSet(14)]; }
-//- (void)setupBMFontWrap15Test { [self testFontWrapping:testConfigSet(15)]; }
-//- (void)setupBMFontWrap16Test { [self testFontWrapping:testConfigSet(16)]; }
-//- (void)setupBMFontWrap17Test { [self testFontWrapping:testConfigSet(17)]; }
+- (void)setupBMFontWrap00Test { [self testFontWrapping:testConfigSet(0)]; }
+- (void)setupBMFontWrap01Test { [self testFontWrapping:testConfigSet(1)]; }
+- (void)setupBMFontWrap02Test { [self testFontWrapping:testConfigSet(2)]; }
+- (void)setupBMFontWrap03Test { [self testFontWrapping:testConfigSet(3)]; }
+- (void)setupBMFontWrap04Test { [self testFontWrapping:testConfigSet(4)]; }
+- (void)setupBMFontWrap05Test { [self testFontWrapping:testConfigSet(5)]; }
+- (void)setupBMFontWrap06Test { [self testFontWrapping:testConfigSet(6)]; }
+- (void)setupBMFontWrap07Test { [self testFontWrapping:testConfigSet(7)]; }
+- (void)setupBMFontWrap08Test { [self testFontWrapping:testConfigSet(8)]; }
+- (void)setupBMFontWrap09Test { [self testFontWrapping:testConfigSet(9)]; }
+- (void)setupBMFontWrap10Test { [self testFontWrapping:testConfigSet(10)]; }
+- (void)setupBMFontWrap11Test { [self testFontWrapping:testConfigSet(11)]; }
+- (void)setupBMFontWrap12Test { [self testFontWrapping:testConfigSet(12)]; }
+- (void)setupBMFontWrap13Test { [self testFontWrapping:testConfigSet(13)]; }
+- (void)setupBMFontWrap14Test { [self testFontWrapping:testConfigSet(14)]; }
+- (void)setupBMFontWrap15Test { [self testFontWrapping:testConfigSet(15)]; }
+- (void)setupBMFontWrap16Test { [self testFontWrapping:testConfigSet(16)]; }
+- (void)setupBMFontWrap17Test { [self testFontWrapping:testConfigSet(17)]; }
 
 - (void)setupBMFontStylingTest
 {
@@ -257,7 +257,11 @@ NSDictionary *testConfigSet(int config)
     CGSize screenSize = [[CCDirector sharedDirector] viewSize];
     float currentWidth = screenSize.width / 2.0f;
     const CGSize pad = CGSizeMake(5.0f, 5.0f);
-
+    
+#if __CC_PLATFORM_MAC
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:2.0f];
+#endif
+    
     CCNodeGradient *background = [CCNodeGradient nodeWithColor:[CCColor darkGrayColor] fadingTo:[CCColor blueColor]];
     [background setAnchorPoint:ccp(0.5f, 0.5f)];
     [background setContentSize:CGSizeMake(currentWidth, 100.0f)];
