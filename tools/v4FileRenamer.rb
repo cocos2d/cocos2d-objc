@@ -35,8 +35,15 @@ end
 
 def explode_name(file)
 	ext = File.extname(file)
-	dir = File.dirname(file)
 	base = File.basename(file, ext)
+	
+	# Handle multiple extentions (ex: .pvr.ccz)
+	until File.extname(base).empty?
+		ext = File.extname(base) + ext
+		base = File.basename(file, ext)
+	end
+	
+	dir = File.dirname(file)
 	
 	return dir, base, ext
 end
@@ -146,7 +153,13 @@ end
 
 EXT_WHITELIST = [
 	".png",
+	".jpg",
+	".jpeg",
+	".bmp",
+	".tiff",
 	".pvr",
+	".pvr.gz",
+	".pvr.ccz",
 	".plist",
 	".fnt",
 	".tmx",
