@@ -25,14 +25,13 @@
 
 #import "cocos2d.h"
 
-#import "CCBuilderReader.h"
 #import "AppController.h"
 #import "CCDirector_Private.h"
 #import "MainMenu.h"
 #import "CCPackageConstants.h"
 
 
-@interface AppDelegate : CCAppDelegate
+@interface AppDelegate : NSObject
 @end
 
 
@@ -44,6 +43,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#if 1
+    [AppController setupApplication];
+#else
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -81,6 +83,7 @@
     [_window makeKeyAndVisible];
     
     [director startRunLoop];
+#endif
     
     return YES;
 }

@@ -12,7 +12,6 @@
 #import "CCScene.h"
 #import "CCBReader.h"
 #import "CCDeviceInfo.h"
-#import "CCAppDelegate.h"
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
 #import "CCFileLocator.h"
@@ -80,9 +79,9 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (CCScene *)startScene
 {
-    NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
+    NSAssert(self.view.director, @"Require a valid director to decode the CCB file!");
 
-    [CCDirector pushCurrentDirector:_glView.director];
+    [CCDirector pushCurrentDirector:self.view.director];
     CCScene *scene = [self createFirstScene];
     [CCDirector popCurrentDirector];
 
@@ -115,102 +114,76 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     _cocosConfig = [self iosConfig];
 
-    CCAppDelegate *appDelegate = (CCAppDelegate*)[UIApplication sharedApplication].delegate;
-    [appDelegate constructWindow];
-
-    _glView = [appDelegate constructView:_cocosConfig withBounds:appDelegate.window.bounds];
+    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
     
-    CCDirector *director = _glView.director;
+    // TODO
+    _view.director.wantsFullScreenLayout = YES;
+    _window.rootViewController = _view.director;
+    
+    CCDirector *director = self.view.director;
     NSAssert(director, @"CCView failed to construct a director.");
-    [self configureDirector:director withConfig:_cocosConfig withView:_glView];
-    
     [CCDirector pushCurrentDirector:director];
     
-    if([_cocosConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
-        [self setupFixedScreenMode:_cocosConfig director:(CCDirectorIOS *) director];
-    } else {
-        [self setupFlexibleScreenMode:_cocosConfig director:director];
-    }
-    
-    // Initialise OpenAL
-    [OALSimpleAudio sharedInstance];
-
-    [appDelegate constructNavController:_cocosConfig];
-    [[CCPackageManager sharedManager] loadPackages];
-    
-    [appDelegate.window makeKeyAndVisible];
-    [appDelegate forceOrientation];
-
-    [CCDirector popCurrentDirector];
-    
-    [self runStartSceneiOS];
-}
-
-- (void)runStartSceneiOS
-{
-    CCDirector *director = _glView.director;
-    [director presentScene:[self startScene]];
-}
-
-- (void)configureDirector:(CCDirector *)director withConfig:(NSDictionary *)config withView:(CC_VIEW <CCView> *)ccview
-{
-    CCDirectorIOS*directorIOS = (CCDirectorIOS*) director;
-    directorIOS.wantsFullScreenLayout = YES;
-
     // Display FSP and SPF
-    [directorIOS setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
+    [director setDisplayStats:[_cocosConfig[CCSetupShowDebugStats] boolValue]];
 
     // set FPS at 60
-    NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
-    [directorIOS setAnimationInterval:animationInterval];
-
-    directorIOS.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
-
-    // attach the openglView to the director
-    [directorIOS setView:ccview];
-}
-
-- (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirector *)director
-{
+    director.animationInterval = [(_cocosConfig[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
+    director.fixedUpdateInterval = [(_cocosConfig[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    
+    // TODO? Fixed screen mode is being replaced.
+//    if([_cocosConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
+//        [self setupFixedScreenMode:_cocosConfig director:(CCDirectorIOS *) director];
+//    } else {
+//        [self setupFlexibleScreenMode:_cocosConfig director:director];
+//    }
+    
     // Setup tablet scaling if it was requested.
-    if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[config[CCSetupTabletScale2X] boolValue] )
+    if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[_cocosConfig[CCSetupTabletScale2X] boolValue] )
     {
         // Set the director to use 2 points per pixel.
         director.contentScaleFactor *= 2.0;
 
         // Set the UI scale factor to show things at "native" size.
         director.UIScaleFactor = 0.5;
-        
-        // TODO
-//        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-//        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
     }
 
     [director setProjection:CCDirectorProjection2D];
-}
-
-- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
-{
-    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
-    CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
-
-    if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
-        CC_SWAP(fixed.width, fixed.height);
-    }
-
-    // Find the minimal power-of-two scale that covers both the width and height.
-    CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
-
-    director.contentScaleFactor = scaleFactor;
-    director.UIScaleFactor = (float)(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
     
-    // TODO
-//    // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-//    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
+    // Initialise OpenAL
+    [OALSimpleAudio sharedInstance];
 
-    director.designSize = fixed;
-    [director setProjection:CCDirectorProjectionCustom];
+    [[CCPackageManager sharedManager] loadPackages];
+
+    [CCDirector popCurrentDirector];
+    [_window makeKeyAndVisible];
+    
+    [director presentScene:[self startScene]];
 }
+
+//- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
+//{
+//    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
+//    CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
+//
+//    if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
+//        CC_SWAP(fixed.width, fixed.height);
+//    }
+//
+//    // Find the minimal power-of-two scale that covers both the width and height.
+//    CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
+//
+//    director.contentScaleFactor = scaleFactor;
+//    director.UIScaleFactor = (float)(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
+//    
+//    // TODO
+////    // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+////    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
+//
+//    director.designSize = fixed;
+//    [director setProjection:CCDirectorProjectionCustom];
+//}
 
 #endif
 

@@ -35,10 +35,20 @@
 
 @interface CCAppController : NSObject
 
+#if __CC_PLATFORM_IOS
+
+@property (nonatomic) UIWindow *window;
+
+#elif __CC_PLATFORM_MAC
+
+@property (nonatomic) NSWindow *window;
+
+#endif
+
 /**
 *  The view in which the cocos nodes and scene graph are rendered
 */
-@property (nonatomic, weak) CC_VIEW<CCView> *glView;
+@property (nonatomic) CC_VIEW<CCView> *view;
 
 // -----------------------------------------------------------------------
 /** @name Cocos2d Setup */
@@ -72,11 +82,6 @@
 /// -----------------------------------------------------------------------
 /// @name Mac Specific
 /// -----------------------------------------------------------------------
-
-/**
-*  The application window (set from .xib)
-*/
-@property (nonatomic, weak) NSWindow *window;
 
 /**
 *  Configuration options that are used to setup cocos2d on Mac

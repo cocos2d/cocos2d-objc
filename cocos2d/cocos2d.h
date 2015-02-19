@@ -165,7 +165,6 @@
 #import "Platforms/CCNS.h"
 
 #if __CC_PLATFORM_IOS
-#import "CCAppDelegate.h"
 #import "Platforms/iOS/CCViewiOSGL.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif __CC_PLATFORM_MAC
