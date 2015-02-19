@@ -55,6 +55,7 @@
 #import "CCDeprecated.h"
 
 #if __CC_PLATFORM_IOS
+#import <QuartzCore/CALayer.h>
 #import "Platforms/iOS/CCDirectorIOS.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #elif __CC_PLATFORM_MAC

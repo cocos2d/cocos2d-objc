@@ -18,11 +18,13 @@
 #import "ccUtils.h"
 #import "CCDirector_Private.h"
 
-#if __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
 
+#if __CC_PLATFORM_ANDROID
 #import "CCActivity.h"
 #import "CCDirectorAndroid.h"
-
 #endif
 
 #if __CC_PLATFORM_MAC
@@ -352,11 +354,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)applyConfigurationToCocos:(NSDictionary*)config
 {
-    CCDirectorMac *director = (CCDirectorMac*) _glView.director;
+    CCDirectorMac *director = (CCDirectorMac*) self.view.director;
     CGSize defaultWindowSize = [config[CCMacDefaultWindowSize] CGSizeValue];
     
     [self.window setFrame:CGRectMake(0.0f, 0.0f, defaultWindowSize.width, defaultWindowSize.height) display:true animate:false];
-    [self.glView setFrame:self.window.frame];
+    [self.view setFrame:self.window.frame];
     
     [director reshapeProjection:CC_SIZE_SCALE(defaultWindowSize, director.contentScaleFactor)];
     
@@ -371,8 +373,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)runStartSceneMac
 {
-    CCDirectorMac *director = (CCDirectorMac*) _glView.director;
-    [director presentScene:[self startScene]];
+    [self.view.director presentScene:[self startScene]];
 }
 
 #endif

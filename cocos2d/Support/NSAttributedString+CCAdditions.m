@@ -29,6 +29,9 @@
 #import <CoreText/CoreText.h>
 
 #import "ccMacros.h"
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
 
 #import "NSAttributedString+CCAdditions.h"
 

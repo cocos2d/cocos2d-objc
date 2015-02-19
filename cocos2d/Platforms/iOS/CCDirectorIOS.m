@@ -25,10 +25,12 @@
  *
  */
 
+
 #include <sys/time.h>
 
 #import "ccMacros.h"
 #if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
 
 #import "ccUtils.h"
 
@@ -121,8 +123,8 @@
 		}
 
 		case CCDirectorProjectionCustom:
-			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				_projectionMatrix = [_delegate updateProjection];
+//			if( [_delegate respondsToSelector:@selector(updateProjection)] )
+//				_projectionMatrix = [_delegate updateProjection];
 			break;
 
 		default:
@@ -162,14 +164,14 @@
 }
 
 // Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	BOOL ret =YES;
-	if( [_delegate respondsToSelector:_cmd] )
-		ret = (BOOL) [_delegate shouldAutorotateToInterfaceOrientation:interfaceOrientation];
-
-	return ret;
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//	BOOL ret =YES;
+//	if( [_delegate respondsToSelector:_cmd] )
+//		ret = (BOOL) [_delegate shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+//
+//	return ret;
+//}
 
 // Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
 //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -281,8 +283,10 @@
 #pragma mark -
 #pragma mark DirectorDisplayLink
 
-@implementation CCDirectorDisplayLink
-
+@implementation CCDirectorDisplayLink {
+	CADisplayLink	*_displayLink;
+	CFTimeInterval	_lastDisplayTime;
+}
 
 -(void) mainLoop:(id)sender
 {

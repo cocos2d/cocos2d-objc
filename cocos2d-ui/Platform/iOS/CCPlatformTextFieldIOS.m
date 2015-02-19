@@ -9,7 +9,7 @@
 #import "CCPlatformTextFieldIOS.h"
 #import "CCDirector.h"
 #import "CCControl.h"
-#import <UIKit/UITextField.h>
+#import <UIKit/UIKit.h>
 
 @implementation CCPlatformTextFieldIOS {
     UITextField *_textField;

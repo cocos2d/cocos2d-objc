@@ -283,8 +283,8 @@
 		}
 
 		case CCDirectorProjectionCustom:
-			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				[_delegate updateProjection];
+//			if( [_delegate respondsToSelector:@selector(updateProjection)] )
+//				[_delegate updateProjection];
 			break;
 
 		default:

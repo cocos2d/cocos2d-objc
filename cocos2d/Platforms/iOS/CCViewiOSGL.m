@@ -12,6 +12,7 @@
 #import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 
+#import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
 #import "CCViewiOSGL.h"

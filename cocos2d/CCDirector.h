@@ -33,10 +33,6 @@
 #import "CCRenderer.h"
 #import "CCView.h"
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif
-
 @class CCDirector;
 
 
@@ -72,22 +68,11 @@
  */
 -(void) startRunLoop;
 
-#pragma mark Director - Memory Helper
-
 /** Removes all the cocos2d data that was cached automatically.
  It will purge the CCTextureCache, CCLabelBMFont cache.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  */
 -(void) purgeCachedData;
-
-/** Called by CCDirector when the projection is updated, and "custom" projection is used */
--(GLKMatrix4) updateProjection;
-
-#if __CC_PLATFORM_IOS
-/** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-
-#endif // __CC_PLATFORM_IOS
 
 @end
 

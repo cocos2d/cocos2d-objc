@@ -27,6 +27,10 @@
 #import "ccMacros.h"
 #import "ccUtils.h"
 
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
+
 #import "CCRenderTexture_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCDirector_Private.h"
