@@ -117,17 +117,11 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @class CCTransition;
 
 #if __CC_PLATFORM_IOS
-#define CC_VIEWCONTROLLER UIViewController
 #define CC_VIEW UIView
-
 #elif __CC_PLATFORM_MAC
-#define CC_VIEWCONTROLLER NSObject
 #define CC_VIEW CCViewMacGL
-
 #elif __CC_PLATFORM_ANDROID
-#define CC_VIEWCONTROLLER NSObject
 #define CC_VIEW CCGLView
-
 #endif
 
 /** The director creates and handles the main Window and the Cocos2D view. It also presents Scenes and initiates scene updates and drawing.
@@ -153,7 +147,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
   - `GL_COLOR_ARRAY` is enabled
   - `GL_TEXTURE_COORD_ARRAY` is enabled
 */
-@interface CCDirector : CC_VIEWCONTROLLER
+@interface CCDirector : NSObject
 {
 	// internal timer
 	NSTimeInterval _animationInterval;
@@ -255,7 +249,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
 /// @see CCView
-@property(nonatomic, retain) CC_VIEW<CCView> *view;
+@property(nonatomic, weak) CC_VIEW<CCView> *view;
 /** Sets an OpenGL projection
  @see CCDirectorProjection
  @see projectionMatrix */

@@ -117,9 +117,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
     
-    // TODO
-    _view.director.wantsFullScreenLayout = YES;
-    _window.rootViewController = _view.director;
+    // TODO need a custom subclass that starts/stops rendering.
+    UIViewController *viewController = [[UIViewController alloc] init];
+    viewController.view = _view;
+    viewController.wantsFullScreenLayout = YES;
+    _window.rootViewController = viewController;
     
     CCDirector *director = self.view.director;
     NSAssert(director, @"CCView failed to construct a director.");

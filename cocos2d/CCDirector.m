@@ -354,11 +354,7 @@ CCDirectorStack()
 
 -(void) setView:(CC_VIEW<CCView> *)view
 {
-#if __CC_PLATFORM_IOS
-		[super setView:view];
-#else 
 		_view = view;
-#endif
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(self.view.bounds.size);

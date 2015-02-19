@@ -196,61 +196,61 @@
     }
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-
-    // This line was presumably added to deal with apps entering and leaving the background.
-    // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
-    // by the OS outside of normal control, so it's very hard to actually call stopRunLoop and expect it to work.
-//    [self startRunLoopIfPossible];
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-//	[self startRunLoop];
-}
-
--(void) viewWillDisappear:(BOOL)animated
-{
+//-(void) viewWillAppear:(BOOL)animated
+//{
+//	[super viewWillAppear:animated];
+//
+//    // This line was presumably added to deal with apps entering and leaving the background.
+//    // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
+//    // by the OS outside of normal control, so it's very hard to actually call stopRunLoop and expect it to work.
+////    [self startRunLoopIfPossible];
+//}
+//
+//-(void) viewDidAppear:(BOOL)animated
+//{
+//	[super viewDidAppear:animated];
+////	[self startRunLoop];
+//}
+//
+//-(void) viewWillDisappear:(BOOL)animated
+//{
+////	[self stopRunLoop];
+//
+//	[super viewWillDisappear:animated];
+//}
+//
+//-(void) viewDidDisappear:(BOOL)animated
+//{
 //	[self stopRunLoop];
-
-	[super viewWillDisappear:animated];
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-	[self stopRunLoop];
-
-	[super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-	// Release any cached data, images, etc that aren't in use.
-	[super purgeCachedData];
-
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-}
-
--(void) viewDidLoad
-{
-	CCLOG(@"cocos2d: viewDidLoad");
-
-	[super viewDidLoad];
-}
-
-
-- (void)viewDidUnload
-{
-	CCLOG(@"cocos2d: viewDidUnload");
-
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
+//
+//	[super viewDidDisappear:animated];
+//}
+//
+//- (void)didReceiveMemoryWarning
+//{
+//	// Release any cached data, images, etc that aren't in use.
+//	[super purgeCachedData];
+//
+//    // Releases the view if it doesn't have a superview.
+//    [super didReceiveMemoryWarning];
+//}
+//
+//-(void) viewDidLoad
+//{
+//	CCLOG(@"cocos2d: viewDidLoad");
+//
+//	[super viewDidLoad];
+//}
+//
+//
+//- (void)viewDidUnload
+//{
+//	CCLOG(@"cocos2d: viewDidUnload");
+//
+//    [super viewDidUnload];
+//    // Release any retained subviews of the main view.
+//    // e.g. self.myOutlet = nil;
+//}
 
 #pragma mark helper
 
