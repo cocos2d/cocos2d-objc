@@ -15,6 +15,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [_window center];
+    [_window makeFirstResponder:_view];
     [_window makeKeyAndOrderFront:self];
     
     CCDirector *director = _view.director;

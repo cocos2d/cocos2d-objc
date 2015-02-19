@@ -276,7 +276,6 @@
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75C72BFA1A82AD6600814F60 /* AppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppActivity.h; sourceTree = "<group>"; };
 		75C72BFB1A82AD6600814F60 /* AppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppActivity.m; sourceTree = "<group>"; };
-		75C72BFD1A82AD6600814F60 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		75C72BFE1A82AD6600814F60 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		75C72BFF1A82AD6600814F60 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75C72C021A82AD6600814F60 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -515,7 +514,6 @@
 		75C72BFC1A82AD6600814F60 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				75C72BFD1A82AD6600814F60 /* AppDelegate.h */,
 				75C72BFE1A82AD6600814F60 /* AppDelegate.m */,
 				75C72BFF1A82AD6600814F60 /* main.m */,
 			);

@@ -25,16 +25,21 @@
 
 #import "cocos2d.h"
 
-#import "AppDelegate.h"
 #import "CCBuilderReader.h"
 #import "AppController.h"
 #import "CCDirector_Private.h"
 #import "MainMenu.h"
 #import "CCPackageConstants.h"
 
+
+@interface AppDelegate : CCAppDelegate
+@end
+
+
 @implementation AppDelegate
 {
     UIWindow *_window;
+    CCViewiOSGL *_view;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -44,8 +49,8 @@
     
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    CCViewiOSGL *view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
-    CCDirectorIOS *director = (CCDirectorIOS *)view.director;
+    _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+    CCDirector *director = _view.director;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         director.contentScaleFactor *= 2;
