@@ -122,6 +122,7 @@
 
 - (void)addResponder:(CCNode *)responder
 {
+    NSAssert(responder != nil, @"Trying to add a nil responder");
     _responderList[_responderListCount] = responder;
     _responderListCount ++;
     NSAssert(_responderListCount < CCResponderManagerBufferSize, @"Number of touchable nodes pr. scene can not exceed <%d>", CCResponderManagerBufferSize);

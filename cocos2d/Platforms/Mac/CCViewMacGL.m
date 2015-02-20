@@ -225,6 +225,11 @@
     [_director.responderManager keyUp:theEvent];
 }
 
+// For keyboard input to work, this NSResponder must be the first responder. This is therefore required.
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
 
 @end
 
