@@ -17,6 +17,7 @@
     [_window center];
     [_window makeFirstResponder:_view];
     [_window makeKeyAndOrderFront:self];
+    _window.acceptsMouseMovedEvents = YES;
     
     CCDirector *director = _view.director;
     director.contentScaleFactor *= 2;

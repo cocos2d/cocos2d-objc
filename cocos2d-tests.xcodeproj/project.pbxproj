@@ -18,8 +18,6 @@
 		75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E61856361100ED1B0F /* CCSchedulerTests.m */; };
 		75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 755569EA1856361100ED1B0F /* InfoPlist.strings */; };
 		756A97B81A3256DF00358CD4 /* CCActionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 756A97B71A3256DF00358CD4 /* CCActionTest.m */; };
-		757316771A97AEAD00670164 /* KeyboardTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 757316761A97AEAD00670164 /* KeyboardTest.m */; };
-		757316781A97AEAD00670164 /* KeyboardTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 757316761A97AEAD00670164 /* KeyboardTest.m */; };
 		7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB2185A0A6900EEEFDE /* TextureTest.m */; };
 		7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB6185A64AD00EEEFDE /* ColorTest.m */; };
 		758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6A1843E5BE00D1A8D2 /* TileMaps */; };
@@ -269,7 +267,6 @@
 		75556A02185636F100ED1B0F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75556A03185636F100ED1B0F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		756A97B71A3256DF00358CD4 /* CCActionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTest.m; sourceTree = "<group>"; };
-		757316761A97AEAD00670164 /* KeyboardTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyboardTest.m; path = "cocos2d-ui-tests/tests/KeyboardTest.m"; sourceTree = SOURCE_ROOT; };
 		7587BDB2185A0A6900EEEFDE /* TextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureTest.m; path = "cocos2d-ui-tests/tests/TextureTest.m"; sourceTree = SOURCE_ROOT; };
 		7587BDB6185A64AD00EEEFDE /* ColorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorTest.m; path = "cocos2d-ui-tests/tests/ColorTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C6A1843E5BE00D1A8D2 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
@@ -571,7 +568,6 @@
 				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
 				A6167B92189A7D4D0044D391 /* VertexZTest.m */,
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
-				757316761A97AEAD00670164 /* KeyboardTest.m */,
 				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
 				D35C2D261A1BC83F00FF96B0 /* CCViewportNodeTest.m */,
 			);
@@ -1091,7 +1087,6 @@
 				D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */,
 				B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */,
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
-				757316771A97AEAD00670164 /* KeyboardTest.m in Sources */,
 				758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */,
 				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
@@ -1141,7 +1136,6 @@
 				D3763D4C19E734C5006C050D /* CCPhysicsTest.m in Sources */,
 				D3763D4D19E734C5006C050D /* TilemapTest.m in Sources */,
 				D3763D4E19E734C5006C050D /* TextureTest.m in Sources */,
-				757316781A97AEAD00670164 /* KeyboardTest.m in Sources */,
 				D3763D4F19E734C5006C050D /* ColorTest.m in Sources */,
 				D3763D5019E734C5006C050D /* CCBMFontTest.m in Sources */,
 				D3763D5119E734C5006C050D /* VertexZTest.m in Sources */,
