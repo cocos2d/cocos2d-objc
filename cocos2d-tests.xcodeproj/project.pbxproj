@@ -25,7 +25,7 @@
 		758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */; };
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
-		75C72BF71A82AD0C00814F60 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* AppController.m */; };
+		75C72BF71A82AD0C00814F60 /* TestbedSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* TestbedSetup.m */; };
 		75C72C051A82AD6600814F60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C72BFE1A82AD6600814F60 /* AppDelegate.m */; };
 		75C72C061A82AD6600814F60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C72BFF1A82AD6600814F60 /* main.m */; };
 		75C72C091A82AD7900814F60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C72C031A82AD6600814F60 /* main.m */; };
@@ -57,7 +57,7 @@
 		B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
 		B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605917E7D278007067F0 /* CoreGraphics.framework */; };
 		B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605B17E7D278007067F0 /* CoreText.framework */; };
-		B7E2620017E7D321007067F0 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* AppController.m */; };
+		B7E2620017E7D321007067F0 /* TestbedSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* TestbedSetup.m */; };
 		B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620217E7D34D007067F0 /* Default-568h@2x.png */; };
 		B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */; };
 		B7E2621017E7D34D007067F0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620417E7D34D007067F0 /* Default.png */; };
@@ -307,8 +307,8 @@
 		B7E2605717E7D278007067F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7E2605917E7D278007067F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B7E2605B17E7D278007067F0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		B7E261FE17E7D321007067F0 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = "cocos2d-ui-tests/ios/AppController.h"; sourceTree = SOURCE_ROOT; };
-		B7E261FF17E7D321007067F0 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppController.m; path = "cocos2d-ui-tests/ios/AppController.m"; sourceTree = SOURCE_ROOT; };
+		B7E261FE17E7D321007067F0 /* TestbedSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestbedSetup.h; path = "cocos2d-ui-tests/ios/TestbedSetup.h"; sourceTree = SOURCE_ROOT; };
+		B7E261FF17E7D321007067F0 /* TestbedSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestbedSetup.m; path = "cocos2d-ui-tests/ios/TestbedSetup.m"; sourceTree = SOURCE_ROOT; };
 		B7E2620217E7D34D007067F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		B7E2620417E7D34D007067F0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -646,8 +646,8 @@
 		B7E261EC17E7D27A007067F0 /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
-				B7E261FE17E7D321007067F0 /* AppController.h */,
-				B7E261FF17E7D321007067F0 /* AppController.m */,
+				B7E261FE17E7D321007067F0 /* TestbedSetup.h */,
+				B7E261FF17E7D321007067F0 /* TestbedSetup.m */,
 				B7E2621B17E7D370007067F0 /* Prefix.pch */,
 				75C72BF91A82AD6600814F60 /* Android */,
 				75C72BFC1A82AD6600814F60 /* iOS */,
@@ -1076,7 +1076,7 @@
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				75C72C051A82AD6600814F60 /* AppDelegate.m in Sources */,
-				B7E2620017E7D321007067F0 /* AppController.m in Sources */,
+				B7E2620017E7D321007067F0 /* TestbedSetup.m in Sources */,
 				0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */,
 				B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */,
 				A664A4EF18A3D9B8006184B8 /* PositioningTest.m in Sources */,
@@ -1139,7 +1139,7 @@
 				D3763D4F19E734C5006C050D /* ColorTest.m in Sources */,
 				D3763D5019E734C5006C050D /* CCBMFontTest.m in Sources */,
 				D3763D5119E734C5006C050D /* VertexZTest.m in Sources */,
-				75C72BF71A82AD0C00814F60 /* AppController.m in Sources */,
+				75C72BF71A82AD0C00814F60 /* TestbedSetup.m in Sources */,
 				D3763D5219E734C5006C050D /* PositioningTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

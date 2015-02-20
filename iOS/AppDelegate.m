@@ -25,7 +25,7 @@
 
 #import "cocos2d.h"
 
-#import "AppController.h"
+#import "TestbedSetup.h"
 #import "CCDirector_Private.h"
 #import "MainMenu.h"
 #import "CCPackageConstants.h"
@@ -44,7 +44,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 #if 1
-    [AppController setupApplication];
+    [[TestbedSetup sharedSetup] setupApplication];
 #else
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];

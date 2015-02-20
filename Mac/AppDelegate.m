@@ -1,6 +1,6 @@
 #import "CCPackageManager.h"
 #import "CCDirector_Private.h"
-#import "AppController.h"
+#import "TestbedSetup.h"
 #import "MainMenu.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>

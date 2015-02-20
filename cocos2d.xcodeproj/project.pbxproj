@@ -23,12 +23,12 @@
 /* Begin PBXBuildFile section */
 		1426D9951A38D24A00A579AF /* CCGestureListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */; };
 		1435EB831A37BA7000BD04D4 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */; };
-		14B84C921A700B55002C4D20 /* CCAppController.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B84C901A700B55002C4D20 /* CCAppController.h */; };
-		14B84C931A700B55002C4D20 /* CCAppController.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B84C901A700B55002C4D20 /* CCAppController.h */; };
-		14B84C941A700B55002C4D20 /* CCAppController.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B84C901A700B55002C4D20 /* CCAppController.h */; };
-		14B84C951A700B55002C4D20 /* CCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B84C911A700B55002C4D20 /* CCAppController.m */; };
-		14B84C961A700B55002C4D20 /* CCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B84C911A700B55002C4D20 /* CCAppController.m */; };
-		14B84C971A700B55002C4D20 /* CCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B84C911A700B55002C4D20 /* CCAppController.m */; };
+		14B84C921A700B55002C4D20 /* CCSetup.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B84C901A700B55002C4D20 /* CCSetup.h */; };
+		14B84C931A700B55002C4D20 /* CCSetup.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B84C901A700B55002C4D20 /* CCSetup.h */; };
+		14B84C941A700B55002C4D20 /* CCSetup.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B84C901A700B55002C4D20 /* CCSetup.h */; };
+		14B84C951A700B55002C4D20 /* CCSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B84C911A700B55002C4D20 /* CCSetup.m */; };
+		14B84C961A700B55002C4D20 /* CCSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B84C911A700B55002C4D20 /* CCSetup.m */; };
+		14B84C971A700B55002C4D20 /* CCSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B84C911A700B55002C4D20 /* CCSetup.m */; };
 		14C4C33E1A37E39E00DD3957 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */; };
 		14E6FBF31A792E5200A80C55 /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E6FBF21A792E5200A80C55 /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		14E6FBFD1A793DB300A80C55 /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 14E6FBFC1A793DB300A80C55 /* CCActivity.h */; };
@@ -1103,8 +1103,8 @@
 		1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		143F32D71A3A2E8A0019FD3C /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
 		1493BC951A77AA3700840737 /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../../../Library/SBAndroid/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
-		14B84C901A700B55002C4D20 /* CCAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAppController.h; sourceTree = "<group>"; };
-		14B84C911A700B55002C4D20 /* CCAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAppController.m; sourceTree = "<group>"; };
+		14B84C901A700B55002C4D20 /* CCSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSetup.h; sourceTree = "<group>"; };
+		14B84C911A700B55002C4D20 /* CCSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSetup.m; sourceTree = "<group>"; };
 		14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AndroidKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/AndroidKit.framework"; sourceTree = "<group>"; };
 		14E6FBF21A792E5200A80C55 /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
 		14E6FBFC1A793DB300A80C55 /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
@@ -2229,8 +2229,8 @@
 		E0EAD0E8121F4B4600B0C81C /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
-				14B84C901A700B55002C4D20 /* CCAppController.h */,
-				14B84C911A700B55002C4D20 /* CCAppController.m */,
+				14B84C901A700B55002C4D20 /* CCSetup.h */,
+				14B84C911A700B55002C4D20 /* CCSetup.m */,
 				D285ECED192E7E06009F4E88 /* Android */,
 				E0EAD0E9121F4B4600B0C81C /* iOS */,
 				E0E9749E1237E4EA00E3E64B /* Mac */,
@@ -2356,7 +2356,7 @@
 				D2DDB09F19805E8400233D80 /* CCVector3.h in Headers */,
 				9D1B4A991A02E90300B2DD9B /* CCLightGroups.h in Headers */,
 				D3903B10199528A0003AA81A /* CCRenderDispatch.h in Headers */,
-				14B84C921A700B55002C4D20 /* CCAppController.h in Headers */,
+				14B84C921A700B55002C4D20 /* CCSetup.h in Headers */,
 				D272032418FC89A000B100FF /* CCEffect_Private.h in Headers */,
 				9D03A5EB1A02F61700C651C8 /* CCLightNode_Private.h in Headers */,
 				D272032D18FC89A000B100FF /* CCEffectStack.h in Headers */,
@@ -2533,7 +2533,7 @@
 				7A5946A119E372F100F65F90 /* CCTiledMap.h in Headers */,
 				7A5946A219E372F100F65F90 /* CCTiledMap.m in Headers */,
 				7A5946A319E372F100F65F90 /* CCTiledMapLayer.h in Headers */,
-				14B84C941A700B55002C4D20 /* CCAppController.h in Headers */,
+				14B84C941A700B55002C4D20 /* CCSetup.h in Headers */,
 				7A5946A419E372F100F65F90 /* CCTiledMapLayer.m in Headers */,
 				7A5946A519E372F200F65F90 /* CCTiledMapObjectGroup.h in Headers */,
 				7A5946A619E372F200F65F90 /* CCTiledMapObjectGroup.m in Headers */,
@@ -2732,7 +2732,7 @@
 				D2FEB64A194F6C9E00FC0574 /* CCTextField.h in Headers */,
 				D2FEB64B194F6C9E00FC0574 /* CCBReader.h in Headers */,
 				D2FEB64C194F6C9E00FC0574 /* CCEffectPixellate.h in Headers */,
-				14B84C931A700B55002C4D20 /* CCAppController.h in Headers */,
+				14B84C931A700B55002C4D20 /* CCSetup.h in Headers */,
 				D2FEB64E194F6C9E00FC0574 /* CCTiledMap.h in Headers */,
 				BC9F4E9819DB644600B25F01 /* CCPackageManager.h in Headers */,
 				BC9F4E9919DB644900B25F01 /* CCPackageManagerDelegate.h in Headers */,
@@ -3094,7 +3094,7 @@
 				502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */,
 				50E1357610ADEB1B00C9E7FA /* CCTexture.m in Sources */,
 				503862E6110072BC005D2C92 /* CCDeviceInfo.m in Sources */,
-				14B84C951A700B55002C4D20 /* CCAppController.m in Sources */,
+				14B84C951A700B55002C4D20 /* CCSetup.m in Sources */,
 				5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */,
 				D37D197818B6665700B23FDE /* CCTiledMapLayer.m in Sources */,
 				D272032618FC89A000B100FF /* CCEffect.m in Sources */,
@@ -3235,7 +3235,7 @@
 				7A59480719E375A400F65F90 /* CCClippingNode.m in Sources */,
 				7A59480919E375A400F65F90 /* CCMotionStreak.m in Sources */,
 				7A59480B19E375A400F65F90 /* CCProgressNode.m in Sources */,
-				14B84C971A700B55002C4D20 /* CCAppController.m in Sources */,
+				14B84C971A700B55002C4D20 /* CCSetup.m in Sources */,
 				7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */,
 				7A59481119E375A500F65F90 /* CCPackage.m in Sources */,
 				7A59481319E375A500F65F90 /* CCPackageConstants.m in Sources */,
@@ -3351,7 +3351,7 @@
 				D2FEB6D6194F6C9E00FC0574 /* CCTMXXMLParser.m in Sources */,
 				D2FEB6D7194F6C9E00FC0574 /* CCSprite.m in Sources */,
 				D2FEB6D8194F6C9E00FC0574 /* CCTiledMap.m in Sources */,
-				14B84C961A700B55002C4D20 /* CCAppController.m in Sources */,
+				14B84C961A700B55002C4D20 /* CCSetup.m in Sources */,
 				D2FEB6DB194F6C9E00FC0574 /* CCTouch.m in Sources */,
 				D2EC6039199D9F82001A15E9 /* CCRendererGLSupport.m in Sources */,
 				D27451C919B111A9006DA0A1 /* CCEffectDFOutline.m in Sources */,

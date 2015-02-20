@@ -1,14 +1,30 @@
-//
-//  CCAppController.m
-//  cocos2d
-//
-//  Created by Donald Hutchison on 13/01/15.
-//
-//
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2015 Cocos2D Authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
-#import "CCAppController.h"
+#import "CCSetup.h"
 #import "CCScene.h"
 #import "CCBReader.h"
 #import "CCDeviceInfo.h"
@@ -39,7 +55,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     return scale;
 }
 
-@implementation CCAppController
+@implementation CCSetup
 {
     NSDictionary *_cocosConfig;
 }
@@ -67,7 +83,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 /*
     Explicitly erroring out here as trying to configure under an unrecognised platform will cause spectacular failures
 */
-#error "Unrecognised platform - CCAppController only supports application configuration on iOS, Mac or Android!"
+#error "Unrecognised platform - CCSetup only supports application configuration on iOS, Mac or Android!"
 #endif
 }
 
@@ -377,5 +393,20 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 }
 
 #endif
+
++ (instancetype)sharedSetup
+{
+    NSAssert(self != [CCSetup class], @"You must create a CCSetup subclass for your app.");
+    
+    static CCSetup *sharedController = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedController = [[self alloc] init];
+    });
+    
+    return sharedController;
+}
+
 
 @end

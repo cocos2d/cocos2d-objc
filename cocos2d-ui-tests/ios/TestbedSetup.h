@@ -22,11 +22,7 @@
  * THE SOFTWARE.
  */
 
-#import "CCAppController.h"
+#import "CCSetup.h"
 
-@interface AppController : CCAppController
-
-+ (AppController*)sharedController;
-+ (void)setupApplication;
-
+@interface TestbedSetup : CCSetup
 @end

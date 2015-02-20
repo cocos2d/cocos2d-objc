@@ -24,12 +24,12 @@
 
 #import "cocos2d.h"
 
-#import "AppController.h"
+#import "TestbedSetup.h"
 #import "MainMenu.h"
 #import "TestBase.h"
 #import "CCPackageConstants.h"
 
-@implementation AppController
+@implementation TestbedSetup
 
 
 - (void)setupApplication
@@ -113,33 +113,5 @@
 }
 
 #endif
-
-#pragma mark Singleton Methods
-
-static AppController *__sharedController;
-
-/*
- These methods are used in the framework to reference this controller.
- */
-+ (AppController*)sharedController
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      __sharedController = [[AppController alloc] init];
-                  });
-    
-    return __sharedController;
-}
-
-+ (void)setupApplication
-{
-    static dispatch_once_t setupToken;
-    dispatch_once(&setupToken, ^
-                  {
-                      [[AppController sharedController] setupApplication];
-                  });
-}
-
 
 @end
