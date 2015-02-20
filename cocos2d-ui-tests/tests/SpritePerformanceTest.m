@@ -12,7 +12,7 @@
 {
 	self.subTitle = [NSString stringWithFormat:@"%d Sprites (unatlassed, unbatched)", SPRITE_COUNT];
 	
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 	for(int i=0; i<SPRITE_COUNT; i++){
 		int num = arc4random()%TILE_COUNT + 1;
@@ -28,7 +28,7 @@
 {
 	self.subTitle = [NSString stringWithFormat:@"%d Sprites (atlassed, unbatched)", SPRITE_COUNT];
 	
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 	for(int i=0; i<SPRITE_COUNT; i++){
 		int num = arc4random()%TILE_COUNT + 1;
@@ -44,7 +44,7 @@
 {
 	self.subTitle = [NSString stringWithFormat:@"%d Sprites (20%% visible, unatlassed, unbatched)", SPRITE_COUNT];
 	
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 	for(int i=0; i<SPRITE_COUNT; i++){
 		int num = arc4random()%TILE_COUNT + 1;
@@ -63,7 +63,7 @@
 {
 	self.subTitle = [NSString stringWithFormat:@"%d Sprites (20%% visible, sorted)", SPRITE_COUNT];
 	
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 	NSMutableArray *sprites = [NSMutableArray array];
 	
@@ -90,7 +90,7 @@
 {
 	self.subTitle = [NSString stringWithFormat:@"%d Sprites (20%% visible, atlassed, unbatched)", SPRITE_COUNT];
 	
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 	for(int i=0; i<SPRITE_COUNT; i++){
 		int num = arc4random()%TILE_COUNT + 1;

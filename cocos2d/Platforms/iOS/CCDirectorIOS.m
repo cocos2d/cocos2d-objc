@@ -25,36 +25,27 @@
  *
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#include <sys/time.h>
+
+#import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 
-#import <unistd.h>
+#import "ccUtils.h"
 
-// cocos2d imports
 #import "CCDirectorIOS.h"
-#import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
-#import "../../CCTextureCache.h"
-#import "../../ccMacros.h"
-#import "../../CCScene.h"
-#import "../../CCShader.h"
-#import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "CCDirector_Private.h"
 #import "CCRenderer_Private.h"
-#import "CCTouch.h"
 #import "CCRenderDispatch_Private.h"
 
-// support imports
-#import "../../Support/CGPointExtension.h"
-#import "../../Support/CCFileUtils.h"
-
-#if CC_ENABLE_PROFILERS
-#import "../../Support/CCProfiling.h"
-#endif
-
-#import "CCDirector_Private.h"
+#import "CCScheduler.h"
+#import "CCTextureCache.h"
+#import "ccMacros.h"
+#import "CCScene.h"
+#import "CCShader.h"
+#import "ccFPSImages.h"
+#import "CCDeviceInfo.h"
+#import "CCTouch.h"
+#import "Support/CCFileUtils.h"
 
 #pragma mark -
 #pragma mark Director
@@ -143,26 +134,6 @@
 	[self createStatsLabel];
 }
 
-// override default logic
-- (void)runWithScene:(CCScene*) scene
-{
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
-	
-	[self pushScene:scene];
-
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-}
-
--(void) reshapeProjection:(CGSize)newViewSize
-{
-	[super reshapeProjection:newViewSize];
-  
-	if( [_delegate respondsToSelector:@selector(directorDidReshapeProjection:)] )
-		[_delegate directorDidReshapeProjection:self];
-}
-
 #pragma mark Director Point Convertion
 
 -(CGPoint)convertTouchToGL:(CCTouch*)touch
@@ -178,8 +149,7 @@
 
 #pragma mark Director - UIViewController delegate
 
-
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 		[super setView:view];
 
@@ -208,12 +178,12 @@
 //		[_delegate willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 //}
 
--(void) startAnimationIfPossible
+-(void) startRunLoopIfPossible
 {
     UIApplicationState state = UIApplication.sharedApplication.applicationState;
     if (state != UIApplicationStateBackground)
     {
-        [self startAnimation];
+        [self startRunLoop];
     }
     else
     {
@@ -221,7 +191,7 @@
         // that there was a full screen view controller that caused additional stop animation calls
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
         {
-            [self startAnimationIfPossible];
+            [self startRunLoopIfPossible];
         });
     }
 }
@@ -230,25 +200,28 @@
 {
 	[super viewWillAppear:animated];
 
-    [self startAnimationIfPossible];
+    // This line was presumably added to deal with apps entering and leaving the background.
+    // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
+    // by the OS outside of normal control, so it's very hard to actually call stopRunLoop and expect it to work.
+//    [self startRunLoopIfPossible];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-//	[self startAnimation];
+//	[self startRunLoop];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-//	[self stopAnimation];
+//	[self stopRunLoop];
 
 	[super viewWillDisappear:animated];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
-	[self stopAnimation];
+	[self stopRunLoop];
 
 	[super viewDidDisappear:animated];
 }
@@ -283,7 +256,7 @@
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+	NSInteger device = [CCDeviceInfo runningDevice];
 
 	if( device == CCDeviceiPadRetinaDisplay) {
 		*datapointer = cc_fps_images_ipadhd_png;
@@ -313,21 +286,21 @@
 
 -(void) mainLoop:(id)sender
 {
-	[self drawScene];
+	[self mainLoopBody];
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
 	_animationInterval = interval;
 	if(_displayLink){
-		[self stopAnimation];
-		[self startAnimation];
+		[self stopRunLoop];
+		[self startRunLoop];
 	}
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
 
     if(_animating)
         return;
@@ -343,36 +316,23 @@
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[_displayLink setFrameInterval:frameInterval];
 
-#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-	//
-	_runningThread = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
-	[_runningThread start];
-
-#else
 	// setup DisplayLink in main thread
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-#endif
 
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
 
-    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    if([_delegate respondsToSelector:@selector(stopRunLoop)])
     {
-        [_delegate stopAnimation];
+        [_delegate stopRunLoop];
     }
     
 	CCLOG(@"cocos2d: animation stopped");
-
-#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-	[_runningThread cancel];
-	[_runningThread release];
-	_runningThread = nil;
-#endif
 
 	[_displayLink invalidate];
 	_displayLink = nil;

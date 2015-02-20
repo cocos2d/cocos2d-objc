@@ -22,9 +22,10 @@
  * THE SOFTWARE.
  */
 
+
 #import "NSValue+CCRenderer.h"
 
-//MARK: NSValue Additions.
+#pragma mark NSValue Additions.
 @implementation NSValue(CCRenderer)
 
 +(NSValue *)valueWithGLKVector2:(GLKVector2)vector

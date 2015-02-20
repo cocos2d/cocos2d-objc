@@ -6,10 +6,10 @@
 //
 //
 
-#import "ccMacros.h"
+#import "ccTypes.h"
+#import "CCDirector.h"
 
 #if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
 #define PlatformTouch UITouch
 #elif __CC_PLATFORM_ANDROID
 @class CCTouchAndroid;
@@ -18,8 +18,8 @@
 #define PlatformTouch NSObject
 #endif
 
-@class CCGLView;
 @class CCNode;
+@class UITouch;
 
 /** Touch phases, equivalent to [UITouch phases](https://developer.apple.com/library/ios/documentation/uikit/reference/UITouch_Class/index.html#//apple_ref/c/tdef/UITouchPhase).
  Used by touch events received through CCResponder. */
@@ -54,14 +54,14 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 /** The timestamp of the most recent touch phase change. 
  @since v3.2 and later
 */
-@property (nonatomic, readonly) NSTimeInterval timestamp;
+@property (nonatomic, readonly) CCTime timestamp;
 
 /** @name Associated View and Platform Touch */
 
 /** The associated Cocos2D view.
  @since v3.2 and later
 */
-@property (nonatomic, strong) CCGLView *view;
+@property (nonatomic, weak) CC_VIEW<CCView> *view;
 /** The associated platform-specific touch event (ie UITouch).
  PlatformTouch is equivalent to UITouch on iOS, CCTouchAndroid on Android and NSObject on OS X.
  @note The CCTouchAndroid class is not documented, it is just a subset of CCTouch.
@@ -93,12 +93,12 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
  @returns The touch location relative to the given view. 
  @since v3.2 and later
 */
-- (CGPoint)locationInView:(CCGLView *)view;
+- (CGPoint)locationInView:(CC_VIEW<CCView>*)view;
 /**
  @param view The view to which this touch should be relative to.
  @returns The previous touch location relative to the given view. 
  @since v3.2 and later
 */
-- (CGPoint)previousLocationInView:(CCGLView *)view;
+- (CGPoint)previousLocationInView:(CC_VIEW<CCView>*)view;
 
 @end

@@ -25,8 +25,9 @@
  */
 
 
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
+#import "ccTypes.h"
+
+@class CCFile;
 
 // keys used for the suffix or directory dictionaries
 extern NSString * const CCFileUtilsSuffixDefault;
@@ -181,7 +182,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 @property (nonatomic, readwrite, copy) NSMutableDictionary *filenameLookup;
 
-#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 /** 
    The iPhone RetinaDisplay suffixes to load resources.
    By default it is "-hd" and "" in that order.
@@ -495,3 +496,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 #ifdef __cplusplus
 }
 #endif
+
+
+@interface CCFileUtils(TEMPORARY)
+
++(CCFile *)fileNamed:(NSString *)name;
+
+@end

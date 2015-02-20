@@ -41,31 +41,32 @@
 // IMPORTANT: Particle Designer is supported by cocos2d, but
 // 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical.
-//
 
-// opengl
-#import "Platforms/CCGL.h"
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 
-// cocos2d
-#import "ccConfig.h"
-#import "CCParticleSystemBase.h"
-#import "CCParticleBatchNode.h"
-#import "CCTexture.h"
-#import "CCTextureCache.h"
+#import <ImageIO/ImageIO.h>
+
+#elseif __CC_PLATFORM_ANDROID
+
+#import <CoreGraphics/CGImageSource.h>
+#import <AndroidKit/AndroidBase64.h>
+
+#endif
+
+
 #import "ccMacros.h"
-#import "Support/CCProfiling.h"
-#import "CCNode_Private.h"
-
-// support
-#import "Support/CGPointExtension.h"
-#import "Support/base64.h"
-#import "Support/ZipUtils.h"
-#import "Support/CCFileUtils.h"
 
 #import "CCParticleSystemBase_Private.h"
+#import "CCFileUtils.h"
+#import "CCRendererBasicTypes.h"
+#import "CCTextureCache.h"
+#import "CCColor.h"
+#import "ccUtils.h"
+
+#import "CCFile_Private.h"
 
 @implementation CCParticleSystemBase
-@synthesize active = _active, duration = _duration;
+@synthesize particlesActive = _particlesActive, duration = _duration;
 @synthesize sourcePosition = _sourcePosition, posVar = _posVar;
 @synthesize particleCount = _particleCount;
 @synthesize life = _life, lifeVar = _lifeVar;
@@ -81,12 +82,12 @@
 @synthesize emitterMode = _emitterMode;
 @synthesize totalParticles = _totalParticles;
 
-+(id) particleWithFile:(NSString*) plistFile
++(instancetype) particleWithFile:(NSString*) plistFile
 {
 	return [[self alloc] initWithFile:plistFile];
 }
 
-+(id) particleWithTotalParticles:(NSUInteger) numberOfParticles
++(instancetype) particleWithTotalParticles:(NSUInteger) numberOfParticles
 {
 	return [[self alloc] initWithTotalParticles:numberOfParticles];
 }
@@ -138,25 +139,25 @@
 		g = [[dictionary valueForKey:@"startColorGreen"] floatValue];
 		b = [[dictionary valueForKey:@"startColorBlue"] floatValue];
 		a = [[dictionary valueForKey:@"startColorAlpha"] floatValue];
-		_startColor = (ccColor4F) {r,g,b,a};
+		_startColor = GLKVector4Make(r,g,b,a);
 
 		r = [[dictionary valueForKey:@"startColorVarianceRed"] floatValue];
 		g = [[dictionary valueForKey:@"startColorVarianceGreen"] floatValue];
 		b = [[dictionary valueForKey:@"startColorVarianceBlue"] floatValue];
 		a = [[dictionary valueForKey:@"startColorVarianceAlpha"] floatValue];
-		_startColorVar = (ccColor4F) {r,g,b,a};
+		_startColorVar = GLKVector4Make(r,g,b,a);
 
 		r = [[dictionary valueForKey:@"finishColorRed"] floatValue];
 		g = [[dictionary valueForKey:@"finishColorGreen"] floatValue];
 		b = [[dictionary valueForKey:@"finishColorBlue"] floatValue];
 		a = [[dictionary valueForKey:@"finishColorAlpha"] floatValue];
-		_endColor = (ccColor4F) {r,g,b,a};
+		_endColor = GLKVector4Make(r,g,b,a);
 
 		r = [[dictionary valueForKey:@"finishColorVarianceRed"] floatValue];
 		g = [[dictionary valueForKey:@"finishColorVarianceGreen"] floatValue];
 		b = [[dictionary valueForKey:@"finishColorVarianceBlue"] floatValue];
 		a = [[dictionary valueForKey:@"finishColorVarianceAlpha"] floatValue];
-		_endColorVar = (ccColor4F) {r,g,b,a};
+		_endColorVar = GLKVector4Make(r,g,b,a);
 
 		// particle size
 		_startSize = [[dictionary valueForKey:@"startParticleSize"] floatValue];
@@ -249,37 +250,27 @@
 			if( tex )
 				[self setTexture:tex];
 			else {
+                // Base64 encoded, gzipped image data.
+                NSString *textureData64 = [dictionary valueForKey:@"textureImageData"];
+                NSAssert(textureData64, @"CCParticleSystem: Couldn't load texture");
 
-				NSString *textureData = [dictionary valueForKey:@"textureImageData"];
-				NSAssert( textureData, @"CCParticleSystem: Couldn't load texture");
+                // Gzipped image data.
+                NSData *textureData = CC_DECODE_BASE64(textureData64);
+                NSAssert(textureData != NULL, @"CCParticleSystem: error decoding textureImageData");
 
-				// if it fails, try to get it from the base64-gzipped data
-				unsigned char *buffer = NULL;
-				int len = base64Decode((unsigned char*)[textureData UTF8String], (unsigned int)[textureData length], &buffer);
-				NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
-
-				unsigned char *deflated = NULL;
-				NSUInteger deflatedLen = ccInflateMemory(buffer, len, &deflated);
-				free( buffer );
-
-				NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
-				NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
-
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-                BOOL png = [[[dictionary valueForKey:@"textureFileName"] lowercaseString] hasSuffix:@".png"];
-                CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-                CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
-				
-				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:image forKey:textureName]];
-
-                CGDataProviderRelease(imgDataProvider);
-                CGImageRelease(image); 
-#elif __CC_PLATFORM_MAC
-				NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
-#endif
-
-				free(deflated); deflated = NULL;
+                CCStreamedImageSource *streamedSource = [[CCStreamedImageSource alloc] initWithStreamBlock:^{
+                    NSInputStream *stream = [[CCGZippedInputStream alloc] initWithInputStream:[NSInputStream inputStreamWithData:textureData]];
+                    [stream open];
+                    
+                    return stream;
+                }];
+                
+                CGImageSourceRef source = [streamedSource createCGImageSource];
+                CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+                CFRelease(source);
+                
+                self.texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:textureName];
+                CGImageRelease(image);
 			}
 
 			NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
@@ -304,7 +295,7 @@
         _allocatedParticles = numberOfParticles;
 		
 		// default, active
-		_active = YES;
+		_particlesActive = YES;
 
 		// default blend function
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
@@ -453,14 +444,14 @@
 
 -(void) stopSystem
 {
-	_active = NO;
+	_particlesActive = NO;
 	_elapsed = _duration;
 	_emitCounter = 0;
 }
 
 -(void) resetSystem
 {
-	_active = YES;
+	_particlesActive = YES;
 	_elapsed = 0;
 	for(int i = 0; i < _particleCount; ++i) {
 		_CCParticle *p = &_particles[i];
@@ -488,9 +479,7 @@
 #pragma mark ParticleSystem - MainLoop
 -(void) update: (CCTime) dt
 {
-	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
-
-	if( _active && _emissionRate ) {
+	if( _particlesActive && _emissionRate ) {
 		float rate = 1.0f / _emissionRate;
 		
 		//issue #1201, prevent bursts of particles, due to too high emitCounter
@@ -508,7 +497,7 @@
 			[self stopSystem];
 	}
 
-	if (_visible)
+	if (self.visible)
 	{
 		for(int i=0; i < _particleCount;)
 		{
@@ -576,7 +565,7 @@
 				_particleCount--;
 
 				if( _particleCount == 0 && _autoRemoveOnFinish ) {
-					[_parent removeChild:self cleanup:YES];
+					[self.parent removeChild:self cleanup:YES];
 					return;
 				}
 			}
@@ -584,8 +573,6 @@
 		
 		_transformSystemDirty = NO;
 	}
-
-	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
 
 -(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
@@ -801,42 +788,42 @@
 
 - (void) setStartColor:(CCColor *)startColor
 {
-    _startColor = startColor.ccColor4f;
+    _startColor = startColor.glkVector4;
 }
 
 - (CCColor*) startColor
 {
-    return [CCColor colorWithCcColor4f:_startColor];
+    return [CCColor colorWithGLKVector4:_startColor];
 }
 
 - (void) setStartColorVar:(CCColor *)startColorVar
 {
-    _startColorVar = startColorVar.ccColor4f;
+    _startColorVar = startColorVar.glkVector4;
 }
 
 - (CCColor*) startColorVar
 {
-    return [CCColor colorWithCcColor4f:_startColorVar];
+    return [CCColor colorWithGLKVector4:_startColorVar];
 }
 
 - (void) setEndColor:(CCColor *)endColor
 {
-    _endColor = endColor.ccColor4f;
+    _endColor = endColor.glkVector4;
 }
 
 - (CCColor*) endColor
 {
-    return [CCColor colorWithCcColor4f:_endColor];
+    return [CCColor colorWithGLKVector4:_endColor];
 }
 
 - (void) setEndColorVar:(CCColor *)endColorVar
 {
-    _endColorVar = endColorVar.ccColor4f;
+    _endColorVar = endColorVar.glkVector4;
 }
 
 - (CCColor*) endColorVar
 {
-    return [CCColor colorWithCcColor4f:_endColorVar];
+    return [CCColor colorWithGLKVector4:_endColorVar];
 }
 
 @end

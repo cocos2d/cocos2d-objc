@@ -31,16 +31,16 @@
 
 
 #import <Foundation/Foundation.h>
-#include <zlib.h>
 
 #import "ccMacros.h"
-#import "Support/CGPointExtension.h"
+#import "ccUtils.h"
+#import "CGPointExtension.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
 #import "CCTiledMapObjectGroup.h"
-#import "Support/base64.h"
-#import "Support/ZipUtils.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileUtils.h"
+
+#import "CCFile_Private.h"
 
 #pragma mark -
 #pragma mark TMXLayerInfo
@@ -48,30 +48,26 @@
 
 @implementation CCTiledMapLayerInfo
 
-@synthesize name = _name, layerSize = _layerSize, tiles = _tiles, visible = _visible, opacity = _opacity, ownTiles = _ownTiles, minGID = _minGID, maxGID = _maxGID, properties = _properties;
-@synthesize offset = _offset;
 -(id) init
 {
 	if( (self=[super init])) {
-		_ownTiles = YES;
 		_minGID = 100000;
 		_maxGID = 0;
 		self.name = nil;
-		_tiles = NULL;
 		_offset = CGPointZero;
 		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
 	return self;
 }
-- (void) dealloc
+
+-(unsigned int *)tiles
 {
-	CCLOGINFO(@"cocos2d: deallocing %@",self);
+    return (unsigned int *)_tileData.bytes;
+}
 
-
-	if( _ownTiles && _tiles ) {
-		free( _tiles );
-		_tiles = NULL;
-	}
+-(void)setTileData:(NSData *)data
+{
+    _tileData = data;
 }
 
 @end
@@ -139,12 +135,12 @@
 @synthesize orientation = _orientation, mapSize = _mapSize, layers = _layers, tilesets = _tilesets, tileSize = _tileSize, filename = _filename, resources = _resources, objectGroups = _objectGroups, properties = _properties;
 @synthesize tileProperties = _tileProperties;
 
-+(id) formatWithTMXFile:(NSString*)tmxFile
++(instancetype) formatWithTMXFile:(NSString*)tmxFile
 {
 	return [[self alloc] initWithFile:tmxFile];
 }
 
-+(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
++(instancetype) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
 {
 	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }
@@ -279,6 +275,7 @@
 
 			[_tilesets addObject:tileset];
 		}
+        _parentElement = TMXPropertyTileSet;
 
 	}
 	else if([elementName isEqualToString:@"tileoffset"]) {
@@ -338,6 +335,12 @@
 
 	} else if([elementName isEqualToString:@"image"]) {
 
+        if(_parentElement == TMXPropertyTile){
+            // Images nested inside tile elements mean we're using a tileset that is a "Collection of Images"
+            // This is one image per tile, and not supported by cocos2d.
+            NSAssert(false, @"'Collection of Images' tilesets are not supported in cocos2d. In Tiled, please use tilesets 'Based on Tileset Images'.");
+        }
+        
 		CCTiledMapTilesetInfo *tileset = [_tilesets lastObject];
 
 		// build full path
@@ -481,34 +484,26 @@
 		_storingCharacters = NO;
 
 		CCTiledMapLayerInfo *layer = [_layers lastObject];
-
-		unsigned char *buffer;
-		len = base64Decode((unsigned char*)[_currentString UTF8String], (unsigned int) [_currentString length], &buffer);
-		if( ! buffer ) {
-			CCLOG(@"cocos2d: TiledMap: decode data error");
-			return;
-		}
+        NSData *decoded = CC_DECODE_BASE64(_currentString);
+        NSAssert(decoded, @"Could not decode tilemap data.");
 
 		if( _layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
-			unsigned char *deflated;
 			CGSize s = [layer layerSize];
 			int sizeHint = s.width * s.height * sizeof(uint32_t);
+            
+            CCWrappedInputStream *stream = [[CCGZippedInputStream alloc] initWithInputStream:[NSInputStream inputStreamWithData:decoded]];
+            [stream open];
+            
+            NSError *err;
+            NSData *data = [stream loadDataWithSizeHint:sizeHint error:&err];
+            if(err) CCLOG(@"Error loading tilemap.");
 
-			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
-			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
-
-			inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
-
-			free( buffer );
-
-			if( ! deflated ) {
-				CCLOG(@"cocos2d: TiledMap: inflate data error");
-				return;
-			}
-
-			layer.tiles = (unsigned int*) deflated;
-		} else
-			layer.tiles = (unsigned int*) buffer;
+            [stream close];
+            
+			[layer setTileData:data];
+		} else {
+			[layer setTileData:decoded];
+        }
 
 		[_currentString setString:@""];
 

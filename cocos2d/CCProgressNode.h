@@ -24,7 +24,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+#import "CCRenderableNode.h"
 #import "CCSprite.h"
 
 /** Progress Node type used by CCProgressNode. */
@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
     - Example: If you want a Left -> Right bar and also have the height grow set the rate to (0, 1) and modpoint to (0, 0.5)
  */
 
-@interface CCProgressNode : CCNode
+@interface CCProgressNode : CCRenderableNode
 
 
 /// -----------------------------------------------------------------------
@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
  *  @return The CCProgressNode Object.
  *  @see CCSprite
  */
-+(id)progressWithSprite:(CCSprite*) sprite;
++(instancetype)progressWithSprite:(CCSprite*) sprite;
 
 /**
  *  Initializes and returns a progress node object using the specified sprite value.

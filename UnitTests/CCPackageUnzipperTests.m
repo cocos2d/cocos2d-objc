@@ -11,7 +11,7 @@
 #import "CCPackage.h"
 #import "CCPackageConstants.h"
 #import "CCPackageUnzipperDelegate.h"
-#import "CCUnitTestAssertions.h"
+#import "CCUnitTestHelperMacros.h"
 #import "CCPackage_private.h"
 
 @interface CCPackageUnzipperTests : XCTestCase <CCPackageUnzipperDelegate>
@@ -138,7 +138,7 @@
     NSError *error;
     NSString *contentsOfSecretFile = [NSString stringWithContentsOfFile:secretFilePath encoding:NSUTF8StringEncoding error:&error];
     XCTAssertNil(error);
-    CCAssertEqualStrings(contentsOfSecretFile, @"unzipping successful");
+    XCTAssertEqualObjects(contentsOfSecretFile, @"unzipping successful");
 }
 
 

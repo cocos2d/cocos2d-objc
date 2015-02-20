@@ -24,31 +24,25 @@
 
 #import "CCNode.h"
 
+@class CCAnimationManager;
+
 CGPoint NodeToPhysicsScale(CCNode * node);
 float NodeToPhysicsRotation(CCNode *node);
-CGAffineTransform NodeToPhysicsTransform(CCNode *node);
-CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
+GLKMatrix4 NodeToPhysicsTransform(CCNode *node);
+GLKMatrix4 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
 CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
-CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
-CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
+CGPoint TransformPointAsVector(CGPoint p, GLKMatrix4 t);
+GLKMatrix4 GLKMatrix4MakeRigid(CGPoint translate, CGFloat radians);
 
-@interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
-	@protected
-	CCRenderState *_renderState;
-	
-	CCShader *_shader;
-	NSMutableDictionary *_shaderUniforms;
-	
-	CCBlendMode *_blendMode;
-	CCTexture *_texture;
+// TODO Doesn't really belong here, but the header includes are such a sphagetti mess it's hard to find anywhere else.
+/// Transform and project a CGPoint by a 4x4 matrix. Throw away the resulting z value.
+static inline CGPoint
+CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
+	GLKVector3 v = GLKMatrix4MultiplyAndProjectVector3(m, GLKVector3Make(p.x, p.y, 0.0));
+	return CGPointMake(v.x, v.y);
 }
 
-/// Returns true if the node is not using custom uniforms.
--(BOOL)hasDefaultShaderUniforms;
-
-/// Cache and return the current render state.
-/// Should be set to nil whenever changing a property that affects the renderstate.
-@property(nonatomic, strong) CCRenderState *renderState;
+@interface CCNode()
 
 /* The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
@@ -59,31 +53,10 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
  */
 @property (nonatomic,readwrite) float vertexZ;
 
-@property (nonatomic,readonly) BOOL isPhysicsNode;
-
-/* used internally for zOrder sorting, don't change this manually */
-@property(nonatomic,readwrite) NSUInteger orderOfArrival;
-
-/* CCActionManager used by all the actions.
- IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
- */
-@property (nonatomic, readwrite, strong) CCActionManager *actionManager;
-
-/* CCScheduler used to schedule all "updates" and timers.
- IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
- */
-@property (nonatomic, readwrite, strong) CCScheduler *scheduler;
-
 /* Reads and writes the animation manager for this node.*/
 @property (nonatomic, readwrite) CCAnimationManager * animationManager;
 
-/* Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
-
-/* Reorders a child according to a new z value.
- * The child MUST be already added.
- */
--(void) reorderChild:(CCNode*)child z:(NSInteger)zOrder;
+-(CCScheduler *)scheduler;
 
 /* performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
  don't call this manually unless a child added needs to be removed in the same frame */
@@ -96,11 +69,6 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
  */
 -(void) cleanup;
 
-///* performs OpenGL view-matrix transformation of its ancestors.
-// Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
-// */
-//-(void) transformAncestors;
-
 /* final method called to actually remove a child node from the children.
  *  @param node    The child node to remove
  *  @param cleanup Stops all scheduled events and actions
@@ -108,5 +76,23 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
 
 - (void) contentSizeChanged;
+
+
+/**
+ In certain special situations, you may wish to designate a node's parent without adding that node to the list
+ of children. In particular this can be useful when a node references another node in an atypical non-child
+ way, such as how the the CCClipNode tracks the stencil. The stencil is kept outside of the normal heirarchy,
+ but still needs a parent to function in a scene.
+ 
+ @since v4.0
+ */
+-(void)setRawParent:(CCNode *)parent;
+
+/**
+ You probably want "active" instead, but this tells you if the node is in the active scene wihtout regards
+ to its pause state.
+ @since v4.0
+ */
+-(BOOL) isInActiveScene;
 
 @end

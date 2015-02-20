@@ -61,7 +61,7 @@
 {
     if (_userInteractionEnabled == userInteractionEnabled) return;
     _userInteractionEnabled = userInteractionEnabled;
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+    [[[CCDirector currentDirector] responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------
@@ -72,6 +72,11 @@
     return(NO);
 }
 
+- (BOOL)clippedHitTestWithWorldPos:(CGPoint)pos
+{
+    return NO;
+}
+
 // -----------------------------------------------------------------
 #pragma mark - iOS
 // -----------------------------------------------------------------
@@ -80,22 +85,22 @@
 
 - (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {    
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 #else
@@ -104,54 +109,39 @@
 #pragma mark - OSX
 // -----------------------------------------------------------------
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton) button
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent
+- (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton) button
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton) button
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
-}
-
-- (void)rightMouseDown:(NSEvent *)theEvent
-{
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
-}
-
-- (void)rightMouseDragged:(NSEvent *)theEvent
-{
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
-}
-
-- (void)rightMouseUp:(NSEvent *)theEvent
-{
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
-}
-
-- (void)otherMouseDown:(NSEvent *)theEvent
-{
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
-}
-
-- (void)otherMouseDragged:(NSEvent *)theEvent
-{
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
-}
-
-- (void)otherMouseUp:(NSEvent *)theEvent
-{
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
+}
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
+}
+
+-(void)keyUp:(NSEvent *)theEvent
+{
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 #endif

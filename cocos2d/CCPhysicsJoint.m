@@ -27,7 +27,7 @@
 #import "CCNode_Private.h"
 
 @interface CCNode(Private)
--(CGAffineTransform)nonRigidTransform;
+-(GLKMatrix4)nonRigidTransform;
 @end
 
 
@@ -99,6 +99,10 @@
 	
 	return joint;
 }
+-(CCPhysicsJoint *)initWithPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA
+{
+    return [CCPhysicsJoint connectedPivotJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA];
+}
 
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
 										   anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
@@ -110,6 +114,11 @@
 	[joint addToPhysicsNode:bodyA.physicsNode];
 	
 	return joint;
+}
+-(CCPhysicsJoint *)initWithDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                           anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+{
+    return [CCPhysicsJoint connectedDistanceJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB];
 }
 
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -123,6 +132,12 @@
 	[joint addToPhysicsNode:bodyA.physicsNode];
 	
 	return joint;
+}
+-(CCPhysicsJoint *)initWithDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                          anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+                                      minDistance:(CGFloat)min maxDistance:(CGFloat)max
+{
+    return [CCPhysicsJoint connectedDistanceJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB minDistance:min maxDistance:max];
 }
 
 +(CCPhysicsJoint *)connectedSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -138,16 +153,14 @@
 	
 	return joint;
 }
-
-
-
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
-                                       restAngle:(CGFloat)restAngle
-                                        stifness:(CGFloat)stiffness
-                                         damping:(CGFloat)damping
+-(CCPhysicsJoint *)initWithSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                        anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+                                     restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
 {
-	return [self connectedRotarySpringJointWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
+    return [CCPhysicsJoint connectedSpringJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
 }
+
+
 
 +(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
                                        restAngle:(CGFloat)restAngle
@@ -161,6 +174,13 @@
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
 }
+-(CCPhysicsJoint *)initWithRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                            restAngle:(CGFloat)restAngle
+                                            stiffness:(CGFloat)stiffness
+                                              damping:(CGFloat)damping
+{
+    return [CCPhysicsJoint connectedRotarySpringJointWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stiffness:stiffness damping:damping];
+}
 
 
 +(CCPhysicsJoint *)connectedMotorJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -172,6 +192,10 @@
 	[bodyB addJoint:joint];
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
+}
+-(CCPhysicsJoint *)initWithMotorJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB rate:(CGFloat)rate
+{
+    return [CCPhysicsJoint connectedMotorJointWithBodyA:bodyA bodyB:bodyB rate:rate];
 }
 
 
@@ -187,6 +211,10 @@
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
 }
+-(CCPhysicsJoint *)initWithRotaryLimitJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB min:(cpFloat)min max:(cpFloat)max
+{
+    return [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:bodyA bodyB:bodyB min:min max:max];
+}
 
 
 +(CCPhysicsJoint *)connectedRatchetJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -199,6 +227,12 @@
 	[bodyB addJoint:joint];
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
+}
+-(CCPhysicsJoint *)initWithRatchetJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                           phase:(cpFloat)phase
+                                         ratchet:(cpFloat)ratchet
+{
+    return [CCPhysicsJoint connectedRatchetJointWithBodyA:bodyA bodyB:bodyB phase:phase ratchet:ratchet];
 }
 
 
@@ -280,7 +314,7 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 {
 	
 	CCPhysicsBody *bodyA = self.bodyA;
-	CGPoint anchor = CGPointApplyAffineTransform(_anchor, bodyA.node.nonRigidTransform);
+	CGPoint anchor = CGPointApplyGLKMatrix4(_anchor, bodyA.node.nonRigidTransform);
 	
 	_constraint.anchorA = CCP_TO_CPV(anchor);
 	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:CCP_TO_CPV(anchor)]];
@@ -345,8 +379,8 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	CGPoint anchorA = CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform);
-	CGPoint anchorB = CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform);
+	CGPoint anchorA = CGPointApplyGLKMatrix4(_anchorA, bodyA.node.nonRigidTransform);
+	CGPoint anchorB = CGPointApplyGLKMatrix4(_anchorB, bodyB.node.nonRigidTransform);
     _constraint.anchorA = CCP_TO_CPV(anchorA);
     _constraint.anchorB = CCP_TO_CPV(anchorB);
 	
@@ -383,8 +417,8 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
-	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorB, bodyB.node.nonRigidTransform));
 }
 
 -(void)setScale:(float)_scale
@@ -427,8 +461,8 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
-	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorB, bodyB.node.nonRigidTransform));
 	
 }
 

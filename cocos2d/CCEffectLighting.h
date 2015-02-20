@@ -8,8 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 /**
  * CCEffectLighting uses a normal map and a collection of light nodes to compute the Phong
  * lighting on the affected node.
@@ -35,7 +33,7 @@
  *  @since v3.4 and later
  *  @see CCColor
  */
-+(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 /**
  *  Initializes a CCEffectLighting object.
@@ -82,13 +80,11 @@
 
 /**
  *  The shininess of the affected node. This value controls the tightness of specular
- *  highlights. 0 results in no specular contribution to the lighting equations and
- *  increasing values result in tighter highlights.
+ *  highlights and is in the range [0..1]. 0 results in no specular contribution to the 
+ *  lighting equations and increasing values result in tighter highlights.
  *  @since v3.4 and later
  */
 @property (nonatomic, assign) float shininess;
 
 @end
-
-#endif
 

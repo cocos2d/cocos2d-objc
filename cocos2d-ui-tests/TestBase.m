@@ -57,13 +57,13 @@
     [self addChild:_headerBg];
     
     // Header label
-    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector sharedDirector].UIScaleFactor];
+    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
     _lblTitle.positionType = CCPositionTypeNormalized;
     _lblTitle.position = ccp(0.5f,0.5f);
     
     [_headerBg addChild:_lblTitle];
     
-    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
 		_lblSubTitle.shadowColor = [CCColor blackColor];
 		_lblSubTitle.shadowBlurRadius = 2.5;
     _lblSubTitle.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
@@ -118,15 +118,15 @@
 + (CCScene *) sceneWithTestName:(NSString*)testName
 {
 	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
+    CCScene *scene = [[CCScene alloc] init ];
+    
 	// 'layer' is an autorelease object.
-  TestBase *node = [[NSClassFromString(testName) alloc] init];
-  if(node == nil){
+    TestBase *node = [[NSClassFromString(testName) alloc] init];
+    if(node == nil){
     NSAssert(NO, @"No class found with the name %@", testName);
-  }
-  
-  node.testName = testName;
+    }
+
+    node.testName = testName;
 	
 	// add layer as a child to scene
 	[scene addChild: node];
@@ -164,7 +164,7 @@
 - (void) pressedBack:(id)sender
 {
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
-    [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
+    [[CCDirector currentDirector] presentScene:[MainMenu scene] withTransition:transition];
 }
 
 - (void) pressedReset:(id)sender
@@ -190,6 +190,8 @@
 
 - (void) setupTestWithIndex:(NSInteger)testNum
 {
+    _currentTest = testNum;
+    
     // Remove current test
     [self.contentNode removeAllChildrenWithCleanup:YES];
     
@@ -208,8 +210,6 @@
         typedef void (*Func)(id, SEL);
         ((Func)objc_msgSend)(self, constructor);
     }
-    
-    _currentTest = testNum;
 }
 
 - (void) setSubTitle:(NSString *)subTitle

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="tmw_desert_spacing.png" width="265" height="199"/>
+ </tileset>
+ <tileset firstgid="49" name="ortho-test2" tilewidth="32" tileheight="32" spacing="2" margin="2">
+  <image source="ortho-test2.png" width="640" height="400"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3SsQ2AUAzE0HyogArYf1eyhS/IhSUP8FZVbd3ercF/dGd3Df+7e7p3+NMedKWr5Kc96EpXyU970JWukp/2oCtdJT/tQVe6Sn7ag650lfy0B13pKvlpD7rSVfLTHnSlq+SnPehKV8lPe9CVrpKf9qCrf7r6AASsPPAQJwAA
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VQQ6AIAxE0d7/RnoXPIskrHSjJYCd+l/CFpK2U8wAeG317ML3Q0ep51j43lezx8xDVU9GZ867UpZW7zf4ZO/PrKx468Y+ABAB++Iqej2y/9HQEz0zmYzKv6dnI95kRqCGv/Y/imn0mz3aUAddCjl7gxnsd68dtcztKfP0HyudFGgS+xAnAAA=
+  </data>
+ </layer>
+ <layer name="Trees" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3WwQ2AMAiF4c7qSuoI6pri0ZMiFEn5v4Sbac0DW1sDgDHMUovU+uLZqfO7WGxSu9RhWEOTRWYeWVzIA1VlPusQi3MQ+IZvZwz08RkZ3fEPhQyYw7F49JOzGpkwjzV49/mvu40+A7DgzvMRnWOv/aJz1OzHrOqQVw0naVueCRAnAAA=
+  </data>
+ </layer>
+</map>

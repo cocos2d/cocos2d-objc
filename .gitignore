@@ -50,3 +50,8 @@ api-docs
 installer/install.tar.gz
 installer/*.app
 
+tools/teacrypt
+
+.idea
+.idea
+**/*/.idea

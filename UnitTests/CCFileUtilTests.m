@@ -7,10 +7,78 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-#import "CCUnitTestAssertions.h"
+#import "CCUnitTestHelperMacros.h"
 
 
-@interface CCFileUtilTests : XCTestCase
+#import "CCFile_Private.h"
+
+
+@interface CCFileTests : XCTestCase @end
+@implementation CCFileTests
+
+-(void)setUp
+{
+    [CCFile setEncryptionKey:@"44DAACE285BB4204AA31EA6A4D7E17E7"];
+}
+
+-(void)testBasics
+{
+    NSString *name = @"Resources-shared/configCocos2d.plist";
+    CGFloat scale = 1.5;
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
+    XCTAssertNotNil(url, @"What happened to the config file?");
+    
+    CCFile *file = [[CCFile alloc] initWithName:name url:url contentScale:scale];
+    
+    XCTAssertEqualObjects(name, file.name);
+    XCTAssertEqualObjects(url, file.url);
+    XCTAssertEqualObjects(url.path, file.absoluteFilePath);
+    XCTAssertEqual(scale, file.contentScale);
+    
+    NSInputStream *stream = [file openInputStream];
+    XCTAssertNotNil(stream);
+    [stream close];
+    
+    XCTAssertNotNil([file loadPlist:nil]);
+    XCTAssertNotNil([file loadData:nil]);
+}
+
+-(void)_testLoadMethods:(NSString *)name
+{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
+    XCTAssertNotNil(url, @"What happened to the file?");
+    
+    id plist = @{@"Foo": @"Bar"};
+    
+    CCFile *file = [[CCFile alloc] initWithName:name url:url contentScale:1.0];
+    XCTAssertEqualObjects([file loadPlist:nil], plist);
+    
+    // Could probably make a better test... but...
+    XCTAssertTrue([file loadData:nil].length > 0);
+}
+
+-(void)testLoadMethods
+{
+    [self _testLoadMethods:@"CCFileTest.plist"];
+    [self _testLoadMethods:@"CCFileTest.plist.gz"];
+    [self _testLoadMethods:@"CCFileTest.plist.ccp"];
+    [self _testLoadMethods:@"CCFileTest.plist.gz.ccp"];
+}
+
+-(void)testLoadDataMethods
+{
+    NSURL *gzippedURL = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.gz" withExtension:nil];
+    CCFile *gzippedFile = [[CCFile alloc] initWithName:@"Test" url:gzippedURL contentScale:1.0];
+    
+    NSURL *encryptedURL = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.ccp" withExtension:nil];
+    CCFile *encryptedFile = [[CCFile alloc] initWithName:@"Test" url:encryptedURL contentScale:1.0];
+    
+    XCTAssertEqualObjects([encryptedFile loadData:nil], [gzippedFile loadData:nil]);
+}
+
+#warning TODO
+// Need tests for files larger than 32kb for gzip buffers and 4kb for encryption buffers.
 
 @end
 
@@ -18,6 +86,7 @@
 +(void) resetSingleton;
 @end
 
+@interface CCFileUtilTests : XCTestCase @end
 @implementation CCFileUtilTests
 
 - (void)setUp
@@ -109,8 +178,8 @@
 
     [[CCFileUtils sharedFileUtils] loadFileNameLookupsInAllSearchPathsWithName:@"fileLookup.plist"];
     NSDictionary *filenameLookup = [CCFileUtils sharedFileUtils].filenameLookup;
-    CCAssertEqualStrings(filenameLookup[@"baa.psd"], @"baa.png");
-    CCAssertEqualStrings(filenameLookup[@"foo.wav"], @"foo.mp4");
+    XCTAssertEqualObjects(filenameLookup[@"baa.psd"], @"baa.png");
+    XCTAssertEqualObjects(filenameLookup[@"foo.wav"], @"foo.mp4");
 }
 
 -(void)testCCFileUtilsSearchModeSuffix

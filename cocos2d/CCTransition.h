@@ -25,9 +25,8 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
 #import "CCScene.h"
+#import "CCTexture.h"
 
 /**
  *  Defines the direction that a directional transition will move. Used by CCTransition.
@@ -158,13 +157,6 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  Default YES.
  */
 @property (nonatomic, getter = isRetinaTransition) BOOL retinaTransition;
-
-/**
- Pixel format used for transition.
- Default `CCTexturePixelFormat_RGBA8888`.
- @see CCTexturePixelFormat
- */
-@property (nonatomic, assign) CCTexturePixelFormat transitionPixelFormat;
 
 /**
  *  Depth/stencil format used for transition.

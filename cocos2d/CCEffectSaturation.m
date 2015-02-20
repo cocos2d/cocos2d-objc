@@ -50,42 +50,34 @@ static float conditionSaturation(float saturation);
 
 
 @interface CCEffectSaturation ()
-
 @property (nonatomic, strong) NSNumber *conditionedSaturation;
-
 @end
 
 
-@implementation CCEffectSaturation
+@interface CCEffectSaturationImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectSaturation *interface;
+@end
 
--(id)init
-{
-    return [self initWithSaturation:0.0f];
-}
 
--(id)initWithSaturation:(float)saturation
+@implementation CCEffectSaturationImpl
+
+-(id)initWithInterface:(CCEffectSaturation *)interface
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectSaturationImpl buildFragmentFunctions];
+    NSArray *renderPasses = [CCEffectSaturationImpl buildRenderPassesWithInterface:interface];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
     {
-        _saturation = saturation;
-        _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
-
-        self.debugName = @"CCEffectSaturation";
+        self.interface = interface;
+        self.debugName = @"CCEffectSaturationImpl";
     }
     return self;
 }
 
-+(id)effectWithSaturation:(float)saturation
++ (NSArray *)buildFragmentFunctions
 {
-    return [[self alloc] initWithSaturation:saturation];
-}
-
--(void)buildFragmentFunctions
-{
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
@@ -99,27 +91,54 @@ static float conditionSaturation(float saturation);
                                    );
 
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectSaturation *)interface
 {
-    __weak CCEffectSaturation *weakSelf = self;
+    __weak CCEffectSaturation *weakInterface = interface;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectSaturation pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
-        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_saturation"]] = weakInterface.conditionedSaturation;
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
+}
+
+@end
+
+
+@implementation CCEffectSaturation
+
+-(id)init
+{
+    return [self initWithSaturation:0.0f];
+}
+
+-(id)initWithSaturation:(float)saturation
+{
+    if((self = [super init]))
+    {
+        _saturation = saturation;
+        _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
+
+        self.effectImpl = [[CCEffectSaturationImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectSaturation";
+    }
+    return self;
+}
+
++(instancetype)effectWithSaturation:(float)saturation
+{
+    return [[self alloc] initWithSaturation:saturation];
 }
 
 -(void)setSaturation:(float)saturation
@@ -127,6 +146,7 @@ static float conditionSaturation(float saturation);
     _saturation = saturation;
     _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 }
+
 @end
 
 

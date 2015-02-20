@@ -29,19 +29,14 @@
  *
  */
 
-#import "CCTiledMapLayer.h"
-#import "CCTiledMap.h"
-#import "CCTMXXMLParser.h"
-#import "CCSprite.h"
-#import "CCSpriteBatchNode.h"
+
+#import "ccUtils.h"
+
+#import "CCTiledMapLayer_Private.h"
 #import "CCTextureCache.h"
 #import "CCShader.h"
-#import "Support/CGPointExtension.h"
-#import "CCNode_Private.h"
-#import "CCSprite_Private.h"
-#import "CCTiledMapLayer_Private.h"
-#import "CCTexture_Private.h"
-#import "CCMathTypesAndroid.h"
+#import "CCTexture.h"
+#import "CCRenderer.h"
 
 #pragma mark -
 #pragma mark CCTMXLayer
@@ -63,11 +58,13 @@
 	// Only used when vertexZ is used.
 	float _vertexZvalue;
 	BOOL _useAutomaticVertexZ;
+    
+    NSMutableData *_tileData;
 }
 
 #pragma mark CCTMXLayer - init & alloc & dealloc
 
-+(id) layerWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo
++(instancetype) layerWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo
 {
 	return [[self alloc] initWithTilesetInfo:tilesetInfo layerInfo:layerInfo mapInfo:mapInfo];
 }
@@ -88,7 +85,7 @@
 		self.layerName = layerInfo.name;
 		_mapColumns = size.width;
 		_mapRows = size.height;
-		_tiles = layerInfo.tiles;
+		_tileData = [layerInfo.tileData mutableCopy];
 		self.opacity = layerInfo.opacity;
 		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
 
@@ -115,12 +112,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	free(_tiles);
-	_tiles = NULL;
-}
-
 -(CGSize)layerSize
 {
 	return CGSizeMake(_mapColumns, _mapRows);
@@ -143,6 +134,11 @@
 	_tileHeight = mapTileSize.height;
 }
 
+-(uint32_t *)tiles
+{
+    return (uint32_t *)_tileData.mutableBytes;
+}
+
 #pragma mark CCTMXLayer - setup Tiles
 
 -(void) setupTiles
@@ -155,7 +151,7 @@
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	self.texture.antialiased = NO;
+//	self.texture.antialiased = NO;
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];
@@ -193,13 +189,12 @@
 -(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(ccTMXTileFlags*)flags
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 
 	NSInteger idx = (int)pos.x + (int)pos.y*_mapColumns;
 
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
 
-	uint32_t tile = _tiles[idx];
+	uint32_t tile = self.tiles[idx];
 	
 	// issue1264, flipped tiles can be changed dynamically
 	if(flags){
@@ -218,7 +213,6 @@
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 	NSAssert( gid == 0 || gid >= _tileset.firstGid, @"TMXLayer: invalid gid" );
 
 	ccTMXTileFlags currentFlags = 0;
@@ -228,7 +222,7 @@
 		uint32_t gidAndFlags = gid | flags;
 		
 		int idx = (int)pos.x + (int)pos.y*_mapColumns;
-		_tiles[idx] = gidAndFlags;
+		self.tiles[idx] = gidAndFlags;
 	}
 }
 
@@ -240,13 +234,12 @@
 -(void) removeTileAt:(CGPoint)pos
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 
 	uint32_t gid = [self tileGIDAt:pos];
 
 	if( gid ) {
 		NSUInteger idx = (int)pos.x + (int)pos.y * _mapColumns;
-		_tiles[idx] = 0;
+		self.tiles[idx] = 0;
 	}
 }
 
@@ -310,7 +303,7 @@ AutomaticVertexZ(int tileX, int tileY, int mapColumns, int mapRows, CCTiledMapOr
 {
 	switch(orientation) {
 		case CCTiledMapOrientationIso: {
-			NSUInteger maxVal = mapColumns + mapRows;
+			int maxVal = mapColumns + mapRows;
 			return -(maxVal - (tileX + tileY));
 		}
 		
@@ -369,15 +362,16 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	GLKMatrix4 tileToNode = [self tileToNodeTransform];
-	struct IntRect tiles = [self tileBoundsForClipTransform:GLKMatrix4Multiply(*transform, tileToNode)];
+	struct IntRect tileRect = [self tileBoundsForClipTransform:GLKMatrix4Multiply(*transform, tileToNode)];
+    uint32_t *tiles = self.tiles;
 	
 	// Count the number of tiles to be drawn.
 	int tileCount = 0;
 	
-	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
-		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
+	for(int tileY = tileRect.ymin; tileY < tileRect.ymax; tileY++){
+		for(int tileX = tileRect.xmin; tileX < tileRect.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
-			uint32_t gid = _tiles[index];
+			uint32_t gid = tiles[index];
 			
 			// Blank tiles have a GID of 0.
 			if(gid != 0) tileCount++;
@@ -394,8 +388,8 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	
 	CCTexture *tex = self.texture;
 	float scale = tex.contentScale;
-	float scaleW = scale/self.texture.pixelWidth;
-	float scaleH = scale/self.texture.pixelHeight;
+	float scaleW = scale/self.texture.sizeInPixels.width;
+	float scaleH = scale/self.texture.sizeInPixels.height;
 	
 	// Number of tiles per row in the tile sheet.
 	int tilesetFirstGid = _tileset.firstGid;
@@ -411,10 +405,10 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	int vertex_cursor = 0;
 	int triangle_cursor = 0;
 	
-	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
-		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
+	for(int tileY = tileRect.ymin; tileY < tileRect.ymax; tileY++){
+		for(int tileX = tileRect.xmin; tileX < tileRect.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
-			uint32_t gidWithFlags = _tiles[index];
+			uint32_t gidWithFlags = tiles[index];
 			
 			uint32_t flags = gidWithFlags & kCCFlipedAll;
 			uint32_t gid = gidWithFlags & kCCFlippedMask;

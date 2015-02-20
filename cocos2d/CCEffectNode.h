@@ -15,11 +15,6 @@
 #import "CCTexture.h"
 
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif // iPHone
-
-
 /**
  CCEffectNode allows the user to apply effects to the effect node's child nodes.
  
@@ -40,32 +35,19 @@
  *
  *  @return An initialized CCRenderTarget object.
  */
-+(id)effectNodeWithWidth:(int)w height:(int)h;
++(instancetype)effectNodeWithWidth:(int)w height:(int)h;
 
 /**
- *  Creates a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and no depth-stencil buffer.
+ *  Creates a CCEffectNode object with width and height in points and depthStencil format
  *
  *  @param w                  Width of render target.
  *  @param h                  Height of render target.
- *  @param format             Pixel format of render target.
- *
- *  @return An initialized CCRenderTarget object.
- *  @see CCTexturePixelFormat
- */
-+(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format;
-
-/**
- *  Creates a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
- *
- *  @param w                  Width of render target.
- *  @param h                  Height of render target.
- *  @param format             Pixel format of render target.
  *  @param depthStencilFormat Stencil format of render target.
  *
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-+(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
++(instancetype)effectNodeWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat;
 
 /**
  *  Initializes a CCEffectNode object with the specified parameters.
@@ -75,32 +57,19 @@
  *
  *  @return The CCEffectNode object.
  */
--(id)initWithWidth:(int)w height:(int)h;
+-(instancetype)initWithWidth:(int)w height:(int)h;
 
 /**
- *  Initializes a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and no depth-stencil buffer.
+ *  Initializes a CCEffectNode object with width and height in Points and depthStencil format
  *
  *  @param w                  Width of render target.
  *  @param h                  Height of render target.
- *  @param format             Pixel format of render target.
- *
- *  @return An initialized CCRenderTarget object.
- *  @see CCTexturePixelFormat
- */
--(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format;
-
-/**
- *  Initializes a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
- *
- *  @param w                  Width of render target.
- *  @param h                  Height of render target.
- *  @param format             Pixel format of render target.
  *  @param depthStencilFormat Stencil format of render target.
  *
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
--(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
+-(id)initWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat;
 
 /** @name Assigning an Effect */
 

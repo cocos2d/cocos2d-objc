@@ -25,6 +25,7 @@
  *
  */
 
+#import "CCAction_Private.h"
 
 #import "CCActionInstant.h"
 #import "CCNode.h"
@@ -45,12 +46,6 @@
 		_duration = 0;
 
 	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] init];
-	return copy;
 }
 
 - (BOOL) isDone
@@ -138,8 +133,11 @@
 //
 #pragma mark CCFlipX
 
-@implementation CCActionFlipX
-+(id) actionWithFlipX:(BOOL)x
+@implementation CCActionFlipX {
+    BOOL _flipX;
+}
+
++(instancetype) actionWithFlipX:(BOOL)x
 {
 	return [[self alloc] initWithFlipX:x];
 }
@@ -174,8 +172,11 @@
 //
 #pragma mark CCFlipY
 
-@implementation CCActionFlipY
-+(id) actionWithFlipY:(BOOL)y
+@implementation CCActionFlipY {
+    BOOL _flipY;
+}
+
++(instancetype) actionWithFlipY:(BOOL)y
 {
 	return [[self alloc] initWithFlipY:y];
 }
@@ -211,8 +212,11 @@
 //
 #pragma mark CCPlace
 
-@implementation CCActionPlace
-+(id) actionWithPosition: (CGPoint) pos
+@implementation CCActionPlace {
+    CGPoint _position;
+}
+
++(instancetype) actionWithPosition: (CGPoint) pos
 {
 	return [[self alloc]initWithPosition:pos];
 }
@@ -243,11 +247,14 @@
 //
 #pragma mark CCCallFunc
 
-@implementation CCActionCallFunc
+@implementation CCActionCallFunc {
+    __weak id _targetCallback;
+    SEL _selector;
+}
 
 @synthesize targetCallback = _targetCallback;
 
-+(id) actionWithTarget: (id) t selector:(SEL) s
++(instancetype) actionWithTarget: (id) t selector:(SEL) s
 {
 	return [[self alloc] initWithTarget: t selector: s];
 }
@@ -266,10 +273,10 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld | selector = %@>",
+	return [NSString stringWithFormat:@"<%@ = %p | Name = %@ | selector = %@>",
 			[self class],
 			self,
-			(long)_tag,
+			self.name,
 			NSStringFromSelector(_selector)
 			];
 }
@@ -299,9 +306,11 @@
 
 #pragma mark CCCallBlock
 
-@implementation CCActionCallBlock
+@implementation CCActionCallBlock {
+    void (^_block)();
+}
 
-+(id) actionWithBlock:(void(^)())block
++(instancetype) actionWithBlock:(void(^)())block
 {
 	return [[self alloc] initWithBlock:block];
 }
@@ -334,7 +343,9 @@
 
 
 #pragma mark CCActionSpriteFrame
-@implementation CCActionSpriteFrame
+@implementation CCActionSpriteFrame {
+    CCSpriteFrame* _spriteFrame;
+}
 
 + (id)actionWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 {
@@ -363,7 +374,12 @@
 @end
 
 
-@implementation CCActionSoundEffect
+@implementation CCActionSoundEffect {
+    NSString *_soundFile;
+    float _pitch;
+    float _pan;
+    float _gain;
+}
 
 + (id)actionWithSoundFile:(NSString*)f pitch:(float)pi pan:(float) pa gain:(float)ga
 {
@@ -386,9 +402,7 @@
 
 - (void)update:(CCTime)time
 {
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
     [[OALSimpleAudio sharedInstance] playEffect:_soundFile volume:_gain pitch:_pitch pan:_pan loop:NO];
-#endif
 }
 
 - (id)copyWithZone:(NSZone*)zone

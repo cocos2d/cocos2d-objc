@@ -25,62 +25,55 @@
  *
  */
 
-// -----------------------------------------------------------------
+#import "CCScene+Private.h"
+#import "CCNode_Private.h"
 
-#import "CCScene.h"
-#import "Support/CGPointExtension.h"
-#import "CCDirector.h"
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
-
-// -----------------------------------------------------------------
+#import "CCColor.h"
 
 @implementation CCScene {
 
 }
+@synthesize director = _director;
 
-// -----------------------------------------------------------------
+-(CCScene *)scene
+{
+    return self;
+}
 
-// Private method used by the CCNode.scene property.
--(BOOL)isScene {return YES;}
-
--( id )init {
-	if((self = [ super init ])){
-		CGSize s = [CCDirector sharedDirector].designSize;
-		_anchorPoint = ccp(0.0f, 0.0f);
+-(id)init
+{
+	if((self = [super init]))
+    {
+		CGSize s = [CCDirector currentDirector].designSize;
+		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
 		
 		self.colorRGBA = [CCColor blackColor];
         
-#if CC_EFFECTS_EXPERIMENTAL
+        _scheduler = [[CCScheduler alloc] init];
         _lights = [[CCLightCollection alloc] init];
-#endif
 	}
 	
 	return( self );
 }
-
-// -----------------------------------------------------------------
 
 - (void)onEnter
 {
     [super onEnter];
     
     // mark starting scene as dirty, to make sure responder manager is updated
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+    [[_director responderManager] markAsDirty];
 }
-
-// -----------------------------------------------------------------
 
 - (void)onEnterTransitionDidFinish
 {
     [super onEnterTransitionDidFinish];
     
     // mark starting scene as dirty, to make sure responder manager is updated
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+    [[_director responderManager] markAsDirty];
 }
-
-// -----------------------------------------------------------------
 
 @end
 

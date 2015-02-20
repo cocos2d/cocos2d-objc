@@ -27,13 +27,70 @@
 
 #import "ccConfig.h"
 #import "ccTypes.h"
-#import "ccMacros.h"
 
-#import "CCProtocols.h"
 #import "Platforms/CCGL.h"
 #import "CCResponderManager.h"
 #import "CCRenderer.h"
-#import "CCDirectorView.h"
+#import "CCView.h"
+
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
+
+@class CCDirector;
+
+
+/** CCDirectorDelegate may be subscribed to in order to get notifications about when the
+ CCDirector is starting, pausing, unpausing, etc. */
+@protocol CCDirectorDelegate <NSObject>
+
+@optional
+
+/** 
+ Execution of the game has ended.
+ */
+-(void) end;
+
+/** 
+ The game has been paused.
+ The running scene will be _drawn_ but all scheduled timers will be paused.
+ While paused, the draw rate reduced to save CPU consumption
+ */
+-(void) pause;
+
+/** The paused game has been resumed.
+ The scheduled timers will be activated again.
+ The "delta time" will be 0 (as if the game wasn't paused)
+ */
+-(void) resume;
+
+/** The main run loop has stopped. Update methods and other scheduled events won't occur.
+ */
+-(void) stopRunLoop;
+
+/** The main loop has been started.
+ */
+-(void) startRunLoop;
+
+#pragma mark Director - Memory Helper
+
+/** Removes all the cocos2d data that was cached automatically.
+ It will purge the CCTextureCache, CCLabelBMFont cache.
+ IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
+ */
+-(void) purgeCachedData;
+
+/** Called by CCDirector when the projection is updated, and "custom" projection is used */
+-(GLKMatrix4) updateProjection;
+
+#if __CC_PLATFORM_IOS
+/** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+
+#endif // __CC_PLATFORM_IOS
+
+@end
+
 
 /**
  Possible OpenGL projections used by CCDirector.
@@ -57,7 +114,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @class CCFPSLabel;
 @class CCScene;
 @class CCScheduler;
-@class CCActionManager;
 @class CCTransition;
 
 #if __CC_PLATFORM_IOS
@@ -66,7 +122,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 #elif __CC_PLATFORM_MAC
 #define CC_VIEWCONTROLLER NSObject
-#define CC_VIEW NSOpenGLView
+#define CC_VIEW CCViewMacGL
 
 #elif __CC_PLATFORM_ANDROID
 #define CC_VIEWCONTROLLER NSObject
@@ -74,16 +130,14 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 #endif
 
-
-
 /** The director creates and handles the main Window and the Cocos2D view. It also presents Scenes and initiates scene updates and drawing.
  
  CCDirector inherits from CC_VIEWCONTROLLER which is equivalent to UIViewController on iOS, and NSObject on OS X and Android.
 
  Since the CCDirector is a singleton, the standard way to use its methods and properties is:
  
- - `[[CCDirector sharedDirector] methodName];`
- - `[CCDirector sharedDirector].aProperty;`
+ - `[[CCDirector currentDirector] methodName];`
+ - `[CCDirector currentDirector].aProperty;`
 
  The CCDirector is responsible for:
  
@@ -156,15 +210,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	/* window size in pixels */
 	CGSize	_winSizeInPixels;
 
-	/* scheduler associated with this director */
-	CCScheduler *_scheduler;
-
-	/* action manager associated with this director */
-	CCActionManager *_actionManager;
-
-    /* fixed timestep action manager associated with this director */
-    CCActionManager *_actionManagerFixed;
-	
 	NSMutableArray *_rendererPool;
 }
 
@@ -173,10 +218,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
 
 
-/** @name Singleton Accessor */
-
-/** @returns The shared director instance. */
-+(CCDirector*)sharedDirector;
+/** @returns The director for the currently active CCView */
++(CCDirector*)currentDirector;
 
 /** @name Accessing OpenGL Thread */
 
@@ -210,9 +253,9 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Working with View and Projection */
 
-/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCGLView on Android.
-/// @see CCDirectorView
-@property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
+/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
+/// @see CCView
+@property(nonatomic, retain) CC_VIEW<CCView> *view;
 /** Sets an OpenGL projection
  @see CCDirectorProjection
  @see projectionMatrix */
@@ -301,8 +344,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  */
 - (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
-// purposefully undocumented: is the same as calling presentScene:
-- (void) runWithScene:(CCScene*) scene;
 
 /**
  * Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
@@ -347,12 +388,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  */
 -(void) popToRootSceneWithTransition:(CCTransition *)transition;
 
-// purposefully undocumented: is the same as calling presentScene:
--(void) replaceScene: (CCScene*) scene;
-
-// purposefully undocumented: is the same as calling presentScene:withTransition:
-- (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
-
 /**
  *  Pushes the running scene onto the scene stack, and presents the incoming scene, using a transition
  *
@@ -379,22 +414,27 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine.
  @see animationInterval */
 @property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
+
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;
+
 /** Whether or not the Director is paused.
  @see animating
  @see pause
  @see resume */
 @property (nonatomic, readonly,getter=isPaused) BOOL paused;
+
 /** Whether or not the Director is active (animating).
  @see paused
- @see startAnimation
- @see stopAnimation */
+ @see startRunLoop
+ @see stopRunLoop */
 @property (nonatomic, readonly,getter=isAnimating) BOOL animating;
+
 /** How many frames were called since the director started
  @see secondsPerFrame
  @see displayStats */
 @property (nonatomic, readonly) NSUInteger totalFrames;
+
 /** Time it took to render the most recent frames, in seconds per frame.
  @see totalFrames
  @see displayStats */
@@ -418,21 +458,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  */
 -(void) resume;
 
-/** Stops the animation. All scheduled updates and actions are effectively paused. 
-
- When not animating, the director doesn't redraw the view at all. It is best to hide the view when not animating the director.
- If you need to keep showing the director's view use pause instead.
- 
- @see startAnimation
- */
--(void) stopAnimation;
-
-/** Begins drawing the screen. Scheduled timers and actions will run.
- 
- @warning Don't call this function to start the main loop. To run the main loop call presentScene:
- @see stopAnimation */
--(void) startAnimation;
-
 #pragma mark Director - Memory Helper
 
 /** @name Purging Caches */
@@ -441,6 +466,3 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 -(void) purgeCachedData;
 
 @end
-
-// optimization. Should only be used to read it. Never to write it.
-extern CGFloat	__ccContentScaleFactor;

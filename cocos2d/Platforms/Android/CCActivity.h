@@ -9,38 +9,37 @@
 #import "CCMacros.h"
 #if __CC_PLATFORM_ANDROID
 
-#import <BridgeKitV3/BridgeKit.h>
+#import <GLActivityKit/GLActivity.h>
 #import "../../Platforms/CCGL.h"
+#import "CCDirector.h"
 #import "CCProtocols.h"
+#import "CCGLView.h"
 
 @class CCScene;
-@class AndroidRelativeLayout;
-BRIDGE_CLASS("org.cocos2d.CCActivity")
-@interface CCActivity : AndroidActivity <AndroidSurfaceHolderCallback, CCDirectorDelegate>
-@property (readonly, nonatomic) AndroidRelativeLayout *layout;
+@class AndroidAbsoluteLayout;
+@class AndroidDisplayMetrics;
+
+
+@interface CCActivity : GLActivity <AndroidSurfaceHolderCallback, CCDirectorDelegate>
+@property (readonly, nonatomic) AndroidAbsoluteLayout *layout;
+@property (nonatomic, strong) NSDictionary *cocos2dSetupConfig;
+@property (nonatomic, strong) CCGLView<CCView> *glView;
+@property (nonatomic, strong) NSString *startScene;
 + (instancetype)currentActivity;
+
 
 - (void)run;
 
-- (void)onDestroy;
+- (void)scheduleInRunLoop;
 
-- (void)onPause;
-- (void)onResume;
+- (void)applyRequestedOrientation:(NSDictionary *)config;
 
-- (void)onLowMemory;
+- (void)constructViewWithConfig:(NSDictionary *)config andDensity:(float)density;
 
-- (void)surfaceChanged:(JavaObject<AndroidSurfaceHolder> *)holder format:(int)format width:(int)width height:(int)height;
-- (void)surfaceCreated:(JavaObject<AndroidSurfaceHolder> *)holder;
-- (void)surfaceDestroyed:(JavaObject<AndroidSurfaceHolder> *)holder;
-
-- (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event;
-- (BOOL)onKeyUp:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event;
+- (AndroidDisplayMetrics *)getDisplayMetrics;
 
 - (void)runOnGameThread:(dispatch_block_t)block;
 - (void)runOnGameThread:(dispatch_block_t)block waitUntilDone:(BOOL)waitUntilDone;
-
-- (void)setupPaths;
-- (CCScene *)startScene;
 
 - (EGLContext)pushApplicationContext;
 - (void)popApplicationContext:(EGLContext)ctx;

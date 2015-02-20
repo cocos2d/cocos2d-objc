@@ -24,7 +24,6 @@
  *
  */
 
-#import <Foundation/Foundation.h>
 #import "CCProgressNode.h"
 #import "CCActionInterval.h"
 
@@ -32,10 +31,7 @@
  *  This action is for use with the CCProgressNode to control the progression to animation.
  *  @warning The target node must be a CCProgressNode or subclass of CCProgressNode.
  */
-@interface CCActionProgressTo : CCActionInterval <NSCopying> {
-	float _to;
-	float _from;
-}
+@interface CCActionProgressTo : CCActionInterval
 
 /** @name Creating a Progress Action */
 
@@ -66,10 +62,7 @@
  *  This action is for use with the CCProgressNode to control the progression from and to animation.
  *  @warning The target node must be a CCProgressNode or subclass of CCProgressNode.
  */
-@interface CCActionProgressFromTo : CCActionInterval <NSCopying> {
-	float _to;
-	float _from;
-}
+@interface CCActionProgressFromTo : CCActionInterval
 
 /** @name Creating a Progress Action */
 

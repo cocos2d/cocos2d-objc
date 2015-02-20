@@ -25,9 +25,12 @@
 #import "CCRendererBasicTypes.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
-#import "CCCache.h"
 
-//MARK: Blend Option Keys.
+#import "CCCache.h"
+#import "CCDeviceInfo.h"
+#import "ccUtils.h"
+
+#pragma mark Blend Option Keys.
 NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";
 NSString * const CCRenderStateShader = @"CCRenderStateShader";
 NSString * const CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
@@ -40,7 +43,7 @@ NSString * const CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 
-//MARK: Blend Modes.
+#pragma mark Blend Modes.
 @interface CCBlendMode()
 
 -(instancetype)initWithOptions:(NSDictionary *)options;
@@ -200,7 +203,7 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 @end
 
 
-//MARK: Render States.
+#pragma mark Render States.
 
 /// A simple key class for tracking render states.
 /// ivars are unretained so that it doesn't force textures to stay in memory.
@@ -292,18 +295,12 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(self != [CCRenderState class]) return;
 	
 	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
-	CCRENDERSTATE_DEBUGCOLOR = [[CCRenderStateClass alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
+	CCRENDERSTATE_DEBUGCOLOR = [[CCRenderStateClass alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{} copyUniforms:YES];
 }
 
 +(void)flushCache
 {
 	[CCRENDERSTATE_CACHE flush];
-}
-
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
-{
-	// Allocate a new instance of the correct class instead of self. (This method was already deprecated).
-	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
 }
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
@@ -397,7 +394,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-//MARK: CCGraphicsBufferBindings
+#pragma mark CCGraphicsBufferBindings
 
 
 @implementation CCGraphicsBufferBindings
@@ -422,7 +419,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-//MARK: Framebuffer bindings.
+#pragma mark Framebuffer bindings.
 
 
 @implementation CCFrameBufferObject
@@ -432,7 +429,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if((self = [super init])){
 		_texture = texture;
 		
-		_sizeInPixels = texture.contentSizeInPixels;
+		_sizeInPixels = CC_SIZE_SCALE(texture.contentSize, texture.contentScale);
 		_contentScale = texture.contentScale;
 		
 		_depthStencilFormat = depthStencilFormat;
@@ -444,9 +441,9 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 -(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
 {NSAssert(NO, @"Must be overridden.");}
 
--(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+-(void)syncWithView:(CC_VIEW<CCView> *)view;
 {
-	CCDirector *director = [CCDirector sharedDirector];
+	CCDirector *director = view.director;
 	self.sizeInPixels = director.viewSizeInPixels;
 	self.contentScale = director.contentScaleFactor;
 }

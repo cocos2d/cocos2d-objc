@@ -36,8 +36,9 @@ done
 ####################################
 
 tools/appledoc \
---project-name "Cocos2D-Swift v3.3" \
---project-company "v3.3" \
+--templates tools/appledoc-templates/ \
+--project-name "Cocos2D-Swift v3.4" \
+--project-company "v3.4" \
 --company-id "org" \
 ${docsets} \
 --output "${outputPath}" \
@@ -55,6 +56,7 @@ ${docsets} \
 --warn-empty-description \
 --warn-unknown-directive \
 --warn-missing-arg \
+--warn-unsupported-typedef-enum \
 --exit-threshold 2 \
 --verbose 2 \
 --index-desc API-Index.md \
@@ -66,30 +68,16 @@ ${docsets} \
 --ignore Cache.h \
 --ignore CCActionManager.h \
 --ignore CCAtlasNode.h \
---ignore CCBAnimationManager.h \
---ignore CCBKeyFrame.h \
---ignore CCBLocalizationManager.h \
---ignore CCBReader.h \
---ignore CCBSequence.h \
 --ignore CCBSequenceProperty.h \
---ignore CCBuilderReader.h \
---ignore ccConfig.h \
 --ignore CCConfiguration.h \
---ignore ccDeprecated.h \
 --ignore CCDirectorIOS.h \
 --ignore CCDirectorMac.h \
---ignore CCDrawingPrimitives.h \
 --ignore CCEffectDistanceField.h \
---ignore CCES2Renderer.h \
---ignore CCESRenderer.h \
---ignore ccFPSImages.h \
---ignore CCGL.h \
---ignore CCGLProgram.h \
---ignore CCGLView.h \
---ignore CCLabelAtlas.h \
---ignore ccMacros.h \
---ignore CCMetalView.h \
---ignore CCNS.h \
+--ignore CCEffectDFOutline.h \
+--ignore CCEffectDFInnerGlow.h \
+--ignore CCEditText.h \
+--ignore Android/CCGLView.h \
+--ignore Mac/CCGLView.h \
 --ignore CCPackageCocos2dEnabler.h \
 --ignore CCPackageDownload.h \
 --ignore CCPackageDownloadDelegate.h \
@@ -104,24 +92,9 @@ ${docsets} \
 --ignore CCProfiling.h \
 --ignore CCProtocols.h \
 --ignore CCResponderManager.h \
---ignore ccShaders.h \
 --ignore CCSpriteBatchNode.h \
---ignore CCTextureAtlas.h \
 --ignore CCTexturePVR.h \
---ignore CCTouchAndroid.h \
---ignore ccUtils.h \
---ignore CCVertex.h \
---ignore CCWindow.h \
 --ignore CGPointExtension.h \
---ignore cocos2d-ui.h \
---ignore cocos2d.h \
---ignore NSAttributedString+CCAdditions.h \
---ignore NSThread+performBlock.h \
---ignore NSValue+CCRenderer.h \
---ignore OpenGL_Internal.h \
---ignore TGAlib.h \
---ignore TransformUtils.h \
---ignore UITouch+CC.h \
 --ignore uthash.h \
 --ignore utlist.h \
 --ignore ZipUtils.h \

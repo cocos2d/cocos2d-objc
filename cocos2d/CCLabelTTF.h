@@ -25,9 +25,8 @@
  *
  */
 
-#import "CCTexture.h"
 #import "CCSprite.h"
-#import "Platforms/CCNS.h"
+#import "CCProtocols.h"
 
 /**
  CCLabelTTF displays text rendered using a TrueType (TTF, OTF) font.
@@ -88,7 +87,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
++(instancetype) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
 
 /**
  *  Creates and returns a label object using the specified text, font name, font size and dimensions.
@@ -100,7 +99,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
++(instancetype) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
 
 /**
  *  Initializes and returns a label object using the specified text, font name and font size.
@@ -138,7 +137,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithAttributedString:(NSAttributedString *)attrString;
++(instancetype) labelWithAttributedString:(NSAttributedString *)attrString;
 
 /**
  *  Creates and returns a label object using the specified attributed text and dimensions.
@@ -150,7 +149,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
++(instancetype) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
 /**
  *  Initializes and returns a label object using the specified attributed text.

@@ -25,23 +25,17 @@
  * THE SOFTWARE.
  */
 
-#import "Platforms/CCGL.h"
-#import "ccTypes.h"
-#import "CCProtocols.h"
-#import "ccConfig.h"
 #import "CCResponder.h"
 #import "CCScheduler.h"
-#import "CCRenderer.h"
-
+#import "CCDirector.h"
 
 @class CCScene;
-@class CCShader;
-@class CCScheduler;
-@class CCActionManager;
-@class CCAction;
 @class CCPhysicsBody;
-@class CCBAnimationManager;
 @class CCAnimationManager;
+@class CCRenderer;
+@class CCColor;
+@class CCAction;
+@class CCTimer;
 
 /** CCNode is the base class for all objects displayed by Cocos2D. CCNode handles transformations, can have a content size and provides a coordinate system 
  for its child nodes.
@@ -151,90 +145,11 @@
  would only add minimal functionality or just data.
  */
 
-@interface CCNode : CCResponder < CCSchedulerTarget > {
-    
-	// Rotation angle.
-	float _rotationalSkewX, _rotationalSkewY;
-
-	// Scaling factors.
-	float _scaleX, _scaleY;
-
-	// OpenGL real Z vertex.
-	float _vertexZ;
-
-	// Position of the node.
-	CGPoint _position;
-
-	// Skew angles.
-	float _skewX, _skewY;
-
-	// Anchor point in points.
-	CGPoint _anchorPointInPoints;
-    
-	// Anchor point normalized (NOT in points).
-	CGPoint _anchorPoint;
-
-	// Untransformed size of the node.
-	CGSize	_contentSize;
-
-	// Transform.
-	CGAffineTransform _transform, _inverse;
-
-	BOOL _isTransformDirty;
-	BOOL _isInverseDirty;
-
-	// Z-order value.
-	NSInteger _zOrder;
-
-	// Array of children.
-	NSMutableArray *_children;
-
-	// Weak ref to parent.
-	__weak CCNode *_parent;
-
-	// A tag any name you want to assign to the node
-    NSString* _name;
-
-	// User data field.
-	id _userObject;
-
-	// Used to preserve sequence while sorting children with the same zOrder.
-	NSUInteger _orderOfArrival;
-	
-	// True when visible.
-	BOOL _visible;
-
-    // True to ensure reorder.
-	BOOL _isReorderChildDirty;
-	
+@interface CCNode : CCResponder < CCSchedulableTarget > {
+	// TODO
 	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
 	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
-	ccColor4F	_displayColor, _color;
-
-	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
-	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
-	
-@private
-	// Physics Body.
-	CCPhysicsBody* _physicsBody;
-	
-	// Scheduler used to schedule timers and updates/
-	CCScheduler		*_scheduler;
-	
-	// ActionManager used to handle all the actions.
-	CCActionManager	*_actionManager;
-	
-    //Animation Manager used to handle CCB animations
-    CCAnimationManager * _animationManager;
-	
-	// YES if the node is added to an active scene.
-	BOOL _isInActiveScene;
-	
-    // True if paused.
-	BOOL _paused;
-	
-	// Number of paused parent or ancestor nodes.
-	int _pausedAncestors;
+	GLKVector4	_displayColor, _color;
 }
 
 
@@ -245,7 +160,7 @@
 /** Creates and returns a new node.
  @note Not all subclasses support initialization via the `node` initializer. Prefer to use specialized initializers
  in CCNode subclasses, where available. */
-+(id) node;
++(instancetype) node;
 
 // purposefully undocumented: init is inherited from NSObject
 -(id) init;
@@ -515,10 +430,8 @@
  */
 -(void) removeAllChildren;
 
-/** A weak reference to the parent.
- @warning **Never ever change the parent manually!** This must be done exclusively by Cocos2D. This property is not readonly due to historical
- reasons, and this is prone to change. */
-@property(nonatomic,readwrite,weak) CCNode* parent;
+/** A weak reference to the parent. */
+@property(nonatomic, unsafe_unretained) CCNode* parent;
 
 /** Array of child nodes. Used to enumerate child nodes, for instance the following allows you to perform a task on all child nodes with a matching name:
  
@@ -538,6 +451,18 @@
  as a child node to a node that already is in the scene.
  @see CCScene */
 @property(nonatomic, readonly) CCScene *scene;
+
+
+/** The CCView this node is a member of, accessed via the scene and director associated with this node.
+ 
+ @see CCView */
+@property(nonatomic, readonly) CC_VIEW<CCView> *view;
+
+/** The CCDirector this node is a member of, accessed via the node's scene.
+ 
+ @see CCDirector */
+@property(nonatomic, readonly) CCDirector *director;
+
 
 /// -----------------------------------------------------------------------
 /// @name Removing Nodes without stopping Actions/Scheduling (unsafe!)
@@ -646,7 +571,7 @@
 @property(nonatomic, assign) BOOL paused;
 
 /** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
+@property(nonatomic, readonly) BOOL active;
 
 /**
  Has the node run an action.
@@ -676,27 +601,27 @@
  *  Removes an action from the running action list given its tag. If there are multiple actions with the same tag it will
  *  only remove the first action found that has this tag.
  *
- *  @param tag Tag of action to remove.
+ *  @param name Name of the action to remove.
  */
--(void) stopActionByTag:(NSInteger) tag;
+-(void) stopActionByName:(NSString *)name;
 
 /**
  *  Gets an action running on the node given its tag.
  *  If there are multiple actions with the same tag it will get the first action found that has this tag.
  *
- *  @param tag Tag of an action.
+ *  @param name Name of the action.
  *
- *  @return The first action with the given tag, or nil if there's no running action with this tag.
+ *  @return The first action with the given name, or nil if there's no running action with this name.
  *  @see CCAction
  */
--(CCAction*) getActionByTag:(NSInteger) tag;
+-(CCAction*) getActionByName:(NSString *)name;
 
-/** Returns the numbers of actions that are running plus the ones that are scheduled to run (actions in the internal actionsToAdd array).
- @note Composable actions are counted as 1 action. Example:
- - If you are running 2 Sequences each with 7 actions, it will return 2.
- - If you are running 7 Sequences each with 2 actions, it will return 7.
+/**
+ Return a list of all actions associated with this node.
+ 
+ @since v4.0
  */
--(NSUInteger) numberOfRunningActions;
+-(NSArray *) actions;
 
 /// -----------------------------------------------------------------------
 /// @name SpriteBuilder Animation Manager
@@ -807,30 +732,29 @@
 /// -----------------------------------------------------------------------
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
- The matrix is in Pixels.
- @see [CGAffineTransform](https://developer.apple.com/library/ios/documentation/graphicsimaging/reference/CGAffineTransform/index.html)
- @see parentToNodeTransform
+ The matrix is in points.
+ @see [GLKMatrix4](https://developer.apple.com/library/ios/documentation/GLkit/Reference/GLKMatrix4/index.html)
+ @see parentToNodeMatrix
  */
-- (CGAffineTransform)nodeToParentTransform;
+- (GLKMatrix4)nodeToParentMatrix;
 
-/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates. The matrix is in Pixels.
- @see [CGAffineTransform](https://developer.apple.com/library/ios/documentation/graphicsimaging/reference/CGAffineTransform/index.html)
- @see nodeToParentTransform
+/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates. The matrix is in points.
+ @see nodeToParentMatrix
 */
-- (CGAffineTransform)parentToNodeTransform;
+- (GLKMatrix4)parentToNodeMatrix;
 
-/** Returns the world affine transform matrix. The matrix is in Pixels.
- @see [CGAffineTransform](https://developer.apple.com/library/ios/documentation/graphicsimaging/reference/CGAffineTransform/index.html)
- @see nodeToParentTransform
- @see worldToNodeTransform
+/** Returns the world transform matrix. The matrix is in points.
+ @see [GLKMatrix4](https://developer.apple.com/library/ios/documentation/GLkit/Reference/GLKMatrix4/index.html)
+ @see nodeToParentMatrix
+ @see worldToNodeMatrix
 */
-- (CGAffineTransform)nodeToWorldTransform;
+- (GLKMatrix4)nodeToWorldMatrix;
 
-/** Returns the inverse world affine transform matrix. The matrix is in Pixels.
- @see [CGAffineTransform](https://developer.apple.com/library/ios/documentation/graphicsimaging/reference/CGAffineTransform/index.html)
+/** Returns the inverse world transform matrix. The matrix is in points.
+ @see [GLKMatrix4](https://developer.apple.com/library/ios/documentation/GLkit/Reference/GLKMatrix4/index.html)
  @see nodeToWorldTransform
 */
-- (CGAffineTransform)worldToNodeTransform;
+- (GLKMatrix4)worldToNodeMatrix;
 
 /// -----------------------------------------------------------------------
 /// @name Converting Point and Size "Types"
@@ -1000,7 +924,7 @@
  *
  *  @param color Color used for update.
  */
-- (void)updateDisplayedColor:(ccColor4F)color;
+- (void)updateDisplayedColor:(GLKVector4)color;
 
 /// -----------------------------------------------------------------------
 /// @name Opacity (Alpha)
@@ -1036,25 +960,6 @@
  */
 - (void)updateDisplayedOpacity:(CGFloat)opacity;
 
-// purposefully undocumented: method marked deprecated
-/*
- Sets the premultipliedAlphaOpacity property.
- 
- - NO:  opacity will be applied as: `glColor(R,G,B,opacity);`
- - YES: opacity will be applied as: `glColor(opacity, opacity, opacity, opacity);`
- 
- Textures with premultiplied alpha will have this property set to YES by default. Otherwise the default value is NO.
- 
- @param boolean Enables or disables setting of opacity with color.
- */
--(void) setOpacityModifyRGB:(BOOL)boolean __attribute__((deprecated));
-
-// purposefully undocumented: method marked deprecated
-/* Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
- */
--(BOOL) doesOpacityModifyRGB __attribute__((deprecated));
-
-
 /// -----------------------------------------------------------------------
 /// @name Rendering (Implemented in Subclasses)
 /// -----------------------------------------------------------------------
@@ -1070,6 +975,13 @@
  @see CCRenderer
  */
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+
+// purposefully undocumented: internal method, users should prefer to implement draw:transform:
+/* Recursive method that visit its children and draw them.
+ * @param renderer The CCRenderer instance to use for drawing.
+ * @param parentTransform The parent node's transform.
+ */
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 
 // purposefully undocumented: users needn't override/implement visit in their own subclasses
 /* Calls visit:parentTransform: using the current renderer and projection. */
@@ -1129,21 +1041,3 @@
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
 
 @end
-
-
-@interface CCNode(NoARC)
-
-// purposefully undocumented: internal method, users should prefer to implement draw:transform:
-/* Returns the 4x4 drawing transformation for this node. Only useful when overriding `visit:parentTransform:`
- @param parentTransform The parent node's transform. */
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
-
-// purposefully undocumented: internal method, users should prefer to implement draw:transform:
-/* Recursive method that visit its children and draw them.
- * @param renderer The CCRenderer instance to use for drawing.
- * @param parentTransform The parent node's transform.
- */
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
-
-@end
-

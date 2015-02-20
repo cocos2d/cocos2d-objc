@@ -8,7 +8,7 @@
 
 #import "CCBReader.h"
 
-#define kCCBVersion 10
+#define kCCBVersion 11
 
 enum {
     kCCBPropTypePosition = 0,
@@ -42,8 +42,8 @@ enum {
     kCCBPropTypeColor4,
     kCCBPropTypeNodeReference,
     kCCBPropTypeFloatCheck,
-	kCCBPropTypeEffects,
-    
+    kCCBPropTypeEffects,
+    kCCBPropTypeTokenArray
 };
 
 enum {
@@ -89,7 +89,3 @@ enum
     kCCBKeyframeEasingBackOut,
     kCCBKeyframeEasingBackInOut,
 };
-
-@interface CCBReader ()
-
-@end

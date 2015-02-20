@@ -835,6 +835,9 @@ extern "C" {
 #define GLKMatrix4Multiply CCMatrix4Multiply
 #define GLKMatrix4Add CCMatrix4Add
 #define GLKMatrix4Subtract CCMatrix4Subtract
+#define GLKMatrix4Translate CCMatrix4Translate
+#define GLKMatrix4TranslateWithVector3 CCMatrix4TranslateWithVector3
+#define GLKMatrix4TranslateWithVector4 CCMatrix4TranslateWithVector4
 #define GLKMatrix4Scale CCMatrix4Scale
 #define GLKMatrix4ScaleWithVector3 CCMatrix4ScaleWithVector3
 #define GLKMatrix4ScaleWithVector4 CCMatrix4ScaleWithVector4

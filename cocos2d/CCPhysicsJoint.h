@@ -54,6 +54,10 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
 +(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA
                                           bodyB:(CCPhysicsBody *)bodyB
                                         anchorA:(CGPoint)anchorA;
+// needed for Swift
+-(CCPhysicsJoint *)initWithPivotJointWithBodyA:(CCPhysicsBody *)bodyA
+                                         bodyB:(CCPhysicsBody *)bodyB
+                                       anchorA:(CGPoint)anchorA;
 
 /// -----------------------------------------------------------------------
 /// @name Creating Distance Joints
@@ -76,6 +80,11 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                              bodyB:(CCPhysicsBody *)bodyB
                                            anchorA:(CGPoint)anchorA
                                            anchorB:(CGPoint)anchorB;
+// needed for Swift
+-(CCPhysicsJoint *)initWithDistanceJointWithBodyA:(CCPhysicsBody *)bodyA
+                                            bodyB:(CCPhysicsBody *)bodyB
+                                          anchorA:(CGPoint)anchorA
+                                          anchorB:(CGPoint)anchorB;
 
 /**
  *  Creates and returns a pivot joint between the two bodies and keeps the distance of the two anchor points within the range.
@@ -97,6 +106,13 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                            anchorB:(CGPoint)anchorB
                                        minDistance:(CGFloat)min
                                        maxDistance:(CGFloat)max;
+// needed for Swift
+-(CCPhysicsJoint *)initWithDistanceJointWithBodyA:(CCPhysicsBody *)bodyA
+                                            bodyB:(CCPhysicsBody *)bodyB
+                                          anchorA:(CGPoint)anchorA
+                                          anchorB:(CGPoint)anchorB
+                                      minDistance:(CGFloat)min
+                                      maxDistance:(CGFloat)max;
 
 /// -----------------------------------------------------------------------
 /// @name Creating Spring Joints
@@ -124,6 +140,14 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                       restLength:(CGFloat)restLength
                                        stiffness:(CGFloat)stiffness
                                          damping:(CGFloat)damping;
+// needed for Swift
+-(CCPhysicsJoint *)initWithSpringJointWithBodyA:(CCPhysicsBody *)bodyA
+                                          bodyB:(CCPhysicsBody *)bodyB
+                                        anchorA:(CGPoint)anchorA
+                                        anchorB:(CGPoint)anchorB
+                                     restLength:(CGFloat)restLength
+                                      stiffness:(CGFloat)stiffness
+                                        damping:(CGFloat)damping;
 
 /**
  *  Creates and returns a rotary spring joint between the two bodies. 
@@ -143,10 +167,12 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                              restAngle:(CGFloat)restAngle
                                              stiffness:(CGFloat)stiffness
                                                damping:(CGFloat)damping;
-
-
-// This method was misspelled. Please change "stifness" to "stiffness".
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping __attribute__((deprecated));
+// needed for Swift
+-(CCPhysicsJoint *)initWithRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA
+                                                bodyB:(CCPhysicsBody *)bodyB
+                                            restAngle:(CGFloat)restAngle
+                                            stiffness:(CGFloat)stiffness
+                                              damping:(CGFloat)damping;
 
 
 /// -----------------------------------------------------------------------
@@ -167,6 +193,10 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
 +(CCPhysicsJoint *)connectedMotorJointWithBodyA:(CCPhysicsBody *)bodyA
                                           bodyB:(CCPhysicsBody *)bodyB
                                            rate:(CGFloat)rate;
+// needed for Swift
+-(CCPhysicsJoint *)initWithMotorJointWithBodyA:(CCPhysicsBody *)bodyA
+                                         bodyB:(CCPhysicsBody *)bodyB
+                                          rate:(CGFloat)rate;
 
 
 /// -----------------------------------------------------------------------
@@ -189,6 +219,11 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                                 bodyB:(CCPhysicsBody *)bodyB
                                                   min:(CGFloat)min
                                                   max:(CGFloat)max;
+// needed for Swift
+-(CCPhysicsJoint *)initWithRotaryLimitJointWithBodyA:(CCPhysicsBody *)bodyA
+                                               bodyB:(CCPhysicsBody *)bodyB
+                                                 min:(CGFloat)min
+                                                 max:(CGFloat)max;
 
 
 /// -----------------------------------------------------------------------
@@ -212,6 +247,11 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                             bodyB:(CCPhysicsBody *)bodyB
                                             phase:(CGFloat)phase
                                           ratchet:(CGFloat)ratchet;
+// needed for Swift
+-(CCPhysicsJoint *)initWithRatchetJointWithBodyA:(CCPhysicsBody *)bodyA
+                                           bodyB:(CCPhysicsBody *)bodyB
+                                           phase:(CGFloat)phase
+                                         ratchet:(CGFloat)ratchet;
 
 /// -----------------------------------------------------------------------
 /// @name Removing a Physics Joint

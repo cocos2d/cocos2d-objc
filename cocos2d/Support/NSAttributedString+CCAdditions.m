@@ -25,10 +25,16 @@
  *
  */
 
-#import "NSAttributedString+CCAdditions.h"
-#import "ccMacros.h"
-#import "cocos2d.h"
+
 #import <CoreText/CoreText.h>
+
+#import "ccMacros.h"
+
+#import "NSAttributedString+CCAdditions.h"
+
+#import "CCDirector.h"
+#import "CCColor.h"
+
 
 BOOL NSMutableAttributedStringSetDefaultAttribute(NSMutableAttributedString *attrString, NSString*attr, id defaultValue);
 CGColorRef CGColorCreateWithPlatformSpecificColor(id platformColor);
@@ -75,7 +81,7 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
-    CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 

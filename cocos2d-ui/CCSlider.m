@@ -6,9 +6,15 @@
 //
 //
 
+#import "ccMacros.h"
+
 #import "CCSlider.h"
 #import "CCControlSubclass.h"
 #import "CCTouch.h"
+#import "CCSprite.h"
+#import "CCSprite9Slice.h"
+#import "CCSpriteFrameCache.h"
+#import "NSEvent+CC.h"
 
 @interface CCSlider (Inputs)
 - (void) inputEnteredWithWorlPos:(CGPoint)worldLocation;
@@ -127,13 +133,17 @@
     [self inputUpOutside];
 }
 
-- (void) mouseDragged:(NSEvent*)event
+- (void) mouseDragged:(NSEvent*)event button:(CCMouseButton) button
 {
+    if(button != CCMouseButtonLeft){
+        return;
+    }
+    
     CGPoint dragPos = [event locationInNode:self];
     
     [self inputDraggedWithPos:dragPos];
     
-    [super mouseDragged:event];
+    [super mouseDragged:event button: button];
 }
 
 #endif
@@ -142,7 +152,7 @@
 
 - (void) inputEnteredWithWorlPos:(CGPoint)worldLocation
 {
-    if ([_handle hitTestWithWorldPos:worldLocation])
+    if ([_handle clippedHitTestWithWorldPos:worldLocation])
     {
         // Touch down in slider handle
         _draggingHandle = YES;

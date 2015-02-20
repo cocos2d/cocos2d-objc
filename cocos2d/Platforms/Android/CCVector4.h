@@ -382,9 +382,9 @@ extern "C" {
                                   *(float32x4_t *)&vector);
         float32x2_t v2 = vpadd_f32(vget_low_f32(v), vget_high_f32(v));
         v2 = vpadd_f32(v2, v2);
-        return sqrt(vget_lane_f32(v2, 0));
+        return sqrtf(vget_lane_f32(v2, 0));
 #else
-        return sqrt(vector.v[0] * vector.v[0] +
+        return sqrtf(vector.v[0] * vector.v[0] +
                     vector.v[1] * vector.v[1] +
                     vector.v[2] * vector.v[2] +
                     vector.v[3] * vector.v[3]);

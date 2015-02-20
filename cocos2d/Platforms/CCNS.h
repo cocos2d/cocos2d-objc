@@ -24,39 +24,18 @@
  * THE SOFTWARE.
  */
 
-//
-// Common layer for NS (Next-Step) stuff
-//
+#import "ccTypes.h"
 
-#import "../ccMacros.h"
-
-#import <Foundation/Foundation.h> //	for NSObject
-
-//#if __CC_PLATFORM_IOS 
-//
-//#define CCRectFromString(__r__)		CGRectFromString(__r__)
-//#define CCPointFromString(__p__)	CGPointFromString(__p__)
-//#define CCSizeFromString(__s__)		CGSizeFromString(__s__)
-//#define CCNSSizeToCGSize
-//#define CCNSRectToCGRect
-//#define CCNSPointToCGPoint
-
-//#elif __CC_PLATFORM_ANDROID
-
-#if __CC_PLATFORM_ANDROID || __CC_PLATFORM_IOS
-
-#if 1
-//#ifndef __CC_CG_STRING_UTILS
+#ifndef __CC_CG_STRING_UTILS
 #define __CC_CG_STRING_UTILS
+
 
 static inline NSString *CCNSStringFromCGPoint(CGPoint point);
 static inline NSString *CCNSStringFromCGSize(CGSize size);
 static inline NSString *CCNSStringFromCGRect(CGRect rect);
-static inline NSString *CCNSStringFromCGAffineTransform(CGAffineTransform transform);
 static inline CGPoint CCCGPointFromString(NSString *string);
 static inline CGSize CCCGSizeFromString(NSString *string);
 static inline CGRect CCCGRectFromString(NSString *string);
-static inline CGAffineTransform CCCGAffineTransformFromString(NSString *string);
 
 static inline NSArray *CGFloatArrayFromString(NSString *string) {
     static NSCharacterSet *ignoredCharacters = nil;
@@ -106,20 +85,6 @@ static inline CGRect CCCGRectFromString(NSString *string) {
     }
 }
 
-static inline CGAffineTransform CCCGAffineTransformFromString(NSString *string) {
-    NSArray *components = CGFloatArrayFromString(string);
-    if ([components count] == 6) {
-        return CGAffineTransformMake([[components objectAtIndex:0] floatValue],
-                                     [[components objectAtIndex:1] floatValue],
-                                     [[components objectAtIndex:2] floatValue],
-                                     [[components objectAtIndex:3] floatValue],
-                                     [[components objectAtIndex:4] floatValue],
-                                     [[components objectAtIndex:5] floatValue]);
-    } else {
-        return CGAffineTransformIdentity;
-    }
-}
-
 static inline NSString *CCNSStringFromCGRect(CGRect r)
 {
     return [NSString stringWithFormat:@"{{%g, %g}, {%g, %g}}", r.origin.x, r.origin.y, r.size.width, r.size.height];
@@ -135,11 +100,7 @@ static inline NSString *CCNSStringFromCGSize(CGSize size)
     return [NSString stringWithFormat:@"{%g, %g}", size.width, size.height];
 }
 
-static inline NSString *CCNSStringFromCGAffineTransform(CGAffineTransform m)
-{
-    return [NSString stringWithFormat:@"[%g, %g, %g, %g, %g, %g]", m.a, m.b, m.c, m.d, m.tx, m.ty];
-}
-
+#if __CC_PLATFORM_ANDROID || __CC_PLATFORM_IOS
 
 #define CCRectFromString(__r__)		CCCGRectFromString(__r__)
 #define CCPointFromString(__p__)	CCCGPointFromString(__p__)
@@ -148,7 +109,6 @@ static inline NSString *CCNSStringFromCGAffineTransform(CGAffineTransform m)
 #define CCNSRectToCGRect
 #define CCNSPointToCGPoint
 
-#endif
 
 #elif __CC_PLATFORM_MAC
 
@@ -158,6 +118,7 @@ static inline NSString *CCNSStringFromCGAffineTransform(CGAffineTransform m)
 #define CCNSSizeToCGSize			NSSizeToCGSize
 #define CCNSRectToCGRect			NSRectToCGRect
 #define CCNSPointToCGPoint			NSPointToCGPoint
+
 #endif
 
-
+#endif //__CC_CG_STRING_UTILS

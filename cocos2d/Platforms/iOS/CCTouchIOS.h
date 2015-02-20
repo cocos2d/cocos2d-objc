@@ -10,10 +10,12 @@
 
 #if __CC_PLATFORM_IOS
 
+@class CCViewiOSGL;
+
 @interface CCTouchIOS : CCTouch
 
-- (CGPoint)locationInView:(CCGLView *)view;
-- (CGPoint)previousLocationInView:(CCGLView *)view;
+- (CGPoint)locationInView:(CCViewiOSGL *)view;
+- (CGPoint)previousLocationInView:(CCViewiOSGL *)view;
 
 @end
 

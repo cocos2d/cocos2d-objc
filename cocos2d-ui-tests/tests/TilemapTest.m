@@ -75,22 +75,30 @@
 
 -(void) setupTilemap1Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-test1.tmx"];
+    [self testForMapNamed:@"TileMaps/orthogonal-test1.tmx"];
 }
 
 -(void) setupTilemap2Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
+    self.subTitle = @"Testing flipped and rotated tiles.";
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
+}
+
+-(void) setupTiled091Test
+{
+    self.subTitle = @"Tilemap generated in new Tiled version 0.9.1.\nBase 64 encoded gzip data";
+    [self testForMapNamed:@"TileMaps/tiled-v091.tmx"];
 }
 
 -(void) setupTilemap3Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-testLarge.tmx"];
+    [self testForMapNamed:@"TileMaps/orthogonal-testLarge.tmx"];
 }
 
 -(void) setupTilemap4Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-desert-obscenely-large.tmx"];
+    self.subTitle = @"Testing an extremely large tilemap.";
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-obscenely-large.tmx"];
 }
 
 -(void) setupTilemap5Test
@@ -110,20 +118,36 @@
 
 -(void) setupTilemap6Test
 {
-	[self testForMapNamed:@"TileMaps/iso-test-bug787.tmx"];
+    self.subTitle = @"Isometric tile map example";
+
+    [self testForMapNamed:@"TileMaps/iso-test-bug787.tmx"];
 }
 
 -(void) setupTilemap7Test
 {
-	// These files are in the SB directories.
-	self.subTitle = @"TileMaps/orthogonal_resolution.tmx";
-	
-	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
-	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
-	scroll.flipYCoordinates = NO;
-	
-	[self.contentNode addChild:scroll];
-	scroll.scrollPosition = ccp(map.contentSizeInPoints.width/2 - scroll.contentSizeInPoints.width/2, 0);
+    // These files are in the SB directories.
+    self.subTitle = @"TileMaps/orthogonal_resolution.tmx";
+
+    CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+    CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+    scroll.flipYCoordinates = NO;
+
+    [self.contentNode addChild:scroll];
+    scroll.scrollPosition = ccp(map.contentSizeInPoints.width/2 - scroll.contentSizeInPoints.width/2, 0);
+}
+
+
+-(void) setupIsoTilemapAutomaticZTest
+{
+    self.subTitle = @"Isometric-Automatic Vertex Z";
+    [self testForMapNamed:@"TileMaps/iso-automaticZ.tmx"];
+}
+
+
+-(void) setupOrthoTilemapAutomaticZTest
+{
+    self.subTitle = @"Ortho-Automatic Vertex Z";
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-automaticZ.tmx"];
 }
 
 @end

@@ -13,15 +13,18 @@
 #import "CCDirector_Private.h"
 
 #import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "../../CCDeviceInfo.h"
 #import "CCRenderer_Private.h"
 #import "CCTouch.h"
+
+#import "ccUtils.h"
+#import "CCActivity.h"
+
 
 
 #pragma mark -
@@ -41,17 +44,6 @@
 
 @implementation CCDirectorAndroid
 
-- (id) init
-{
-	if( (self=[super init]) ) {
-		// main thread
-		_runningThread = [NSThread currentThread];
-	}
-    
-	return self;
-}
-
-
 -(void) setViewport
 {
 	CGSize size = _winSizeInPixels;
@@ -61,9 +53,7 @@
 -(void) setProjection:(CCDirectorProjection)projection
 {
 	CGSize sizePoint = _winSizeInPoints;
-    
-	[self setViewport];
-    
+        
 	switch (projection) {
 		case CCDirectorProjection2D:
 			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
@@ -75,9 +65,13 @@
                                                    GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
                                                    GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
                                                    );
+            break;
+        }
             
+        case CCDirectorProjectionCustom:
+			if( [_delegate respondsToSelector:@selector(updateProjection)] )
+				_projectionMatrix = [_delegate updateProjection];
 			break;
-		}
             
 		default:
 			CCLOG(@"cocos2d: Director: unrecognized projection");
@@ -85,30 +79,14 @@
 	}
     
 	_projection = projection;
-	[self createStatsLabel];
 }
+
 
 // override default logic
-- (void) runWithScene:(CCScene*) scene
+- (void)antiFlickrDrawCall
 {
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
-	
-	[self pushScene:scene];
-    
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-}
-
-// overriden, don't call super
--(void) reshapeProjection:(CGSize)size
-{
-	_winSizeInPixels = size;
-	_winSizeInPoints = CGSizeMake(size.width/__ccContentScaleFactor, size.height/__ccContentScaleFactor);
-	
-	[self setProjection:_projection];
-    
-    [self.runningScene viewDidResizeTo: _winSizeInPoints];
+//    NSThread *thread = [self runningThread];
+//    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
@@ -116,7 +94,7 @@
 	[super end];
 }
 
--(void) setView:(CCGLView *)view
+-(void) setView:(CCGLView<CCView> *)view
 {
 		[super setView:view];
 		if( view ) {
@@ -132,6 +110,17 @@
     [[CCActivity currentActivity] runOnGameThread:block];
 }
 
+// Unlike iOS, GL isn't initialized on Android before the config is read
+// Here we can perform the necessary configuration functions that operate on a GL context
+- (void) onGLInitialization
+{
+    [self setViewport];
+    [self createStatsLabel];
+
+	[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"GL_INITIALIZED" object:nil];
+}
 @end
 
 
@@ -144,7 +133,7 @@
 {
     EGLContext *ctx = [[CCActivity currentActivity] pushApplicationContext];
     
-	[self drawScene];
+	[self mainLoopBody];
     
     [[CCActivity currentActivity] popApplicationContext:ctx];
 }
@@ -154,14 +143,14 @@
 	_animationInterval = interval;
 	if(_displayLink)
     {
-		[self stopAnimation];
-		[self startAnimation];
+		[self stopRunLoop];
+		[self startRunLoop];
 	}
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
     
     if(_animating)
         return;
@@ -181,14 +170,14 @@
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
     
-    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    if([_delegate respondsToSelector:@selector(stopRunLoop)])
     {
-        [_delegate stopAnimation];
+        [_delegate stopRunLoop];
     }
     
 	CCLOG(@"cocos2d: animation stopped");

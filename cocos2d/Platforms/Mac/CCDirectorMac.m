@@ -26,7 +26,7 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
 #import <sys/time.h>
@@ -34,12 +34,12 @@
 #import "CCDirectorMac.h"
 #import "CCWindow.h"
 
-#import "../../CCNode.h"
-#import "../../CCScene.h"
-#import "../../CCScheduler.h"
-#import "../../ccMacros.h"
-#import "../../CCShader.h"
-#import "../../ccFPSImages.h"
+#import "CCNode.h"
+#import "CCScene.h"
+#import "CCScheduler.h"
+#import "ccMacros.h"
+#import "CCShader.h"
+#import "ccFPSImages.h"
  
 
 #import "CCDirector_Private.h"
@@ -80,7 +80,7 @@
 {
 	if( (self = [super init]) ) {
 		_isFullScreen = NO;
-		_resizeMode = kCCDirectorResize_AutoScale;
+		_resizeMode = kCCDirectorResize_NoScale;
 
 		_originalWinSizeInPoints = CGSizeZero;
 		_fullScreenWindow = nil;
@@ -117,7 +117,7 @@
     if (_isFullScreen == fullscreen)
 		return;
 
-    CC_VIEW<CCDirectorView> *view = self.view;
+    CC_VIEW<CCView> *view = self.view;
     BOOL viewAcceptsTouchEvents = view.acceptsTouchEvents;
 
     if( fullscreen ) {
@@ -173,6 +173,8 @@
         self.view.wantsBestResolutionOpenGLSurface = YES;
 
     }
+    // issue #681
+    [_windowGLView keyDown:nil];
 	
 	// issue #1189
 	[_windowGLView makeFirstResponder:view];
@@ -195,7 +197,7 @@
 #endif
 }
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 		[super setView:view];
 
@@ -204,6 +206,16 @@
 		{
 			_originalWinSizeInPoints = _winSizeInPoints;
 		}
+}
+
+- (CGFloat)deviceContentScaleFactor {
+    if (self.view) {
+        NSRect backingBounds = [self.view convertRectToBacking:[self.view bounds]];
+        
+        return backingBounds.size.width / self.view.bounds.size.width;
+    }
+    
+    return 1.0;
 }
 
 -(int) resizeMode
@@ -254,7 +266,7 @@
 -(void) setProjection:(CCDirectorProjection)projection
 {
 	CGSize sizePoint = _winSizeInPoints;
-	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
+   	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
 		sizePoint = _originalWinSizeInPoints;
 	}
 
@@ -267,33 +279,7 @@
 
 
 		case CCDirectorProjection3D: {
-//			float zeye = [self getZEye];
-//
-//			kmGLMatrixMode(KM_GL_PROJECTION);
-//			kmGLLoadIdentity();
-//
-//			kmMat4 matrixPerspective, matrixLookup;
-//
-//			// issue #1334
-//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, MAX(zeye*2,1500) );
-////			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
-//
-//
-//			kmGLMultMatrix(&matrixPerspective);
-//
-//
-//			kmGLMatrixMode(KM_GL_MODELVIEW);
-//			kmGLLoadIdentity();
-//			kmVec3 eye, center, up;
-//
-//			float eyeZ = size.height * zeye / size.height;
-//
-//			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
-//			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
-//			kmVec3Fill( &up, 0, 1, 0);
-//			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-//			kmGLMultMatrix(&matrixLookup);
-//			break;
+
 		}
 
 		case CCDirectorProjectionCustom:
@@ -331,61 +317,6 @@
 	return 1.0;
 }
 
-//- (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
-//{
-//	CGPoint ret;
-//
-//	if( _resizeMode == kCCDirectorResize_NoScale )
-//		ret = coords;
-//
-//	else {
-//
-//		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
-//		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
-//
-//		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
-//		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
-//
-//		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );
-//	}
-//
-//	return ret;
-//}
-//
-//-(CGPoint)convertToGL:(CGPoint)uiPoint
-//{
-//    NSPoint point = [[self view] convertPoint:uiPoint fromView:nil];
-//	CGPoint p = NSPointToCGPoint(point);
-//    
-//	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
-//}
-//
-//- (CGPoint) unConvertFromLogicalCoordinates:(CGPoint)coords
-//{
-//	CGPoint ret;
-//	
-//	if( _resizeMode == kCCDirectorResize_NoScale )
-//		ret = coords;
-//	
-//	else {
-//		
-//		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
-//		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
-//		
-//		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
-//		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
-//		
-//		ret = CGPointMake(  (coords.x+ adjust_x)/x_diff, (coords.y +adjust_y)/y_diff );
-//	}
-//	
-//	return ret;
-//}
-//
-//- (CGPoint) convertToUI:(CGPoint)glPoint
-//{
-//	return [self unConvertFromLogicalCoordinates:glPoint];
-//}
-
 #pragma mark helper
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
@@ -418,19 +349,7 @@
 {
     @autoreleasepool
     {
-#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD)
-        if( ! _runningThread )
-            _runningThread = [NSThread currentThread];
-
-		[self drawScene];
-
-		// Process timers and other events
-		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
-
-			
-#else
-		[self performSelector:@selector(drawScene) onThread:_runningThread withObject:nil waitUntilDone:YES];
-#endif
+		[self performSelector:@selector(mainLoopBody) onThread:_runningThread withObject:nil waitUntilDone:YES];
 
         return kCVReturnSuccess;
     }
@@ -443,20 +362,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     return result;
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
 	
     if(_animating)
         return;
 
-	CCLOG(@"cocos2d: startAnimation");
-#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
-	_runningThread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
-	[_runningThread start];
-#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
+	CCLOG(@"cocos2d: startRunLoop");
     _runningThread = [NSThread mainThread];
-#endif
 
 	gettimeofday( &_lastUpdate, NULL);
 
@@ -467,7 +381,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, (__bridge void *)(self));
 
 	// Set the display link for the current renderer
-	CCGLView *openGLview = (CCGLView*) self.view;
+	CCViewMacGL *openGLview = (CCViewMacGL*) self.view;
 	CGLContextObj cglContext = [[openGLview openGLContext] CGLContextObj];
 	CGLPixelFormatObj cglPixelFormat = [[openGLview pixelFormat] CGLPixelFormatObj];
 	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
@@ -478,25 +392,19 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
 
-	CCLOG(@"cocos2d: stopAnimation");
+	CCLOG(@"cocos2d: stopRunLoop");
 
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
 		displayLink = NULL;
 
-#if CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD
-		[_runningThread cancel];
-		[_runningThread release];
-		_runningThread = nil;
-#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
         _runningThread = nil;
-#endif
 	}
     
     _animating = NO;
@@ -527,7 +435,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 // set the event dispatcher
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 	// Synchronize buffer swaps with vertical refresh rate
 	[[view openGLContext] makeCurrentContext];

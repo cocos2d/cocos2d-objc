@@ -29,22 +29,16 @@
 
 #import "CCResponderManager.h"
 #import "CCNode.h"
-#import "CCDirector.h"
+#import "CCDirector_Private.h"
 #import "CCDirectorMac.h"
 #import "CCScene.h"
 #import "CCTouch.h"
-
-// -----------------------------------------------------------------
-#pragma mark -
-// -----------------------------------------------------------------
 
 @implementation CCRunningResponder
 
 @end
 
-// -----------------------------------------------------------------
 #pragma mark -
-// -----------------------------------------------------------------
 
 @implementation CCResponderManager
 {
@@ -54,26 +48,21 @@
     BOOL _currentEventProcessed;                                    // current event was processed
     BOOL _enabled;                                                  // responder manager enabled
     BOOL _exclusiveMode;                                            // manager only responds to current exclusive responder
+    __weak CCDirector *_director;
     
     NSMutableArray *_runningResponderList;                          // list of running responders
 }
 
-// -----------------------------------------------------------------
 #pragma mark - create and destroy
-// -----------------------------------------------------------------
 
-+ (id)responderManager
-{
-    return([[self alloc] init]);
-}
-
-- (id)init
+- (id)initWithDirector:(CCDirector *)director
 {
     self = [super init];
     NSAssert(self, @"Unable to create class");
     
     // initalize
     _runningResponderList = [NSMutableArray array];
+    _director = director;
     
     // reset touch handling
     [self removeAllResponders];
@@ -85,22 +74,23 @@
     return(self);
 }
 
-// -----------------------------------------------------------------
 
 - (void)discardCurrentEvent
 {
     _currentEventProcessed = NO;
 }
 
-// -----------------------------------------------------------------
 #pragma mark - add and remove touch responders
-// -----------------------------------------------------------------
 
 - (void)buildResponderList
 {
     // rebuild responder list
     [self removeAllResponders];
-    [self buildResponderList:[CCDirector sharedDirector].runningScene];
+    
+    NSAssert(_director, @"Missing current director. Probably not bound.");
+    NSAssert(_director.runningScene, @"Missing current running scene.");
+    
+    [self buildResponderList:_director.runningScene];
     _dirty = NO;
 }
 
@@ -129,7 +119,6 @@
     if (shouldAddNode) [self addResponder:node];
 }
 
-// -----------------------------------------------------------------
 
 - (void)addResponder:(CCNode *)responder
 {
@@ -152,18 +141,14 @@
     _exclusiveMode = NO;
 }
 
-// -----------------------------------------------------------------
 #pragma mark - dirty
-// -----------------------------------------------------------------
 
 - (void)markAsDirty
 {
     _dirty = YES;
 }
 
-// -----------------------------------------------------------------
 #pragma mark - enabled
-// -----------------------------------------------------------------
 
 - (void)setEnabled:(BOOL)enabled
 {
@@ -176,9 +161,7 @@
     }
 }
 
-// -----------------------------------------------------------------
 #pragma mark - nodes at specific positions
-// -----------------------------------------------------------------
 
 - (CCNode *)nodeAtPoint:(CGPoint)pos
 {
@@ -219,9 +202,7 @@
     return(result);
 }
 
-// -----------------------------------------------------------------
 #pragma mark - iOS touch handling -
-// -----------------------------------------------------------------
 
 //#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
@@ -232,7 +213,7 @@
 
     // End editing any text fields
 #if __CC_PLATFORM_IOS
-    [[CCDirector sharedDirector].view endEditing:YES];
+    [_director.view endEditing:YES];
 #endif
     BOOL responderCanAcceptTouch;
     
@@ -241,7 +222,7 @@
     // go through all touches
     for (CCTouch *touch in touches)
     {
-        CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:(CCGLView*)[CCDirector sharedDirector].view]];
+        CGPoint worldTouchLocation = [_director convertToGL:[touch locationInView:(CC_VIEW<CCView>*)_director.view]];
         
         // scan backwards through touch responders
         for (int index = _responderListCount - 1; index >= 0; index --)
@@ -249,7 +230,7 @@
             CCNode *node = _responderList[index];
             
             // check for hit test
-            if ([node hitTestWithWorldPos:worldTouchLocation])
+            if ([node clippedHitTestWithWorldPos:worldTouchLocation])
             {
                 // check if node has exclusive touch
                 if (node.isExclusiveTouch)
@@ -290,7 +271,6 @@
     }
 }
 
-// -----------------------------------------------------------------
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(CCTouchEvent *)event
 {
@@ -318,7 +298,7 @@
             else
             {
                 // as node does not lock touch, check if it was moved outside
-                if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:(CCGLView*)[CCDirector sharedDirector].view]]])
+                if (![node clippedHitTestWithWorldPos:[_director convertToGL:[touch locationInView:_director.view]]])
                 {
                     // cancel the touch
                     if ([node respondsToSelector:@selector(touchCancelled:withEvent:)])
@@ -347,7 +327,7 @@
                     CCNode *node = _responderList[index];
                     
                     // if the touch responder does not lock touch, it will receive a touchBegan if a touch is moved inside
-                    if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:(CCGLView*)[CCDirector sharedDirector].view ]]])
+                    if (!node.claimsUserInteraction  && [node clippedHitTestWithWorldPos:[_director convertToGL:[touch locationInView:_director.view ]]])
                     {
                         // check if node has exclusive touch
                         if (node.isExclusiveTouch)
@@ -374,7 +354,6 @@
     }
 }
 
-// -----------------------------------------------------------------
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(CCTouchEvent *)event
 {
@@ -403,7 +382,6 @@
     }
 }
 
-// -----------------------------------------------------------------
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(CCTouchEvent *)event
 {
@@ -426,11 +404,9 @@
     }
 }
 
-// -----------------------------------------------------------------
 #pragma mark - iOS helper functions
-// -----------------------------------------------------------------
-// finds a responder object for a touch
 
+// finds a responder object for a touch
 - (CCRunningResponder *)responderForTouch:(CCTouch *)touch
 {
     for (CCRunningResponder *touchEntry in _runningResponderList)
@@ -441,9 +417,7 @@
     return(nil);
 }
 
-// -----------------------------------------------------------------
 // adds a responder object ( running responder ) to the responder object list
-
 - (void)addResponder:(CCNode *)node withTouch:(CCTouch *)touch andEvent:(CCTouchEvent *)event
 {
     CCRunningResponder *touchEntry;
@@ -456,7 +430,6 @@
     [_runningResponderList addObject:touchEntry];
 }
 
-// -----------------------------------------------------------------
 // cancels a running responder
 
 - (void)cancelResponder:(CCRunningResponder *)responder
@@ -470,115 +443,51 @@
     [_runningResponderList removeObject:responder];
 }
 
-// -----------------------------------------------------------------
 
 #elif __CC_PLATFORM_MAC
 
-// -----------------------------------------------------------------
 #pragma mark - Mac mouse handling -
-// -----------------------------------------------------------------
 
 - (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button
-{    
+{
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
     
-    // scan backwards through mouse responders
-    for (int index = _responderListCount - 1; index >= 0; index --)
-    {
-        CCNode *node = _responderList[index];
-        
-        // check for hit test
-        if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
-        {
-            // begin the mouse down
-            _currentEventProcessed = YES;
-            switch (button)
-            {
-                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
-                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)]) [node rightMouseDown:theEvent]; break;
-                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)]) [node otherMouseDown:theEvent]; break;
-            }
-            
-            // if mouse was processed, remember it and break
-            if (_currentEventProcessed)
-            {
-                [self addResponder:node withButton:button];
-                break;
-            }
+    [self executeOnEachResponder:^(CCNode *node){
+        [node mouseDown:theEvent button:button];
+        if (_currentEventProcessed) {
+            [self addResponder:node withButton:button];
         }
-    }
+    } withEvent:theEvent];
+    
 }
-
-// TODO: Should all mouse buttons call mouseDragged?
-// As it is now, only mouseDragged gets called if several buttons are pressed
 
 - (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button
 {
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
     
     CCRunningResponder *responder = [self responderForButton:button];
     
-    if (responder)
-    {
+    if (responder) {
+        // This drag event is already associated with a specific target.
         CCNode *node = (CCNode *)responder.target;
         
-        // check if it locks mouse
-        if (node.claimsUserInteraction)
-        {
-            // move the mouse
-            switch (button)
-            {
-                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDragged:)]) [node mouseDragged:theEvent]; break;
-                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDragged:)]) [node rightMouseDragged:theEvent]; break;
-                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDragged:)]) [node otherMouseDragged:theEvent]; break;
+        // Items that claim user interaction receive events even if they occur outside of the bounds of the object.
+        if (node.claimsUserInteraction || [node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]]) {
+            [CCDirector pushCurrentDirector:_director];
+            if ([node respondsToSelector:@selector(mouseDragged:button:)]) [node mouseDragged:theEvent button:button];
+            [CCDirector popCurrentDirector];
+        } else {
+            [_runningResponderList removeObject:responder];
+        }        
+    } else {
+        [self executeOnEachResponder:^(CCNode *node){
+            [node mouseDragged:theEvent button:button];
+            if (_currentEventProcessed) {
+                [self addResponder:node withButton:button];
             }
-        }
-        else
-        {
-            // as node does not lock mouse, check if it was moved outside
-            if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
-            {
-                [_runningResponderList removeObject:responder];
-            }
-            else
-            {
-                // move the mouse
-                switch (button)
-                {
-                    case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDragged:)]) [node mouseDragged:theEvent]; break;
-                    case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDragged:)]) [node rightMouseDragged:theEvent]; break;
-                    case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDragged:)]) [node otherMouseDragged:theEvent]; break;
-                }
-            }
-        }
-    }
-    else
-    {
-        // scan backwards through mouse responders
-        for (int index = _responderListCount - 1; index >= 0; index --)
-        {
-            CCNode *node = _responderList[index];
-            
-            // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
-            {
-                // begin the mouse down
-                _currentEventProcessed = YES;
-                switch (button)
-                {
-                    case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
-                    case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)]) [node rightMouseDown:theEvent]; break;
-                    case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)]) [node otherMouseDown:theEvent]; break;
-                }
-                
-                // if mouse was accepted, add it and break
-                if (_currentEventProcessed)
-                {
-                    [self addResponder:node withButton:button];
-                    break;
-                }
-            }
-        }
+        } withEvent:theEvent];
     }
 }
 
@@ -591,73 +500,12 @@
     {
         CCNode *node = (CCNode *)responder.target;
         
-        // end the mouse
-        switch (button)
-        {
-            case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseUp:)]) [node mouseUp:theEvent]; break;
-            case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseUp:)]) [node rightMouseUp:theEvent]; break;
-            case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseUp:)]) [node otherMouseUp:theEvent]; break;
-        }
-        // remove
+        [CCDirector pushCurrentDirector:_director];
+        if ([node respondsToSelector:@selector(mouseUp:button:)]) [node mouseUp:theEvent button:button];
+        [CCDirector popCurrentDirector];
+        
         [_runningResponderList removeObject:responder];
     }
-}
-
-// -----------------------------------------------------------------
-
-- (void)mouseDown:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
-    [self mouseDown:theEvent button:CCMouseButtonLeft];
-}
-
-- (void)mouseDragged:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseDragged:theEvent button:CCMouseButtonLeft];
-}
-
-- (void)mouseUp:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseUp:theEvent button:CCMouseButtonLeft];
-}
-
-- (void)rightMouseDown:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseDown:theEvent button:CCMouseButtonRight];
-}
-
-- (void)rightMouseDragged:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseDragged:theEvent button:CCMouseButtonRight];
-}
-
-- (void)rightMouseUp:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseUp:theEvent button:CCMouseButtonRight];
-}
-
-- (void)otherMouseDown:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseDown:theEvent button:CCMouseButtonOther];
-}
-
-- (void)otherMouseDragged:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseDragged:theEvent button:CCMouseButtonOther];
-}
-
-- (void)otherMouseUp:(NSEvent *)theEvent
-{
-    if (!_enabled) return;
-    [self mouseUp:theEvent button:CCMouseButtonOther];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
@@ -674,11 +522,33 @@
         CCNode *node = (CCNode *)responder.target;
         
         _currentEventProcessed = YES;
+        [CCDirector pushCurrentDirector:_director];
         if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
-    
+        [CCDirector popCurrentDirector];
+        
         // if mouse was accepted, return
         if (_currentEventProcessed) return;
     }
+    
+    [self executeOnEachResponder:^(CCNode *node){
+        [node scrollWheel:theEvent];
+    } withEvent:theEvent];
+    
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    if (!_enabled) return;
+    if (_dirty) [self buildResponderList];
+    
+    [self executeOnEachResponder:^(CCNode *node){
+        [node mouseMoved:theEvent];
+    } withEvent:theEvent];
+}
+
+- (void) executeOnEachResponder:(void(^)(CCNode *))block withEvent:(NSEvent *)theEvent
+{
+    [CCDirector pushCurrentDirector:_director];
     
     // scan through responders, and find first one
     for (int index = _responderListCount - 1; index >= 0; index --)
@@ -686,38 +556,54 @@
         CCNode *node = _responderList[index];
         
         // check for hit test
-        if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+        if ([node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
         {
             _currentEventProcessed = YES;
-            if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
-        
+            block(node);
+            
             // if mouse was accepted, break
             if (_currentEventProcessed) break;
         }
     }
+    [CCDirector popCurrentDirector];
 }
 
-/** Moved, Entered and Exited is not supported
- */
+#pragma mark - Mac keyboard handling -
 
-- (void)mouseMoved:(NSEvent *)theEvent
+- (void)keyDown:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
+
+    if (_dirty) [self buildResponderList];
+    [CCDirector pushCurrentDirector:_director];
+
+    for (int index = _responderListCount - 1; index >= 0; index --)
+    {
+        CCNode *node = _responderList[index];
+        [node keyDown:theEvent];
+    }
+    [CCDirector popCurrentDirector];
     
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent
+- (void)keyUp:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
+
+    if (_dirty) [self buildResponderList];
+    [CCDirector pushCurrentDirector:_director];
+
+    for (int index = _responderListCount - 1; index >= 0; index --)
+    {
+        CCNode *node = _responderList[index];
+        [node keyUp:theEvent];
+    }
+    [CCDirector popCurrentDirector];
     
 }
 
-- (void)mouseExited:(NSEvent *)theEvent
-{
-    
-}
 
-// -----------------------------------------------------------------
 #pragma mark - Mac helper functions
-// -----------------------------------------------------------------
 // finds a responder object for an event
 
 - (CCRunningResponder *)responderForButton:(CCMouseButton)button
@@ -729,9 +615,7 @@
     return(nil);
 }
 
-// -----------------------------------------------------------------
 // adds a responder object ( running responder ) to the responder object list
-
 - (void)addResponder:(CCNode *)node withButton:(CCMouseButton)button
 {
     CCRunningResponder *touchEntry;
@@ -743,56 +627,11 @@
     [_runningResponderList addObject:touchEntry];
 }
 
-// -----------------------------------------------------------------
-// cancels a running responder
-
 - (void)cancelResponder:(CCRunningResponder *)responder
 {
     [_runningResponderList removeObject:responder];
 }
 
-// -----------------------------------------------------------------
-
 #endif
 
-// -----------------------------------------------------------------
-
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

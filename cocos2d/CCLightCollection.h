@@ -23,11 +23,8 @@
  */
 
 #import "ccTypes.h"
-
+#import "CCColor.h"
 #import "CCLightGroups.h"
-
-
-#if CC_EFFECTS_EXPERIMENTAL
 
 extern const CCLightGroupMask CCLightCollectionAllGroups;
 
@@ -37,8 +34,6 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  * CCLightCollection is a container for light nodes within the scene.  It allows
  * CCEffectLighting to find the most influential N lights given the relative positions
  * of a node and the contained lights.
- *
- * @note This class is currently considered experimental. Set the `CC_EFFECTS_EXPERIMENTAL` macro to 1 in ccConfig.h if you want to use this class.
  *
  */
 
@@ -103,6 +98,14 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  */
 - (NSArray*)findClosestKLights:(NSUInteger)count toPoint:(CGPoint)point withMask:(CCLightGroupMask)mask;
 
+/**
+ *  Return the sum of ambient colors for all lights matching the
+ *  supplied mask.
+ *
+ *  @param mask    The light group mask to match.
+ */
+- (CCColor*)findAmbientSumForLightsWithMask:(CCLightGroupMask)mask;
+
 
 /// -----------------------------------------------------------------------
 /// @name Getting a Light Groups Mask
@@ -121,6 +124,10 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  */
 - (CCLightGroupMask)maskForGroups:(NSArray *)groups;
 
-@end
+/**
+ *  Reset the group name to group mask mapping. This invalidates any outstanding
+ *  group masks.
+ */
+- (void)flushGroupNames;
 
-#endif
+@end

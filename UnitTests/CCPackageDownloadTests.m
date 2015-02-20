@@ -133,10 +133,9 @@ static BOOL __support_range_request = YES;
     [super setUp];
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-    [[CCDirector sharedDirector] stopAnimation];
-    // Spin the runloop a bit otherwise nondeterministic exceptions are thrown in the CCScheduler.
-    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.2 sinceDate:[NSDate date]]];
-
+    // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
+    [[CCDirector currentDirector] stopRunLoop];
+    
     [NSURLProtocol registerClass:[CCPackageDownloadTestURLProtocol class]];
 
     self.downloadPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"Downloads"];
@@ -163,7 +162,7 @@ static BOOL __support_range_request = YES;
 {
     [NSURLProtocol unregisterClass:[CCPackageDownloadTestURLProtocol class]];
 
-    [[CCDirector sharedDirector] startAnimation];
+    [[CCDirector currentDirector] startRunLoop];
 
     [super tearDown];
 }

@@ -12,12 +12,23 @@
 
 #import <android/native_window.h>
 #import <bridge/runtime.h>
+#import <AndroidKit/AndroidLooper.h>
+#import <AndroidKit/AndroidAbsoluteLayout.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
 #import "CCGLView.h"
 #import "CCScene.h"
-#import <android/looper.h>
+
+#import "CCPackageManager.h"
+#import "CCDirector.h"
+#import "CCDirector_Private.h"
+
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
+#import <AndroidKit/AndroidActivityInfo.h>
+#import <AndroidKit/AndroidSurface+NDKExtensions.h>
+#import <AndroidKit/AndroidSurfaceHolder.h>
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 
@@ -41,24 +52,12 @@ extern ANativeWindow *ANativeWindow_fromSurface(JNIEnv *env, jobject surface);
 static CCActivity *currentActivity = nil;
 
 @implementation CCActivity {
-    CCGLView *_glView;
     NSThread *_thread;
     BOOL _running;
     NSRunLoop *_gameLoop;
-    NSMutableDictionary *_cocos2dSetupConfig;
 }
 @synthesize layout=_layout;
 
-@bridge (callback) run = run;
-@bridge (callback) onDestroy = onDestroy;
-@bridge (callback) onPause = onPause;
-@bridge (callback) onResume = onResume;
-@bridge (callback) onLowMemory = onLowMemory;
-@bridge (callback) surfaceCreated: = surfaceCreated;
-@bridge (callback) surfaceDestroyed: = surfaceDestroyed;
-@bridge (callback) surfaceChanged:format:width:height: = surfaceChanged;
-@bridge (callback) onKeyDown:keyEvent: = onKeyDown;
-@bridge (callback) onKeyUp:keyEvent: = onKeyUp;
 
 - (void)dealloc
 {
@@ -66,7 +65,6 @@ static CCActivity *currentActivity = nil;
     [_glView release];
     [_layout release];
     [_thread release];
-    [_cocos2dSetupConfig release];
     [super dealloc];
 }
 
@@ -80,6 +78,14 @@ static void handler(NSException *e)
     NSLog(@"Unhandled exception %@", e);
 }
 
+static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
+{
+    int scale = 1;
+    while(fixedSize*scale < size) scale++;
+
+    return scale;
+}
+
 - (void)run
 {
     if (_running) {
@@ -88,30 +94,22 @@ static void handler(NSException *e)
     NSSetUncaughtExceptionHandler(&handler);
     currentActivity = self;
     _running = YES;
-    _layout = [[AndroidRelativeLayout alloc] initWithContext:self];
-    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
-    [self.windowManager.defaultDisplay getMetrics:metrics];
-    
-    // Configure Cocos2d with the options set in SpriteBuilder
-    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
-    
-    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
-    
-    _cocos2dSetupConfig = [[NSMutableDictionary dictionaryWithContentsOfFile:configPath] retain];
-    
-    enum CCAndroidScreenMode screenMode = CCNativeScreenMode;
-    
-    if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFlexible] ||
-       [_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
-    {
-        screenMode = CCScreenScaledAspectFitEmulationMode;
-    }
-    
-    if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationPortrait])
+    _layout = [[AndroidAbsoluteLayout alloc] initWithContext:self];
+}
+
+- (void)scheduleInRunLoop
+{
+    AndroidLooper *looper = [AndroidLooper currentLooper];
+    [looper scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+- (void)applyRequestedOrientation:(NSDictionary*)config
+{
+    if([config[CCSetupScreenOrientation] isEqual:CCScreenOrientationPortrait])
     {
         self.requestedOrientation = AndroidActivityInfoScreenOrientationSensorPortrait;
     }
-    else if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationLandscape])
+    else if([config[CCSetupScreenOrientation] isEqual:CCScreenOrientationLandscape])
     {
         self.requestedOrientation = AndroidActivityInfoScreenOrientationSensorLandscape;
     }
@@ -119,19 +117,35 @@ static void handler(NSException *e)
     {
         self.requestedOrientation = AndroidActivityInfoScreenOrientationUnspecified;
     }
-    
-    _glView = [[CCGLView alloc] initWithContext:self screenMode:screenMode scaleFactor:metrics.density];
-    [metrics release];
+}
+
+- (void)constructViewWithConfig:(NSDictionary*)config andDensity:(float)density
+{
+    enum CCAndroidScreenMode screenMode = CCNativeScreenMode;
+
+    if([config[CCSetupScreenMode] isEqual:CCScreenModeFlexible] ||
+            [config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+    {
+        screenMode = CCScreenScaledAspectFitEmulationMode;
+    }
+
+    _glView = [[CCGLView alloc] initWithContext:self screenMode:screenMode scaleFactor:density];
     [_glView.holder addCallback:self];
     [self.layout addView:_glView];
     [self setContentView:_layout];
-    [[AndroidLooper currentLooper] scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+
+}
+
+- (AndroidDisplayMetrics*)getDisplayMetrics
+{
+    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+    [self.windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
+    return metrics;
 }
 
 - (void)onDestroy
 {
-    [[CCDirector sharedDirector] end];
-    [super onDestroy];
+    [[CCDirector currentDirector] end];
     exit(0);
 }
 
@@ -142,20 +156,17 @@ static void handler(NSException *e)
 #else
     if(_thread == nil)
     {
-        [super onResume];
         return;
     }
-    
+
     [self performSelector:@selector(handleResume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-    
-    [super onResume];
 }
 
 - (void)handleResume
 {
-    [[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-    [[CCDirector sharedDirector] resume];
+    [[CCDirector currentDirector] setNextDeltaTimeZero:YES];
+    [[CCDirector currentDirector] resume];
 }
 
 - (void)onPause
@@ -165,19 +176,16 @@ static void handler(NSException *e)
 #else
     if(_thread == nil)
     {
-        [super onPause];
         return;
     }
-    
+
     [self performSelector:@selector(handlePause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-    
-    [super onPause];
 }
 
 - (void)handlePause
 {
-    [[CCDirector sharedDirector] pause];
+    [[CCDirector currentDirector] pause];
     [[CCPackageManager sharedManager] savePackages];
 }
 
@@ -189,35 +197,32 @@ static void handler(NSException *e)
 #else
     if(_thread == nil)
     {
-        [super onLowMemory];
         return;
     }
 
     [self performSelector:@selector(handleLowMemory) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-
-    [super onLowMemory];
 }
 
 - (void)handleLowMemory
 {
-    [[CCDirector sharedDirector] purgeCachedData];
+    [[CCDirector currentDirector] purgeCachedData];
     [[CCPackageManager sharedManager] savePackages];
 }
 
 - (void)reshape:(NSValue *)value
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
-	[director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
+    [director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
 }
 
 - (void)surfaceChanged:(JavaObject<AndroidSurfaceHolder> *)holder format:(int)format width:(int)width height:(int)height
 {
     if(_glView == nil)
         return;
-    
+
     _glView.bounds = CGRectMake(0, 0, width/_glView.contentScaleFactor, height/_glView.contentScaleFactor);
-    
+
 #if USE_MAIN_THREAD
     [self reshape:[NSValue valueWithCGSize:CGSizeMake(width, height)]];
 #else
@@ -227,60 +232,26 @@ static void handler(NSException *e)
 
 - (void)setupView:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    ANativeWindow* window = ANativeWindow_fromSurface(bridge_getEnv(), bridge_getJava(holder.surface));
+    ANativeWindow* window = holder.surface.nativeWindow;
     [_glView setupView:window];
-}
-
-- (void)setupPaths
-{
-    [CCBReader configureCCFileUtils];
 }
 
 - (void)startGL:(JavaObject<AndroidSurfaceHolder> *)holder
 {
     @autoreleasepool {
-        
+        CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
+
         _gameLoop = [NSRunLoop currentRunLoop];
-        
         [_gameLoop addPort:[NSPort port] forMode:NSDefaultRunLoopMode]; // Ensure that _gameLoop always has a source.
-        
+
         [self setupView:holder];
-        
-        [self setupPaths];
-        
-        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
-        director.delegate = self;
-        director.contentScaleFactor = _glView.contentScaleFactor;
-        [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-        [director setView:_glView];
-        
-        if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
-        {
-            CGSize fixed = {568, 384};
-            if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
-            {
-                CC_SWAP(fixed.width, fixed.height);
-            }
-            
-            director.designSize = fixed;
-            [director setProjection:CCDirectorProjectionCustom];
-        }
+        [director onGLInitialization];
 
-        [[CCPackageManager sharedManager] loadPackages];
-
-        [director runWithScene:[self startScene]];
-        [director setAnimationInterval:1.0/60.0];
-        [director startAnimation];
 #if !USE_MAIN_THREAD
         [_gameLoop runUntilDate:[NSDate distantFuture]];
 #endif
-    }
-}
 
-- (CCScene *)startScene
-{
-    NSAssert([self class] != [CCActivity class], @"%s requires a subclass implementation", sel_getName(_cmd));
-    return nil;
+    }
 }
 
 - (void)runOnGameThread:(dispatch_block_t)block
@@ -320,8 +291,8 @@ static void handler(NSException *e)
     else
     {
         [self performSelector:@selector(setupView:) onThread:_thread withObject:holder waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
-        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
-        [director performSelector:@selector(startAnimation) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
+        [director performSelector:@selector(startRunLoop) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
     }
 #endif
 }
@@ -337,7 +308,7 @@ static void handler(NSException *e)
 
 - (void)handleDestroy
 {
-    [[CCDirector sharedDirector] stopAnimation];
+    [[CCDirector currentDirector] stopRunLoop];
 }
 
 - (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
@@ -355,22 +326,22 @@ static void handler(NSException *e)
     EGLDisplay display;
     EGLSurface surfaceR;
     EGLSurface surfaceD;
-    
+
     EGLContext ctx = eglGetCurrentContext();
-    
+
     EGLContext appContext = _glView.eglContext;
     if (appContext != ctx)
     {
         display = eglGetCurrentDisplay();
         surfaceD = eglGetCurrentSurface(EGL_DRAW);
         surfaceR = eglGetCurrentSurface(EGL_READ);
-        
+
         EGLSurface surface = _glView.eglSurface;
-        
+
         eglMakeCurrent(_glView.eglDisplay, surface, surface, appContext);
         return ctx;
     }
-    
+
     return NULL;
 }
 
@@ -381,11 +352,11 @@ static void handler(NSException *e)
         EGLDisplay display;
         EGLSurface surfaceR;
         EGLSurface surfaceD;
-        
+
         display = eglGetCurrentDisplay();
         surfaceD = eglGetCurrentSurface(EGL_DRAW);
         surfaceR = eglGetCurrentSurface(EGL_READ);
-        
+
         eglMakeCurrent(display, surfaceD, surfaceR, ctx);
     }
 }
@@ -395,13 +366,13 @@ static void handler(NSException *e)
 // Projection delegate is only used if the fixed resolution mode is enabled
 -(GLKMatrix4)updateProjection
 {
-	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
-	CGSize fixed = [CCDirector sharedDirector].designSize;
-	
-	// Half of the extra size that will be cut off
-	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
-	
-	return CCMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
+    CGSize sizePoint = [CCDirector currentDirector].viewSize;
+    CGSize fixed = [CCDirector currentDirector].designSize;
+
+    // Half of the extra size that will be cut off
+    CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
+
+    return CCMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
 }
 
 @end

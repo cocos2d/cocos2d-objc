@@ -91,7 +91,7 @@
 
 - (void) touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    if ([self hitTestWithWorldPos:[touch locationInWorld]])
+    if ([self clippedHitTestWithWorldPos:[touch locationInWorld]])
     {
         if (!_touchInside)
         {
@@ -150,17 +150,21 @@
 
 #elif __CC_PLATFORM_MAC
 
-- (void) mouseDown:(NSEvent *)event
+- (void) mouseDown:(NSEvent *)event button:(CCMouseButton)button
 {
+    if(button != CCMouseButtonLeft) return;
+
     _tracking = YES;
     _touchInside = YES;
     
     [self mouseDownEntered:event];
 }
 
-- (void) mouseDragged:(NSEvent *)event
+- (void) mouseDragged:(NSEvent *)event button:(CCMouseButton)button
 {
-    if ([self hitTestWithWorldPos:[event locationInWorld]])
+    if(button != CCMouseButtonLeft) return;
+
+    if ([self clippedHitTestWithWorldPos:[event locationInWorld]])
     {
         if (!_touchInside)
         {
@@ -178,14 +182,13 @@
     }
 }
 
-- (void) mouseUp:(NSEvent *)event
+- (void) mouseUp:(NSEvent *)event button:(CCMouseButton)button
 {
-    if (_touchInside)
-    {
+    if(button != CCMouseButtonLeft) return;
+    
+    if (_touchInside) {
         [self mouseUpInside:event];
-    }
-    else
-    {
+    } else {
         [self mouseUpOutside:event];
     }
     

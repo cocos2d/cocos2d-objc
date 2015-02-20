@@ -27,28 +27,15 @@
  */
 
 
-// opengl
-#import "Platforms/CCGL.h"
+#import "ccTypes.h"
 
-// cocos2d
-#import "ccConfig.h"
-#import "CCParticleSystem.h"
-#import "CCParticleBatchNode.h"
-#import "CCTextureCache.h"
-#import "ccMacros.h"
-#import "CCSpriteFrame.h"
-#import "CCDirector.h"
-#import "CCShader.h"
-#import "CCConfiguration.h"
-
-// support
-#import "Support/CGPointExtension.h"
-#import "Support/NSThread+performBlock.h"
-
-#import "CCNode_Private.h"
-#import "CCParticleSystemBase_Private.h"
 #import "CCParticleSystem_Private.h"
-#import "CCTexture_Private.h"
+#import "CCShader.h"
+#import "CCTexture.h"
+#import "CCSpriteFrame.h"
+#import "CCRenderer.h"
+#import "ccUtils.h"
+
 
 @implementation CCParticleSystem {
 	GLKVector2 _texCoord1[4];
@@ -99,19 +86,19 @@
 							 pointRect.size.width * scale,
 							 pointRect.size.height * scale );
 
-	GLfloat wide = [self.texture pixelWidth];
-	GLfloat high = [self.texture pixelHeight];
+    float wide = self.texture.sizeInPixels.width;
+	float high = self.texture.sizeInPixels.height;
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-	GLfloat left = (rect.origin.x*2+1) / (wide*2);
-	GLfloat bottom = (rect.origin.y*2+1) / (high*2);
-	GLfloat right = left + (rect.size.width*2-2) / (wide*2);
-	GLfloat top = bottom + (rect.size.height*2-2) / (high*2);
+	float left = (rect.origin.x*2+1) / (wide*2);
+	float bottom = (rect.origin.y*2+1) / (high*2);
+	float right = left + (rect.size.width*2-2) / (wide*2);
+	float top = bottom + (rect.size.height*2-2) / (high*2);
 #else
-	GLfloat left = rect.origin.x / wide;
-	GLfloat bottom = rect.origin.y / high;
-	GLfloat right = left + rect.size.width / wide;
-	GLfloat top = bottom + rect.size.height / high;
+	float left = rect.origin.x / wide;
+	float bottom = rect.origin.y / high;
+	float right = left + rect.size.width / wide;
+	float top = bottom + rect.size.height / high;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 	for(NSUInteger i=0; i<_totalParticles; i++) {
