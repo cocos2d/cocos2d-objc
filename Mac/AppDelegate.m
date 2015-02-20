@@ -9,17 +9,37 @@
 @implementation AppDelegate
 {
     IBOutlet NSWindow *_window;
-    IBOutlet CCViewMacGL *_view;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+#if 1
+    [[TestbedSetup sharedSetup] setupApplication];
+#else
+    CGRect rect = CGRectMake(0, 0, 1024, 768);
+    NSUInteger styleMask = NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask;
+    _window = [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];
+    
+    NSOpenGLPixelFormat * pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute[]) {
+        NSOpenGLPFAWindow,
+        NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFADepthSize, 32,
+        0
+    }];
+
+    CCViewMacGL *view = [[CCViewMacGL alloc] initWithFrame:CGRectZero pixelFormat:pixelFormat];
+    view.wantsBestResolutionOpenGLSurface = YES;
+    _window.contentView = view;
+    
     [_window center];
-    [_window makeFirstResponder:_view];
+    [_window makeFirstResponder:view];
     [_window makeKeyAndOrderFront:self];
     _window.acceptsMouseMovedEvents = YES;
     
-    CCDirector *director = _view.director;
+    // TODO hack
+    [view awakeFromNib];
+    
+    CCDirector *director = view.director;
     director.contentScaleFactor *= 2;
     director.UIScaleFactor *= 0.5;
     
@@ -42,6 +62,7 @@
     [CCDirector pushCurrentDirector:director];
     [director presentScene:[MainMenu scene]];
     [CCDirector popCurrentDirector];
+#endif
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification

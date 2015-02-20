@@ -55,13 +55,21 @@
 
 #if __CC_PLATFORM_IOS
 
-@property (nonatomic) UIWindow *window;
+@property (nonatomic, readonly) UIWindow *window;
 
 #elif __CC_PLATFORM_MAC
 
-@property (nonatomic) NSWindow *window;
+@property (nonatomic, readonly) NSWindow *window;
 
 #endif
+
+@property (nonatomic, readonly) NSDictionary *config;
+
+/**
+*  Loads configCocos2D.plist from disk or returns an empty dictionary.
+*  Override to provide alternate configuration shared by all platforms.
+*/
+-(NSDictionary *)baseConfig;
 
 /**
 *  The view in which the cocos nodes and scene graph are rendered
@@ -102,7 +110,8 @@
 /// -----------------------------------------------------------------------
 
 /**
-*  Configuration options that are used to setup cocos2d on Mac
+*  Override to provide Mac specific configuration options.
+*  Default implementation simply calls baseConfig.
 */
 - (NSDictionary *)macConfig;
 
@@ -120,8 +129,8 @@
 /// -----------------------------------------------------------------------
 
 /**
-*  Configuration options that are used to setup cocos2d on iOS
-*  By default this reads from "configCocos2d.plist" in the Published-iOS directory
+*  Override to provide iOS specific configuration options.
+*  Default implementation simply calls baseConfig.
 */
 
 - (NSDictionary *)iosConfig;
@@ -131,8 +140,8 @@
 /// -----------------------------------------------------------------------
 
 /**
-*  Configuration options that are used to setup cocos2d on Android
-*  By default this reads from "configCocos2d.plist" in the Published-Android directory
+*  Override to provide Android specific configuration options.
+*  Default implementation simply calls baseConfig.
 */
 - (NSDictionary *)androidConfig;
 
@@ -151,6 +160,10 @@
 *  the application.
  */
 - (void)setupApplication;
+
+- (void)setupIOS;
+- (void)setupMac;
+- (void)setupAndroid;
 
 /**
     Instantiate and return the first scene in the application

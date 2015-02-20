@@ -31,34 +31,17 @@
 
 @implementation TestbedSetup
 
-
-- (void)setupApplication
-{
-    [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
-    [super setupApplication];
-}
-
-- (NSDictionary*)iosConfig
+-(NSDictionary *)baseConfig
 {
     return @{
-             CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
-             CCSetupTabletScale2X: @YES,
-             CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
-             };
+        CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
+        CCSetupTabletScale2X: @YES,
+        CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
+        CCMacDefaultWindowSize: [NSValue valueWithCGSize:CGSizeMake(960.0f, 640.0f)],
+    };
 }
 
-- (NSDictionary*)macConfig
-{
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
-    config[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
-    config[CCSetupDepthFormat] = @GL_DEPTH24_STENCIL8;
-    config[CCSetupTabletScale2X] = @YES;
-    config[CCSetupShowDebugStats] = @(getenv("SHOW_DEBUG_STATS") != nil);
-    
-    return config;
-}
-
-- (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
+- (void)setupApplication
 {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -75,6 +58,8 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
+    
+    [super setupApplication];
 }
 
 - (CCScene*) createFirstScene
@@ -87,31 +72,5 @@
         return [MainMenu scene];
     }
 }
-
-
-#pragma mark Android
-
-#if __CC_PLATFORM_ANDROID
-
-/*
- Add any android specific overrides here
- */
-
-#endif
-
-
-#pragma mark Mac
-
-#if __CC_PLATFORM_MAC
-
-/*
- Add any Mac specific overrides here
- */
--(CGSize)defaultWindowSize
-{
-    return CGSizeMake(960.0f, 640.0f);
-}
-
-#endif
 
 @end

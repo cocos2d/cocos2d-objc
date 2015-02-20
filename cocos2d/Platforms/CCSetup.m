@@ -47,6 +47,13 @@
 #import "CCDirectorMac.h"
 #endif
 
+
+#if __CC_PLATFORM_MAC
+@interface CCSetup() <NSWindowDelegate>
+@end
+#endif
+
+
 static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     int scale = 1;
@@ -57,7 +64,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 @implementation CCSetup
 {
-    NSDictionary *_cocosConfig;
+    NSDictionary *_config;
 }
 
 - (instancetype)init
@@ -74,10 +81,13 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (void)setupApplication
 {
 #if __CC_PLATFORM_IOS
+    _config = [self iosConfig];
     [self setupIOS];
 #elif __CC_PLATFORM_ANDROID
+    _config = [self androidConfig];
     [self setupAndroid];
 #elif __CC_PLATFORM_MAC
+    _config = [self macConfig];
     [self setupMac];
 #else
 /*
@@ -85,6 +95,24 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 */
 #error "Unrecognised platform - CCSetup only supports application configuration on iOS, Mac or Android!"
 #endif
+}
+
+-(NSDictionary *)baseConfig
+{
+    // TODO iOS path here?
+    NSString *configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
+    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
+
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
+    if(config == nil){
+        config = [NSMutableDictionary dictionary];
+    }
+    
+    // TODO??
+    // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
+    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
+    
+    return config;
 }
 
 /*
@@ -110,28 +138,13 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (NSDictionary*)iosConfig
 {
-    NSString *configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
-    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
-
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
-    if(config == nil){
-        config = [NSMutableDictionary dictionary];
-    }
-    
-    // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
-    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
-
-    [CCBReader configureCCFileUtils];
-    
-    return config;
+    return [self baseConfig];
 }
 
 #if __CC_PLATFORM_IOS
 
 - (void)setupIOS
 {
-    _cocosConfig = [self iosConfig];
-
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
     
@@ -146,11 +159,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [CCDirector pushCurrentDirector:director];
     
     // Display FSP and SPF
-    [director setDisplayStats:[_cocosConfig[CCSetupShowDebugStats] boolValue]];
+    [director setDisplayStats:[_config[CCSetupShowDebugStats] boolValue]];
 
     // set FPS at 60
-    director.animationInterval = [(_cocosConfig[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
-    director.fixedUpdateInterval = [(_cocosConfig[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    director.animationInterval = [(_config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
+    director.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
     
     // TODO? Fixed screen mode is being replaced.
 //    if([_cocosConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
@@ -160,7 +173,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 //    }
     
     // Setup tablet scaling if it was requested.
-    if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[_cocosConfig[CCSetupTabletScale2X] boolValue] )
+    if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[_config[CCSetupTabletScale2X] boolValue] )
     {
         // Set the director to use 2 points per pixel.
         director.contentScaleFactor *= 2.0;
@@ -168,18 +181,16 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
         // Set the UI scale factor to show things at "native" size.
         director.UIScaleFactor = 0.5;
     }
-
-    [director setProjection:CCDirectorProjection2D];
     
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
 
     [[CCPackageManager sharedManager] loadPackages];
 
-    [CCDirector popCurrentDirector];
-    [_window makeKeyAndVisible];
-    
     [director presentScene:[self startScene]];
+    [CCDirector popCurrentDirector];
+    
+    [_window makeKeyAndVisible];
 }
 
 //- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
@@ -361,35 +372,57 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 -(void)setupMac
 {
-    _cocosConfig = [self macConfig];
-    [self applyConfigurationToCocos:_cocosConfig];
-    [self runStartSceneMac];
-}
-
-
-
-- (void)applyConfigurationToCocos:(NSDictionary*)config
-{
-    CCDirectorMac *director = (CCDirectorMac*) self.view.director;
-    CGSize defaultWindowSize = [config[CCMacDefaultWindowSize] CGSizeValue];
+    CGRect rect = CGRectMake(0, 0, 1024, 768);
+    NSUInteger styleMask = NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask;
+    _window = [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];
+    _window.delegate = self;
     
-    [self.window setFrame:CGRectMake(0.0f, 0.0f, defaultWindowSize.width, defaultWindowSize.height) display:true animate:false];
-    [self.view setFrame:self.window.frame];
-    
-    [director reshapeProjection:CC_SIZE_SCALE(defaultWindowSize, director.contentScaleFactor)];
-    
-    // Enable "moving" mouse event. Default no.
-    [self.window setAcceptsMouseMovedEvents:NO];
+    NSOpenGLPixelFormat * pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute[]) {
+        NSOpenGLPFAWindow,
+        NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFADepthSize, 32,
+        0
+    }];
 
-    // Center main window
-    [self.window center];
+    _view = [[CCViewMacGL alloc] initWithFrame:CGRectZero pixelFormat:pixelFormat];
+    _view.wantsBestResolutionOpenGLSurface = YES;
+    _window.contentView = _view;
+    
+    // TODO hack
+    [_view awakeFromNib];
+    
+    CCDirector *director = _view.director;
+    NSAssert(director, @"CCView failed to construct a director.");
+    [CCDirector pushCurrentDirector:director];
+    
+    // Display FSP and SPF
+    [director setDisplayStats:[_config[CCSetupShowDebugStats] boolValue]];
+
+    // set FPS at 60
+    director.animationInterval = [(_config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
+    director.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    
+    director.contentScaleFactor *= 2;
+    director.UIScaleFactor *= 0.5;
+    
+    // Initialise OpenAL
+    [OALSimpleAudio sharedInstance];
 
     [[CCPackageManager sharedManager] loadPackages];
+
+    [director presentScene:[self startScene]];
+    [CCDirector popCurrentDirector];
+    
+    [_window center];
+    [_window makeFirstResponder:_view];
+    [_window makeKeyAndOrderFront:self];
+    _window.acceptsMouseMovedEvents = YES;
+    
 }
 
-- (void)runStartSceneMac
+-(void)windowWillClose:(NSNotification *)notification
 {
-    [self.view.director presentScene:[self startScene]];
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 #endif
