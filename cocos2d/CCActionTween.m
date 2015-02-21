@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * Cocos2D-SpriteBuilder: http://cocos2d.spritebuilder.com
  *
  * Copyright 2009 lhunath (Maarten Billemont)
  * Copyright (c) 2013-2014 Cocos2D Authors
