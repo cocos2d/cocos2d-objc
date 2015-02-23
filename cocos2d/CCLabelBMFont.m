@@ -95,7 +95,7 @@ void FNTConfigRemoveCache( void )
 @synthesize characterSet=_characterSet;
 @synthesize atlasName=_atlasName;
 
-+(id) configurationWithFNTFile:(NSString*)FNTfile
++(instancetype) configurationWithFNTFile:(NSString*)FNTfile
 {
 	return [[self alloc] initWithFNTfile:FNTfile];
 }
@@ -475,17 +475,17 @@ void FNTConfigRemoveCache( void )
 
 #pragma mark LabelBMFont - Creation & Init
 
-+(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
++(instancetype) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
 	return [[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
 }
 
-+(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
++(instancetype) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
 {
     return [[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:CGPointZero];
 }
 
-+(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset
++(instancetype) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset
 {
     return [[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:offset];
 }

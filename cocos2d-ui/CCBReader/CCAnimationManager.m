@@ -72,7 +72,6 @@ static NSInteger ccbAnimationManagerID = 0;
     
     _lastSequence   = nil;
     _fixedTimestep  = NO;
-    _loop           = NO;
     
     return self;
 }
@@ -229,7 +228,9 @@ static NSInteger ccbAnimationManagerID = 0;
             return [CCActionHide action];
         }
     } else if ([name isEqualToString:@"spriteFrame"]) {
-        return [CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
+        // TODO is this a mild bug?
+        // What happens if an easing curve is applied to this?
+        return (CCActionInterval *)[CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
     } else if ([node isKindOfClass:[CCLightNode class]]) {
         if ([name isEqualToString:@"intensity"] ||
             [name isEqualToString:@"specularIntensity"] ||
@@ -422,7 +423,7 @@ static NSInteger ccbAnimationManagerID = 0;
     CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
     seq.tag = _animationManagerId;
     [seq startWithTarget:node];
-    if(kf0.time > 0 || _loop) { // Ensure Sync
+    if(kf0.time > 0) { // Ensure Sync
         [seq step:0];
         [seq step:_runningSequence.time-kf0.time - _runningSequence.tween];
     }
@@ -525,26 +526,19 @@ static NSInteger ccbAnimationManagerID = 0;
             [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
         }
 		
-        
-        if(_lastSequence.sequenceId!=seqId || _runningSequence.sequenceId!=seqId) {
-            _loop = NO;
+        // Always Reset the nodes that may have been changed by other timelines
+        NSDictionary* nodeBaseValues = [_baseValues objectForKey:nodePtr];
+        for (NSString* propName in nodeBaseValues) {
             
-            // Reset the nodes that may have been changed by other timelines
-            NSDictionary* nodeBaseValues = [_baseValues objectForKey:nodePtr];
-            for (NSString* propName in nodeBaseValues) {
+            if (![seqNodePropNames containsObject:propName]) {
                 
-                if (![seqNodePropNames containsObject:propName]) {
-                    
-                    id value = [nodeBaseValues objectForKey:propName];
-                    
-                    if (value!=nil) {
-                        [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:tweenDuration];
-                    }
+                id value = [nodeBaseValues objectForKey:propName];
+                
+                if (value!=nil) {
+                    [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:tweenDuration];
                 }
             }
-        
         }
-        
         
     }
     
@@ -607,11 +601,6 @@ static NSInteger ccbAnimationManagerID = 0;
 	
     // Play next sequence
     int nextSeqId = _runningSequence.chainedSequenceId;
-    
-    // Repeat Same Sequence
-    if(nextSeqId!=-1&& nextSeqId==_runningSequence.sequenceId) {
-        _loop = YES;
-    }
     
     _runningSequence = NULL;
     
@@ -867,34 +856,27 @@ static NSInteger ccbAnimationManagerID = 0;
     CCBKeyframe* endKF   = [keyframes objectAtIndex:endKeyFrame];
     
     CCActionSequence* seq = nil;
+
+    // Build Animation Actions
+    NSMutableArray* actions = [[NSMutableArray alloc] init];
     
-    // Check Keyframe Cache
-    if(endKF.frameActions) {
-        seq = [endKF.frameActions copy];
-    } else {
+    CCActionInterval* action = [self actionFromKeyframe0:startKF andKeyframe1:endKF propertyName:seqProp.name node:node];
+    
+    if (action) {
         
-        // Build Animation Actions
-        NSMutableArray* actions = [[NSMutableArray alloc] init];
-        
-        CCActionInterval* action = [self actionFromKeyframe0:startKF andKeyframe1:endKF propertyName:seqProp.name node:node];
-        
-        if (action) {
-            
-            // Instant
-            if(startKF.easingType==kCCBKeyframeEasingInstant) {
-                [actions addObject:[CCActionDelay actionWithDuration:endKF.time-startKF.time]];
-            }
-            
-            // Apply Easing
-            action = [self easeAction:action easingType:startKF.easingType easingOpt:startKF.easingOpt];
-            [actions addObject:action];
-            
-            // Cache
-            seq = [CCActionSequence actionWithArray:actions];
-            seq.tag = _animationManagerId;
-            endKF.frameActions = [seq copy];
+        // Instant
+        if(startKF.easingType==kCCBKeyframeEasingInstant) {
+            [actions addObject:[CCActionDelay actionWithDuration:endKF.time-startKF.time]];
         }
+        
+        // Apply Easing
+        action = [self easeAction:action easingType:startKF.easingType easingOpt:startKF.easingOpt];
+        [actions addObject:action];
+        
+        seq = [CCActionSequence actionWithArray:actions];
+        seq.tag = _animationManagerId;
     }
+    
     
     return seq;
 }

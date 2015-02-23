@@ -24,19 +24,23 @@
 
 #import "ccTypes.h"
 
-/** NSValue CCRenderer category */
+/** NSValue category to easily create NSValue from GLKit structs. Mainly used internally by CCRenderer and CCEffect classes. */
 @interface NSValue(CCRenderer)
 
 /// Create an NSValue wrapping a GLKVector2.
+/// @param vector The input vector
 +(NSValue *)valueWithGLKVector2:(GLKVector2)vector;
 
 /// Create an NSValue wrapping a GLKVector3.
+/// @param vector The input vector
 +(NSValue *)valueWithGLKVector3:(GLKVector3)vector;
 
 /// Create an NSValue wrapping a GLKVector4.
+/// @param vector The input vector
 +(NSValue *)valueWithGLKVector4:(GLKVector4)vector;
 
 /// Create an NSValue wrapping a GLKMatrix4.
+/// @param matrix The input matrix
 +(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix;
 
 @end

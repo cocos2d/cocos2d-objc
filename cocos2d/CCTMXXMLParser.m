@@ -139,12 +139,12 @@
 @synthesize orientation = _orientation, mapSize = _mapSize, layers = _layers, tilesets = _tilesets, tileSize = _tileSize, filename = _filename, resources = _resources, objectGroups = _objectGroups, properties = _properties;
 @synthesize tileProperties = _tileProperties;
 
-+(id) formatWithTMXFile:(NSString*)tmxFile
++(instancetype) formatWithTMXFile:(NSString*)tmxFile
 {
 	return [[self alloc] initWithFile:tmxFile];
 }
 
-+(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
++(instancetype) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
 {
 	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }

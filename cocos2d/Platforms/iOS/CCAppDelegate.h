@@ -34,12 +34,15 @@
 @class CCScene;
 
 
+/** Just a plain, simple subclass of [UINavigationController](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/index.html).
+ It implements certain navigation controller methods mainly related to orientation and projection changes Cocos2D needs to know about. Other than that it is just a regular UINavigationController.
+ */
 @interface CCNavigationController : UINavigationController <CCDirectorDelegate> {
 }
 @end
 
 /**
- Most Cocos2d apps should override the CCAppDelegate, it serves as the apps starting point.
+ Most Cocos2d apps should override the CCAppDelegate, it serves as the app's starting point and provides a CCNavigationController.
  
  At the very least the `startScene` method should be overridden to return the first scene the app should display.
  
@@ -64,7 +67,7 @@
 /**
  The navigation controller that Cocos2D is using.
  
- @note The undocumented CCNavigationController is a subclass of [UINavigationController](https://developer.apple.com/library/ios/documentation/Uikit/reference/UINavigationController_Class/index.html).
+ @note The CCNavigationController is a subclass of [UINavigationController](https://developer.apple.com/library/ios/documentation/Uikit/reference/UINavigationController_Class/index.html).
  It implements certain navigation controller methods mainly related to orientation and projection changes Cocos2D needs to know about. Other than that it is just a regular UINavigationController.
  */
 @property (atomic, readonly) CCNavigationController *navController;

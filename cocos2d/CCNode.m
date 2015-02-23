@@ -137,7 +137,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode - Init & cleanup
 
-+(id) node
++(instancetype) node
 {
 	return [[self alloc] init];
 }
@@ -412,6 +412,9 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     CCSizeUnit widthUnit = type.widthUnit;
     CCSizeUnit heightUnit = type.heightUnit;
     
+    BOOL gotParentSize = NO;
+    CGSize parentsContentSizeInPoints;
+    
     // Width
     if (widthUnit == CCSizeUnitPoints)
     {
@@ -423,15 +426,21 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
-        size.width = contentSize.width * _parent.contentSizeInPoints.width;
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        size.width = contentSize.width * parentsContentSizeInPoints.width;
     }
     else if (widthUnit == CCSizeUnitInsetPoints)
     {
-        size.width = _parent.contentSizeInPoints.width - contentSize.width;
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        size.width = parentsContentSizeInPoints.width - contentSize.width;
     }
     else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
-        size.width = _parent.contentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        size.width = parentsContentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
     }
     
     // Height
@@ -445,17 +454,16 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (heightUnit == CCSizeUnitNormalized)
     {
-        size.height = contentSize.height * _parent.contentSizeInPoints.height;
+        size.height = contentSize.height * (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height);
     }
     else if (heightUnit == CCSizeUnitInsetPoints)
     {
-        size.height = _parent.contentSizeInPoints.height - contentSize.height;
+        size.height = (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - contentSize.height;
     }
     else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
-        size.height = _parent.contentSizeInPoints.height - contentSize.height * director.UIScaleFactor;
+        size.height = (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - contentSize.height * director.UIScaleFactor;
     }
-    
     return size;
 }
 
@@ -468,6 +476,9 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     CCSizeUnit widthUnit = type.widthUnit;
     CCSizeUnit heightUnit = type.heightUnit;
     
+    BOOL gotParentSize = NO;
+    CGSize parentsContentSizeInPoints;
+    
     // Width
     if (widthUnit == CCSizeUnitPoints)
     {
@@ -479,8 +490,10 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         
-        float parentWidthInPoints = _parent.contentSizeInPoints.width;
+        float parentWidthInPoints = parentsContentSizeInPoints.width;
         if (parentWidthInPoints > 0)
         {
             size.width = pointSize.width/parentWidthInPoints;
@@ -492,11 +505,17 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitInsetPoints)
     {
-        size.width = _parent.contentSizeInPoints.width - pointSize.width;
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        
+        size.width = parentsContentSizeInPoints.width - pointSize.width;
     }
     else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
-        size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        
+        size.width = (parentsContentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
     }
     
     // Height
@@ -510,8 +529,7 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (heightUnit == CCSizeUnitNormalized)
     {
-        
-        float parentHeightInPoints = _parent.contentSizeInPoints.height;
+        float parentHeightInPoints = (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height);
         if (parentHeightInPoints > 0)
         {
             size.height = pointSize.height/parentHeightInPoints;
@@ -523,13 +541,12 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (heightUnit == CCSizeUnitInsetPoints)
     {
-        size.height = _parent.contentSizeInPoints.height - pointSize.height;
+        size.height = (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - pointSize.height;
     }
     else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
-        size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.UIScaleFactor;
+        size.height = ((gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - pointSize.height) / director.UIScaleFactor;
     }
-    
     return size;
 }
 
@@ -1304,6 +1321,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
     CCDirector* director = [CCDirector sharedDirector];
     
+    BOOL gotParentSize = NO;
+    CGSize parentsContentSizeInPoints;
+    
     CGPoint positionInPoints;
     float x = 0;
     float y = 0;
@@ -1312,12 +1332,24 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) x = position.x;
     else if (xUnit == CCPositionUnitUIPoints) x = position.x * director.UIScaleFactor;
-    else if (xUnit == CCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
+    else if(xUnit == CCPositionUnitNormalized){
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        gotParentSize = YES;
+        x = position.x * parentsContentSizeInPoints.width;
+    }
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) y = position.y;
     else if (yUnit == CCPositionUnitUIPoints) y = position.y * director.UIScaleFactor;
-    else if (yUnit == CCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
+    else if (yUnit == CCPositionUnitNormalized){
+        if(gotParentSize){
+            y = position.y * parentsContentSizeInPoints.height;
+        }else{
+            parentsContentSizeInPoints = _parent.contentSizeInPoints;
+            gotParentSize = YES;
+            y = position.y * parentsContentSizeInPoints.height;
+        }
+    }
     
     // Account for reference corner
     CCPositionReferenceCorner corner = type.corner;
@@ -1328,18 +1360,18 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     else if (corner == CCPositionReferenceCornerTopLeft)
     {
         // Reverse y-axis
-        y = _parent.contentSizeInPoints.height - y;
+        y = gotParentSize?parentsContentSizeInPoints.height - y:_parent.contentSizeInPoints.height - y;
     }
     else if (corner == CCPositionReferenceCornerTopRight)
     {
         // Reverse x-axis and y-axis
-        x = _parent.contentSizeInPoints.width - x;
-        y = _parent.contentSizeInPoints.height - y;
+        x = gotParentSize?parentsContentSizeInPoints.width - x:_parent.contentSizeInPoints.width - x;
+        y = gotParentSize?parentsContentSizeInPoints.height - y:_parent.contentSizeInPoints.height - y;
     }
     else if (corner == CCPositionReferenceCornerBottomRight)
     {
         // Reverse x-axis
-        x = _parent.contentSizeInPoints.width - x;
+        x = gotParentSize?parentsContentSizeInPoints.width - x:_parent.contentSizeInPoints.width - x;
     }
     
     positionInPoints.x = x;
@@ -1351,6 +1383,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 - (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
+    
+    BOOL gotParentSize = NO;
+    CGSize parentsContentSizeInPoints;
     
     CGPoint position;
     
@@ -1366,18 +1401,24 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     else if (corner == CCPositionReferenceCornerTopLeft)
     {
         // Reverse y-axis
-        y = _parent.contentSizeInPoints.height - y;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        gotParentSize = YES;
+        y = parentsContentSizeInPoints.height - y;
     }
     else if (corner == CCPositionReferenceCornerTopRight)
     {
         // Reverse x-axis and y-axis
-        x = _parent.contentSizeInPoints.width - x;
-        y = _parent.contentSizeInPoints.height - y;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        gotParentSize = YES;
+        x = parentsContentSizeInPoints.width - x;
+        y = parentsContentSizeInPoints.height - y;
     }
     else if (corner == CCPositionReferenceCornerBottomRight)
     {
         // Reverse x-axis
-        x = _parent.contentSizeInPoints.width - x;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
+        gotParentSize = YES;
+        x = parentsContentSizeInPoints.width - x;
     }
     
     // Convert position from points
@@ -1386,7 +1427,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     else if (xUnit == CCPositionUnitUIPoints) position.x = x / director.UIScaleFactor;
     else if (xUnit == CCPositionUnitNormalized)
     {
-        float parentWidth = _parent.contentSizeInPoints.width;
+        float parentWidth = gotParentSize?parentsContentSizeInPoints.width:_parent.contentSizeInPoints.width;
         if (parentWidth > 0)
         {
             position.x = x / parentWidth;
@@ -1398,7 +1439,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     else if (yUnit == CCPositionUnitUIPoints) position.y = y / director.UIScaleFactor;
     else if (yUnit == CCPositionUnitNormalized)
     {
-        float parentHeight = _parent.contentSizeInPoints.height;
+        float parentHeight = gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height;
         if (parentHeight > 0)
         {
             position.y = y / parentHeight;

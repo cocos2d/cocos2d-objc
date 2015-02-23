@@ -245,7 +245,7 @@
 /** Creates and returns a new node.
  @note Not all subclasses support initialization via the `node` initializer. Prefer to use specialized initializers
  in CCNode subclasses, where available. */
-+(id) node;
++(instancetype) node;
 
 // purposefully undocumented: init is inherited from NSObject
 -(id) init;

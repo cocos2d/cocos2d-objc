@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="64" height="64" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="Untitled" tilewidth="64" tileheight="115" spacing="2" margin="2">
+  <image source="iso-test.png" width="512" height="256"/>
+ </tileset>
+ <layer name="Layer 0" width="64" height="64">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3DwQkAAAwDoYPsv3PH6EfBVVNVVVVVVVVVVVVVVVVVVVVfH73hYN0AQAAA
+  </data>
+ </layer>
+ <layer name="Layer 1" width="64" height="64">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2ZSQ7DIAxFsyD3v3LFIhJFwXggwDd+UtUmgcC3mexeVxDwSKs7EATBFNL1P99T9e2dWmd5fU9sdzant7+Ses6dBoL2L32E4v+RfXxbZxFskLHuA6n61PdbZT3Q01zbJjXKeYOjzYsN3jRwtXmwAaWBawN0Wjbg+BdRv6TPPRug6e+Nd8lcQJz/ljlNxaMIWP2F6O8Had8te8KuSPveyj8ho7UB+tinrlt10M/7lO88nmtKuPEsVR8Z7nnFa4xfargb99/uedD+IIlrev+tINhEMsd746DXxo720PiOYy8qP7iTHTTruSTXQz3bwQ7aPZ0T4yPkgrR9HKlv9ViQ6hgVF0rLfInET5q+cveIlYxa06gzhLX9r7Hmesrf0rPCDvoznDioVY96T6sc99lMNDmMEeV20Z8Ztc5LxsAO66AWqV+16+SuaM/SkvegYo2n0JHECx71Z5DzBCPwqouLZ99yscTSHtDkDz1hySN4oNzjTtOe8b7HcThZexAEQRBY+AHXFDwtAEAAAA==
+  </data>
+ </layer>
+</map>

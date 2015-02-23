@@ -200,12 +200,12 @@
     return self;
 }
 
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment
++(instancetype)effectWithRefraction:(float)refraction environment:(CCSprite *)environment
 {
     return [[self alloc] initWithRefraction:refraction environment:environment];
 }
 
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
++(instancetype)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }

@@ -47,7 +47,7 @@
  *  @return The CCEffectOutline object.
  */
 -(id)initWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth;
-+(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth;
++(instancetype)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth;
 
 @end
 
