@@ -189,6 +189,22 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
 @property (nonatomic, getter = isIncomingSceneAnimated) BOOL incomingSceneAnimated;
 
 /// -----------------------------------------------------------------------
+/// @name For use with Custom Transitions
+/// -----------------------------------------------------------------------
+
+/**
+ *  CCRenderTexture, holding the incoming scene as a texture
+ *  Only valid after StartTransition has been called.
+ */
+@property (nonatomic, readonly) CCRenderTexture *incomingTexture;
+
+/**
+ *  CCRenderTexture, holding the outgoing scene as a texture
+ *  Only valid after StartTransition has been called.
+ */
+@property (nonatomic, readonly) CCRenderTexture *outgoingTexture;
+
+/// -----------------------------------------------------------------------
 /// @name Transition Running Time and Progress
 /// -----------------------------------------------------------------------
 
