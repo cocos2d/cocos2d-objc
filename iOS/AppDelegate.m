@@ -38,20 +38,30 @@
 @implementation AppDelegate
 {
     UIWindow *_window;
-    CCViewiOSGL *_view;
+    CC_VIEW<CCView> *_view;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 #if 1
     [[TestbedSetup sharedSetup] setupApplication];
+    _window = [TestbedSetup sharedSetup].window;
+    _view = [TestbedSetup sharedSetup].view;
 #else
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
     _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+    
+    UIViewController *viewController = [[UIViewController alloc] init];
+    viewController.view = _view;
+    viewController.wantsFullScreenLayout = YES;
+    _window.rootViewController = viewController;
+    
+    // Need to force the window to be visible to set the initial view size on iOS < 8
+    [_window makeKeyAndVisible];
+    
     CCDirector *director = _view.director;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
@@ -78,9 +88,6 @@
     [CCDirector pushCurrentDirector:director];
     [director presentScene:[MainMenu scene]];
     [CCDirector popCurrentDirector];
-    
-    _window.rootViewController = director;
-    [_window makeKeyAndVisible];
     
     [director startRunLoop];
 #endif

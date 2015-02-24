@@ -8,13 +8,16 @@
 
 @implementation AppDelegate
 {
-    IBOutlet NSWindow *_window;
+    NSWindow *_window;
+    CC_VIEW<CCView> *_view;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-#if 1
+#if 0
     [[TestbedSetup sharedSetup] setupApplication];
+    _window = [TestbedSetup sharedSetup].window;
+    _view = [TestbedSetup sharedSetup].view;
 #else
     CGRect rect = CGRectMake(0, 0, 1024, 768);
     NSUInteger styleMask = NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask;

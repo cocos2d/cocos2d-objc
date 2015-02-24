@@ -154,6 +154,9 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     viewController.wantsFullScreenLayout = YES;
     _window.rootViewController = viewController;
     
+    // Need to force the window to be visible to set the initial view size on iOS < 8
+    [_window makeKeyAndVisible];
+    
     CCDirector *director = self.view.director;
     NSAssert(director, @"CCView failed to construct a director.");
     [CCDirector pushCurrentDirector:director];
@@ -189,8 +192,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
     [director presentScene:[self startScene]];
     [CCDirector popCurrentDirector];
-    
-    [_window makeKeyAndVisible];
 }
 
 //- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
