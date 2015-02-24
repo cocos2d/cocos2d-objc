@@ -216,23 +216,9 @@
 
 - (void)align:(CCTextAlignment)alignment
 {
-    // TODO: debug - remove me
-    CCLabelBMFont *lbl = (CCLabelBMFont *)[_firstCharacter parent];
-    NSString *alignStr = @"left";
-    switch (alignment) {
-        case CCTextAlignmentCenter:
-            alignStr = @"center";
-            break;
-        case CCTextAlignmentRight:
-            alignStr = @"right";
-            break;
-        default:
-            break;
-    }
     NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
     CCBMFontCharacter *lineStart = _firstCharacter;
-    CGSize sz = [lbl contentSize];
-    BOOL isLineStart = YES;
+    CGSize sz = [[_firstCharacter parent] contentSize];
     while (lineStart != nil)
     {
         // when aligning ignore whitespace characters at the start of the line
