@@ -211,7 +211,10 @@
 
 - (void)setAlignment:(CCTextAlignment)alignment
 {
-    [self align:alignment];
+    if (_alignment != alignment)
+    {
+        [self align:alignment];
+    }
 }
 
 - (void)align:(CCTextAlignment)alignment
@@ -272,20 +275,13 @@
 {
     NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
     BOOL expectingWordBoundary = NO;
-    BOOL isNewLine = YES;
-    float lineLHS = 0.0f;
     CCBMFontCharacter *wordBoundary = nil;
     CCBMFontCharacter *wordEnd = nil;
     CCBMFontCharacter *prevCharacter = _firstCharacter;
     for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
     {
+        float charRHS2 = [fc position].x + [fc contentSize].width / 2.0f;
         if ([ws characterIsMember:[fc characterValue]]) continue;
-        float charLHS = [fc position].x - [fc contentSize].width / 2.0f;
-        if (isNewLine)
-        {
-            lineLHS = charLHS;
-            isNewLine = NO;
-        }
         if ([fc controlFollowing] & WordBreakFollows)
         {
             expectingWordBoundary = YES;
@@ -296,7 +292,7 @@
             expectingWordBoundary = NO;
         }
         float charRHS = [fc position].x + [fc contentSize].width / 2.0f;
-        if (charRHS - lineLHS > width)
+        if (charRHS > width)
         {
             if (wordBoundary != nil)
             {
@@ -310,15 +306,10 @@
                 [prevCharacter setControlFollowing:SoftLineBreakFollows];
             }
             expectingWordBoundary = NO;
-            lineLHS = 0.0f;
         }
         if ([fc controlFollowing] & WordBreakFollows)
         {
             wordEnd = fc;
-        }
-        else if ([fc controlFollowing] & HardLineBreakFollows)
-        {
-            isNewLine = YES;
         }
         prevCharacter = fc;
     }
@@ -346,32 +337,22 @@
 {
     NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
     CGSize result = CGSizeZero;
-    float top = 0.0f, bottom = 0.0f, lhs = 0.0f, rhs = 0.0f;
+    float top = 0.0f, bottom = 0.0f;
     for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
     {
         if ([ws characterIsMember:[fc characterValue]]) continue;
         CGPoint charPos = [fc position];
         CGSize charSz = [fc contentSize];
         float charRHS = charPos.x + charSz.width / 2.0f;
-        float charLHS = charPos.x - charSz.width / 2.0f;
+        if (result.width < charRHS)
+        {
+            result.width = charRHS;
+        }
         float charTop = charPos.y + charSz.height / 2.0f;
         float charBottom = charPos.y - charSz.height / 2.0f;
-        if (fc == _firstCharacter)
-        {
-            top = charTop;
-            bottom = charBottom;
-            lhs = charLHS;
-            rhs = charRHS;
-        }
-        else
-        {
-            top =    MAX(charTop, top);
-            bottom = MIN(charBottom, bottom);
-            lhs =    MIN(charLHS, lhs);
-            rhs =    MAX(charRHS, rhs);
-        }
+        top = MAX(charTop, top);
+        bottom = MIN(charBottom, bottom);
     }
-    result.width = rhs - lhs;
     result.height = top - bottom;
     return result;
 }
@@ -903,29 +884,36 @@ void FNTConfigRemoveCache( void )
     if (_width > 0)
     {
         [_characterSprites fitToWidth:_width];
-    }
-    [self setContentSize:[_characterSprites boundSize]];
-    
-    [_characterSprites setAlignment:[self alignment]];
-    [self setContentSize:[_characterSprites boundSize]];
-    
-    float top = 0.0f;
-    for (CCBMFontCharacter *fc = [_characterSprites firstCharacter]; fc; fc = [fc nextCharacter])
-    {
-        float charTop = [fc position].y + [fc contentSize].height / 2.0f;
-        top = MAX(charTop, top);
-    }
-    float yShift = [self contentSize].height - top;
-    if (yShift != 0.0f)
-    {
-        for (CCBMFontCharacter *fc = [_characterSprites firstCharacter] ; fc; fc = [fc nextCharacter])
+        
+        CGSize tmpSize = [_characterSprites boundSize];
+        CGFloat contentScale = 1.0/_texture.contentScale;
+        [self setContentSize:CC_SIZE_SCALE(tmpSize, contentScale)];
+        
+        // fitToWidth may've caused height to grow as line breaks are inserted
+        // so shift rows up within the new height
+        float top = 0.0f;
+        for (CCBMFontCharacter *fc = [_characterSprites firstCharacter]; fc; fc = [fc nextCharacter])
         {
-            CGPoint pos = [fc position];
-            pos.y += yShift;
-            [fc setPosition:pos];
+            float charTop = [fc position].y + [fc contentSize].height / 2.0f;
+            top = MAX(charTop, top);
+        }
+        float yShift = [self contentSize].height - top;
+        if (yShift != 0.0f)
+        {
+            for (CCBMFontCharacter *fc = [_characterSprites firstCharacter] ; fc; fc = [fc nextCharacter])
+            {
+                CGPoint pos = [fc position];
+                pos.y += yShift;
+                [fc setPosition:pos];
+            }
         }
     }
 
+    if (self.alignment != CCTextAlignmentLeft)
+    {
+        [_characterSprites setAlignment:[self alignment]];
+    }
+    
     if ([self enableDebugDrawing])
     {
         [self debugDraw];
@@ -934,7 +922,25 @@ void FNTConfigRemoveCache( void )
 
 - (NSArray *)characterSpritesForRange:(NSRange)range
 {
-    return [_characterSprites characterSpritesForRange:range];
+    CCBMFontCharacter *fontChar = [_characterSprites firstCharacter];
+    NSMutableArray *results = [NSMutableArray array];
+    NSUInteger strLen = [[self string] length];
+    NSCharacterSet *nlcs = [NSCharacterSet newlineCharacterSet];
+    for (NSUInteger i = 0; i < strLen; ++i)
+    {
+        unichar stringCharacter = [[self string] characterAtIndex:i];
+        if (![nlcs characterIsMember:stringCharacter])
+        {
+            if (i >= range.location)
+            {
+                [results addObject:fontChar];
+            }
+            NSAssert([fontChar characterValue] == stringCharacter, @"Character is out of sync with sprites!");
+            fontChar = [fontChar nextCharacter];
+            NSAssert(fontChar != nil || i+1 >= strLen, @"End of sprites does not match end of string!");
+        }
+    }
+    return [results copy];
 }
 
 #pragma mark LabelBMFont - Atlas generation
@@ -1164,7 +1170,7 @@ void FNTConfigRemoveCache( void )
         };
         CCColor *wrapFill = [CCColor colorWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 0.1f)];
         CCColor *wrapBorder = [CCColor colorWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 0.9f)];
-        [drawNode drawPolyWithVerts:vertFC count:4 fillColor:wrapFill borderWidth:0.5f borderColor:wrapBorder];
+        [drawNode drawPolyWithVerts:vertFC count:4 fillColor:wrapFill borderWidth:1.0f borderColor:wrapBorder];
     }
 }
 @end

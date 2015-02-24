@@ -156,10 +156,8 @@ NSDictionary *testConfigSet(int config)
     NSString *explanation = [NSString stringWithFormat:@"%@ - Align:%@ - Width:%0.2f", testConfig[@"Font"],
                              testConfig[ @"Explainer" ], currentWidth];
 
-    // To see debug frames around the label and font characters, uncomment
-    // the following lines.  This is helpful when working on font rendering.
-    //    explanation = [explanation stringByAppendingString:@"\ndebugDraw - GREEN: content rect - RED: width property"];
-    //    [label setEnableDebugDrawing:YES];
+//    explanation = [explanation stringByAppendingString:@"\ndebugDraw - GREEN: content rect - RED: width property"];
+//    [label setEnableDebugDrawing:YES];
     
     [self setSubTitle:explanation];
 }
@@ -183,73 +181,9 @@ NSDictionary *testConfigSet(int config)
 - (void)setupBMFontWrap16Test { [self testFontWrapping:testConfigSet(16)]; }
 - (void)setupBMFontWrap17Test { [self testFontWrapping:testConfigSet(17)]; }
 
-- (void)setupBMFontStylingTest
+- (void)testStylingCharacters:(NSDictionary *)testConfig
 {
-    CGSize screenSize = [[CCDirector currentDirector] viewSize];
-    float currentWidth = screenSize.width / 2.0f;
     
-    NSString *highlightString = @"even if the sound";
-    NSString *testString = @"Supercalifragilisticexpialidocious even if the sound of it is something quite atrocious";
-    NSRange highlightRange = [testString rangeOfString:highlightString];
-    CCLabelBMFont *label = [CCLabelBMFont labelWithString:testString fntFile:@"arial16.fnt" width:currentWidth alignment:CCTextAlignmentLeft];
-    [label setColor:[CCColor whiteColor]];
-    NSArray *highlightChars = [label characterSpritesForRange:highlightRange];
-    for (CCSprite *fontSprite in highlightChars)
-    {
-        [fontSprite setColor:[CCColor cyanColor]];
-    }
-    [label setPositionType:CCPositionTypeNormalized];
-    [label setPosition:ccp(0.5f, 0.5f)];
-    [[self contentNode] addChild:label];
-    NSString *explanation = @"Styling font characters - color";
-    
-    // To see debug frames around the label and font characters, uncomment
-    // the following lines.  This is helpful when working on font rendering.
-    //    explanation = [explanation stringByAppendingString:@"\ndebugDraw - GREEN: content rect - RED: width property"];
-    //    [label setEnableDebugDrawing:YES];
-    
-    [self setSubTitle:explanation];
 }
-
-- (void)setupBMFontStyling2Test
-{
-    CGSize screenSize = [[CCDirector currentDirector] viewSize];
-    float currentWidth = screenSize.width / 2.0f;
-    
-    NSString *boldString = @"boldly go";
-    NSString *italicString = @"new civilizations";
-    NSString *testString = @"to seek out new life and new civilizations, to boldly go where no man has gone before.";
-    NSRange boldRange = [testString rangeOfString:boldString];
-    NSRange italicRange = [testString rangeOfString:italicString];
-    CCLabelBMFont *label = [CCLabelBMFont labelWithString:testString fntFile:@"arial16.fnt" width:currentWidth alignment:CCTextAlignmentLeft];
-    [label setColor:[CCColor whiteColor]];
-    {
-        NSArray *highlightChars = [label characterSpritesForRange:boldRange];
-        CCEffectBloom *boldEffect = [CCEffectBloom effectWithBlurRadius:1 intensity:0.5 luminanceThreshold:0.1];
-        for (CCSprite *fontSprite in highlightChars)
-        {
-            [fontSprite setEffect:boldEffect];
-        }
-    }
-    {
-        NSArray *highlightChars = [label characterSpritesForRange:italicRange];
-        for (CCSprite *fontSprite in highlightChars)
-        {
-            [fontSprite setSkewX:20.0f];
-        }
-    }
-    [label setPositionType:CCPositionTypeNormalized];
-    [label setPosition:ccp(0.5f, 0.5f)];
-    [[self contentNode] addChild:label];
-    NSString *explanation = @"Styling font characters - bold/italic";
-    
-    // To see debug frames around the label and font characters, uncomment
-    // the following lines.  This is helpful when working on font rendering.
-    //    explanation = [explanation stringByAppendingString:@"\ndebugDraw - GREEN: content rect - RED: width property"];
-    //    [label setEnableDebugDrawing:YES];
-    
-    [self setSubTitle:explanation];
-}
-
 
 @end
