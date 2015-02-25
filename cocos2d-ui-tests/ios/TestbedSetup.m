@@ -31,7 +31,7 @@
 
 @implementation TestbedSetup
 
--(NSDictionary *)baseConfig
+-(NSDictionary *)setupConfig
 {
     return @{
         CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
