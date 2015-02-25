@@ -105,6 +105,7 @@
  *  @param config Dictionary with setup options for Cocos2D.
  */
 
+#if __CC_PLATFORM_MAC
 /// -----------------------------------------------------------------------
 /// @name Mac Specific
 /// -----------------------------------------------------------------------
@@ -116,14 +117,21 @@
 - (NSDictionary *)macConfig;
 
 /**
+ Called from setupApplication to setup the Mac platform. Override this to perform custom setup.
+ */
+- (void)setupMac;
+
+/**
  *  The application window size to be displayed on mac.
     Default value (480.0f, 320.0f)
  *
  *  @return CGSize
  */
 - (CGSize)defaultWindowSize;
+#endif
 
 
+#if __CC_PLATFORM_IOS
 /// -----------------------------------------------------------------------
 /// @name iOS Specific
 /// -----------------------------------------------------------------------
@@ -132,9 +140,16 @@
 *  Override to provide iOS specific configuration options.
 *  Default implementation simply calls baseConfig.
 */
-
 - (NSDictionary *)iosConfig;
 
+/**
+ Called from setupApplication to setup the iOS platform. Override this to perform custom setup.
+ */
+- (void)setupMac;
+#endif
+
+
+#if __CC_PLATFORM_ANDROID
 /// -----------------------------------------------------------------------
 /// @name Android Specific
 /// -----------------------------------------------------------------------
@@ -144,6 +159,13 @@
 *  Default implementation simply calls baseConfig.
 */
 - (NSDictionary *)androidConfig;
+
+/**
+ Called from setupApplication to setup the iOS platform. Override this to perform custom setup.
+ */
+- (void)setupAndroid;
+#endif
+
 
 /// -----------------------------------------------------------------------
 /// @name Application Setup
@@ -156,13 +178,11 @@
 @property(nonatomic, copy) NSString *firstSceneName;
 
 /**
- *  Setup and configure cocos for the current platform. This method should be invoked from the entry point of
-*  the application.
+ *  Setup and configure cocos for the current platform. This method should be invoked from the entry point of the application.
  */
 - (void)setupApplication;
 
 - (void)setupIOS;
-- (void)setupMac;
 - (void)setupAndroid;
 
 /**

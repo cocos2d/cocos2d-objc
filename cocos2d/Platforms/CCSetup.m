@@ -239,9 +239,17 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupAndroid
 {
-    _cocosConfig = [self androidConfig];
+    CCActivity *activity = [CCActivity currentActivity];
+    AndroidDisplayMetrics* metrics = [activity getDisplayMetrics];
 
-    [self performAndroidNonGLConfiguration:_cocosConfig];
+    activity.cocos2dSetupConfig = _config;
+    [activity applyRequestedOrientation:_config];
+    [activity constructViewWithConfig:_config andDensity:metrics.density];
+    
+    _view = activity.glView;
+    [activity scheduleInRunLoop];
+
+    [[CCPackageManager sharedManager] loadPackages];
 
     /*
         Unlike iOS, GL is not initialized on Android before the application is constructed.
@@ -256,47 +264,17 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 }
 
 
-- (void)performAndroidNonGLConfiguration:(NSDictionary*)config
-{
-    CCActivity *activity = [CCActivity currentActivity];
-    AndroidDisplayMetrics* metrics = [activity getDisplayMetrics];
-
-    activity.cocos2dSetupConfig = config;
-    [activity applyRequestedOrientation:config];
-    [activity constructViewWithConfig:config andDensity:metrics.density];
-    
-    _glView = activity.glView;
-    [activity scheduleInRunLoop];
-
-    [[CCPackageManager sharedManager] loadPackages];
-}
-
 - (void)performAndroidGLConfiguration
 {
-    [self configureDirector:_glView.director withConfig:_cocosConfig withView:_glView];
+    [self configureDirector:_view.director withConfig:_config withView:_view];
 
     [self runStartSceneAndroid];
 }
 
 - (void)configureDirector:(CCDirector*)director withConfig:(NSDictionary *)config withView:(CCGLView<CCView>*)view
 {
-    CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)director;
     director.delegate = [CCActivity currentActivity];
     [director setView:view];
-
-    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
-    {
-        [self setupFixedScreenMode:config];
-    }
-    else
-    {
-        [self setupFlexibleScreenMode:config];
-    }
-}
-
-- (void)setupFlexibleScreenMode:(NSDictionary*)config
-{
-    CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
 
     NSInteger device = [CCDeviceInfo runningDevice];
     BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
@@ -305,42 +283,69 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     {
         // Set the UI scale factor to show things at "native" size.
         director.UIScaleFactor = 0.5;
-
-        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
     }
 
     director.contentScaleFactor *= 1.83;
 
     [director setProjection:CCDirectorProjection2D];
+    
+//    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+//    {
+//        [self setupFixedScreenMode:config];
+//    }
+//    else
+//    {
+//        [self setupFlexibleScreenMode:config];
+//    }
 }
 
-- (void)setupFixedScreenMode:(NSDictionary*)config
-{
-    CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
-
-    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
-    CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
-
-    if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
-    {
-        CC_SWAP(fixed.width, fixed.height);
-    }
-
-    CGFloat scaleFactor = MAX(size.width/ fixed.width, size.height/ fixed.height);
-
-    director.contentScaleFactor = scaleFactor;
-    director.UIScaleFactor = 1;
-
-    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
-
-    director.designSize = fixed;
-    [director setProjection:CCDirectorProjectionCustom];
-}
+//- (void)setupFlexibleScreenMode:(NSDictionary*)config
+//{
+//    CCDirectorAndroid *director = (CCDirectorAndroid*)_view.director;
+//
+//    NSInteger device = [CCDeviceInfo runningDevice];
+//    BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
+//
+//    if(tablet && [config[CCSetupTabletScale2X] boolValue])
+//    {
+//        // Set the UI scale factor to show things at "native" size.
+//        director.UIScaleFactor = 0.5;
+//
+//        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+//        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+//    }
+//
+//    director.contentScaleFactor *= 1.83;
+//
+//    [director setProjection:CCDirectorProjection2D];
+//}
+//
+//- (void)setupFixedScreenMode:(NSDictionary*)config
+//{
+//    CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
+//
+//    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
+//    CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
+//
+//    if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
+//    {
+//        CC_SWAP(fixed.width, fixed.height);
+//    }
+//
+//    CGFloat scaleFactor = MAX(size.width/ fixed.width, size.height/ fixed.height);
+//
+//    director.contentScaleFactor = scaleFactor;
+//    director.UIScaleFactor = 1;
+//
+//    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+//
+//    director.designSize = fixed;
+//    [director setProjection:CCDirectorProjectionCustom];
+//}
 
 - (void)runStartSceneAndroid
 {
-    CCDirector *androidDirector = _glView.director;
+    CCDirector *androidDirector = _view.director;
 
     [androidDirector presentScene:[self startScene]];
     [androidDirector setAnimationInterval:1.0/60.0];
