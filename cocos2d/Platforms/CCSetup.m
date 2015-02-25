@@ -63,44 +63,28 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 }
 
 @implementation CCSetup
-{
-    NSDictionary *_config;
-}
 
-- (instancetype)init
+-(NSString *)spriteBuilderResourceDirectory
 {
-    self = [super init];
-    if (self)
-    {
-        _firstSceneName = @"MainScene";
-    }
-
-    return self;
-}
-
-- (void)setupApplication
-{
-#if __CC_PLATFORM_IOS
-    _config = [self iosConfig];
-    [self setupIOS];
-#elif __CC_PLATFORM_ANDROID
-    _config = [self androidConfig];
-    [self setupAndroid];
-#elif __CC_PLATFORM_MAC
-    _config = [self macConfig];
-    [self setupMac];
+#if __CC_PLATFORM_ANDROID
+    return @"Published-Android";
 #else
-/*
-    Explicitly erroring out here as trying to configure under an unrecognised platform will cause spectacular failures
-*/
-#error "Unrecognised platform - CCSetup only supports application configuration on iOS, Mac or Android!"
+    // TODO this probably doesn't make sense in the future...
+    return @"Published-iOS";
 #endif
 }
 
--(NSDictionary *)baseConfig
+-(void)setupForSpriteBuilder;
+{
+    [CCFileLocator sharedFileLocator].searchPaths = [@[
+        [[NSBundle mainBundle] pathForResource:[self spriteBuilderResourceDirectory] ofType:nil],
+    ] arrayByAddingObjectsFromArray:[CCFileLocator sharedFileLocator].searchPaths];
+}
+
+-(NSDictionary *)setupConfig
 {
     // TODO iOS path here?
-    NSString *configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
+    NSString *configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[self spriteBuilderResourceDirectory]];
     configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
 
     NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
@@ -115,12 +99,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     return config;
 }
 
-/*
- Instantiate and return the first scene
- */
 - (CCScene *)createFirstScene
 {
-    return [CCBReader loadAsScene:self.firstSceneName];
+    NSAssert(NO, @"Abstract Method: Your CCSetup subclass must override createFirstScene.");
+    
+    return nil;
 }
 
 - (CCScene *)startScene
@@ -134,17 +117,14 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     return scene;
 }
 
-#pragma mark iOS setup
-
-- (NSDictionary*)iosConfig
-{
-    return [self baseConfig];
-}
+//MARK iOS setup
 
 #if __CC_PLATFORM_IOS
 
-- (void)setupIOS
+- (void)setupApplication
 {
+    _config = [self setupConfig];
+    
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
     
@@ -219,26 +199,14 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #endif
 
-#pragma mark Android setup
-
-- (NSDictionary*)androidConfig
-{
-    [CCBReader configureCCFileUtils];
-    
-    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
-
-    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
-
-    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
-
-    return config;
-}
+//MARK Android setup
 
 #if __CC_PLATFORM_ANDROID
 
-- (void)setupAndroid
+- (void)setupApplication
 {
+    _config = [self setupConfig];
+    
     CCActivity *activity = [CCActivity currentActivity];
     AndroidDisplayMetrics* metrics = [activity getDisplayMetrics];
 
@@ -353,31 +321,13 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #endif
 
-#pragma mark Mac setup
-
-/*
-    Override to change mac window size
-*/
--(CGSize)defaultWindowSize
-{
-    return CGSizeMake(480.0f, 320.0f);
-}
-
-- (NSDictionary*)macConfig
-{
-    [CCBReader configureCCFileUtils];
-    
-    NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
-
-    macConfig[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
-
-    return macConfig;
-}
+//MARK Mac setup
 
 #if __CC_PLATFORM_MAC
 
--(void)setupMac
+- (void)setupApplication
 {
+    _config = [self setupConfig];
     CGRect rect = CGRectMake(0, 0, 1024, 768);
     NSUInteger styleMask = NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask;
     _window = [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];
@@ -433,6 +383,8 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #endif
 
+//MARK: Singleton
+
 + (instancetype)sharedSetup
 {
     NSAssert(self != [CCSetup class], @"You must create a CCSetup subclass for your app.");
@@ -446,6 +398,5 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     
     return sharedController;
 }
-
 
 @end
