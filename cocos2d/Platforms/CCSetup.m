@@ -64,6 +64,16 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 @implementation CCSetup
 
+-(instancetype)init
+{
+    if((self = [super init])){
+        _contentScale = 1.0;
+        _UIScale = 1.0;
+    }
+    
+    return self;
+}
+
 -(NSString *)spriteBuilderResourceDirectory
 {
 #if __CC_PLATFORM_ANDROID
@@ -159,10 +169,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[_config[CCSetupTabletScale2X] boolValue] )
     {
         // Set the director to use 2 points per pixel.
-        director.contentScaleFactor *= 2.0;
+        self.contentScale *= 2.0;
 
         // Set the UI scale factor to show things at "native" size.
-        director.UIScaleFactor = 0.5;
+        self.UIScale = 0.5;
     }
     
     // Initialise OpenAL
@@ -358,8 +368,8 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     director.animationInterval = [(_config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
     director.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
     
-    director.contentScaleFactor *= 2;
-    director.UIScaleFactor *= 0.5;
+    self.contentScale *= 2;
+    self.UIScale *= 0.5;
     
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
@@ -387,12 +397,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 + (instancetype)sharedSetup
 {
-    NSAssert(self != [CCSetup class], @"You must create a CCSetup subclass for your app.");
-    
     static CCSetup *sharedController = nil;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        NSAssert(self != [CCSetup class], @"You must create a CCSetup subclass for your app.");
         sharedController = [[self alloc] init];
     });
     

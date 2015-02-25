@@ -29,6 +29,7 @@
 #import "CCCache.h"
 #import "CCDeviceInfo.h"
 #import "ccUtils.h"
+#import "CCSetup.h"
 
 #pragma mark Blend Option Keys.
 NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";
@@ -445,7 +446,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {
 	CCDirector *director = view.director;
 	self.sizeInPixels = director.viewSizeInPixels;
-	self.contentScale = director.contentScaleFactor;
+	self.contentScale = [CCSetup sharedSetup].contentScale;
 }
 
 @end

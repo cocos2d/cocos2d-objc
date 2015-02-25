@@ -76,11 +76,6 @@ CC_RADIANS_TO_DEGREES(const float angle)
 	return angle*57.29577951f;
 } 
 
-/** @def CC_CONTENT_SCALE_FACTOR
- Factor relating pixel to point coordinates.
- */
-extern float __ccContentScaleFactor;
-
 // Util functions for rescaling CGRects and CGSize, use ccpMult() for CGPoints.
 
 static inline CGRect CC_RECT_SCALE(CGRect rect, CGFloat scale){

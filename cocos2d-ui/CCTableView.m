@@ -27,6 +27,7 @@
 #import "CCDirector.h"
 #import "CGPointExtension.h"
 #import <objc/message.h>
+#import "CCSetup.h"
 
 @interface CCScrollView()
 - (void)scrollViewDidScroll;
@@ -126,7 +127,7 @@
 
 - (NSRange) visibleRangeForScrollPosition:(CGFloat) scrollPosition
 {
-    CGFloat positionScale = self.director.UIScaleFactor;
+    CGFloat positionScale = [CCSetup sharedSetup].UIScale;
     
     if ([_dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)])
     {
@@ -215,7 +216,7 @@
     
     if (_rowHeightUnit == CCSizeUnitUIPoints)
     {
-        location *= self.director.UIScaleFactor;
+        location *= [CCSetup sharedSetup].UIScale;
     }
     
     return location;
@@ -337,7 +338,7 @@
 {
     if (_rowHeightUnit == CCSizeUnitPoints) return _rowHeight;
     else if (_rowHeightUnit == CCSizeUnitUIPoints)
-        return _rowHeight * self.director.UIScaleFactor;
+        return _rowHeight * [CCSetup sharedSetup].UIScale;
     else
     {
         NSAssert(NO, @"Only point and scaled units are supported for row height");

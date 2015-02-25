@@ -52,6 +52,7 @@
 #import "CCFileLocator.h"
 #import "CCImage.h"
 #import "ccUtils.h"
+#import "CCSetup.h"
 #import "CCDeprecated.h"
 
 #if __CC_PLATFORM_IOS
@@ -68,9 +69,6 @@
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)
-
-// TODO: This global should not also be a property on specific instances of CCDirector. it should be global. probably belongs on a different class.
-float __ccContentScaleFactor = 1;
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -176,9 +174,6 @@ CCDirectorStack()
 		
 		_responderManager = [ [CCResponderManager alloc] initWithDirector:self ];
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
-		
-		__ccContentScaleFactor = 1;
-		self.UIScaleFactor = 1;
 		
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
@@ -338,7 +333,7 @@ CCDirectorStack()
 
 -(float) getZEye
 {
-	return ( _winSizeInPixels.height / 1.1566f / __ccContentScaleFactor );
+	return ( _winSizeInPixels.height / 1.1566f / [CCSetup sharedSetup].contentScale );
 }
 
 -(void) setViewport
@@ -359,18 +354,10 @@ CCDirectorStack()
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(self.view.bounds.size);
-#if __CC_PLATFORM_IOS
-		CGFloat scale = self.view.layer.contentsScale ?: 1.0;
-#elif __CC_PLATFORM_ANDROID
-        CGFloat scale = _view.contentScaleFactor;
-#else
-		//self.view.wantsBestResolutionOpenGLSurface = YES;
-		CGFloat scale = self.view.window.backingScaleFactor;
-#endif
-		
+		CGFloat scale = [CCSetup sharedSetup].contentScale;
+    
 		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
 		_winSizeInPoints = size;
-		__ccContentScaleFactor = scale;
 
 		// it could be nil
 		if( view ) {
@@ -389,23 +376,18 @@ CCDirectorStack()
 
 #pragma mark Director Scene Landscape
 
--(CGFloat) contentScaleFactor
-{
-	return __ccContentScaleFactor;
-}
-
--(void) setContentScaleFactor:(CGFloat)scaleFactor
-{
-	NSAssert(scaleFactor > 0.0, @"scaleFactor must be positive.");
-	
-	if( scaleFactor != __ccContentScaleFactor ) {
-		__ccContentScaleFactor = scaleFactor;
-		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
-
-		// update projection
-		[self setProjection:_projection];
-	}
-}
+//-(void) setContentScaleFactor:(CGFloat)scaleFactor
+//{
+//	NSAssert(scaleFactor > 0.0, @"scaleFactor must be positive.");
+//	
+//	if( scaleFactor != __ccContentScaleFactor ) {
+//		__ccContentScaleFactor = scaleFactor;
+//		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
+//
+//		// update projection
+//		[self setProjection:_projection];
+//	}
+//}
 
 -(CGFloat)flipY
 {
@@ -479,7 +461,7 @@ CCDirectorStack()
 -(void) reshapeProjection:(CGSize)newViewSize
 {
 	_winSizeInPixels = newViewSize;
-	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/self.contentScaleFactor);
+	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/[CCSetup sharedSetup].contentScale);
 	
 	[self setProjection:_projection];
 	

@@ -53,6 +53,7 @@
 #import "Platforms/CCGL.h"
 
 // Singletons:
+#import "CCSetup.h"
 #import "CCDirector.h"
 #import "CCSpriteFrameCache.h"
 

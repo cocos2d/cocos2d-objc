@@ -212,19 +212,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 #pragma mark Director - View Size
 
-/** @name View Scale */
-
-/** Content scaling factor. Sets the ratio of points to pixels. Default value is initalized from the content scale of the GL view used by the director.
- @see UIScaleFactor
- @see [UIView contentScaleFactor](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instp/UIView/contentScaleFactor)
- */
-@property(nonatomic, assign) CGFloat contentScaleFactor;
-
-/** UI scaling factor, default value is 1. Positions and content sizes are scale by this factor if the position type is set to scale.
- @see contentScaleFactor
- */
-@property (nonatomic,readwrite,assign) float UIScaleFactor;
-
 /// User definable value that is used for default contentSizes of many node types (CCScene, CCNodeColor, etc).
 /// Defaults to the view size.
 @property(nonatomic, assign) CGSize designSize;

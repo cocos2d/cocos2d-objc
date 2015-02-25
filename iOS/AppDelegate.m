@@ -65,13 +65,13 @@
     CCDirector *director = _view.director;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-        director.contentScaleFactor *= 2;
-        director.UIScaleFactor *= 0.5;
+        [CCSetup sharedSetup].contentScaleFactor *= 2;
+        [CCSetup sharedSetup].UIScaleFactor *= 0.5;
     }
     
     CCFileLocator *locator = [CCFileLocator sharedFileLocator];
     locator.untaggedContentScale = 4;
-    locator.deviceContentScale = director.contentScaleFactor;
+    locator.assetContentScale = director.contentScaleFactor;
     
     locator.searchPaths = @[
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],

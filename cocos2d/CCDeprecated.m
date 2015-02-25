@@ -29,6 +29,7 @@
 #import "CCImage.h"
 #import "CCDeviceInfo.h"
 #import "CCRenderDispatch.h"
+#import "CCSetup.h"
 
 #import "CCMetalSupport_Private.h"
 #import "CCTexture_Private.h"
@@ -41,6 +42,16 @@
 +(CCDirector *)sharedDirector
 {
     return [CCDirector currentDirector];
+}
+
+-(CGFloat)contentScaleFactor
+{
+	return [CCSetup sharedSetup].contentScale;
+}
+
+-(float)UIScaleFactor
+{
+    return [CCSetup sharedSetup].UIScale;
 }
 
 @end

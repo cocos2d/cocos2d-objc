@@ -104,13 +104,6 @@ typedef NS_ENUM(NSInteger, CCFileLocatorError){
 @property (nonatomic, assign) NSUInteger untaggedContentScale;
 
 /**
- The device's content scale.
- 
- @since 4.0
- */
-@property (nonatomic, assign) CGFloat deviceContentScale;
-
-/**
  Returns a singleton instance of the file utils.
  
  @return An shared instance of this class

@@ -40,6 +40,7 @@
 #import "CCLayout.h"
 #import "CCScene.h"
 #import "CCAction.h"
+#import "CCsetup.h"
 
 
 @interface CCAnimationManager()
@@ -391,7 +392,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 - (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCSizeType)type
 {
     CGSize size = CGSizeZero;
-    CCDirector* director = [CCDirector currentDirector];
+    CCSetup *setup = [CCSetup sharedSetup];
     
     CCSizeUnit widthUnit = type.widthUnit;
     CCSizeUnit heightUnit = type.heightUnit;
@@ -406,7 +407,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     }
     else if (widthUnit == CCSizeUnitUIPoints)
     {
-        size.width = director.UIScaleFactor * contentSize.width;
+        size.width = setup.UIScale * contentSize.width;
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
@@ -424,7 +425,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     {
         gotParentSize = YES;
         parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        size.width = parentsContentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
+        size.width = parentsContentSizeInPoints.width - contentSize.width * setup.UIScale;
     }
     
     // Height
@@ -434,7 +435,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     }
     else if (heightUnit == CCSizeUnitUIPoints)
     {
-        size.height = director.UIScaleFactor * contentSize.height;
+        size.height = setup.UIScale * contentSize.height;
     }
     else if (heightUnit == CCSizeUnitNormalized)
     {
@@ -446,7 +447,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     }
     else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
-        size.height = (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - contentSize.height * director.UIScaleFactor;
+        size.height = (gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - contentSize.height * setup.UIScale;
     }
     return size;
 }
@@ -455,7 +456,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     CGSize size = CGSizeZero;
     
-    CCDirector* director = [CCDirector currentDirector];
+    CCSetup *setup = [CCSetup sharedSetup];
     
     CCSizeUnit widthUnit = type.widthUnit;
     CCSizeUnit heightUnit = type.heightUnit;
@@ -470,7 +471,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     }
     else if (widthUnit == CCSizeUnitUIPoints)
     {
-        size.width = pointSize.width / director.UIScaleFactor;
+        size.width = pointSize.width / setup.UIScale;
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
@@ -499,7 +500,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
         gotParentSize = YES;
         parentsContentSizeInPoints = _parent.contentSizeInPoints;
         
-        size.width = (parentsContentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
+        size.width = (parentsContentSizeInPoints.width - pointSize.width) / setup.UIScale;
     }
     
     // Height
@@ -509,7 +510,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     }
     else if (heightUnit == CCSizeUnitUIPoints)
     {
-        size.height = pointSize.height / director.UIScaleFactor;
+        size.height = pointSize.height / setup.UIScale;
     }
     else if (heightUnit == CCSizeUnitNormalized)
     {
@@ -529,7 +530,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     }
     else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
-        size.height = ((gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - pointSize.height) / director.UIScaleFactor;
+        size.height = ((gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height) - pointSize.height) / setup.UIScale;
     }
     return size;
 }
@@ -553,7 +554,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return self.scale * [CCDirector currentDirector].UIScaleFactor;
+        return self.scale * [CCSetup sharedSetup].UIScale;
     }
     return self.scale;
 }
@@ -562,7 +563,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return _scaleX * [CCDirector currentDirector].UIScaleFactor;
+        return _scaleX * [CCSetup sharedSetup].UIScale;
     }
     return _scaleX;
 }
@@ -571,7 +572,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return _scaleY * [CCDirector currentDirector].UIScaleFactor;
+        return _scaleY * [CCSetup sharedSetup].UIScale;
     }
     return _scaleY;
 }
@@ -1281,7 +1282,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 - (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type
 {
-    CCDirector* director = [CCDirector currentDirector];
+    CCSetup *setup = [CCSetup sharedSetup];
     
     BOOL gotParentSize = NO;
     CGSize parentsContentSizeInPoints;
@@ -1293,7 +1294,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     // Convert position to points
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) x = position.x;
-    else if (xUnit == CCPositionUnitUIPoints) x = position.x * director.UIScaleFactor;
+    else if (xUnit == CCPositionUnitUIPoints) x = position.x * setup.UIScale;
     else if(xUnit == CCPositionUnitNormalized){
         parentsContentSizeInPoints = _parent.contentSizeInPoints;
         gotParentSize = YES;
@@ -1302,7 +1303,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) y = position.y;
-    else if (yUnit == CCPositionUnitUIPoints) y = position.y * director.UIScaleFactor;
+    else if (yUnit == CCPositionUnitUIPoints) y = position.y * setup.UIScale;
     else if (yUnit == CCPositionUnitNormalized){
         if(gotParentSize){
             y = position.y * parentsContentSizeInPoints.height;
@@ -1344,7 +1345,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 - (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType)type
 {
-    CCDirector* director = [CCDirector currentDirector];
+    CCSetup *setup = [CCSetup sharedSetup];
     
     BOOL gotParentSize = NO;
     CGSize parentsContentSizeInPoints;
@@ -1386,7 +1387,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     // Convert position from points
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) position.x = x;
-    else if (xUnit == CCPositionUnitUIPoints) position.x = x / director.UIScaleFactor;
+    else if (xUnit == CCPositionUnitUIPoints) position.x = x / setup.UIScale;
     else if (xUnit == CCPositionUnitNormalized)
     {
         float parentWidth = gotParentSize?parentsContentSizeInPoints.width:_parent.contentSizeInPoints.width;
@@ -1398,7 +1399,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) position.y = y;
-    else if (yUnit == CCPositionUnitUIPoints) position.y = y / director.UIScaleFactor;
+    else if (yUnit == CCPositionUnitUIPoints) position.y = y / setup.UIScale;
     else if (yUnit == CCPositionUnitNormalized)
     {
         float parentHeight = gotParentSize?parentsContentSizeInPoints.height:_parent.contentSizeInPoints.height;
@@ -1494,7 +1495,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
         
         float scaleFactor = 1;
-        if (_scaleType == CCScaleTypeScaled) scaleFactor = [CCDirector currentDirector].UIScaleFactor;
+        if (_scaleType == CCScaleTypeScaled) scaleFactor = [CCSetup sharedSetup].UIScale;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed

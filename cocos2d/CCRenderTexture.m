@@ -41,6 +41,7 @@
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
 #import "CCImage.h"
+#import "CCSetup.h"
 
 //#if __CC_PLATFORM_MAC
 //#import <ApplicationServices/ApplicationServices.h>
@@ -107,7 +108,7 @@
 		if( [director runningThread] != [NSThread currentThread] )
 			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
-		_contentScale = director.contentScaleFactor;
+		_contentScale = [CCSetup sharedSetup].assetScale;
 		[self setContentSize:CGSizeMake(width, height)];
 		_depthStencilFormat = depthStencilFormat;
 
@@ -454,7 +455,7 @@ FlipY(GLKMatrix4 projection)
    	}
 
 #if __CC_PLATFORM_IOS
-   	CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
+   	CGFloat scale = _contentScale;
    	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
    	NSData *imageData = nil;
 
@@ -512,7 +513,7 @@ FlipY(GLKMatrix4 projection)
 {
 	CGImageRef imageRef = [self newCGImage];
 	
-	CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
+	CGFloat scale = _contentScale;
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
     
 	CGImageRelease( imageRef );

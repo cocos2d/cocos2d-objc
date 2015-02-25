@@ -30,6 +30,7 @@
 #import "CCFileLocatorDatabaseProtocol.h"
 #import "CCFileMetaData.h"
 #import "ccUtils.h"
+#import "CCSetup.h"
 
 // Options are only used internally for now
 static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
@@ -67,7 +68,6 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     {
         self.searchPaths = @[[[NSBundle mainBundle] resourcePath]];
         self.untaggedContentScale = 4;
-        self.deviceContentScale = 4;
         self.cache = [NSMutableDictionary dictionary];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -282,7 +282,7 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     }
     else
     {
-        int contentScale = CCNextPOT(ceil(self.deviceContentScale));
+        int contentScale = CCNextPOT(ceil([CCSetup sharedSetup].assetScale));
         
         // First try the highest-res tagged variant.
         NSString *name = [self contentScaleFilenameWithBasefilename:filename contentScale:contentScale];

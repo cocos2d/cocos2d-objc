@@ -36,6 +36,7 @@
 #import "NSAttributedString+CCAdditions.h"
 
 #import "CCDirector.h"
+#import "CCSetup.h"
 #import "CCColor.h"
 
 
@@ -84,7 +85,7 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
-    CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
+    CGFloat scale = [CCSetup sharedSetup].contentScale;
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 

@@ -43,6 +43,7 @@
 #import "CCRenderableNode_Private.h"
 #import "CCColor.h"
 #import "CCImage_Private.h"
+#import "CCSetup.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -476,7 +477,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGSize originalDimensions = _dimensions;
   
-    CGFloat scale = __ccContentScaleFactor;
+    CGFloat scale = [CCSetup sharedSetup].assetScale;
     originalDimensions.width *= scale;
     originalDimensions.height *= scale;
     
@@ -640,7 +641,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGContextRelease(context);
     
-    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCDirector currentDirector].contentScaleFactor pixelData:pixelData];
+    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCSetup sharedSetup].assetScale pixelData:pixelData];
     image.contentSize = CC_SIZE_SCALE(dimensions, 1.0/image.contentScale);
 	return [[CCTexture alloc] initWithImage:image options:nil];
 }

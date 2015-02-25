@@ -44,6 +44,7 @@
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCProtocols.h"
+#import "CCSetup.h"
 
 
 #ifdef CCB_ENABLE_UNZIP
@@ -528,7 +529,7 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-            if (sType == 1) f *= [CCDirector currentDirector].UIScaleFactor;
+            if (sType == 1) f *= [CCSetup sharedSetup].UIScale;
             [node setValue:[NSNumber numberWithFloat:f] forKey:name];
         }
     }

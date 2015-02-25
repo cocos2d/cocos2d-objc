@@ -54,6 +54,31 @@
 + (instancetype)sharedSetup;
 
 /**
+ Global content scale for the app.
+ This is the number of pixels on the screen that are equivalent to a point in Cocos2D.
+
+ @since 4.0.0
+ */
+@property(nonatomic, assign) float contentScale;
+
+/**
+ Minimum content scale of assets such as textures, TTF labels or render textures.
+ Normally you want this value to be the same as the contentScale, but on Mac you may want a higher value since the user could resize the window.
+
+ @since 4.0.0
+ */
+@property(nonatomic, assign) float assetScale;
+
+/**
+ UI scaling factor. Positions and content sizes are scale by this factor if the position type is set to UIScale.
+ This is useful for creating UIs that have the same physical size (ex: centimeters) on different devices.
+ This also affects the loading of assets marked as having a UIScale.
+
+ @since 4.0.0
+ */
+@property(nonatomic, assign) float UIScale;
+
+/**
 *  Loads configCocos2D.plist from disk or returns a default dictionary.
 *  Override to provide alternate configuration shared by all platforms.
 *

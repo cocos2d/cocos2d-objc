@@ -235,7 +235,7 @@
 -(void)testCCNodePositionTypePointsScaled
 {
 	// let's say our scale was set the same way since we launched the app.
-	[CCDirector currentDirector].UIScaleFactor = 2.0;
+	[CCSetup sharedSetup].UIScale = 2.0;
 	
 	CCScene *scene = [CCScene node];
 	
@@ -262,7 +262,7 @@
 -(void)testCCNodePositionTypeUIPointsScaled
 {
 	// let's say our scale was set the same way since we launched the app.
-	[CCDirector currentDirector].UIScaleFactor = 2.0;
+	[CCSetup sharedSetup].UIScale = 2.0;
 	
 	CCScene *scene = [CCScene node];
 	
@@ -332,7 +332,7 @@
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
-	[CCDirector currentDirector].UIScaleFactor = 2.0;
+	[CCSetup sharedSetup].UIScale = 2.0;
 	// Since our positionInPoints are not UIPoints (we didn't change the position type), changing the UIScaleFactor has no effect.
 	
 	XCTAssertEqual(first.position.x, (CGFloat) 10.0f, @"");
@@ -370,7 +370,7 @@
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
-	[CCDirector currentDirector].UIScaleFactor = 2.0;
+	[CCSetup sharedSetup].UIScale = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 20.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 30.0, @"");
@@ -405,7 +405,7 @@
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
-	[CCDirector currentDirector].UIScaleFactor = 2.0;
+	[CCSetup sharedSetup].UIScale = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 20.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 30.0, @"");
@@ -447,7 +447,7 @@
 	XCTAssertEqual(first.scaleXInPoints, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.scaleYInPoints, (CGFloat) 1.0, @"");
 	
-	[CCDirector currentDirector].UIScaleFactor = 2.0;
+	[CCSetup sharedSetup].UIScale = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 10.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 15.0, @"");
