@@ -341,7 +341,7 @@
         root.contentSizeType = CCSizeTypePoints;
         root.contentSize = CGSizeMake(200.0f, 200.0f);
 
-        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCSetup sharedSetup].UIScale];
         label.color = [CCColor whiteColor];
         label.positionType = CCPositionTypeNormalized;
         label.position = ccp(0.5f, 1.0f);
@@ -408,7 +408,7 @@
         root.contentSizeType = CCSizeTypePoints;
         root.contentSize = CGSizeMake(200.0f, 200.0f);
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector sharedDirector].UIScaleFactor];
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCSetup sharedSetup].UIScale];
         label.color = [CCColor whiteColor];
         label.positionType = CCPositionTypeNormalized;
         label.position = ccp(0.5f, 1.0f);
@@ -531,7 +531,7 @@
         
         [sprite addChild:light];
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:36 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:36 * [CCSetup sharedSetup].UIScale];
         label.color = [CCColor whiteColor];
         label.positionType = CCPositionTypeNormalized;
         label.position = ccp(0.5f, 1.1f);
@@ -936,7 +936,7 @@
         
         [self.contentNode addChild:sprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor whiteColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(0.25f, 0.8f);
@@ -955,7 +955,7 @@
         
         [self.contentNode addChild:sprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset without padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset without padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor whiteColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(0.25f, 0.65f);
@@ -975,7 +975,7 @@
         
         [self.contentNode addChild:sprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset with padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset with padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor whiteColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(0.25f, 0.5f);
@@ -996,7 +996,7 @@
         
         [self.contentNode addChild:sprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded effect stack (offset then hue)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded effect stack (offset then hue)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor whiteColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(0.25f, 0.35f);
@@ -1017,7 +1017,7 @@
         
         [self.contentNode addChild:sprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded efect stack (hue then offset)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded efect stack (hue then offset)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor whiteColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(0.25f, 0.2f);
@@ -1775,7 +1775,7 @@
     [self.contentNode addChild:background];
 
     // Add row titles
-    CCLabelTTF *plainTitle = [CCLabelTTF labelWithString:@"No FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+    CCLabelTTF *plainTitle = [CCLabelTTF labelWithString:@"No FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
     plainTitle.color = [CCColor blackColor];
     plainTitle.positionType = CCPositionTypeNormalized;
     plainTitle.position = ccp(0.05f, 0.7f);
@@ -1784,7 +1784,7 @@
     [self.contentNode addChild:plainTitle];
     
     
-    CCLabelTTF *effectTitle = [CCLabelTTF labelWithString:@"FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+    CCLabelTTF *effectTitle = [CCLabelTTF labelWithString:@"FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
     effectTitle.color = [CCColor blackColor];
     effectTitle.positionType = CCPositionTypeNormalized;
     effectTitle.position = ccp(0.05f, 0.3f);
@@ -1812,7 +1812,7 @@
         effectSprite.effect = saturation;
         [self.contentNode addChild:effectSprite];
 
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Is color preserved?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Is color preserved?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor blackColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(x, 0.05f);
@@ -1841,7 +1841,7 @@
         effectSprite.effect = saturation;
         [self.contentNode addChild:effectSprite];
 
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Opacity?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Opacity?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor blackColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(x, 0.05f);
@@ -1873,7 +1873,7 @@
         effectSprite.effect = stack;
         [self.contentNode addChild:effectSprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (all stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (all stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor blackColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(x, 0.05f);
@@ -1909,7 +1909,7 @@
         effectSprite.effect = stack;
         [self.contentNode addChild:effectSprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (some stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (some stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor blackColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(x, 0.05f);
@@ -1942,7 +1942,7 @@
         effectSprite.effect = stack;
         [self.contentNode addChild:effectSprite];
         
-        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (no stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (no stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor blackColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(x, 0.05f);
@@ -2017,7 +2017,7 @@
     float smallFontSize = 10.0f;
     
     CCLabelTTF *title = nil;
-    title = [CCLabelTTF labelWithString:@"Stacked Effects" fontName:@"HelveticaNeue-Light" fontSize:bigFontSize * [CCDirector currentDirector].UIScaleFactor];
+    title = [CCLabelTTF labelWithString:@"Stacked Effects" fontName:@"HelveticaNeue-Light" fontSize:bigFontSize * [CCSetup sharedSetup].UIScale];
     title.color = [CCColor blackColor];
     title.positionType = CCPositionTypeNormalized;
     title.position = ccp(0.5f, 0.85f);
@@ -2025,7 +2025,7 @@
     
     [self.contentNode addChild:title];
 
-    title = [CCLabelTTF labelWithString:@"Solo Effects" fontName:@"HelveticaNeue-Light" fontSize:bigFontSize * [CCDirector currentDirector].UIScaleFactor];
+    title = [CCLabelTTF labelWithString:@"Solo Effects" fontName:@"HelveticaNeue-Light" fontSize:bigFontSize * [CCSetup sharedSetup].UIScale];
     title.color = [CCColor blackColor];
     title.positionType = CCPositionTypeNormalized;
     title.position = ccp(0.5f, 0.45f);
@@ -2070,7 +2070,7 @@
             effectName = NSStringFromClass([effect class]);
         }
         
-        title = [CCLabelTTF labelWithString:effectName fontName:@"HelveticaNeue-Light" fontSize:smallFontSize * [CCDirector currentDirector].UIScaleFactor];
+        title = [CCLabelTTF labelWithString:effectName fontName:@"HelveticaNeue-Light" fontSize:smallFontSize * [CCSetup sharedSetup].UIScale];
         title.color = [CCColor blackColor];
         title.positionType = CCPositionTypeNormalized;
         title.position = ccp(x + 0.5f * xStep1, y - 0.35f * yStep);

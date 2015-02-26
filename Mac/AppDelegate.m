@@ -21,7 +21,7 @@
     _view = [TestbedSetup sharedSetup].view;
 #else
     [CCSetup sharedSetup].contentScale = 2;
-    [CCSetup sharedSetup].assetScale = 1;
+    [CCSetup sharedSetup].assetScale = 2;
     [CCSetup sharedSetup].UIScale = 0.5;
     
     CCFileLocator *locator = [CCFileLocator sharedFileLocator];
@@ -58,9 +58,6 @@
     [_window makeFirstResponder:view];
     [_window makeKeyAndOrderFront:self];
     _window.acceptsMouseMovedEvents = YES;
-    
-    // TODO hack
-    [view awakeFromNib];
     
     CCDirector *director = view.director;
     [CCDirector pushCurrentDirector:director];

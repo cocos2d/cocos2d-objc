@@ -270,7 +270,7 @@ static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
 	
 #elif __CC_PLATFORM_MAC
     CCDirectorMac *dir = (CCDirectorMac *)[CCDirectorMac currentDirector];
-    return dir.deviceContentScaleFactor == 1.0 ? CCDeviceMac : CCDeviceMacRetinaDisplay;
+    return CCDeviceMac;
 	
 #endif // __CC_PLATFORM_MAC
 	

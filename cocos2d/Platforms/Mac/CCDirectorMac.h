@@ -30,71 +30,12 @@
 #import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
-#import <QuartzCore/CVDisplayLink.h>
 #import "CCDirector.h"
 
-enum  {
-	// If the window is resized, it won't be autoscaled
-	kCCDirectorResize_NoScale,
-	// If the window is resized, it will be autoscaled (default behavior)
-	kCCDirectorResize_AutoScale,
-};
-
-@interface CCDirector (MacExtension)
-
-/* converts an NSEvent to GL coordinates (Mac only) */
--(CGPoint) convertEventToGL:(NSEvent*)event;
-@end
-
-/* Base class of Mac directors
- */
 @interface CCDirectorMac : CCDirector
-{
-	BOOL			_isFullScreen;
-	int				_resizeMode;
-	CGPoint			_winOffset;
-	CGSize			_originalWinSizeInPoints;
 
-	NSWindow		*_fullScreenWindow;
+-(CGPoint)convertEventToGL:(NSEvent *)event;
 
-	// cache
-	NSWindow		*_windowGLView;
-    NSView          *_superViewGLView;
-    NSRect          _originalWinRect; // Original size and position
-}
-
-// whether or not the view is in fullscreen mode
-@property (nonatomic, readonly) BOOL isFullScreen;
-
-// resize mode: with or without scaling
-@property (nonatomic, readwrite) int resizeMode;
-
-@property (nonatomic, readwrite) CGSize originalWinSizeInPoints;
-
-/** returns the real device content scale factor
- */
-@property (nonatomic, readonly) CGFloat deviceContentScaleFactor;
-
-/* Sets the view in fullscreen or window mode */
-- (void) setFullScreen:(BOOL)fullscreen;
-
-@end
-
-
-/* DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- *
- * Features and Limitations:
- * - Only available on 3.1+
- * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
- * - Only supports animation intervals of 1/60 1/30 & 1/15
- *
- * It is the recommended Director if the SDK is 3.1 or newer
- *
- */
-@interface CCDirectorDisplayLink : CCDirectorMac
-{
-	CVDisplayLinkRef displayLink;
-}
 @end
 
 #endif // __CC_PLATFORM_MAC

@@ -163,8 +163,6 @@
 
 - (CCNode*) createScrollContent
 {
-    CCDirector* dir = [CCDirector currentDirector];
-    
     CCNode* node = [CCNode node];
     
     float w = 3;
@@ -180,7 +178,7 @@
     {
         for (int y = 0; y < h; y++)
         {
-            CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"(%d,%d)",x,y] fontName:@"HelveticaNeue-Light" fontSize:100 * dir.UIScaleFactor];
+            CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"(%d,%d)",x,y] fontName:@"HelveticaNeue-Light" fontSize:100 * [CCSetup sharedSetup].UIScale];
             lbl.positionType = CCPositionTypeNormalized;
             lbl.position = ccp((x + 0.5f)/w, (y + 0.5f)/h);
             [node addChild:lbl];

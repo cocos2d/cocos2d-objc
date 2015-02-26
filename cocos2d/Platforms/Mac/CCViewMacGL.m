@@ -17,14 +17,16 @@
 
 @implementation CCViewMacGL {
     NSMutableArray *_fences;
+    CCDirectorMac *_director;
 }
-@synthesize director = _director;
 
-
--(void)awakeFromNib
+-(CCDirector *)director
 {
-    _director = [CCDirector director];
-    _director.view = self;
+    if(_director == nil){
+        _director = [[CCDirectorMac alloc] initWithView:self];
+    }
+    
+    return _director;
 }
 
 - (void) prepareOpenGL
@@ -229,6 +231,11 @@
 - (BOOL)acceptsFirstResponder
 {
     return YES;
+}
+
+-(CGSize)sizeInPixels
+{
+    return [self convertRectToBacking:self.bounds].size;
 }
 
 @end

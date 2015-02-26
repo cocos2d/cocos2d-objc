@@ -481,7 +481,7 @@
         CCNode *node = (CCNode *)responder.target;
         
         // Items that claim user interaction receive events even if they occur outside of the bounds of the object.
-        if (node.claimsUserInteraction || [node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]]) {
+        if (node.claimsUserInteraction || [node clippedHitTestWithWorldPos:[(CCDirectorMac *)_director convertEventToGL:theEvent]]) {
             [CCDirector pushCurrentDirector:_director];
             if ([node respondsToSelector:@selector(mouseDragged:button:)]) [node mouseDragged:theEvent button:button];
             [CCDirector popCurrentDirector];
@@ -563,7 +563,7 @@
         CCNode *node = _responderList[index];
         
         // check for hit test
-        if ([node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
+        if ([node clippedHitTestWithWorldPos:[(CCDirectorMac *)_director convertEventToGL:theEvent]])
         {
             _currentEventProcessed = YES;
             block(node);

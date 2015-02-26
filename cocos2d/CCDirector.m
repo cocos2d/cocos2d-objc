@@ -142,15 +142,15 @@ CCDirectorStack()
     [stack removeLastObject];
 }
 
-+(CCDirector *)director;
+-(instancetype)initWithView:(CC_VIEW<CCView> *)view
 {
-    return [[CC_DIRECTOR_DEFAULT alloc] init];
-}
+	if((self = [super init])){
+		_view = view;
 
-- (id) init
-{
-	if( (self=[super init] ) ) {
-
+		_winSizeInPixels = view.sizeInPixels;
+		_winSizeInPoints = CC_SIZE_SCALE(_winSizeInPixels, 1.0/[CCSetup sharedSetup].contentScale);
+        [self setProjection: _projection];
+        
 		// scenes
 		_runningScene = nil;
 		_nextScene = nil;
@@ -173,7 +173,6 @@ CCDirectorStack()
 		_runningThread = nil;
 		
 		_responderManager = [ [CCResponderManager alloc] initWithDirector:self ];
-		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 		
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
@@ -282,20 +281,14 @@ CCDirectorStack()
 
 -(void) calculateDeltaTime
 {
-	struct timeval now;
-
-	if( gettimeofday( &now, NULL) != 0 ) {
-		CCLOG(@"cocos2d: error in gettimeofday");
-		_dt = 0;
-		return;
-	}
+	CCTime now = CACurrentMediaTime();
 
 	// new delta time
 	if( _nextDeltaTimeZero ) {
 		_dt = 0;
 		_nextDeltaTimeZero = NO;
 	} else {
-		_dt = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+		_dt = now - _lastUpdate;
 		_dt = MAX(0,_dt);
 	}
 
@@ -345,34 +338,6 @@ CCDirectorStack()
 {
 	CCLOG(@"cocos2d: override me");
 }
-
-#pragma mark Director Integration with a UIKit view
-
--(void) setView:(CC_VIEW<CCView> *)view
-{
-		_view = view;
-
-		// set size
-		CGSize size = CCNSSizeToCGSize(self.view.bounds.size);
-		CGFloat scale = [CCSetup sharedSetup].contentScale;
-    
-		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
-		_winSizeInPoints = size;
-
-		// it could be nil
-		if( view ) {
-#if !__CC_PLATFORM_ANDROID
-			[self createStatsLabel];
-#endif
-			[self setProjection: _projection];
-		}
-
-#if !__CC_PLATFORM_ANDROID
-		// Dump info once OpenGL was initilized
-		[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
-#endif
-}
-
 
 #pragma mark Director Scene Landscape
 
@@ -640,8 +605,6 @@ CCDirectorStack()
 	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
 
 	_delegate = nil;
-
-	[self setView:nil];
 	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
@@ -748,10 +711,8 @@ CCDirectorStack()
     }
     
 	[self setAnimationInterval: _oldAnimationInterval];
-
-	if( gettimeofday( &_lastUpdate, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
+    
+    _lastUpdate = CACurrentMediaTime();
 
 	[self willChangeValueForKey:@"isPaused"];
 	_isPaused = NO;
@@ -891,10 +852,7 @@ static const float CCFPSLabelItemHeight = 32;
 
 -(void) calculateMPF
 {
-	struct timeval now;
-	gettimeofday( &now, NULL);
-
-	_secondsPerFrame = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+	_secondsPerFrame = CACurrentMediaTime() - _lastUpdate;
 }
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale

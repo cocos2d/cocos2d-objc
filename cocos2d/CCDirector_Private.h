@@ -32,9 +32,7 @@
 	__weak NSThread *_runningThread;
 }
 
-// Create a new director.
-// This returns the correct director type for the current platform.
-+(CCDirector *)director;
+-(instancetype)initWithView:(CC_VIEW<CCView> *)view;
 
 // Manage the currently bound CCDirector.
 +(void)pushCurrentDirector:(CCDirector *)director;

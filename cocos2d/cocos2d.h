@@ -171,7 +171,6 @@
 #elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCViewMacGL.h"
 #import "Platforms/Mac/CCDirectorMac.h"
-#import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/NSEvent+CC.h"
 #elif __CC_PLATFORM_ANDROID
 #import "Platforms/Android/CCActivity.h"

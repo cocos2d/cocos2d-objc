@@ -63,8 +63,8 @@
 {
     CGSize winSize = [CCDirector currentDirector].viewSize;
 
-    CCLabelTTF *labelSmiley1 = [CCLabelTTF labelWithString:@"Jolly Smiley? ->" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
-    CCLabelTTF *labelSmiley2 = [CCLabelTTF labelWithString:@"<- Angry Smiley?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector currentDirector].UIScaleFactor];
+    CCLabelTTF *labelSmiley1 = [CCLabelTTF labelWithString:@"Jolly Smiley? ->" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
+    CCLabelTTF *labelSmiley2 = [CCLabelTTF labelWithString:@"<- Angry Smiley?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCSetup sharedSetup].UIScale];
 
     labelSmiley1.position = ccp((CGFloat) (winSize.width / 2.0 - 75.0), (CGFloat) (winSize.height / 2.0));
     labelSmiley2.position = ccp((CGFloat) (winSize.width / 2.0 + 75.0), (CGFloat) (winSize.height / 2.0));

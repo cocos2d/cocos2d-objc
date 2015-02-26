@@ -57,13 +57,13 @@
     [self addChild:_headerBg];
     
     // Header label
-    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
+    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCSetup sharedSetup].UIScale];
     _lblTitle.positionType = CCPositionTypeNormalized;
     _lblTitle.position = ccp(0.5f,0.5f);
     
     [_headerBg addChild:_lblTitle];
     
-    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
 		_lblSubTitle.shadowColor = [CCColor blackColor];
 		_lblSubTitle.shadowBlurRadius = 2.5;
     _lblSubTitle.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
