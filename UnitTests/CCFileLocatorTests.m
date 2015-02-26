@@ -14,6 +14,7 @@
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
 #import "CCFileLocatorDatabase.h"
+#import "CCSetup.h"
 
 @interface CCFileLocatorTests : FileSystemTestCase
 
@@ -30,8 +31,9 @@
 
     self.fileLocator = [[CCFileLocator alloc] init];
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
-    _fileLocator.assetContentScale = 4;
     _fileLocator.untaggedContentScale = 4;
+    
+    [CCSetup sharedSetup].assetScale = 4;
 }
 
 #pragma mark - Tests for non image files
@@ -124,7 +126,7 @@
 
     [self mockPreferredLanguages:@[@"es"]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
@@ -165,7 +167,7 @@
     [self addDatabaseWithJSON:jsonA forSearchPath:[self fullPathForFile:@"Resources"]];
     [self addDatabaseWithJSON:jsonB forSearchPath:[self fullPathForFile:@"Packages/Superpackage.sbpack"]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error1;
@@ -227,7 +229,7 @@
             @"foo-de-4x.png",
     ]];
 
-    _fileLocator.assetContentScale = 2;
+    [CCSetup sharedSetup].assetScale = 2;
 
     [self mockPreferredLanguages:@[@"de"]];
 
@@ -286,7 +288,7 @@
             @"foo-de.png",
     ]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     [self mockPreferredLanguages:@[@"de"]];
@@ -338,7 +340,7 @@
             @"baa.jpg",
     ]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
@@ -354,7 +356,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"default"]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
@@ -370,7 +372,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"2", @"1", @"default"]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
@@ -383,7 +385,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"2", @"1"]];
 
-    _fileLocator.assetContentScale = 3;
+    [CCSetup sharedSetup].assetScale = 3;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -395,7 +397,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"2", @"1"]];
 
-    _fileLocator.assetContentScale = 2;
+    [CCSetup sharedSetup].assetScale = 2;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -407,7 +409,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"1"]];
 
-    _fileLocator.assetContentScale = 2;
+    [CCSetup sharedSetup].assetScale = 2;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -419,7 +421,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"1"]];
 
-    _fileLocator.assetContentScale = 2;
+    [CCSetup sharedSetup].assetScale = 2;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -431,7 +433,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4"]];
 
-    _fileLocator.assetContentScale = 1;
+    [CCSetup sharedSetup].assetScale = 1;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -443,7 +445,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"2"]];
 
-    _fileLocator.assetContentScale = 1;
+    [CCSetup sharedSetup].assetScale = 1;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -455,7 +457,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"1"]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -467,7 +469,7 @@
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"2", @"default"]];
 
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
@@ -485,7 +487,7 @@
     [self createPNGsInDir:@"Packages/foo" name:@"Hero" scales:@[@"4", @"2", @"1"]];
 
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Packages/foo"], [self fullPathForFile:@"Packages/baa"]];
-    _fileLocator.assetContentScale = 2;
+    [CCSetup sharedSetup].assetScale = 2;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -499,7 +501,7 @@
     [self createPNGsInDir:@"Packages/foo" name:@"Spaceship" scales:@[@"4", @"2", @"1"]];
 
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Packages/foo"], [self fullPathForFile:@"Packages/baa"]];
-    _fileLocator.assetContentScale = 2;
+    [CCSetup sharedSetup].assetScale = 2;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
@@ -547,7 +549,7 @@
 
 - (void)prepareCacheTestRequestImageNamedAndDeleteAssetAfterwards:(NSString *)imageName
 {
-    _fileLocator.assetContentScale = 4;
+    [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
 
     NSString *relPath = [_fileLocator.searchPaths[0] stringByAppendingPathComponent:imageName];

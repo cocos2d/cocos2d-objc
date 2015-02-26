@@ -116,19 +116,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 -(void) setViewport
 {
-	CGPoint offset = CGPointZero;
-	float widthAspect = _winSizeInPixels.width;
-	float heightAspect = _winSizeInPixels.height;
-
-
+    CGSize size = self.viewSizeInPixels;
 	CCRenderDispatch(NO, ^{
-		glViewport(offset.x, offset.y, widthAspect, heightAspect);
+		glViewport(0, 0, size.width, size.height);
 	});
 }
 
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CGSize sizePoint = _winSizeInPoints;
+	CGSize sizePoint = self.viewSize;
 	[self setViewport];
 
 	switch (projection) {
@@ -148,16 +144,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 {
 	NSPoint point = [[self view] convertPoint:[event locationInWindow] fromView:nil];
 	return  [self convertToGL:NSPointToCGPoint(point)];
-}
-
--(CGSize) winSize
-{
-	return _winSizeInPoints;
-}
-
--(CGSize) winSizeInPixels
-{
-	return _winSizeInPixels;
 }
 
 -(CGFloat)flipY

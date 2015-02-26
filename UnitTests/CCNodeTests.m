@@ -20,7 +20,8 @@
 
 -(void) setUp
 {
-    [CCDirector pushCurrentDirector:[CCDirector director]];
+    CCDirector *director = [[CCDirector alloc] initWithView:nil];
+    [CCDirector pushCurrentDirector:director];
 }
 
 -(void)tearDown

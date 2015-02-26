@@ -95,15 +95,15 @@
 
 -(void) setViewport
 {
-	CGSize size = _winSizeInPixels;
+	CGSize size = self.viewSizeInPixels;
 	CCRenderDispatch(YES, ^{
-		glViewport(0, 0, size.width, size.height );
+		glViewport(0, 0, size.width, size.height);
 	});
 }
 
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CGSize sizePoint = _winSizeInPoints;
+	CGSize sizePoint = self.viewSize;
     
 	[self setViewport];
 
@@ -147,20 +147,6 @@
 -(void) end
 {
 	[super end];
-}
-
-#pragma mark Director - UIViewController delegate
-
--(void) setView:(CC_VIEW<CCView> *)view
-{
-		[super setView:view];
-
-		if( view ) {
-			// set size
-			CGFloat scale = view.contentScaleFactor;
-			CGSize size = view.bounds.size;
-			_winSizeInPixels = CGSizeMake(size.width * scale, size.height * scale);
-		}
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -308,8 +294,8 @@
 
     if(_animating)
         return;
-
-	gettimeofday( &_lastUpdate, NULL);
+    
+    _lastUpdate = CACurrentMediaTime();
 
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
@@ -358,8 +344,9 @@
     _lastDisplayTime = _displayLink.timestamp;
 
 	// needed for SPF
-	if( _displayStats )
-		gettimeofday( &_lastUpdate, NULL);
+	if( _displayStats ){
+		_lastUpdate = CACurrentMediaTime();
+    }
 
 #if DEBUG
 	// If we are debugging our code, prevent big delta time

@@ -15,8 +15,9 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "ccUtils.h"
 #import "CCViewiOSGL.h"
-#import "CCDirector.h"
+#import "CCDirectorIOS.h"
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
 #import "CCScene.h"
@@ -117,9 +118,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
         self.multipleTouchEnabled = YES;
         
         _touchEvent = [[CCTouchEvent alloc] init];
-        
-        _director = [CCDirector director];
-        _director.view = self;
     }
     
     return self;
@@ -142,6 +140,20 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
     }
     
     return self;
+}
+
+-(CCDirector *)director
+{
+    if(_director == nil){
+        _director = [[CCDirectorDisplayLink alloc] initWithView:self];
+    }
+    
+    return _director;
+}
+
+-(CGSize)sizeInPixels
+{
+    return CC_SIZE_SCALE(self.bounds.size, self.contentScaleFactor);
 }
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup

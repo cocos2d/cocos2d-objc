@@ -183,12 +183,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	/* projection used */
 	CCDirectorProjection _projection;
 
-	/* window size in points */
-	CGSize	_winSizeInPoints;
-
-	/* window size in pixels */
-	CGSize	_winSizeInPixels;
-
 	NSMutableArray *_rendererPool;
 }
 

@@ -146,9 +146,6 @@ CCDirectorStack()
 {
 	if((self = [super init])){
 		_view = view;
-
-		_winSizeInPixels = view.sizeInPixels;
-		_winSizeInPoints = CC_SIZE_SCALE(_winSizeInPixels, 1.0/[CCSetup sharedSetup].contentScale);
         [self setProjection: _projection];
         
 		// scenes
@@ -188,7 +185,8 @@ CCDirectorStack()
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, _winSizeInPoints.width, _winSizeInPoints.height, self.view];
+    CGSize size = self.viewSize;
+	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, size.width, size.height, self.view];
 }
 
 - (void) dealloc
@@ -326,7 +324,7 @@ CCDirectorStack()
 
 -(float) getZEye
 {
-	return ( _winSizeInPixels.height / 1.1566f / [CCSetup sharedSetup].contentScale );
+	return ( self.viewSizeInPixels.height / 1.1566f / [CCSetup sharedSetup].contentScale );
 }
 
 -(void) setViewport
@@ -388,12 +386,12 @@ CCDirectorStack()
 
 -(CGSize)viewSize
 {
-	return _winSizeInPoints;
+	return CC_SIZE_SCALE(self.view.sizeInPixels, 1.0/[CCSetup sharedSetup].contentScale);
 }
 
 -(CGSize)viewSizeInPixels
 {
-	return _winSizeInPixels;
+	return self.view.sizeInPixels;
 }
 
 -(CGRect)viewportRect
@@ -425,12 +423,11 @@ CCDirectorStack()
 
 -(void) reshapeProjection:(CGSize)newViewSize
 {
-	_winSizeInPixels = newViewSize;
-	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/[CCSetup sharedSetup].contentScale);
+    NSAssert(CGSizeEqualToSize(self.view.sizeInPixels, newViewSize), @"Size does not match view?");
 	
 	[self setProjection:_projection];
 	
-	[_runningScene viewDidResizeTo: _winSizeInPoints];
+	[_runningScene viewDidResizeTo: self.viewSize];
 }
 
 #pragma mark Director Scene Management
