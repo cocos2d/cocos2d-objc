@@ -53,9 +53,6 @@
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
-/* Sets the glViewport*/
--(void) setViewport;
-
 /**
  Stops the run loop. Nothing will be drawn or simulated. The main loop won't be triggered anymore.
  If you want to pause your game call [pause] instead.

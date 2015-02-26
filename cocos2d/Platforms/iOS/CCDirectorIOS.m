@@ -93,49 +93,6 @@
 	return self;
 }
 
--(void) setViewport
-{
-	CGSize size = self.viewSizeInPixels;
-	CCRenderDispatch(YES, ^{
-		glViewport(0, 0, size.width, size.height);
-	});
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CGSize sizePoint = self.viewSize;
-    
-	[self setViewport];
-
-	switch (projection) {
-		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			break;
-
-		case CCDirectorProjection3D: {
-			float zeye = sizePoint.height*sqrtf(3.0f)/2.0f;
-			_projectionMatrix = GLKMatrix4Multiply(
-				GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
-				GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
-			);
-
-			break;
-		}
-
-		case CCDirectorProjectionCustom:
-//			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-//				_projectionMatrix = [_delegate updateProjection];
-			break;
-
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
-	}
-
-	_projection = projection;
-	[self createStatsLabel];
-}
-
 #pragma mark Director Point Convertion
 
 -(CGPoint)convertTouchToGL:(CCTouch*)touch

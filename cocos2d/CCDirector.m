@@ -327,30 +327,24 @@ CCDirectorStack()
 	return ( self.viewSizeInPixels.height / 1.1566f / [CCSetup sharedSetup].contentScale );
 }
 
--(void) setViewport
-{
-	CCLOG(@"cocos2d: override me");
-}
-
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CCLOG(@"cocos2d: override me");
+	CGSize sizePoint = self.viewSize;
+
+	switch (projection) {
+		case CCDirectorProjection2D:
+			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
+			break;
+		default:
+			CCLOG(@"cocos2d: Director: unrecognized projection");
+			break;
+	}
+
+	_projection = projection;
+	[self createStatsLabel];
 }
 
 #pragma mark Director Scene Landscape
-
-//-(void) setContentScaleFactor:(CGFloat)scaleFactor
-//{
-//	NSAssert(scaleFactor > 0.0, @"scaleFactor must be positive.");
-//	
-//	if( scaleFactor != __ccContentScaleFactor ) {
-//		__ccContentScaleFactor = scaleFactor;
-//		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
-//
-//		// update projection
-//		[self setProjection:_projection];
-//	}
-//}
 
 -(CGFloat)flipY
 {

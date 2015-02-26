@@ -114,32 +114,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	}
 }
 
--(void) setViewport
-{
-    CGSize size = self.viewSizeInPixels;
-	CCRenderDispatch(NO, ^{
-		glViewport(0, 0, size.width, size.height);
-	});
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CGSize sizePoint = self.viewSize;
-	[self setViewport];
-
-	switch (projection) {
-		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			break;
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
-	}
-
-	_projection = projection;
-	[self createStatsLabel];
-}
-
 -(CGPoint)convertEventToGL:(NSEvent *)event
 {
 	NSPoint point = [[self view] convertPoint:[event locationInWindow] fromView:nil];
