@@ -114,12 +114,10 @@
 	GLfloat top = bottom + rect.size.height / high;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-	for(NSUInteger i=0; i<_totalParticles; i++) {
-		_texCoord1[0] = GLKVector2Make(left, bottom);
-		_texCoord1[1] = GLKVector2Make(right, bottom);
-		_texCoord1[2] = GLKVector2Make(right, top);
-		_texCoord1[3] = GLKVector2Make(left, top);
-	}
+	_texCoord1[0] = GLKVector2Make(left, bottom);
+	_texCoord1[1] = GLKVector2Make(right, bottom);
+	_texCoord1[2] = GLKVector2Make(right, top);
+	_texCoord1[3] = GLKVector2Make(left, top);
 }
 
 -(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect
