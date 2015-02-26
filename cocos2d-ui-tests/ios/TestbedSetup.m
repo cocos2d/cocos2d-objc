@@ -43,6 +43,13 @@
 
 - (void)setupApplication
 {
+    // TODO Hack to make the registerSpriteFramesFile: calls work until they are removed.
+#if __CC_PLATFORM_MAC
+    self.assetScale = 2;
+#elif __CC_PLATFORM_IOS
+    self.assetScale = [UIScreen mainScreen].scale*(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 2.0 : 1.0);
+#endif
+    
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 

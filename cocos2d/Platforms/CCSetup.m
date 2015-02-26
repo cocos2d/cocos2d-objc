@@ -119,10 +119,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (CCScene *)startScene
 {
     NSAssert(self.view.director, @"Require a valid director to decode the CCB file!");
-
-    [CCDirector pushCurrentDirector:self.view.director];
     CCScene *scene = [self createFirstScene];
-    [CCDirector popCurrentDirector];
 
     return scene;
 }
@@ -133,6 +130,9 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupApplication
 {
+    self.contentScale = [UIScreen mainScreen].scale;
+    self.UIScale = 1;
+    
     _config = [self setupConfig];
     
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -168,12 +168,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     // Setup tablet scaling if it was requested.
     if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[_config[CCSetupTabletScale2X] boolValue] )
     {
-        // Set the director to use 2 points per pixel.
         self.contentScale *= 2.0;
-
-        // Set the UI scale factor to show things at "native" size.
-        self.UIScale = 0.5;
+        self.UIScale *= 0.5;
     }
+    
+    self.assetScale = self.contentScale;
     
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
@@ -181,7 +180,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [[CCPackageManager sharedManager] loadPackages];
 
     [director presentScene:[self startScene]];
-    [CCDirector popCurrentDirector];
 }
 
 //- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
@@ -337,7 +335,12 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupApplication
 {
+    self.contentScale = 2;
+    self.UIScale = 0.5;
+    self.assetScale = 2;
+    
     _config = [self setupConfig];
+    
     CGRect rect = CGRectMake(0, 0, 1024, 768);
     NSUInteger styleMask = NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask;
     _window = [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];
@@ -354,8 +357,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     _view.wantsBestResolutionOpenGLSurface = YES;
     _window.contentView = _view;
     
-    // TODO hack
-    [_view awakeFromNib];
+    [_window center];
+    [_window makeFirstResponder:_view];
+    [_window makeKeyAndOrderFront:self];
+    _window.acceptsMouseMovedEvents = YES;
     
     CCDirector *director = _view.director;
     NSAssert(director, @"CCView failed to construct a director.");
@@ -368,22 +373,12 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     director.animationInterval = [(_config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
     director.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
     
-    self.contentScale *= 2;
-    self.UIScale *= 0.5;
-    
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
 
     [[CCPackageManager sharedManager] loadPackages];
 
     [director presentScene:[self startScene]];
-    [CCDirector popCurrentDirector];
-    
-    [_window center];
-    [_window makeFirstResponder:_view];
-    [_window makeKeyAndOrderFront:self];
-    _window.acceptsMouseMovedEvents = YES;
-    
 }
 
 -(void)windowWillClose:(NSNotification *)notification
@@ -395,17 +390,28 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 //MARK: Singleton
 
-+ (instancetype)sharedSetup
+static CCSetup *
+CCSetupSingleton(Class klass, BOOL useCustom)
 {
-    static CCSetup *sharedController = nil;
+    static CCSetup *sharedSetup = nil;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSAssert(self != [CCSetup class], @"You must create a CCSetup subclass for your app.");
-        sharedController = [[self alloc] init];
+        NSCAssert(useCustom || klass != [CCSetup class], @"You must either create a CCSetup subclass for your app or call [CCSetup useCustomSetup] if you are integrating Cocos2D into an existing app.");
+        sharedSetup = [[klass alloc] init];
     });
     
-    return sharedController;
+    return sharedSetup;
+}
+
++(void)useCustomSetup
+{
+    CCSetupSingleton([self class], YES);
+}
+
++(instancetype)sharedSetup
+{
+    return CCSetupSingleton([self class], NO);
 }
 
 @end

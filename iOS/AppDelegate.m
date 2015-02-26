@@ -43,7 +43,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [TestbedSetup sharedSetup];
 #if 0
     [[TestbedSetup sharedSetup] setupApplication];
     _window = [TestbedSetup sharedSetup].window;
@@ -52,6 +51,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [CCSetup useCustomSetup];
     [CCSetup sharedSetup].contentScale = [UIScreen mainScreen].scale;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){

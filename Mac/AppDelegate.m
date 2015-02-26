@@ -14,12 +14,12 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [TestbedSetup sharedSetup];
 #if 0
     [[TestbedSetup sharedSetup] setupApplication];
     _window = [TestbedSetup sharedSetup].window;
     _view = [TestbedSetup sharedSetup].view;
 #else
+    [CCSetup useCustomSetup];
     [CCSetup sharedSetup].contentScale = 2;
     [CCSetup sharedSetup].assetScale = 2;
     [CCSetup sharedSetup].UIScale = 0.5;

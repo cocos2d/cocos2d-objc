@@ -47,11 +47,18 @@
 @interface CCSetup : NSObject
 
 /**
- Access the CCSetup singleton. You must *not* call this method directly on CCSetup, but on your own CCSetup subclass.
+ TODO
 
  @since 4.0.0
  */
 + (instancetype)sharedSetup;
+
+/**
+ In order to call sharedSetup, you must either subclass CCSetup
+
+ @since 4.0.0
+ */
++(void)useCustomSetup;
 
 /**
  Global content scale for the app.
