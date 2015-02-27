@@ -226,6 +226,7 @@ NSDictionary *testConfigSet(int config)
     {
         NSArray *highlightChars = [label characterSpritesForRange:boldRange];
         CCEffectBloom *boldEffect = [CCEffectBloom effectWithBlurRadius:1 intensity:0.5 luminanceThreshold:0.1];
+        boldEffect.padding = CGSizeMake(3.0f, 3.0f);
         for (CCSprite *fontSprite in highlightChars)
         {
             [fontSprite setEffect:boldEffect];
@@ -251,5 +252,60 @@ NSDictionary *testConfigSet(int config)
     [self setSubTitle:explanation];
 }
 
+- (void)setupBMFontScaledWidthTest
+{
+    CGSize screenSize = [[CCDirector currentDirector] viewSize];
+    float currentWidth = screenSize.width / 2.0f;
+    const CGSize pad = CGSizeMake(5.0f, 5.0f);
+    
+    CCNodeGradient *background = [CCNodeGradient nodeWithColor:[CCColor darkGrayColor] fadingTo:[CCColor blueColor]];
+    [background setAnchorPoint:ccp(0.5f, 0.5f)];
+    [background setContentSize:CGSizeMake(currentWidth, 100.0f)];
+    [background setPositionType:CCPositionTypeNormalized];
+    [background setPosition:ccp(0.5f, 0.5f)];
+    [[self contentNode] addChild:background];
+
+    NSString *testString = @"to seek out new life and new civilizations, to boldly go where no man has gone before.";
+    CCLabelBMFont *label = [CCLabelBMFont labelWithString:testString fntFile:@"Xolonium.bmfont/Xolonium.fnt"
+                                                    width:currentWidth alignment:CCTextAlignmentLeft];
+    [label setPositionType:CCPositionTypeNormalized];
+    [label setPosition:ccp(0.5f, 0.5f)];
+    [background addChild:label];
+    [background setContentSize:CGSizeMake(currentWidth + pad.width, label.contentSize.height + pad.height)];
+    
+    NSString *fontUsed = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"Xolonium.bmfont/Xolonium.fnt"];
+    NSRange fontNameRange = [fontUsed rangeOfString:@"Xolonium.bmfont"];
+    fontUsed = [fontUsed substringFromIndex:fontNameRange.location];
+    NSString *explanation = [NSString stringWithFormat:@"%@ - width modified", fontUsed];
+    
+    // To see debug frames around the label and font characters, uncomment
+    // the following lines.  This is helpful when working on font rendering.
+    //    explanation = [explanation stringByAppendingString:@"\ndebugDraw - GREEN: content rect - RED: width property"];
+    //    [label setEnableDebugDrawing:YES];
+    
+    __block float variableWidth = currentWidth;
+    __block float increment = 10.0f;
+    
+    const float MAX_WIDTH = screenSize.width - pad.width;
+    const float MIN_WIDTH = screenSize.width / 4.0f;
+    
+    const CCTime delay = 1.0;
+    
+    _runTestLoop = YES;
+    _testLoopTimer = delay;
+    _updateBlock = ^(void) {
+        if ((variableWidth + increment > MAX_WIDTH) || (variableWidth + increment < MIN_WIDTH))
+        {
+            increment = -increment;
+        }
+        variableWidth += increment;
+        [label setWidth:variableWidth];
+        [background setContentSize:CGSizeMake(variableWidth + pad.width, label.contentSize.height + pad.height)];
+        
+        return delay;
+    };
+
+    [self setSubTitle:explanation];
+}
 
 @end
