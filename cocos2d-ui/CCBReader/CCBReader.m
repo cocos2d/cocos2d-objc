@@ -1786,8 +1786,8 @@ SelectorNameForProperty(objc_property_t property)
     if (version != kCCBVersion)
     {
         return YES;
-		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
-        return NO;
+//		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
+//        return NO;
     }
     
     return YES;
