@@ -139,18 +139,18 @@
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDFInnerGlow pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakInterface.distanceField;
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakInterface.fillColor.glkVector4];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakInterface.glowColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakInterface.fillColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakInterface.glowColor.glkVector4];
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakInterface.innerMin, weakInterface.innerMax)];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_glowInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakInterface.innerMin, weakInterface.innerMax)];
         
-    } copy]];
+    }]];
     
     return @[pass0];
 }

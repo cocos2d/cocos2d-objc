@@ -126,6 +126,7 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 @property (nonatomic, assign) GLKVector2 texCoord2Center;
 @property (nonatomic, assign) GLKVector2 texCoord2Extents;
 @property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
+@property (nonatomic, strong) NSDictionary* uniformTranslationTable;
 @property (nonatomic, assign) BOOL needsClear;
 
 @end
@@ -135,7 +136,17 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 
 typedef void (^CCEffectRenderPassBeginBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
 typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
-typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
+
+
+@interface CCEffectRenderPassBeginBlockContext : NSObject
+
+@property (nonatomic, copy) CCEffectRenderPassBeginBlock block;
+@property (nonatomic, strong) NSDictionary *uniformTranslationTable;
+
+-(id)initWithBlock:(CCEffectRenderPassBeginBlock)block;
+
+@end
+
 
 @interface CCEffectRenderPass : NSObject
 
@@ -144,17 +155,14 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 @property (nonatomic, assign) CCEffectTexCoordMapping texCoord2Mapping;
 @property (nonatomic, strong) CCBlendMode* blendMode;
 @property (nonatomic, strong) CCShader* shader;
-@property (nonatomic, strong) NSDictionary* uniformTranslationTable;
 @property (nonatomic, copy) NSArray* beginBlocks;
 @property (nonatomic, copy) NSArray* updateBlocks;
-@property (nonatomic, copy) NSArray* endBlocks;
 @property (nonatomic, copy) NSString *debugLabel;
 
 -(id)initWithIndex:(NSUInteger)indexInEffect;
 
 -(void)begin:(CCEffectRenderPassInputs *)passInputs;
 -(void)update:(CCEffectRenderPassInputs *)passInputs;
--(void)end:(CCEffectRenderPassInputs *)passInputs;
 -(void)enqueueTriangles:(CCEffectRenderPassInputs *)passInputs;
 
 @end
@@ -196,7 +204,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 @property (nonatomic, readonly) BOOL firstInStack;
 
 
--(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings uniformTranslationTable:(NSDictionary*)translations firstInStack:(BOOL)firstInStack;
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack;
 -(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms;

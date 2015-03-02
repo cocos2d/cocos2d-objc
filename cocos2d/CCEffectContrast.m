@@ -59,15 +59,15 @@ static float conditionContrast(float contrast);
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectContrast pass 0";
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_contrast"]] = weakInterface.conditionedContrast;
-    } copy]];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_contrast"]] = weakInterface.conditionedContrast;
+    }]];
     
     return @[pass0];
 }

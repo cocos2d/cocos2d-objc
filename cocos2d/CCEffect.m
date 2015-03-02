@@ -226,6 +226,29 @@ static NSString* vertBase =
 @end
 
 
+#pragma mark CCEffectRenderPassBeginBlockContext
+
+@implementation CCEffectRenderPassBeginBlockContext
+
+-(id)initWithBlock:(CCEffectRenderPassBeginBlock)block;
+{
+    if (self = [super init])
+    {
+        _block = [block copy];
+    }
+    return self;
+}
+
+-(instancetype)copyWithZone:(NSZone *)zone
+{
+    CCEffectRenderPassBeginBlockContext *newContext = [[CCEffectRenderPassBeginBlockContext allocWithZone:zone] initWithBlock:_block];
+    newContext.uniformTranslationTable = _uniformTranslationTable;
+    return newContext;
+}
+
+@end
+
+
 #pragma mark CCEffectRenderPass
 
 @implementation CCEffectRenderPass
@@ -244,8 +267,7 @@ static NSString* vertBase =
         _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
         _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
         
-        _beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){} copy]];
-        _endBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){} copy]];
+        _beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){}]];
 
         CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
             if (passInputs.needsClear)
@@ -270,32 +292,24 @@ static NSString* vertBase =
     newPass.texCoord2Mapping = _texCoord2Mapping;
     newPass.blendMode = _blendMode;
     newPass.shader = _shader;
-    newPass.beginBlocks = _beginBlocks;
-    newPass.updateBlocks = _updateBlocks;
-    newPass.endBlocks = _endBlocks;
+    newPass.beginBlocks = [_beginBlocks copy];
+    newPass.updateBlocks = [_updateBlocks copy];
     newPass.debugLabel = _debugLabel;
     return newPass;
 }
 
 -(void)begin:(CCEffectRenderPassInputs *)passInputs
 {
-    for (CCEffectRenderPassBeginBlock block in _beginBlocks)
+    for (CCEffectRenderPassBeginBlockContext *blockContext in _beginBlocks)
     {
-        block(self, passInputs);
+        passInputs.uniformTranslationTable = blockContext.uniformTranslationTable;
+        blockContext.block(self, passInputs);
     }
 }
 
 -(void)update:(CCEffectRenderPassInputs *)passInputs
 {
     for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
-    {
-        block(self, passInputs);
-    }
-}
-
--(void)end:(CCEffectRenderPassInputs *)passInputs
-{
-    for (CCEffectRenderPassUpdateBlock block in _endBlocks)
     {
         block(self, passInputs);
     }
@@ -355,7 +369,7 @@ static NSString* vertBase =
     return [[NSSet alloc] initWithArray:@[]];
 }
 
--(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings uniformTranslationTable:(NSDictionary*)uniformTranslationTable firstInStack:(BOOL)firstInStack
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack
 {
     if((self = [super init]))
     {
@@ -386,16 +400,8 @@ static NSString* vertBase =
         
         _shaderUniforms = [CCEffectImpl buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         
-        if (uniformTranslationTable)
-        {
-            // If a translation was supplied, make sure it's valid.
-            [CCEffectImpl checkUniformTranslationTable:uniformTranslationTable againstUniforms:_shaderUniforms];
-        }
-        else
-        {
-            // No translation table was supplied, create a default one.
-            uniformTranslationTable = [CCEffectImpl buildUniformTranslationTable:_fragmentUniforms vertexUniforms:_vertexUniforms];
-        }
+        // Create a default UTT.
+        NSDictionary *uniformTranslationTable = [CCEffectImpl buildUniformTranslationTable:_fragmentUniforms vertexUniforms:_vertexUniforms];
         
         NSString *fragBody = [CCEffectImpl buildShaderSourceFromBase:fragBase functions:_fragmentFunctions uniforms:_fragmentUniforms varyings:_varyingVars firstInStack:_firstInStack];
         NSString *vertBody = [CCEffectImpl buildShaderSourceFromBase:vertBase functions:_vertexFunctions uniforms:_vertexUniforms varyings:_varyingVars firstInStack:_firstInStack];
@@ -413,7 +419,15 @@ static NSString* vertBase =
         for (CCEffectRenderPass *pass in _renderPasses)
         {
             pass.shader = _shader;
-            pass.uniformTranslationTable = uniformTranslationTable;
+            
+            // If a uniform translation table is not set already, set it to the default.
+            for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+            {
+                if (!blockContext.uniformTranslationTable)
+                {
+                    blockContext.uniformTranslationTable = uniformTranslationTable;
+                }
+            }
         }
     }
     return self;
@@ -421,7 +435,7 @@ static NSString* vertBase =
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings
 {
-    return [self initWithRenderPasses:renderPasses fragmentFunctions:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings uniformTranslationTable:nil firstInStack:YES];
+    return [self initWithRenderPasses:renderPasses fragmentFunctions:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings firstInStack:YES];
 }
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms
@@ -526,30 +540,6 @@ static NSString* vertBase =
         translationTable[uniform.name] = uniform.name;
     }
     return translationTable;
-}
-
-+ (BOOL)checkUniformTranslationTable:(NSDictionary *)utt againstUniforms:(NSDictionary *)uniforms
-{
-    // If the two tables have different sizes then they can't match.
-    BOOL result = (utt.count == uniforms.count);
-
-    if (result)
-    {
-        // Does every entry in the translation table have a corresponding entry in
-        // the uniforms dictionary?
-
-        NSArray *mangledNames = [utt allValues];
-        for (NSString *mangledName in mangledNames)
-        {
-            if (![uniforms objectForKey:mangledName])
-            {
-                result = NO;
-                break;
-            }
-        }
-    }
-    
-    return result;
 }
 
 -(NSUInteger)renderPassCount
