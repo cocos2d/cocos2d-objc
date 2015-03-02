@@ -36,6 +36,20 @@
 +(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 /**
+ *  Creates and initializes a CCEffectLighting object with the supplied parameters.
+ *
+ *  @param groups         The light groups this effect belongs to.
+ *  @param specularColor  The specular color of this effect.
+ *  @param shininess      The overall shininess of the effect.
+ *  @param contribution   The overall contribution of lighting to the affected node.
+ *
+ *  @return The CCEffectLighting object.
+ *  @since v3.4 and later
+ *  @see CCColor
+ */
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess contribution:(float)contribution;
+
+/**
  *  Initializes a CCEffectLighting object.
  *
  *  @return The CCEffectLighting object.
@@ -55,6 +69,20 @@
  *  @see CCColor
  */
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
+
+/**
+ *  Initializes a CCEffectLighting object with the supplied parameters.
+ *
+ *  @param groups         The light groups this effect belongs to.
+ *  @param specularColor  The specular color of this effect.
+ *  @param shininess      The overall shininess of the effect.
+ *  @param contribution   The overall contribution of lighting to the affected node.
+ *
+ *  @return The CCEffectLighting object.
+ *  @since v3.4 and later
+ *  @see CCColor
+ */
+-(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess contribution:(float)contribution;
 
 /// -----------------------------------------------------------------------
 /// @name Lighting Properties
@@ -85,6 +113,14 @@
  *  @since v3.4 and later
  */
 @property (nonatomic, assign) float shininess;
+
+/**
+ *  The overall contribution of the lighting effect to the affected node's final color.
+ *  This value is in the range [0..1] where 0 results in no lighting and 1 results in 
+ *  full lighting.
+ *  @since v3.4 and later
+ */
+@property (nonatomic, assign) float contribution;
 
 @end
 
