@@ -339,18 +339,16 @@
             // Copy the begin and update blocks from the input passes into the new pass.
             for (CCEffectRenderPass *pass in effectImpl.renderPasses)
             {
-                NSMutableArray *beginBlocks = [pass.beginBlocks copy];
-                NSMutableArray *updateBlocks = [pass.updateBlocks copy];
-                
                 // Update the uniform translation table in the new pass's begin blocks
-                for (CCEffectRenderPassBeginBlockContext *blockContext in beginBlocks)
+                for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
                 {
-                    blockContext.uniformTranslationTable = utt;
+                    CCEffectRenderPassBeginBlockContext *newContext = [blockContext copy];
+                    newContext.uniformTranslationTable = utt;
+                    [allBeginBlocks addObject:newContext];
                 }
                 
-                // Add the blocks to the list of all blocks for the new pass.
-                [allBeginBlocks addObjectsFromArray:beginBlocks];
-                [allUpdateBlocks addObjectsFromArray:updateBlocks];
+                // Copy the update blocks
+                [allUpdateBlocks addObjectsFromArray:[pass.updateBlocks copy]];
             }
         }
         
