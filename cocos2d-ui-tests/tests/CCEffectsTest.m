@@ -1665,6 +1665,48 @@
                                                                ]]];
 }
 
+-(void)setupNameConflictTest
+{
+    self.subTitle = @"Stack Name Conflict Test\nShould look like glass.";
+    
+    CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    reflectEnvironment.positionType = CCPositionTypeNormalized;
+    reflectEnvironment.position = ccp(0.5f, 0.5f);
+    reflectEnvironment.visible = NO;
+    [self.contentNode addChild:reflectEnvironment];
+    
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/StoneWall.jpg"];
+    refractEnvironment.positionType = CCPositionTypeNormalized;
+    refractEnvironment.position = ccp(0.5f, 0.5f);
+    refractEnvironment.scale = 0.5;
+    [self.contentNode addChild:refractEnvironment];
+    
+    NSArray *effects = @[
+                         [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
+                         [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
+                         ];
+    
+    CCSprite *sprite = [[CCSprite alloc] init];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    sprite.effect = [CCEffectStack effectWithArray:effects];
+    sprite.scale = 0.5f;
+    sprite.colorRGBA = [CCColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
+    [self.contentNode addChild:sprite];
+    
+    CGPoint p1 = CGPointMake(0.1f, 0.1f);
+    CGPoint p2 = CGPointMake(0.9f, 0.9f);
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
+                                                               [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
+                                                               nil
+                                                               ]]];
+}
+
 -(void)setupPerformanceTest
 {
     self.subTitle = @"Effect Performance Test";
