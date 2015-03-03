@@ -40,34 +40,18 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 	CCTiledMapOrientationIso,
 };
 
-/** 
- 
- CCTiledMap parses and renders a tile map in the TMX format.
+/** CCTiledMap parses and renders a tile map in the TMX format.
 
- ### Features:
+ The Tiled map's layers create CCTiledMapLayer instances which are added as a child nodes of CCTiledMap
  
- - Each tile is treated as a CCSprite if needed, otherwise it's efficiently stored
- - A tile is converted to CCSprite when you call [layer tileAt:] - doing so on every tile will greatly increase memory consumption!
- - If a tile became a sprite it can be rotated / moved / scaled / tinted / fade out
- - Tiles can be added/removed/replaced at runtime
- - The zOrder of the tiles can be modified at runtime
- - Each tile has an anchorPoint of (0,0)
- - The anchorPoint of the TMXTileMap is (0,0)
- - The Tiled map's layers create CCTiledMapLayer instances which are added as a child nodes of CCTiledMap
- - The Tiled layer's tiles will be aliased by default
- - Each tile will have a unique tag
- - Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
- - Each object group is stored in an NSMutableArray
- - Properties can be assigned to the Map, Layer, Object Group, and Object
-
  ### Limitations:
  
- - It only supports one tileset image per layer.
- - Embedded images (image layers) are not supported.
- - It only supports the XML format. The JSON format is not supported.
- - Hexagonal tilemaps are not currently supported.
+ - Only supports one tileset image per layer.
+ - Image layers are not supported.
+ - It only supports the Base64 format.
+ - Hexagonal and staggered isometric tilemaps are not currently supported.
 
- ### Notes:
+ ### Tips:
  
  You can obtain the map's layers at runtime by:
  
