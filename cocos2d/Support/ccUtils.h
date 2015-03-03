@@ -102,7 +102,7 @@ static inline NSData* CC_DECODE_BASE64(NSString* base64){
 #if __CC_PLATFORM_IOS
         result = [[NSData alloc] initWithBase64Encoding:base64];
 #elif __CC_PLATFORM_MAC
-        result = [[NSData alloc] initWithBase64EncodedString:base64 options:0];
+        result = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
 #elif __CC_PLATFORM_ANDROID
 //        result = [NSData decodeWithStr:base64 flags:0];
 #warning "Base64 decoding not implemented on android."
