@@ -408,7 +408,7 @@
         root.contentSizeType = CCSizeTypePoints;
         root.contentSize = CGSizeMake(200.0f, 200.0f);
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector sharedDirector].UIScaleFactor];
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector currentDirector].UIScaleFactor];
         label.color = [CCColor whiteColor];
         label.positionType = CCPositionTypeNormalized;
         label.position = ccp(0.5f, 1.0f);
