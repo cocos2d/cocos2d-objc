@@ -225,7 +225,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 			//     never draw it into the frame buffer
 			//     if not in inverted mode: set the current layer value to 0 in the stencil buffer
 			//     if in inverted mode: set the current layer value to 1 in the stencil buffer
-			glClearStencil(_inverted ? ~0 : 0);
+			glClearStencil(_inverted ? mask_layer : 0);
 			glClear(GL_STENCIL_BUFFER_BIT);
 			
 			///////////////////////////////////
