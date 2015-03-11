@@ -170,8 +170,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setString:(NSString*)str
 {
-	NSAssert( str, @"Invalid string" );
-    [self _setAttributedString:[[NSAttributedString alloc] initWithString:str]];
+    [self _setAttributedString:[[NSAttributedString alloc] initWithString:(str ?: @"")]];
 }
 
 -(NSString*) string
