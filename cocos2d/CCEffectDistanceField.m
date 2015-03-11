@@ -123,35 +123,35 @@
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDistanceField pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakInterface.glowColor.glkVector4];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakInterface.fillColor.glkVector4];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakInterface.glowColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakInterface.fillColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
         
         // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
         float innerMin = 0.5;
         float innerMax = (0.5 * weakInterface.outlineInnerWidth) + innerMin;
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
         
         float outerMin = (0.5 * (1.0 - weakInterface.outlineOuterWidth));
         float outerMax = 0.5;
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
         
         float glowWidthMin = (0.5 * (1.0 - weakInterface.glowWidth));
         float glowWidthMax = 0.5;
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outline"]] = weakInterface.outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glow"]] = weakInterface.glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_outline"]] = weakInterface.outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_glow"]] = weakInterface.glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
         
         GLKVector2 offset = GLKVector2Make(weakInterface.glowOffset.x / passInputs.previousPassTexture.contentSize.width, weakInterface.glowOffset.y / passInputs.previousPassTexture.contentSize.height);
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
         
-    } copy]];
+    }]];
     
     return @[pass0];
 }
