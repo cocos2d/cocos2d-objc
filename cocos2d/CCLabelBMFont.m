@@ -323,7 +323,6 @@
                 [self insertLineBreakAtCharacter:fc];
                 [prevCharacter setControlFollowing:SoftLineBreakFollows];
             }
-            expectingWordBoundary = NO;
             lineLHS = 0.0f;
         }
         if ([fc controlFollowing] & WordBreakFollows)
