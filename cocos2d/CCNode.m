@@ -194,8 +194,9 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
     [_userObject release];
     [_children release];
     [_queuedActions release];
-    [_animationManager release];
     [_physicsBody release];
+    
+    self.animationManager = nil;
     
     [super dealloc];
 }

@@ -28,6 +28,8 @@
 #import "CCScene.h"
 #import "CCTexture.h"
 
+@class CCRenderTexture;
+
 /**
  *  Defines the direction that a directional transition will move. Used by CCTransition.
  *

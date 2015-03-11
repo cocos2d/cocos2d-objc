@@ -1883,6 +1883,8 @@ SelectorNameForProperty(objc_property_t property)
     NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file];
     NSData* d = [NSData dataWithContentsOfFile:path];
 
+    NSAssert(d != nil, @"Could not load file: %@ at %@", file, path);
+    
     self.currentCCBFile = file;
 
     return [self loadWithData:d owner:(id)o];
