@@ -39,7 +39,7 @@
     [keyFrames addObject:frameDict];
     
     // Add Animation Sequence
-    [self addKeyFramesForSequenceNamed:name propertyType:CCBSequencePropertyTypeSpriteFrame frameArray:keyFrames node:node loop:loop];
+    [self addKeyFramesForSequenceNamed:name propertyType:CCSequencePropertyTypeSpriteFrame frameArray:keyFrames node:node loop:loop];
 }
 
 #pragma mark Legacy Animation Support

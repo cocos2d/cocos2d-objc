@@ -29,40 +29,50 @@
 #import "CCSpriteFrame.h"
 #import "CCAnimationManager.h"
 
+@protocol CCSBReaderDidLoad <NSObject>
+@optional
+- (void) didLoadFromSB;
+
+@end
+
+@interface CCNode(CCSBReader) <CCSBReaderDidLoad>
+
+@end
+
 /**
- The CCBReader loads SpriteBuilder (CCB) documents.
+ The CCSBReader loads SpriteBuilder (SB) documents.
  
  For the most part you'll just use one of these two methods:
  
-    // load a CCB document as a CCNode instance
-    CCNode* myNode = [CCBReader load:@"MyNode"];
+    // load a SB document as a CCNode instance
+    CCNode* myNode = [CCSBReader load:@"MyNode"];
 
-    // load a CCB document of type "Sprite" as a CCSprite instance
-    CCSprite* mySprite = (CCSprite*)[CCBReader load:@"MySprite"];
+    // load a SB document of type "Sprite" as a CCSprite instance
+    CCSprite* mySprite = (CCSprite*)[CCSBReader load:@"MySprite"];
 
-    // load a CCB document wrapped in a CCScene instance
-    CCScene* scene = [CCBReader loadAsScene:@"MyNode"];
+    // load a SB document wrapped in a CCScene instance
+    CCScene* scene = [CCSBReader loadAsScene:@"MyNode"];
  
- You can optionally pass an owner object to the CCBReader load methods. This owner object then gets assigned all of the SpriteBuilder document's member variables that are marked to be set to the "Owner".
+ You can optionally pass an owner object to the CCSBReader load methods. This owner object then gets assigned all of the SpriteBuilder document's member variables that are marked to be set to the "Owner".
  In all other cases owner is nil and assigning variables to Owner discards their assignment.
  
- When a SpriteBuilder document was loaded, all nodes created from the document will receive the didLoadFromCCB message, if implemented as follows:
+ When a SpriteBuilder document was loaded, all nodes created from the document will receive the didLoadFromSB message, if implemented as follows:
  
  **Objective-C:**
  
-    -(void) didLoadFromCCB {
+    -(void) didLoadFromSB {
         NSLog(@"%@ did load", self);
     }
 
  **Swift:**
  
-    func didLoadFromCCB() {
+    func didLoadFromSB() {
         NSLog("%@ did load", self)
     }
  
  Nodes created from a SpriteBuilder document will also have a valid CCAnimationManager instance assigned to their [CCNode animationManager] property.
  */
-@interface CCBReader : NSObject
+@interface CCSBReader : NSObject
 {
     NSData* data;
     unsigned char* bytes;
@@ -95,18 +105,18 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates a new CCBReader. You don't normally need to do this because you can directly use most methods, ie `[CCBReader load:@"MyNode"];`.
+ *  Creates a new CCSBReader. You don't normally need to do this because you can directly use most methods, ie `[CCSBReader load:@"MyNode"];`.
  *
- *  @return A new CCBReader.
+ *  @return A new CCSBReader.
  */
-+ (CCBReader*) reader;
++ (CCSBReader*) reader;
 
 /// -----------------------------------------------------------------------
 /// @name Loading SpriteBuilder documents
 /// -----------------------------------------------------------------------
 
 /**
- *  Loads a ccbi-file with the specified name. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *  Loads a sbi-file with the specified name. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.sbi will work.
  *
  *  @param file Name of the file to load.
  *
@@ -115,7 +125,7 @@
 - (CCNode*) load:(NSString*) file;
 
 /**
- *  Loads a ccbi-file with the specified name. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *  Loads a sbi-file with the specified name. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.sbi will work.
  *
  *  @param file Name of the file to load.
  *
@@ -124,7 +134,7 @@
 + (CCNode*) load:(NSString*) file;
 
 /**
- *  Loads a ccbi-file with the specified name and wraps it in a CCScene node. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *  Loads a sbi-file with the specified name and wraps it in a CCScene node. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.sbi will work.
  *
  *  @param file Name of the file to load.
  *
@@ -137,7 +147,7 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Loads a ccbi-file with the specified name and owner. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *  Loads a sbi-file with the specified name and owner. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.sbi will work.
  *
  *  @param file Name of the file to load.
  *  @param owner The owner object used to load the file.
@@ -147,9 +157,9 @@
 - (CCNode*) load:(NSString*) file owner:(id)owner;
 
 /**
- *  Loads a ccbi-file from the provided NSData object. This method is useful if you load ccbi-files from the internet. If you are not using the owner variable, pass NULL.
+ *  Loads a sbi-file from the provided NSData object. This method is useful if you load sbi-files from the internet. If you are not using the owner variable, pass NULL.
  *
- *  @param data       Data object to load the ccbi-file from.
+ *  @param data       Data object to load the sbi-file from.
  *  @param owner      The owner object used to load the file, or NULL if not used.
  *
  *  @return The loaded node graph.
@@ -157,7 +167,7 @@
 - (CCNode*) loadWithData:(NSData*) data owner:(id)owner;
 
 /**
- *  Loads a ccbi-file with the specified name and owner. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *  Loads a sbi-file with the specified name and owner. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.sbi will work.
  *
  *  @param file Name of the file to load.
  *  @param owner The owner object used to load the file.
@@ -167,7 +177,7 @@
 + (CCNode*) load:(NSString*) file owner:(id)owner;
 
 /**
- *  Loads a ccbi-file with the specified name and owner and wraps it in a CCScene node. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *  Loads a sbi-file with the specified name and owner and wraps it in a CCScene node. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.sbi will work.
  *
  *  @param file Name of the file to load.
  *  @param owner The owner object used to load the file.
@@ -181,8 +191,9 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Once a ccb-file has been loaded, the animationManager property will be set to contain the top level CCAnimationManager
+ *  Once a sb-file has been loaded, the animationManager property will be set to contain the top level CCAnimationManager
  */
 @property (nonatomic,strong) CCAnimationManager* animationManager;
 
 @end
+

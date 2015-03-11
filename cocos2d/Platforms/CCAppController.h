@@ -131,7 +131,7 @@
 
 /**
     Instantiate and return the first scene in the application
-    Only override this if you wish to load something other than a `.ccb` file
+    Only override this if you wish to load something other than a `.sb` file
     (i.e. a programaticaly created CCScene instance)
  */
 - (CCScene*) createFirstScene;

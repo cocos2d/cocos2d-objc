@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "CCAppController.h"
 #import "CCScene.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCDeviceInfo.h"
 #import "CCAppDelegate.h"
 #import "OALSimpleAudio.h"
@@ -75,12 +75,12 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
  */
 - (CCScene *)createFirstScene
 {
-    return [CCBReader loadAsScene:self.firstSceneName];
+    return [CCSBReader loadAsScene:self.firstSceneName];
 }
 
 - (CCScene *)startScene
 {
-    NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
+    NSAssert(_glView.director, @"Require a valid director to decode the SB file!");
 
     [CCDirector pushCurrentDirector:_glView.director];
     CCScene *scene = [self createFirstScene];
@@ -104,7 +104,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
     config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
 
-    [CCBReader configureCCFileUtils];
+    [CCSBReader configureCCFileUtils];
     
     return config;
 }
@@ -216,7 +216,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (NSDictionary*)androidConfig
 {
-    [CCBReader configureCCFileUtils];
+    [CCSBReader configureCCFileUtils];
     
     NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
 
@@ -353,7 +353,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (NSDictionary*)macConfig
 {
-    [CCBReader configureCCFileUtils];
+    [CCSBReader configureCCFileUtils];
     
     NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
 

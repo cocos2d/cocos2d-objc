@@ -23,9 +23,18 @@
  * THE SOFTWARE.
  */
 
-#import "CCBAnimationManager.h"
+#import <Foundation/Foundation.h>
+#import "CCSBReader_Private.h"
 
-@implementation CCBAnimationManager
+typedef NS_ENUM(NSInteger, CCSequencePropertyType) {
+    CCSequencePropertyTypeSpriteFrame = kCCPropTypeSpriteFrame
+};
 
+@interface CCSequenceProperty : NSObject
 
+@property (nonatomic,strong)   NSString* name;
+@property (nonatomic,assign)   int type;
+@property (nonatomic,readonly) NSMutableArray* keyframes;
+
++ (NSString *)getPropertyNameFromTypeId:(CCSequencePropertyType)propertyType;
 @end

@@ -30,5 +30,5 @@
 #import "CCTextField.h"
 #import "CCSlider.h"
 
-// CCBReader
+// CCSBReader
 #import "CCBuilderReader.h"

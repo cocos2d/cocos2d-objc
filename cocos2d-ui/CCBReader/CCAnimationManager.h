@@ -28,7 +28,7 @@
 @class CCNode;
 
 
-@class CCBSequence;
+@class CCSequence;
 
 #pragma mark Animation Manager Delegate
 
@@ -36,7 +36,7 @@
  The animation manager delegate receives callbacks when animation sequences finishes playing.
  Used by CCAnimationManager.
  */
-@protocol CCBAnimationManagerDelegate <NSObject>
+@protocol CCAnimationManagerDelegate <NSObject>
 
 /**
  * Called when an animation sequence has finished playing.
@@ -60,8 +60,8 @@
     NSMutableDictionary* _baseValues;
     
     NSString *_animationManagerId;
-    CCBSequence* _runningSequence;
-    CCBSequence* _lastSequence;
+    CCSequence* _runningSequence;
+    CCSequence* _lastSequence;
     
     void (^block)(id sender);
     
@@ -130,6 +130,6 @@
 
 /// The animation manager delegate receives updates about the animation playback state.
 /// @see CCBAnimationManagerDelegate
-@property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
+@property (nonatomic,weak) NSObject<CCAnimationManagerDelegate>* delegate;
 
 @end

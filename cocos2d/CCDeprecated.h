@@ -29,7 +29,10 @@
 #import "CCNode.h"
 #import "CCTexture.h"
 #import "CCAction.h"
+#import "CCSBReader.h"
 
+// ease backwards compatability for the old class, which was just "CCBReader"
+@compatibility_alias CCBReader CCSBReader;
 
 /** RGB color composed of bytes 3 bytes
  */
@@ -434,5 +437,19 @@ enum {
 @interface CCAction(Deprecated)
 
 @property (nonatomic, readwrite, assign) NSInteger tag;
+
+@end
+
+
+@protocol CCSBReaderDidLoadDeprecated <NSObject>
+@optional
+/**
+ Use didLoadFromSB instead.
+ */
+- (void) didLoadFromCCB __attribute__((deprecated));
+
+@end
+
+@interface CCNode(CCSBReaderDeprecated) <CCSBReaderDidLoadDeprecated>
 
 @end

@@ -24,7 +24,7 @@
 
 
 #import "CCAnimationManager.h"
-#import "CCBSequenceProperty.h"
+#import "CCSequenceProperty.h"
 
 
 @interface CCAnimationManager ()
@@ -39,13 +39,13 @@
 // Base node.
 @property (nonatomic,unsafe_unretained) CCNode* rootNode;
 
-// (CCB) Optional owner
+// Optional owner
 @property (nonatomic,unsafe_unretained) id owner;
 
-// (CCB) Resolution and default container size.
+// Resolution and default container size.
 @property (nonatomic,assign) CGSize rootContainerSize;
 
-// (CCB) Node Management
+// Node Management
 - (CGSize) containerSize:(CCNode*)node;
 - (void) addNode:(CCNode*)node andSequences:(NSDictionary*)seq;
 - (void) moveAnimationsFromNode:(CCNode*)fromNode toNode:(CCNode*)toNode;
@@ -58,7 +58,7 @@
 - (void)timeSeekForSequenceId:(int)seqId time:(float)time;
 
 #pragma mark Simple Sequence Builder
-- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCBSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop;
+- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop;
 
 @end
 

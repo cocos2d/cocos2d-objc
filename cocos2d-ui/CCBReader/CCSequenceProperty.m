@@ -23,39 +23,37 @@
  * THE SOFTWARE.
  */
 
-#import "CCBKeyframe.h"
+#import "CCSequenceProperty.h"
 
-@implementation CCBKeyframe
+@implementation CCSequenceProperty
 
-- (id)init
+- (id) init
 {
     self = [super init];
     if (!self) return NULL;
     
-    // Defaults
-    _value              = nil;
-    _time               = 0.0f;
-    _easingType         = 0;
-    _easingOpt          = 0.0f;
+    _name      = @"";
+    _type      = 0;
+    _keyframes = [[NSMutableArray alloc] init];
     
     return self;
 }
 
-- (NSString *) description {
-    
-    NSString *description = [NSString localizedStringWithFormat:@"[CCAnimationKeyframe] value: %@, time: %f, easingType: %d, easingOpt: %f", self.value, self.time,self.easingType,self.easingOpt];
+- (NSString *)description {
+        NSString *description = [NSString localizedStringWithFormat:@"[CCAnimationSequenceProperty] Name: %@, Type: %d, Keyframes: %@", self.name, self.type, self.keyframes];
     
     return description;
 }
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	CCBKeyframe * copyKeyframe = [[self class] allocWithZone:zone];
-	copyKeyframe->_value = self->_value;
-	copyKeyframe->_time = self->_time;
-	copyKeyframe->_easingType = self->_easingType;
-	copyKeyframe->_easingOpt = self->_easingOpt;
-
-	return copyKeyframe;
++ (NSString *)getPropertyNameFromTypeId:(CCSequencePropertyType)propertyType {
+    
+    switch(propertyType) {
+        case CCSequencePropertyTypeSpriteFrame:
+            return @"spriteFrame";
+            break;
+    }
+    
+    return nil;
 }
+
 @end

@@ -64,7 +64,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     // The testbed uses a different directory dictionary than is created by the default CCFileUtils constructor- it uses the file utils one
-    [CCBReader configureCCFileUtils];
+    [CCSBReader configureCCFileUtils];
     CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
 
     // Testbed needs special directory search paths:

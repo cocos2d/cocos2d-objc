@@ -11,7 +11,7 @@
 #import "CCPackage.h"
 #import "CCFileUtils.h"
 #import "CCSprite.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "AppDelegate.h"
 #import "CCPackage_private.h"
 #import "CCPackageHelper.h"

@@ -1,6 +1,7 @@
 /*
  * SpriteBuilder: http://www.spritebuilder.org
  *
+ * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,18 +25,20 @@
 
 #import <Foundation/Foundation.h>
 
-#define CCBLocalize(key) \
-[[CCBLocalizationManager sharedManager] localizedStringForKey:(key)]
+@class CCSequenceProperty;
 
-@interface CCBLocalizationManager : NSObject
-{
-    NSMutableDictionary* _translations;
-}
+@interface CCSequence : NSObject
 
-@property (nonatomic,readonly) NSDictionary* translations;
+@property (nonatomic,assign) float duration;
+@property (nonatomic,assign) float time;
+@property (nonatomic,copy)   NSString* name;
+@property (nonatomic,assign) int sequenceId;
+@property (nonatomic,assign) int chainedSequenceId;
+@property (nonatomic,assign) int loops; // @todo
+@property (nonatomic,assign) float tween;
 
-+ (id)sharedManager;
-
-- (NSString*) localizedStringForKey:(NSString*)key;
+// Channels
+@property (nonatomic,strong) CCSequenceProperty* callbackChannel;
+@property (nonatomic,strong) CCSequenceProperty* soundChannel;
 
 @end

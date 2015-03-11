@@ -9,8 +9,8 @@
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
 #import "CCAnimationManager.h"
-#import "CCBSequence.h"
-#import "CCBKeyframe.h"
+#import "CCSequence.h"
+#import "CCKeyframe.h"
 #import "CCAnimationManager_Private.h"
 
 #define NUM_ELEMENTS(array) (sizeof(array)/sizeof(array[0]))
@@ -60,14 +60,14 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 	node.position = ccp(0.0f,0.0f);
 	
 
-	CCBSequence* seq = [[CCBSequence alloc] init];
+	CCSequence* seq = [[CCSequence alloc] init];
 	seq.duration = 5.0f;
 	seq.name = @"TestSequence";
 	seq.sequenceId = 0;
 	seq.chainedSequenceId = 0;
 	[animationManager.sequences addObject:seq];
 	
-	CCBSequenceProperty* seqProp = [[CCBSequenceProperty alloc] init];
+	CCSequenceProperty* seqProp = [[CCSequenceProperty alloc] init];
 	
 	seqProp.name = @"position";
 	seqProp.type = 0;
@@ -84,10 +84,10 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 	
 	for (int k = 0; k < numKeyframes; k++)
 	{
-		CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
+		CCKeyframe* keyframe = [[CCKeyframe alloc] init];
 		keyframe.time = (float)k * seq.duration / (float)(numKeyframes - 1);
 		
-		keyframe.easingType = kCCBKeyframeEasingLinear;
+		keyframe.easingType = kCCKeyframeEasingLinear;
 		keyframe.easingOpt = 0;
 		keyframe.value = points[k];
 		
@@ -145,7 +145,7 @@ NSDictionary * createPositionSequencePropery(struct PositionKeyframes * keyframe
 	
 	const int kSequencerID = 0; //for now;
 	
-	CCBSequenceProperty* seqProp = [[CCBSequenceProperty alloc] init];
+	CCSequenceProperty* seqProp = [[CCSequenceProperty alloc] init];
 	
 	seqProp.name = @"position";
 	seqProp.type = 0;
@@ -153,10 +153,10 @@ NSDictionary * createPositionSequencePropery(struct PositionKeyframes * keyframe
 	
 	for (int k = 0; k < count; k++)
 	{
-		CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
+		CCKeyframe* keyframe = [[CCKeyframe alloc] init];
 		keyframe.time = keyframes[k].time;
 		
-		keyframe.easingType = kCCBKeyframeEasingLinear;
+		keyframe.easingType = kCCKeyframeEasingLinear;
 		keyframe.easingOpt = 0;
 		keyframe.value = @[@(keyframes[k].position.x),@(keyframes[k].position.y)];
 		
@@ -175,7 +175,7 @@ NSDictionary * createPositionSequencePropery(struct PositionKeyframes * keyframe
 - (void)testAnimationSync
 {
 	CCAnimationManager * animationManager = [[CCAnimationManager alloc] init];
-	CCBSequence* seq = [[CCBSequence alloc] init];
+	CCSequence* seq = [[CCSequence alloc] init];
 	seq.duration = 4.0f;
 	seq.name = @"TestSequence";
 	seq.sequenceId = 0;
