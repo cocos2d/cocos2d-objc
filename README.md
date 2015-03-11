@@ -1,11 +1,11 @@
-Cocos2D SpriteBuilder
+Cocos2D-SpriteBuilder
 =====================
 
 [Cocos2D-SpriteBuilder][1] is a framework for building 2D games, demos, and other
 graphical/interactive applications for iOS, Mac and Android.
 It is based on the [Cocos2D][2] design, but instead of using Python it uses Swift or Objective-C.
 
-Cocos2D SpriteBuilder is:
+Cocos2D-SpriteBuilder is:
 
   * Fast
   * Free
@@ -20,7 +20,7 @@ New Cocos2D projects are created with SpriteBuilder. SpriteBuilder is, just like
 
 SpriteBuilder also allows you to update the Cocos2D version in your project, to newest version, making it trivial to always keep you project updated to latest Cocos2D version.
 
-You can find the full Cocos2D documentation and user guide at our [documentation page](http://www.cocos2d-spritebuilder.org/docs).
+You can find the full Cocos2D documentation and user guide at our [documentation page](http://cocos2d.spritebuilder.com/docs).
 
 Features
 -------------
@@ -34,7 +34,7 @@ Features
      * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
      * Misc actions: CallFunc, OrbitCamera, Follow, Tween
    * Basic menus and buttons
-   * Integrated with [Chipmunk][6] physics engine
+   * Integrated with [Chipmunk][4] physics engine
    * Particle system
    * Fonts:
      * Fast font rendering using Fixed and Variable width fonts
@@ -76,7 +76,7 @@ Running Tests
 
 Forum
 -----
-  * [Cocos2D User Forum][4]
+  * [Cocos2D-SpriteBuilder Forum][3]
 
 
 Download from Github
@@ -85,9 +85,7 @@ Download from Github
     $ git clone --recursive https://github.com/cocos2d/cocos2d-spritebuilder.git
     $ cd cocos2d-spritebuilder
 
-[1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
+[1]: http://cocos2d.spritebuilder.com "Cocos2D-SpriteBuilder"
 [2]: http://www.cocos2d.org "cocos2d"
-[3]: http://www.cocos2d-iphone.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"
-[4]: http://forum.cocos2d-swift.org "cocos2d for iPhone forum"
-[5]: https://github.com/cocos2d/cocos2d-iphone/archive/develop-v3.zip
-[6]: http://www.chipmunk-physics.net
+[3]: http://forum.cocos2d-swift.org "Cocos2D-SpriteBuilder forum"
+[4]: http://www.chipmunk-physics.net
