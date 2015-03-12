@@ -63,7 +63,7 @@
                                    float blueInBounds = step(0.0, min(blueCompare.x, blueCompare.y));
                                    vec4 blueSample = inputValue * texture2D(cc_PreviousPassTexture, blueSamplePos) * blueInBounds;
                                    
-                                   return vec4(redSample.r, greenSample.g, blueSample.b, (redSample.a + greenSample.a + blueSample.a) / 3.0);
+                                   return vec4(redSample.r, greenSample.g, blueSample.b, max(max(redSample.a, greenSample.a), blueSample.a));
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"colorChannelOffsetEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
