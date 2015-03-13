@@ -1,6 +1,4 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-swift.org
- *
  * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy

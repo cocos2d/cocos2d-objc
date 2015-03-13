@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * Cocos2D-SpriteBuilder: http://cocos2d.spritebuilder.com
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -171,8 +171,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setString:(NSString*)str
 {
-	NSAssert( str, @"Invalid string" );
-    [self _setAttributedString:[[NSAttributedString alloc] initWithString:str]];
+    [self _setAttributedString:[[NSAttributedString alloc] initWithString:(str ?: @"")]];
 }
 
 -(NSString*) string

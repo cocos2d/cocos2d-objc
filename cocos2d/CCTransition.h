@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * Cocos2D-SpriteBuilder: http://cocos2d.spritebuilder.com
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -27,6 +27,8 @@
 
 #import "CCScene.h"
 #import "CCTexture.h"
+
+@class CCRenderTexture;
 
 /**
  *  Defines the direction that a directional transition will move. Used by CCTransition.
@@ -179,6 +181,22 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  Default NO.
  */
 @property (nonatomic, getter = isIncomingSceneAnimated) BOOL incomingSceneAnimated;
+
+/// -----------------------------------------------------------------------
+/// @name For use with Custom Transitions
+/// -----------------------------------------------------------------------
+
+/**
+ *  CCRenderTexture, holding the incoming scene as a texture
+ *  Only valid after StartTransition has been called.
+ */
+@property (nonatomic, readonly) CCRenderTexture *incomingTexture;
+
+/**
+ *  CCRenderTexture, holding the outgoing scene as a texture
+ *  Only valid after StartTransition has been called.
+ */
+@property (nonatomic, readonly) CCRenderTexture *outgoingTexture;
 
 /// -----------------------------------------------------------------------
 /// @name Transition Running Time and Progress
