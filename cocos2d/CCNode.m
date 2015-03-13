@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * Cocos2D-SpriteBuilder: http://cocos2d.spritebuilder.com
  *
  * Copyright (c) 2009 Valentin Milea
  * Copyright (c) 2008-2010 Ricardo Quesada
@@ -195,8 +195,9 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
     [_userObject release];
     [_children release];
     [_queuedActions release];
-    [_animationManager release];
     [_physicsBody release];
+    
+    self.animationManager = nil;
     
     [super dealloc];
 }

@@ -111,9 +111,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (CCScene *)createFirstScene
 {
-    NSAssert(NO, @"Abstract Method: Your CCSetup subclass must override createFirstScene.");
-    
-    return nil;
+    return [CCBReader loadAsScene:@"MainScene"];
 }
 
 - (CCScene *)startScene

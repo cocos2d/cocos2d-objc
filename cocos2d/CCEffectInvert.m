@@ -51,11 +51,11 @@
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectInvert pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs)
-    {
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-    } copy]];
+    }]];
     
     return @[pass0];
 }
