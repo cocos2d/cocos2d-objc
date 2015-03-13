@@ -110,19 +110,19 @@
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectOutline pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
         
         GLKVector2 stepSize = GLKVector2Make(weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.width,
                                              weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
         
-    } copy]];
+    }]];
     
     
     // Pass 1 is a WIP (trying to scale the outline before applying it. (a bad idea so far..)
@@ -130,16 +130,16 @@
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
     pass1.debugLabel = @"CCEffectOutline pass 1";
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
+    pass1.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
 
         GLKVector2 stepSize = GLKVector2Make(weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.width,
                                              weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:1.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:1.0f];
         
         
         float aspect = passInputs.previousPassTexture.contentSize.width / passInputs.previousPassTexture.contentSize.height;
@@ -158,7 +158,7 @@
         verts.tl.texCoord2 = texCoords.tl;
         passInputs.verts = verts;
 
-    } copy]];
+    }]];
 #endif
     
     return @[pass0];

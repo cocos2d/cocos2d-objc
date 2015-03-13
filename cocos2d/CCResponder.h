@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * Cocos2D-SpriteBuilder: http://cocos2d.spritebuilder.com
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -236,14 +236,14 @@ typedef NS_ENUM(NSInteger, CCMouseButton)
 - (void)mouseMoved:(NSEvent *)theEvent;
 
 /**
- *  Called whan a key down.
+ *  Called whan a key is down.
  *
  *  @param theEvent    Current event information.
  */
 - (void)keyDown:(NSEvent *)theEvent;
 
 /**
- *  Called whan a key up.
+ *  Called whan a key is up.
  *
  *  @param theEvent    Current event information.
  */

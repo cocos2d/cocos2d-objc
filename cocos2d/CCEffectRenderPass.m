@@ -21,6 +21,29 @@
 @end
 
 
+#pragma mark CCEffectRenderPassBeginBlockContext
+
+@implementation CCEffectRenderPassBeginBlockContext
+
+-(id)initWithBlock:(CCEffectRenderPassBeginBlock)block;
+{
+    if (self = [super init])
+    {
+        _block = [block copy];
+    }
+    return self;
+}
+
+-(instancetype)copyWithZone:(NSZone *)zone
+{
+    CCEffectRenderPassBeginBlockContext *newContext = [[CCEffectRenderPassBeginBlockContext allocWithZone:zone] initWithBlock:_block];
+    newContext.uniformTranslationTable = _uniformTranslationTable;
+    return newContext;
+}
+
+@end
+
+
 #pragma mark CCEffectRenderPass
 
 @implementation CCEffectRenderPass
@@ -39,8 +62,7 @@
         _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
         _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
         
-        _beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){} copy]];
-        _endBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){} copy]];
+        _beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){}]];
         
         CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
             if (passInputs.needsClear)
@@ -65,32 +87,24 @@
     newPass.texCoord2Mapping = _texCoord2Mapping;
     newPass.blendMode = _blendMode;
     newPass.shader = _shader;
-    newPass.beginBlocks = _beginBlocks;
-    newPass.updateBlocks = _updateBlocks;
-    newPass.endBlocks = _endBlocks;
+    newPass.beginBlocks = [_beginBlocks copy];
+    newPass.updateBlocks = [_updateBlocks copy];
     newPass.debugLabel = _debugLabel;
     return newPass;
 }
 
 -(void)begin:(CCEffectRenderPassInputs *)passInputs
 {
-    for (CCEffectRenderPassBeginBlock block in _beginBlocks)
+    for (CCEffectRenderPassBeginBlockContext *blockContext in _beginBlocks)
     {
-        block(self, passInputs);
+        passInputs.uniformTranslationTable = blockContext.uniformTranslationTable;
+        blockContext.block(self, passInputs);
     }
 }
 
 -(void)update:(CCEffectRenderPassInputs *)passInputs
 {
     for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
-    {
-        block(self, passInputs);
-    }
-}
-
--(void)end:(CCEffectRenderPassInputs *)passInputs
-{
-    for (CCEffectRenderPassUpdateBlock block in _endBlocks)
     {
         block(self, passInputs);
     }

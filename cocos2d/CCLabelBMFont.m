@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * Cocos2D-SpriteBuilder: http://cocos2d.spritebuilder.com
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
@@ -323,7 +323,6 @@
                 [self insertLineBreakAtCharacter:fc];
                 [prevCharacter setControlFollowing:SoftLineBreakFollows];
             }
-            expectingWordBoundary = NO;
             lineLHS = 0.0f;
         }
         if ([fc controlFollowing] & WordBreakFollows)

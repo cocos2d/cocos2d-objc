@@ -4,10 +4,10 @@
 # Start constants
 company="testpath1";
 companyID="testpath2";
-companyURL="http://www.cocos2d-swift.org";
+companyURL="http://cocos2d.spritebuilder.com";
 target="iphoneos";
 outputPath="api-docs";
-atomfilename="cocos2d-swift.atom"
+atomfilename="cocos2d-spritebuilder.atom"
 feedurl="${companyURL}/${company}/%DOCSETATOMFILENAME"
 packageurl="${companyURL}/${company}/%DOCSETPACKAGEFILENAME"
 fallbackurl="${companyURL}/${company}"
@@ -37,7 +37,7 @@ done
 
 tools/appledoc \
 --templates tools/appledoc-templates/ \
---project-name "Cocos2D-Swift v3.4" \
+--project-name "Cocos2D-SpriteBuilder v3.4" \
 --project-company "v3.4" \
 --company-id "org" \
 ${docsets} \

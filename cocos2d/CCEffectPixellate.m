@@ -100,7 +100,7 @@ static float conditionBlockSize(float blockSize);
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectPixellate pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
@@ -109,9 +109,9 @@ static float conditionBlockSize(float blockSize);
         float uStep = weakInterface.conditionedBlockSize / passInputs.previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
-    } copy]];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
+    }]];
     
     return @[pass0];
 }

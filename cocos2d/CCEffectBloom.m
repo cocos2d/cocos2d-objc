@@ -290,46 +290,46 @@
 
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
     pass0.debugLabel = @"CCEffectBloom pass 0";
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = weakInterface.conditionedThreshold;
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_luminanceThreshold"]] = weakInterface.conditionedThreshold;
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
         GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.sizeInPixels.width / passInputs.previousPassTexture.contentScale), 0.0);
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
-    } copy]];
+    }]];
     
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] initWithIndex:1];
     pass1.debugLabel = @"CCEffectBloom pass 1";
-    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass1.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.sizeInPixels.height / passInputs.previousPassTexture.contentScale));
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
-        
-    } copy]];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
+                
+    }]];
 
     
     CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] initWithIndex:2];
     pass2.debugLabel = @"CCEffectBloom pass 2";
     pass2.texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
     pass2.texCoord2Mapping = CCEffectTexCoordMapMainTex;
-    pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass2.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
@@ -337,11 +337,11 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord2Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord2Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
-    } copy]];
+    }]];
 
     return @[pass0, pass1, pass2];
 }

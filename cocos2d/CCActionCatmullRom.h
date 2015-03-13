@@ -1,6 +1,4 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- *
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2013-2014 Cocos2D Authors

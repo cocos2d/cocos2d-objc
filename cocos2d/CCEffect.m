@@ -80,7 +80,7 @@ static NSString* vertBase =
     return [[NSSet alloc] initWithArray:@[]];
 }
 
--(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings uniformTranslationTable:(NSDictionary*)uniformTranslationTable firstInStack:(BOOL)firstInStack
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack
 {
     if((self = [super init]))
     {
@@ -111,16 +111,8 @@ static NSString* vertBase =
         
         _shaderUniforms = [CCEffectImpl buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         
-        if (uniformTranslationTable)
-        {
-            // If a translation was supplied, make sure it's valid.
-            [CCEffectImpl checkUniformTranslationTable:uniformTranslationTable againstUniforms:_shaderUniforms];
-        }
-        else
-        {
-            // No translation table was supplied, create a default one.
-            uniformTranslationTable = [CCEffectImpl buildUniformTranslationTable:_fragmentUniforms vertexUniforms:_vertexUniforms];
-        }
+        // Create a default UTT.
+        NSDictionary *uniformTranslationTable = [CCEffectImpl buildUniformTranslationTable:_fragmentUniforms vertexUniforms:_vertexUniforms];
         
         NSString *fragBody = [CCEffectImpl buildShaderSourceFromBase:fragBase functions:_fragmentFunctions uniforms:_fragmentUniforms varyings:_varyingVars firstInStack:_firstInStack];
         NSString *vertBody = [CCEffectImpl buildShaderSourceFromBase:vertBase functions:_vertexFunctions uniforms:_vertexUniforms varyings:_varyingVars firstInStack:_firstInStack];
@@ -138,7 +130,15 @@ static NSString* vertBase =
         for (CCEffectRenderPass *pass in _renderPasses)
         {
             pass.shader = _shader;
-            pass.uniformTranslationTable = uniformTranslationTable;
+            
+            // If a uniform translation table is not set already, set it to the default.
+            for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+            {
+                if (!blockContext.uniformTranslationTable)
+                {
+                    blockContext.uniformTranslationTable = uniformTranslationTable;
+                }
+            }
         }
     }
     return self;
@@ -146,7 +146,7 @@ static NSString* vertBase =
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings
 {
-    return [self initWithRenderPasses:renderPasses fragmentFunctions:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings uniformTranslationTable:nil firstInStack:YES];
+    return [self initWithRenderPasses:renderPasses fragmentFunctions:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings firstInStack:YES];
 }
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms
@@ -251,30 +251,6 @@ static NSString* vertBase =
         translationTable[uniform.name] = uniform.name;
     }
     return translationTable;
-}
-
-+ (BOOL)checkUniformTranslationTable:(NSDictionary *)utt againstUniforms:(NSDictionary *)uniforms
-{
-    // If the two tables have different sizes then they can't match.
-    BOOL result = (utt.count == uniforms.count);
-
-    if (result)
-    {
-        // Does every entry in the translation table have a corresponding entry in
-        // the uniforms dictionary?
-
-        NSArray *mangledNames = [utt allValues];
-        for (NSString *mangledName in mangledNames)
-        {
-            if (![uniforms objectForKey:mangledName])
-            {
-                result = NO;
-                break;
-            }
-        }
-    }
-    
-    return result;
 }
 
 -(NSUInteger)renderPassCount

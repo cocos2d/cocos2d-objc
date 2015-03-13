@@ -226,8 +226,8 @@
     NSMutableArray* allVertexFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allVertexUniforms = [[NSMutableArray alloc] init];
     NSMutableArray* allVaryings = [[NSMutableArray alloc] init];
-    NSMutableDictionary* uniformTranslationTable = [[NSMutableDictionary alloc] init];
-    
+    NSMutableArray* allUTTs = [[NSMutableArray alloc] init];
+
     // Even if we're only handed one effect in this stitch list, we have to run it through the
     // name mangling code below because all effects in a stack share one uniform namespace.
     int effectIndex = startIndex;
@@ -266,6 +266,7 @@
 
         // Build a new translation table from the mangled vertex and fragment
         // uniform names.
+        NSMutableDictionary* uniformTranslationTable = [[NSMutableDictionary alloc] init];
         for (NSString *key in vtxUniformReplacements)
         {
             CCEffectUniform *uniform = vtxUniformReplacements[key];
@@ -277,6 +278,7 @@
             CCEffectUniform *uniform = fragUniformReplacements[key];
             uniformTranslationTable[key] = uniform.name;
         }
+        [allUTTs addObject:uniformTranslationTable];
 
         effectIndex++;
     }
@@ -293,13 +295,20 @@
         // If there was only one effect in the stitch list copy its render
         // passes into the output stitched effect. Update the copied passes
         // so they point to the new shader in the stitched effect.
-
+        NSDictionary *utt = [allUTTs firstObject];
+        
         NSMutableArray *renderPasses = [[NSMutableArray alloc] init];
         for (CCEffectRenderPass *pass in firstEffectImpl.renderPasses)
         {
             CCEffectRenderPass *newPass = [pass copy];
             newPass.shader = stitchedEffectImpl.shader;
             [renderPasses addObject:newPass];
+            
+            // Update the uniform translation table in the new pass's begin blocks
+            for (CCEffectRenderPassBeginBlockContext *blockContext in newPass.beginBlocks)
+            {
+                blockContext.uniformTranslationTable = utt;
+            }
         }
 
         stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:renderPasses
@@ -308,7 +317,6 @@
                                                        fragmentUniforms:allFragUniforms
                                                          vertexUniforms:allVertexUniforms
                                                                varyings:allVaryings
-                                                uniformTranslationTable:uniformTranslationTable
                                                            firstInStack:firstInStack];
     }
     else
@@ -320,21 +328,33 @@
         newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
         newPass.shader = stitchedEffectImpl.shader;
 
-        NSMutableArray *beginBlocks = [[NSMutableArray alloc] init];
-        NSMutableArray *endBlocks = [[NSMutableArray alloc] init];
-
-        for (CCEffectImpl *effectImpl in stitchList)
+        NSMutableArray *allBeginBlocks = [[NSMutableArray alloc] init];
+        NSMutableArray *allUpdateBlocks = [[NSMutableArray alloc] init];
+        
+        for (int i = 0; i < stitchList.count; i++)
         {
-            // Copy the begin and end blocks from the input passes into the new pass.
+            CCEffectImpl *effectImpl = stitchList[i];
+            NSDictionary *utt = allUTTs[i];
+
+            // Copy the begin and update blocks from the input passes into the new pass.
             for (CCEffectRenderPass *pass in effectImpl.renderPasses)
             {
-                [beginBlocks addObjectsFromArray:pass.beginBlocks];
-                [endBlocks addObjectsFromArray:pass.endBlocks];
+                // Update the uniform translation table in the new pass's begin blocks
+                for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+                {
+                    CCEffectRenderPassBeginBlockContext *newContext = [blockContext copy];
+                    newContext.uniformTranslationTable = utt;
+                    [allBeginBlocks addObject:newContext];
+                }
+                
+                // Copy the update blocks
+                [allUpdateBlocks addObjectsFromArray:[pass.updateBlocks copy]];
             }
         }
-
-        newPass.beginBlocks = beginBlocks;
-        newPass.endBlocks = endBlocks;
+        
+        // Add all blocks to the pass.
+        newPass.beginBlocks = allBeginBlocks;
+        newPass.updateBlocks = allUpdateBlocks;
 
         stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:@[newPass]
                                                       fragmentFunctions:allFragFunctions
@@ -342,7 +362,6 @@
                                                        fragmentUniforms:allFragUniforms
                                                          vertexUniforms:allVertexUniforms
                                                                varyings:allVaryings
-                                                uniformTranslationTable:uniformTranslationTable
                                                            firstInStack:firstInStack];
     }
 
