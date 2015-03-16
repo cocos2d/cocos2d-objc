@@ -129,8 +129,19 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     if (cachedFile) return cachedFile;
 
     CCFileResolvedMetaData *metaData = [self resolvedMetaDataForFilename:filename trace:trace];
-
-    CCFile *result = [self findFileInAllSearchPaths:filename metaData:metaData options:options trace:trace];
+    
+    CCFile *result = nil;
+    if (filename.isAbsolutePath)
+    {
+        NSURL *fileURL = [NSURL fileURLWithPath:filename];
+        if(trace) CCLOG(@"Checking absolute path: %@", fileURL);
+        
+        result = [[CCFile alloc] initWithName:filename url:fileURL contentScale:1.0];
+    }
+    else
+    {
+        result = [self findFileInAllSearchPaths:filename metaData:metaData options:options trace:trace];
+    }
 
     if (result)
     {
