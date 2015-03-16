@@ -33,6 +33,8 @@
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
     _fileLocator.untaggedContentScale = 4;
     
+    [CCSetup sharedSetup].contentScale = 1;
+    [CCSetup sharedSetup].UIScale = 1;
     [CCSetup sharedSetup].assetScale = 4;
 }
 
@@ -413,8 +415,9 @@
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
-
-    [self assertSuccessForFile:file filePath:@"Resources/Hero-4x.png" contentScale:4.0 error:error];
+    
+    // It should fall back to the 1x file since it won't search for files that are >= 2x the asset scale.
+    [self assertSuccessForFile:file filePath:@"Resources/Hero-1x.png" contentScale:1.0 error:error];
 }
 
 - (void)testImageNamedSearchOrderFor2xDeviceScaleButOnly1xAvailable
@@ -449,8 +452,9 @@
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
-
-    [self assertSuccessForFile:file filePath:@"Resources/Hero-2x.png" contentScale:2.0 error:error];
+    
+    // It should fail to find files that are >= 2x the content scale of the device.
+    XCTAssertNil(file);
 }
 
 - (void)testImageNamedSearchOrder4XDeviceScaleWith1xOnlyAvailable
