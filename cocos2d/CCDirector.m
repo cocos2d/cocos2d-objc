@@ -146,7 +146,6 @@ CCDirectorStack()
 {
 	if((self = [super init])){
 		_view = view;
-        [self setProjection: _projection];
         
 		// scenes
 		_runningScene = nil;
@@ -157,10 +156,6 @@ CCDirectorStack()
 		_oldAnimationInterval = _animationInterval = 1.0 / kDefaultFPS;
 		_scenesStack = [[NSMutableArray alloc] initWithCapacity:10];
 
-		// Set default projection (3D)
-		_projection = CCDirectorProjectionDefault;
-
-		// projection delegate if "Custom" projection is used
 		_delegate = nil;
 
 		// FPS
@@ -215,7 +210,7 @@ CCDirectorStack()
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
-		GLKMatrix4 projection = self.projectionMatrix;
+		GLKMatrix4 projection = _runningScene.projection;
 		
 		// Synchronize the framebuffer with the view.
 		[_framebuffer syncWithView:self.view];
@@ -315,35 +310,6 @@ CCDirectorStack()
 	[[CCFileLocator sharedFileLocator] purgeCache];
 }
 
-#pragma mark Director - Scene OpenGL Helper
-
--(CCDirectorProjection) projection
-{
-	return _projection;
-}
-
--(float) getZEye
-{
-	return ( self.viewSizeInPixels.height / 1.1566f / [CCSetup sharedSetup].contentScale );
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CGSize sizePoint = self.viewSize;
-
-	switch (projection) {
-		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			break;
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
-	}
-
-	_projection = projection;
-	[self createStatsLabel];
-}
-
 #pragma mark Director Scene Landscape
 
 -(CGFloat)flipY
@@ -353,7 +319,7 @@ CCDirectorStack()
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	GLKMatrix4 transform = self.projectionMatrix;
+	GLKMatrix4 transform = _runningScene.projection;
 	GLKMatrix4 invTransform = GLKMatrix4Invert(transform, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
@@ -370,7 +336,7 @@ CCDirectorStack()
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	GLKMatrix4 transform = self.projectionMatrix;
+	GLKMatrix4 transform = _runningScene.projection;
 		
 	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
 	
@@ -390,7 +356,7 @@ CCDirectorStack()
 
 -(CGRect)viewportRect
 {
-	GLKMatrix4 projection = self.projectionMatrix;
+	GLKMatrix4 projection = _runningScene.projection;
 	
 	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
 	GLKMatrix4 projectionInv = GLKMatrix4Invert(projection, NULL);
@@ -413,15 +379,6 @@ CCDirectorStack()
 {
 	// Return the viewSize unless designSize has been set.
 	return (CGSizeEqualToSize(_designSize, CGSizeZero) ? self.viewSize : _designSize);
-}
-
--(void) reshapeProjection:(CGSize)newViewSize
-{
-    NSAssert(CGSizeEqualToSize(self.view.sizeInPixels, newViewSize), @"Size does not match view?");
-	
-	[self setProjection:_projection];
-	
-	[_runningScene viewDidResizeTo: self.viewSize];
 }
 
 #pragma mark Director Scene Management
@@ -835,9 +792,9 @@ static const float CCFPSLabelItemHeight = 32;
 		
 		// TODO should pass as a parameter instead? Requires changing method signatures...
 		CCRenderer *renderer = [CCRenderer currentRenderer];
-		[_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
-		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
-		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
+//		[_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
+//		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
+//		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
 	}
 }
 

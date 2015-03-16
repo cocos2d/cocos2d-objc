@@ -27,6 +27,8 @@
 
 #import "CCNode.h"
 
+@protocol CCProjectionDelegate;
+
 @class CCLightCollection;
 @class CCDirector;
 
@@ -55,6 +57,22 @@
  @since v4.0 and later
  */
 @property (nonatomic, readonly, strong) CCScheduler *scheduler;
+
+/**
+ Delegate that calculates the projection matrix for this scene.
+ The default value is an CCProjectionOrthographic delegate that goes from (0, 0) to the screen's size in points.
+
+ @since 4.0.0
+ */
+@property (nonatomic, strong) id<CCProjectionDelegate> projectionDelegate;
+
+/**
+ Projection matrix for this scene. This value is overridden if the projectionDelegate is set.
+ Defaults to the identity matrix.
+
+ @since 4.0.0
+ */
+@property (nonatomic, assign) GLKMatrix4 projection;
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Scene

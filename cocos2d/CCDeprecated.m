@@ -30,6 +30,7 @@
 #import "CCDeviceInfo.h"
 #import "CCRenderDispatch.h"
 #import "CCSetup.h"
+#import "CCScene.h"
 
 #import "CCMetalSupport_Private.h"
 #import "CCTexture_Private.h"
@@ -52,6 +53,11 @@
 -(float)UIScaleFactor
 {
     return [CCSetup sharedSetup].UIScale;
+}
+
+-(GLKMatrix4)projectionMatrix
+{
+    return self.runningScene.projection;
 }
 
 @end

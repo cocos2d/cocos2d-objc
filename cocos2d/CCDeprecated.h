@@ -350,6 +350,9 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 // Use `CCSetup.UIScale` instead.
 @property(nonatomic, readonly) float UIScaleFactor __attribute__((deprecated));
 
+// Use CCScene.projectionDelegate instead.
+@property(nonatomic, readonly) GLKMatrix4 projectionMatrix __attribute__((deprecated));
+
 @end
 
 

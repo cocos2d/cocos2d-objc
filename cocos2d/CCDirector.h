@@ -180,9 +180,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	/* whether or not the next delta time will be zero */
 	BOOL _nextDeltaTimeZero;
 
-	/* projection used */
-	CCDirectorProjection _projection;
-
 	NSMutableArray *_rendererPool;
 }
 
@@ -216,16 +213,10 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
 /// @see CCView
 @property(nonatomic, readonly, weak) CC_VIEW<CCView> *view;
-/** Sets an OpenGL projection
- @see CCDirectorProjection
- @see projectionMatrix */
-@property (nonatomic, readwrite) CCDirectorProjection projection;
-/// Projection matrix used for rendering.
-/// @see projection
-@property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
+
 /** Whether or not to display statistics in the view's lower left corner. From top to bottom the numbers are:
  number of draw calls, time per frame (in seconds), framerate (average over most recent frames).
  @see totalFrames
@@ -241,13 +232,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  @see viewSize
  */
 - (CGSize) viewSizeInPixels;
-
-/**
- *  Changes the projection size.
- *
- *  @param newViewSize New projection size.
- */
--(void) reshapeProjection:(CGSize)newViewSize;
 
 /**
  *  Converts a UIKit coordinate to an OpenGL coordinate.

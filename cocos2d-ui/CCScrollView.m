@@ -43,6 +43,7 @@
 #import "CCResponderManager.h"
 #import "CCTouch.h"
 #import "CCDirector_Private.h"
+#import "CCProjectionDelegate.h"
 
 #pragma mark Constants
 

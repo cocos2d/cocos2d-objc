@@ -261,9 +261,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 - (void) layoutSubviews
 {
     [self resizeFromLayer:(CAEAGLLayer*)self.layer];
-    
-    // Issue #914 #924
-    [_director reshapeProjection:CGSizeMake( _backingWidth, _backingHeight)];
 }
 
 // Find or make a fence that is ready to use.
