@@ -22,6 +22,9 @@
 {
     CCDirector *director = [[CCDirector alloc] initWithView:nil];
     [CCDirector pushCurrentDirector:director];
+    
+    [CCSetup sharedSetup].contentScale = 1.0;
+    [CCSetup sharedSetup].UIScale = 1.0;
 }
 
 -(void)tearDown
