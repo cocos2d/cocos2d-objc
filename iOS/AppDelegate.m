@@ -51,7 +51,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [CCSetup useCustomSetup];
+    [CCSetup createCustomSetup];
     [CCSetup sharedSetup].contentScale = [UIScreen mainScreen].scale;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){

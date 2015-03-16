@@ -54,11 +54,11 @@
 + (instancetype)sharedSetup;
 
 /**
- In order to call sharedSetup, you must either subclass CCSetup
+ In order to call sharedSetup, you must either subclass CCSetup or call createCustomSetup if you intend to set up your windows and views yourself.
 
  @since 4.0.0
  */
-+(void)useCustomSetup;
++(void)createCustomSetup;
 
 /**
  Global content scale for the app.

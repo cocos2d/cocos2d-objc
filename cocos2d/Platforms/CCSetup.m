@@ -395,14 +395,14 @@ CCSetupSingleton(Class klass, BOOL useCustom)
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSCAssert(useCustom || klass != [CCSetup class], @"You must either create a CCSetup subclass for your app or call [CCSetup useCustomSetup] if you are integrating Cocos2D into an existing app.");
+        NSCAssert(useCustom || klass != [CCSetup class], @"You must either create a CCSetup subclass for your app or call [CCSetup createCustomSetup] if you are integrating Cocos2D into an existing app.");
         sharedSetup = [[klass alloc] init];
     });
     
     return sharedSetup;
 }
 
-+(void)useCustomSetup
++(void)createCustomSetup
 {
     CCSetupSingleton([self class], YES);
 }
