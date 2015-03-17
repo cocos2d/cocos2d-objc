@@ -22,7 +22,8 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CCFileLocator.h"
+#import "CCFileLocator_Private.h"
+
 #import "CCFile.h"
 #import "CCFile_Private.h"
 #import "CCFileLocatorDatabaseProtocol.h"
@@ -31,7 +32,8 @@
 #import "CCSetup.h"
 
 // Options are only used internally for now
-static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
+NSString * const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
+NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OPTION_NOTRACE";
 
 #pragma mark - CCFileResolvedMetaData helper class
 
@@ -149,13 +151,15 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
     }
     else
     {
+#if DEBUG
         // Search for the file again with tracing enabled.
-        if(!trace)
+        if(!trace && ![options[CCFILELOCATOR_SEARCH_OPTION_NOTRACE] boolValue])
         {
             CCLOG(@"CCFileLocator: File not found! '%@'", filename);
             CCLOG(@"Beginning trace with options:%@", options);
             [self fileNamed:filename options:options error:error trace:YES];
         }
+#endif
         
         [self setErrorPtr:error code:CCFileLocatorErrorNoFileFound description:@"No file found."];
         return nil;

@@ -61,11 +61,6 @@
         [[NSBundle mainBundle] resourcePath],
     ];
 
-    // Register spritesheets.
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
-    
     [super setupApplication];
 }
 

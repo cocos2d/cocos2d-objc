@@ -40,7 +40,7 @@
 #import "CCSpriteFrameCache.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
-#import "CCFileLocator.h"
+#import "CCFileLocator_Private.h"
 #import "CCFile.h"
 #import "CCTexture_Private.h"
 
@@ -48,13 +48,6 @@
 @interface CCSpriteFrame(Proxy)
 - (BOOL)hasProxy;
 - (CCProxy *)proxy;
-@end
-
-
-@interface CCSpriteFrameCache ()
-- (void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
-- (void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture;
-- (void) removeSpriteFramesFromDictionary:(NSDictionary*) dictionary;
 @end
 
 
@@ -188,7 +181,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - loading sprite frames
 
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureReference:(id)textureReference
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureReference:(id)textureReference prefix:(NSString *)pathPrefix
 {
 	/*
 	 Supported Zwoptex Formats:
@@ -304,17 +297,14 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 		// add sprite frame
 		[_spriteFrames setObject:spriteFrame forKey:frameDictKey];
+        
+        // Add an alias that allows spriteframe files to be treated as directories.
+        // Ex: A frame named "bar.png" in a spritesheet named "bar.plist" will add both "bar.png" and "foo/bar.png" to the dictionary.
+        if(pathPrefix && ![frameDictKey hasPrefix:pathPrefix]){
+            NSString *key = [pathPrefix stringByAppendingPathComponent:frameDictKey];
+            _spriteFrames[key] = spriteFrame;
+        }
 	}
-}
-
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)textureFilename
-{
-	return [self addSpriteFramesWithDictionary:dictionary textureReference:textureFilename];
-}
-
--(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture
-{
-	return [self addSpriteFramesWithDictionary:dictionary textureReference:texture];
 }
 
 -(void) addSpriteFramesWithFile:(NSString*)plistFile textureReference:(id)textureReference
@@ -331,7 +321,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
         NSDictionary *dict = [file loadPlist:&err];
         NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
 
-		[self addSpriteFramesWithDictionary:dict textureReference:textureReference];
+		[self addSpriteFramesWithDictionary:dict textureReference:textureReference prefix:[plistFile stringByDeletingPathExtension]];
 		
 		[_loadedFilenames addObject:plistFile];
 	}
@@ -384,7 +374,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 			CCLOG(@"cocos2d: CCSpriteFrameCache: Trying to use file '%@' as texture", texturePath);
 		}
 
-		[self addSpriteFramesWithDictionary:dict textureFilename:texturePath];
+		[self addSpriteFramesWithDictionary:dict textureReference:texturePath prefix:[plistFile stringByDeletingPathExtension]];
 		
 		[_loadedFilenames addObject:plistFile];
 	}
@@ -489,33 +479,69 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - getting
 
--(CCSpriteFrame*) spriteFrameByName:(NSString*)name
+-(CCSpriteFrame *) spriteFrameByName:(NSString*)name
 {
-	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];
+    // Check to see if the frame is already in the cache.
+    CCSpriteFrame *frame = _spriteFrames[name];
     
-    if (!frame)
-    {
-        // Check fileLookup.plist
-        #warning Important TODO!
-        // This was slightly broken in v3 since multiple search paths could define the same alias.
-//        NSString *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];
-//        name = newName ?: name;
-        
-        // Try finding the frame in one of the registered sprite sheets
-        NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
-        if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];
-        
-        // Attempt to load the frame again
-        frame = [_spriteFrames objectForKey:name];
+    // TODO try the FileLocator name alias.
+//        name = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name] ?: name;
+    
+    // Search for spritesheets by breaking down the spriteframe's name into paths.
+    if(frame == nil){
+        NSArray *pathComponents = [name pathComponents];
+        for(int len = pathComponents.count - 1; len > 0; len--){
+            NSString *subpath = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, len)]];
+            NSString *path = [subpath stringByAppendingPathExtension:@"plist"];
+            
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:path options:@{CCFILELOCATOR_SEARCH_OPTION_NOTRACE: @(YES)} error:nil trace:NO];
+            if(file){
+                [self addSpriteFramesWithFile:path];
+                frame = _spriteFrames[name];
+                
+                if(frame) break;
+            }
+        }
     }
     
-	if( ! frame ) {
-		// try alias dictionary
-		NSString *key = [_spriteFramesAliases objectForKey:name];
-		frame = [_spriteFrames objectForKey:key];
+    // Last, try the alias dictionary.
+    // These are provided by format #3 when loading the sprite frame files.
+    // I have no idea what format #3 is other than there is code for it above...
+	if(frame == nil){
+		NSString *key = _spriteFramesAliases[name];
+		frame = _spriteFrames[key];
 	}
 
 	return (CCSpriteFrame *)frame.proxy;
 }
+
+//-(CCSpriteFrame*)_spriteFrameByName:(NSString*)name
+//{
+//	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];
+//    
+//    if (!frame)
+//    {
+//        // Check fileLookup.plist
+//        #warning Important TODO!
+//        // This was slightly broken in v3 since multiple search paths could define the same alias.
+////        NSString *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];
+////        name = newName ?: name;
+//        
+//        // Try finding the frame in one of the registered sprite sheets
+//        NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
+//        if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];
+//        
+//        // Attempt to load the frame again
+//        frame = [_spriteFrames objectForKey:name];
+//    }
+//    
+//	if( ! frame ) {
+//		// try alias dictionary
+//		NSString *key = [_spriteFramesAliases objectForKey:name];
+//		frame = [_spriteFrames objectForKey:key];
+//	}
+//
+//	return (CCSpriteFrame *)frame.proxy;
+//}
 
 @end

@@ -19,26 +19,6 @@
     _window = [TestbedSetup sharedSetup].window;
     _view = [TestbedSetup sharedSetup].view;
 #else
-    [CCSetup useCustomSetup];
-    [CCSetup sharedSetup].contentScale = 2;
-    [CCSetup sharedSetup].assetScale = 2;
-    [CCSetup sharedSetup].UIScale = 0.5;
-    
-    CCFileLocator *locator = [CCFileLocator sharedFileLocator];
-    locator.untaggedContentScale = 4;
-    
-    locator.searchPaths = @[
-        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
-        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
-        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
-        [[NSBundle mainBundle] resourcePath],
-    ];
-
-    // Register spritesheets.
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
-    
     CGRect rect = CGRectMake(0, 0, 1024, 768);
     NSUInteger styleMask = NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask;
     _window = [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];
@@ -54,6 +34,21 @@
     view.wantsBestResolutionOpenGLSurface = YES;
     _window.contentView = view;
     
+    [CCSetup createCustomSetup];
+    [CCSetup sharedSetup].contentScale = 2*[view convertSizeToBacking:NSMakeSize(1, 1)].width;
+    [CCSetup sharedSetup].assetScale = [CCSetup sharedSetup].contentScale;
+    [CCSetup sharedSetup].UIScale = 0.5;
+    
+    CCFileLocator *locator = [CCFileLocator sharedFileLocator];
+    locator.untaggedContentScale = 4;
+    
+    locator.searchPaths = @[
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+        [[NSBundle mainBundle] resourcePath],
+    ];
+
     [_window center];
     [_window makeFirstResponder:view];
     [_window makeKeyAndOrderFront:self];
