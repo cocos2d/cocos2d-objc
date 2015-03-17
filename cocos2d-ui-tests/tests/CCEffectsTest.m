@@ -290,6 +290,40 @@
 {
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
+
+-(void)setupStereoTest
+{
+    self.subTitle = @"Stereo Effect Test";
+
+    CCSprite *bg = [CCSprite spriteWithImageNamed:@"Images/background.png"];
+    bg.scale = 1.0f;
+    bg.positionType = CCPositionTypeNormalized;
+    bg.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:bg];
+
+    
+    CCEffectStereo *redEffect = [CCEffectStereo effectWithChannelSelect:CCEffectStereoSelectRed];
+    CCEffectStereo *cyanEffect = [CCEffectStereo effectWithChannelSelect:CCEffectStereoSelectCyan];
+    
+    CCSprite *leftSprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    leftSprite.scale = 1.0f;
+    leftSprite.positionType = CCPositionTypeNormalized;
+    leftSprite.position = ccp(0.49f, 0.5f);
+    leftSprite.effect = redEffect;
+    
+    [self.contentNode addChild:leftSprite];
+
+    
+    CCSprite *rightSprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    rightSprite.scale = 1.0f;
+    rightSprite.positionType = CCPositionTypeNormalized;
+    rightSprite.position = ccp(0.51f, 0.5f);
+    rightSprite.effect = cyanEffect;
+    
+    [self.contentNode addChild:rightSprite];
+
+}
 #endif
 
 -(void)setupSimpleLightingTest
