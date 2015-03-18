@@ -360,7 +360,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
+	if(!CCRenderCheckVisibility(transform, _vertexCenter, _vertexExtents)) return;
 	
 	if (_effect)
 	{

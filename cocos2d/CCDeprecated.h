@@ -454,3 +454,7 @@ enum {
 @property (nonatomic, readwrite, assign) NSInteger tag;
 
 @end
+
+
+// Mispelled. Use CCRenderCheckVisibility() instead.
+__attribute__((deprecated)) BOOL CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents);

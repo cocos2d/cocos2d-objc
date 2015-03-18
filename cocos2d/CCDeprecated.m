@@ -260,3 +260,9 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 }
 
 @end
+
+BOOL
+CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
+{
+    return CCRenderCheckVisibility(transform, center, extents);
+}
