@@ -22,57 +22,6 @@
 @end
 
 
-@implementation CCSprite(NoARC)
-
-static inline void
-EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
-{
-	CCRenderState *state = self->_renderState ?: self.renderState;
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:state globalSortOrder:0];
-	
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(self->_verts.tl, transform));
-
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-}
-
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
-{
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
-	if (_effect)
-	{
-		_effectRenderer.contentSize = self.contentSizeInPoints;
-        
-        CCEffectPrepareResult prepResult = [self.effect prepareForRenderingWithSprite:self];
-        NSAssert(prepResult.status == CCEffectPrepareSuccess, @"Effect preparation failed.");
-        
-        if (prepResult.changes & CCEffectPrepareUniformsChanged)
-		{
-			// Preparing an effect for rendering can modify its uniforms
-			// dictionary which means we need to reinitialize our copy of the
-			// uniforms.
-			[self updateShaderUniformsFromEffect];
-		}
-		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
-	}
-	else
-	{
-		EnqueueTriangles(self, renderer, transform);
-	}
-}
-
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
-	EnqueueTriangles(self, renderer, transform);
-}
-
-@end
-
-
 @implementation CCRenderer(NoARC)
 
 // Positive offset of the vertex allocation to prevent overlapping a boundary.
