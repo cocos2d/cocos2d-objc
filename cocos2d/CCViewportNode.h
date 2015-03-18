@@ -8,9 +8,9 @@
 
 #import "ccMacros.h"
 #import "CCNode.h"
+#import "CCProjectionDelegate.h"
 
 @class CCCamera;
-@protocol CCProjectionDelegate;
 
 /**
  *  CCViewportNode

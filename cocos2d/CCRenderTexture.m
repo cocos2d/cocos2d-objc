@@ -104,10 +104,6 @@
 	if((self = [super init])){
 		CCDirector *director = [CCDirector currentDirector];
 
-		// XXX multithread
-		if( [director runningThread] != [NSThread currentThread] )
-			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
-
 		_contentScale = [CCSetup sharedSetup].assetScale;
 		[self setContentSize:CGSizeMake(width, height)];
 		_depthStencilFormat = depthStencilFormat;

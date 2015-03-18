@@ -157,13 +157,13 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 -(void)stopActionByTag:(NSInteger)tag
 {
 	NSAssert(tag != kCCActionTagInvalid, @"Invalid tag");
-	[self.scheduler removeActionByName:[NSString stringWithFormat:@"%d", tag] target:self];
+	[self.scheduler removeActionByName:[NSString stringWithFormat:@"%d", (int)tag] target:self];
 }
 
 -(CCAction *)getActionByTag:(NSInteger)tag
 {
 	NSAssert(tag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[self.scheduler getActionByName:[NSString stringWithFormat:@"%d", tag] target:self];
+	return [self.scheduler getActionByName:[NSString stringWithFormat:@"%d", (int)tag] target:self];
 }
 
 @end

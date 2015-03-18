@@ -146,6 +146,6 @@
 /**
  CCView created by [CCSetup setupApplication].
 */
-@property (nonatomic) CC_VIEW<CCView> *view;
+@property (nonatomic, readonly) CC_VIEW<CCView> *view;
 
 @end

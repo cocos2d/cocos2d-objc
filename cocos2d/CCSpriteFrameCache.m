@@ -502,7 +502,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
     // Search for spritesheets by breaking down the spriteframe's name into paths.
     if(frame == nil){
         NSArray *pathComponents = [name pathComponents];
-        for(int len = pathComponents.count - 1; len > 0; len--){
+        for(NSUInteger len = pathComponents.count - 1; len > 0; len--){
             NSString *subpath = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, len)]];
             NSString *path = [subpath stringByAppendingPathExtension:@"plist"];
             

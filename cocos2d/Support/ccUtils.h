@@ -114,7 +114,7 @@ static inline NSData* CC_DECODE_BASE64(NSString* base64){
 	- If "value" is 17, it will return 32.
 
  */
-static inline unsigned long
+static inline NSUInteger
 CCNextPOT(unsigned long x)
 {
     x = x - 1;

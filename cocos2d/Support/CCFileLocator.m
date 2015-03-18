@@ -272,7 +272,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
     return ret;
 }
 
-- (NSString *)contentScaleFilenameWithBasefilename:(NSString *)baseFilename contentScale:(int)contentScale
+- (NSString *)contentScaleFilenameWithBasefilename:(NSString *)baseFilename contentScale:(NSUInteger)contentScale
 {
     NSString *base = [baseFilename stringByDeletingPathExtension];
     NSString *ext = [baseFilename pathExtension];
@@ -284,7 +284,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
         base = [base stringByDeletingPathExtension];
     }
     
-    return [NSString stringWithFormat:@"%@-%dx.%@", base, contentScale, ext];
+    return [NSString stringWithFormat:@"%@-%dx.%@", base, (int)contentScale, ext];
 }
 
 - (void)tryVariantsForFilename:(NSString *)filename options:(NSDictionary *)options block:(BOOL (^)(NSString *name, CGFloat contentScale, BOOL tagged))block
@@ -295,7 +295,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
     }
     else
     {
-        int contentScale = CCNextPOT(ceil([CCSetup sharedSetup].assetScale));
+        NSUInteger contentScale = CCNextPOT(ceil([CCSetup sharedSetup].assetScale));
         
         // First try the highest-res tagged variant.
         NSString *name = [self contentScaleFilenameWithBasefilename:filename contentScale:contentScale];
