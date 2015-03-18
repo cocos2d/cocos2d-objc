@@ -163,6 +163,20 @@ static NSDictionary *_DEFAULT_OPTIONS = nil;
     return [[CCTextureCache sharedTextureCache] addImage:file];
 }
 
++(instancetype)textureForKey:(NSString *)key loader:(CCTexture *(^)())loader
+{
+    key = [NSString stringWithFormat:@"CCTEXTURECACHE_KEY:%@", key];
+    
+    CCTexture *texture = [[CCTextureCache sharedTextureCache] textureForKey:key];
+    
+    if(texture == nil){
+        texture = loader();
+        [[CCTextureCache sharedTextureCache] addTexture:texture forKey:key];
+    }
+    
+    return texture;
+}
+
 +(NSDictionary *)defaultOptions
 {
     return _DEFAULT_OPTIONS;

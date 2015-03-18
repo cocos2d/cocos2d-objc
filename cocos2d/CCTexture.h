@@ -160,6 +160,9 @@ extern NSString * const CCTextureOptionAddressModeY;
  */
 +(instancetype)textureWithFile:(NSString*)file;
 
+// TODO review
++(instancetype)textureForKey:(NSString *)key loader:(CCTexture *(^)())loader;
+
 /**
  An options dictionary that will be passed to [CCFileUtils fileNamed:options:], [CCImage initWithfile:options:], and [CCTexture initWithImage:options:].
  @return The current value of the default options dictionary.

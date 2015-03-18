@@ -203,6 +203,15 @@ static CCTextureCache *sharedTextureCache;
 	});
 }
 
+// TODO temporary method.
+-(void)addTexture:(CCTexture *)texture forKey:(NSString *)key
+{
+    dispatch_sync(_dictQueue, ^{
+        NSAssert(_textures[key] == nil, @"Texture is already in the cache?");
+        _textures[key] = texture;
+    });
+}
+
 -(CCTexture*) addImage: (NSString*) path
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");

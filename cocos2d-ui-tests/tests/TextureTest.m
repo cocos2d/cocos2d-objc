@@ -403,4 +403,40 @@
 }
 #endif
 
+-(void)setupCustomCacheTest
+{
+    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+    
+	self.subTitle = @"Custom texture cache loading.\n"
+        @"Left is linear filtered. Right is nearest filtered.";
+	
+    {
+        CCTexture *texture = [CCTexture textureForKey:@"test1" loader:^CCTexture *{
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"test_image.png" error:nil];
+            CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+            return [[CCTexture alloc] initWithImage:image options:@{}];
+        }];
+        
+        CCSprite *img = [CCSprite spriteWithTexture:texture];
+        img.positionType = CCPositionTypeNormalized;
+        img.position = ccp(0.25, 0.5);
+        [self.contentNode addChild:img];
+    }
+	
+    {
+        CCTexture *texture = [CCTexture textureForKey:@"test2" loader:^CCTexture *{
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"test_image.png" error:nil];
+            CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+            return [[CCTexture alloc] initWithImage:image options:@{
+                CCTextureOptionMagnificationFilter: @(CCTextureFilterNearest)
+            }];
+        }];
+        
+        CCSprite *img = [CCSprite spriteWithTexture:texture];
+        img.positionType = CCPositionTypeNormalized;
+        img.position = ccp(0.75, 0.5);
+        [self.contentNode addChild:img];
+    }
+}
+
 @end
