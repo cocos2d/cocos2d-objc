@@ -12,6 +12,7 @@
 #import "ccUtils.h"
 #import "CCDeviceInfo.h"
 #import "CCProjectionDelegate.h"
+#import "CCSetup.h"
 
 #define NEAR_Z -1024
 #define FAR_Z 1024
@@ -195,7 +196,7 @@
 static void
 SetViewport(int minx, int miny, int maxx, int maxy)
 {
-    switch([CCDeviceInfo graphicsAPI]){
+    switch([CCSetup sharedSetup].graphicsAPI){
         case CCGraphicsAPIGL: {
             glViewport((GLint)minx, (GLint)miny, (GLint)(maxx - minx), (GLint)(maxy - miny));
             break;

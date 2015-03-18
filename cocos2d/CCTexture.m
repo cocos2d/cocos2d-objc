@@ -26,20 +26,20 @@
 #import "Platforms/CCNS.h"
 
 #import "CCTexture.h"
+#import "CCImage_Private.h"
+#import "CCTexture_Private.h"
+
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "CCRenderDispatch.h"
-#import "CCImage_Private.h"
-
-#import "Support/ccUtils.h"
+#import "ccUtils.h"
 #import "CCFileLocator.h"
-
-#import "CCTexture_Private.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
+#import "CCSetup.h"
 #import "CCDeprecated.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
@@ -251,9 +251,9 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 {
     options = [CCTexture normalizeOptions:options];
     
-    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
-	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
     NSUInteger maxTextureSize = [info maxTextureSize];
     CGSize sizeInPixels = image.sizeInPixels;
     
@@ -344,9 +344,9 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 {
     options = [CCTexture normalizeOptions:options];
     
-    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
-	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
     NSUInteger maxTextureSize = [info maxTextureSize];
     CGSize sizeInPixels = posX.sizeInPixels;
     

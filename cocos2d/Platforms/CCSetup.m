@@ -24,7 +24,10 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
-#import "CCSetup.h"
+
+#import "CCSetup_Private.h"
+#import "CCDirector_Private.h"
+
 #import "CCScene.h"
 #import "CCBReader.h"
 #import "CCDeviceInfo.h"
@@ -32,7 +35,6 @@
 #import "CCPackageManager.h"
 #import "CCFileLocator.h"
 #import "ccUtils.h"
-#import "CCDirector_Private.h"
 
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
@@ -54,6 +56,38 @@
 #endif
 
 
+Class CCTextureClass;
+Class CCGraphicsBufferClass;
+Class CCGraphicsBufferBindingsClass;
+Class CCRenderStateClass;
+Class CCRenderCommandDrawClass;
+Class CCFrameBufferObjectClass;
+
+
+NSString * const CCSetupPixelFormat = @"CCSetupPixelFormat";
+NSString * const CCSetupScreenMode = @"CCSetupScreenMode";
+NSString * const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
+NSString * const CCSetupFrameSkipInterval = @"CCSetupFrameSkipInterval";
+NSString * const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
+NSString * const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
+NSString * const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
+
+NSString * const CCSetupDepthFormat = @"CCSetupDepthFormat";
+NSString * const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
+NSString * const CCSetupMultiSampling = @"CCSetupMultiSampling";
+NSString * const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
+NSString * const CCSetupScreenModeFixedDimensions = @"CCScreenModeFixedDimensions";
+
+NSString * const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
+NSString * const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+NSString * const CCScreenOrientationAll = @"CCScreenOrientationAll";
+
+NSString * const CCScreenModeFlexible = @"CCScreenModeFlexible";
+NSString * const CCScreenModeFixed = @"CCScreenModeFixed";
+
+NSString * const CCMacDefaultWindowSize = @"CCMacDefaultWindowSize";
+
+
 static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     int scale = 1;
@@ -62,7 +96,9 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     return scale;
 }
 
-@implementation CCSetup
+@implementation CCSetup {
+    CCGraphicsAPI _graphicsAPI;
+}
 
 -(instancetype)init
 {
@@ -106,7 +142,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     
     // TODO??
     // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
-    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
+    config[CCSetupScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
     
     return config;
 }
@@ -383,6 +419,58 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 }
 
 #endif
+
+-(void)setGraphicsAPI:(CCGraphicsAPI)graphicsAPI
+{
+    NSAssert(_graphicsAPI == CCGraphicsAPIInvalid, @"The graphics API cannot be changed after startup!");
+    switch(graphicsAPI){
+        case CCGraphicsAPIGL:
+            CCTextureClass = NSClassFromString(@"CCTextureGL");
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
+			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
+			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectGL");
+            break;
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+        case CCGraphicsAPIMetal:
+            if(!MTLCreateSystemDefaultDevice || !MTLCreateSystemDefaultDevice() || getenv("CC_FORCE_GL")){
+                CCLOG(@"Metal Renderer not available. Falling back to GL.");
+                
+                self.graphicsAPI = CCGraphicsAPIGL;
+                return;
+            }
+            
+            CCTextureClass = NSClassFromString(@"CCTextureMetal");
+            CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
+            CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
+            CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
+            CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
+            CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectMetal");
+            break;
+#endif
+        default:
+            NSAssert(NO, @"Invalid graphics API");
+    }
+    
+    NSAssert(CCTextureClass, @"CCTextureClass not configured.");
+    NSAssert(CCGraphicsBufferClass, @"CCGraphicsBufferClass not configured.");
+    NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
+    NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");
+    NSAssert(CCRenderCommandDrawClass, @"CCRenderCommandDrawClass not configured.");
+    NSAssert(CCFrameBufferObjectClass, @"CCFrameBufferObjectClass not configured.");
+    
+    _graphicsAPI = graphicsAPI;
+}
+
+-(CCGraphicsAPI)graphicsAPI
+{
+    if(_graphicsAPI == CCGraphicsAPIInvalid){
+        self.graphicsAPI = CCGraphicsAPIGL;
+    }
+    
+    return _graphicsAPI;
+}
 
 //MARK: Singleton
 

@@ -4,7 +4,7 @@
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"
 #import "CCRenderableNode_Private.h"
-#import "CCDeviceInfo.h"
+#import "CCSetup_Private.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"

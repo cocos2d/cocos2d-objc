@@ -36,6 +36,7 @@
 #import "CCRenderDispatch_Private.h"
 #import "CCScheduler_Private.h"
 #import "CCScene+Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCScheduler.h"
 #import "CCTextureCache.h"
@@ -169,8 +170,7 @@ CCDirectorStack()
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
 		
 		// Force the graphics API to be selected if it hasn't already done so.
-		// Startup code is annoyingly different for iOS/Mac/Android.
-		[CCDeviceInfo graphicsAPI];
+		[[CCSetup sharedSetup] graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 

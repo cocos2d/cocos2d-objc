@@ -36,6 +36,7 @@
 #import "CCRenderDispatch.h"
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
+#import "CCSetup.h"
 
 
 NSString * const CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";
@@ -417,7 +418,7 @@ GLUniformSettersForProgram(GLuint program)
 
 -(instancetype)initWithGLProgram:(GLuint)program uniformSetters:(NSDictionary *)uniformSetters ownsProgram:(BOOL)ownsProgram
 {
-	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"GL graphics not configured.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIGL, @"GL graphics not configured.");
 	
 	if((self = [super init])){
 		_program = program;
@@ -742,7 +743,7 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	// +initialize may be called due to loading a subclass.
 	if(self != [CCShader class]) return;
 	
-	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED

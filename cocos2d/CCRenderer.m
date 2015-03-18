@@ -30,6 +30,7 @@
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCCache.h"
 #import "CCRenderDispatch.h"
@@ -354,7 +355,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		_clearDepth = depth;
 		_clearStencil = stencil;
 	} else {
-		NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
+		NSAssert([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
 		
 		[self enqueueBlock:^{
 			if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);

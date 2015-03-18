@@ -29,6 +29,47 @@
 @class CCGLView;
 @class CCScene;
 
+extern NSString * const CCSetupPixelFormat;
+extern NSString * const CCSetupScreenMode;
+extern NSString * const CCSetupScreenOrientation;
+extern NSString * const CCSetupFrameSkipInterval;
+extern NSString * const CCSetupFixedUpdateInterval;
+extern NSString * const CCSetupShowDebugStats;
+extern NSString * const CCSetupTabletScale2X;
+
+extern NSString * const CCSetupDepthFormat;
+extern NSString * const CCSetupPreserveBackbuffer;
+extern NSString * const CCSetupMultiSampling;
+extern NSString * const CCSetupNumberOfSamples;
+extern NSString * const CCSetupScreenModeFixedDimensions;
+
+// Landscape screen orientation. Used with CCSetupScreenOrientation.
+extern NSString * const CCScreenOrientationLandscape;
+
+// Portrait screen orientation.  Used with CCSetupScreenOrientation.
+extern NSString * const CCScreenOrientationPortrait;
+
+// Support all screen orientations.  Used with CCSetupScreenOrientation.
+extern NSString * const CCScreenOrientationAll;
+
+
+// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
+extern NSString * const CCScreenModeFlexible;
+
+// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
+extern NSString * const CCScreenModeFixed;
+
+// The desired default window size for mac
+extern NSString * const CCMacDefaultWindowSize;
+
+
+typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
+	CCGraphicsAPIInvalid = 0,
+	CCGraphicsAPIGL,
+	CCGraphicsAPIMetal,
+};
+
+
 /**
  CCSetup serves as the setup point for the application and prepares cocos2d to run with various platform specific settings.
  It exists outside of cocos scene management, and as such can be used to start application specific logic.
@@ -91,6 +132,14 @@
  @since 4.0.0
  */
 @property(nonatomic, assign) CCTime fixedUpdateInterval;
+
+/**
+ Which graphics API Cocos2D will use to render.
+ Defaults to the GL renderer on all current platforms.
+
+ @since 4.0.0
+ */
+@property (nonatomic, assign) CCGraphicsAPI graphicsAPI;
 
 /**
 *  Loads configCocos2D.plist from disk or returns a default dictionary.

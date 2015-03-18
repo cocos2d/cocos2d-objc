@@ -33,36 +33,7 @@
 #import <AndroidKit/AndroidDisplay.h>
 #endif
 
-Class CCTextureClass;
-Class CCGraphicsBufferClass;
-Class CCGraphicsBufferBindingsClass;
-Class CCRenderStateClass;
-Class CCRenderCommandDrawClass;
-Class CCFrameBufferObjectClass;
-
-NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
-NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
-NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
-NSString* const CCSetupFrameSkipInterval = @"CCSetupFrameSkipInterval";
-NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
-NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
-NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
-
-NSString* const CCSetupDepthFormat = @"CCSetupDepthFormat";
-NSString* const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
-NSString* const CCSetupMultiSampling = @"CCSetupMultiSampling";
-NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
-
-NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
-NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
-NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
-
-NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
-NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
-NSString* const CCScreenModeFixedDimensions = @"CCScreenModeFixedDimensions";
-
-NSString* const CCMacDefaultWindowSize = @"CCMacDefaultWindowSize";
-
+#import "CCSetup_Private.h"
 
 
 @implementation CCDeviceInfo
@@ -143,10 +114,10 @@ static NSSet *GL_EXTENSIONS_SET = nil;
 -(instancetype)init
 {
     if((self=[super init])){
-        switch(self.graphicsAPI){
+        switch([CCSetup sharedSetup].graphicsAPI){
             case CCGraphicsAPIGL: [self getGLInfo]; break;
             case CCGraphicsAPIMetal: [self getMetalInfo]; break;
-            default: NSAssert(NO, @"Internal Error: Graphics API not set up?");
+            default: NSAssert(NO, @"Error: Graphics API has not set up?");
         }
     }
     
@@ -159,51 +130,6 @@ static NSSet *GL_EXTENSIONS_SET = nil;
 //#endif
     
     return self;
-}
-
-static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
-
-+(CCGraphicsAPI)graphicsAPI
-{
-	if(GRAPHICS_API == CCGraphicsAPIInvalid){
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-		// Metal is weakly linked. Check that the function exists AND that it returns non-nil.
-		if(MTLCreateSystemDefaultDevice && MTLCreateSystemDefaultDevice() && !getenv("CC_FORCE_GL")){
-            CCTextureClass = NSClassFromString(@"CCTextureMetal");
-			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
-			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
-			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
-			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
-			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectMetal");
-			
-			GRAPHICS_API = CCGraphicsAPIMetal;
-		} else
-#endif
-		{
-            CCTextureClass = NSClassFromString(@"CCTextureGL");
-			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
-			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
-			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
-			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
-			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectGL");
-			
-			GRAPHICS_API = CCGraphicsAPIGL;
-		}
-		
-        NSAssert(CCTextureClass, @"CCTextureClass not configured.");
-		NSAssert(CCGraphicsBufferClass, @"CCGraphicsBufferClass not configured.");
-		NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
-		NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");
-		NSAssert(CCRenderCommandDrawClass, @"CCRenderCommandDrawClass not configured.");
-		NSAssert(CCFrameBufferObjectClass, @"CCFrameBufferObjectClass not configured.");
-	}
-	
-	return GRAPHICS_API;
-}
-
--(CCGraphicsAPI)graphicsAPI
-{
-    return [CCDeviceInfo graphicsAPI];
 }
 
 - (BOOL) checkForGLExtension:(NSString *)searchName
@@ -298,7 +224,7 @@ static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
     static const BOOL multiThreadedRendering = CC_RENDER_DISPATCH_ENABLED;
 	printf("Cocos2D: Multi-threaded rendering: %s\n", multiThreadedRendering ? "YES" : "NO");
 	
-	if(GRAPHICS_API == CCGraphicsAPIGL){
+	if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIGL){
 		printf("Cocos2D: OpenGL Rendering enabled.");
 		
 		CCRenderDispatch(NO, ^{
@@ -311,7 +237,7 @@ static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
 		printf("Cocos2D: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
 		printf("Cocos2D: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
 		printf("Cocos2D: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
-	} else if(GRAPHICS_API == CCGraphicsAPIMetal){
+	} else if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
 		printf("Cocos2D: Metal Rendering enabled.");
 	}
 	

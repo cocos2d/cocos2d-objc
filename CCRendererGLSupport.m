@@ -24,9 +24,9 @@
 
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCRenderDispatch.h"
-#import "CCDeviceInfo.h"
 
 
 @implementation CCTextureGL

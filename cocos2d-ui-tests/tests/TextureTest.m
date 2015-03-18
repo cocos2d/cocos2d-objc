@@ -22,7 +22,7 @@
 // Skip certain tests that are not supported by Metal
 -(BOOL)skipForMetal
 {
-    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+    if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
         [self pressedNext:nil];
         return YES;
     }

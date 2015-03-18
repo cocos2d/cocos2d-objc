@@ -37,6 +37,7 @@
 #import "CCRenderDispatch.h"
 #import "CCRenderableNode_Private.h"
 #import "CCTexture_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
@@ -355,7 +356,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
 	// Workaround - use pixel buffers and a copy encoder?
-	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
 	CGSize s = CC_SIZE_SCALE(self.texture.contentSize, self.texture.contentScale);
 	int tx = s.width;

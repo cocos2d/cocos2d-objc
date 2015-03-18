@@ -33,7 +33,7 @@
 
 #import "Platforms/CCGL.h"
 #import "CCTexture_Private.h"
-#import "CCDeviceInfo.h"
+#import "CCSetup.h"
 #import "CCDirector.h"
 #import "CCFileLocator.h"
 #import "CCFile_Private.h"
@@ -79,7 +79,7 @@ static CCTextureCache *sharedTextureCache;
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 		
 		// Skip the GL context sharegroup code for Metal.
-		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
+		if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal) return self;
 
         NSAssert([CCDirector currentDirector], @"Do not initialize the TextureCache before the director is created and set");
         CC_VIEW<CCView> *view;

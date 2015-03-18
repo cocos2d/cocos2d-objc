@@ -57,7 +57,8 @@
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
     CCDirectorMac *director = (__bridge CCDirectorMac *)displayLinkContext;
-    if(director->_frameCount++ % director.frameSkipInterval != 0) return kCVReturnSuccess;
+    NSUInteger skip = MAX(1, director.frameSkipInterval);
+    if(director->_frameCount++ % skip != 0) return kCVReturnSuccess;
     
     dispatch_semaphore_t semaphore = director->_semaphore;
     
