@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="24" height="24" tilewidth="101" tileheight="81">
- <tileset firstgid="1" source="orthogonal-test1.tsx"/>
- <layer name="Layer 0" width="24" height="24">
-  <data encoding="base64" compression="zlib">
-   eJy1ltEKwjAMRYNOH3xRq6J7FWWD/f//2bJcDLFN2skuhNF2PU3vsm5vInqvHD3NwrWk0RnXAl/KWqPja1DtpJPD11yZ69FYczD6wL9zQCFz7xJJ/z3vPYVMH/hp//DvyWvtuI11L2ruIMZLuYE/cGxjbGh+bom/F2zwrRrSY+CP9OtzYObI97wMbkn6PTjHmGI8Ylxj3Jh/UPyc15D0qpZfyl/vWbeX5l+zD8lvVe058S9f1qjH79TYkvdW+6Xzb6ltqx+5Wv54z65Gmu8xWzxDXefy7ym/b/kcu4p8ltZPSSkn+a2QfJyfLR7gXCzN8/KHH4HK9WN9N8Cf6HuOT41hzVn7vyTFBwHOHMg=
-  </data>
- </layer>
-</map>
