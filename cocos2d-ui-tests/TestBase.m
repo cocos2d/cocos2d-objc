@@ -165,6 +165,10 @@
 {
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
     [[CCDirector currentDirector] presentScene:[MainMenu scene] withTransition:transition];
+    
+    // TODO this is sort of a dumb hack.
+    // Something is causing a retain cycle with self.contentNode, but I cannot find it.
+    [self.contentNode removeAllChildrenWithCleanup:YES];
 }
 
 - (void) pressedReset:(id)sender

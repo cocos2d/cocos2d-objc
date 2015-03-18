@@ -112,8 +112,8 @@ NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 #pragma mark -
 #pragma mark CCTexture2D - Main
 
-@implementation CCTexture
-{
+@implementation CCTexture {
+    CCSpriteFrame *_spriteFrame;
 	CCProxy __weak *_proxy;
 }
 
@@ -328,8 +328,12 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 
 -(CCSpriteFrame*)spriteFrame
 {
-	CGRect rectInPixels = {CGPointZero, _sizeInPixels};
-	return [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
+    if(_spriteFrame == nil){
+        CGRect rectInPixels = {CGPointZero, _sizeInPixels};
+        _spriteFrame = [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
+    }
+    
+    return _spriteFrame;
 }
 
 @end

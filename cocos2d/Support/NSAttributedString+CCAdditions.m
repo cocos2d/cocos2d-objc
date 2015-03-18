@@ -291,7 +291,6 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
     NSMutableAttributedStringSetDefaultAttribute(string, NSParagraphStyleAttributeName, style);
     
     
-    
 #else
     // You betcha not to have those attributes on Android, they are not supported
     assert(!NSAttributedStringHasAttribute(string, @"NSParagraphStyle"));
@@ -334,7 +333,7 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
 #else
     NSString *foregroundColorAttributeName = (__bridge id)kCTForegroundColorAttributeName;
 #endif
-    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge id)defaultColor.CGColor);
+    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge_transfer id)defaultColor.CGColor);
     useFullColor |= (![defaultColor isEqualToColor:[CCColor whiteColor]]) && colorChanged;
     
     // Font

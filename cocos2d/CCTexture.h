@@ -123,8 +123,7 @@ extern NSString * const CCTextureOptionAddressModeY;
 /**
  Textures are image buffers that the GPU reads from when drawing to the screen.
  */
-@interface CCTexture : NSObject
-{
+@interface CCTexture : NSObject {
     @private
     CGSize _sizeInPixels;
     CGSize _contentSize;
