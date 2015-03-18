@@ -188,23 +188,9 @@
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	NSInteger device = [CCDeviceInfo runningDevice];
-
-	if( device == CCDeviceiPadRetinaDisplay) {
-		*datapointer = cc_fps_images_ipadhd_png;
-		*len = cc_fps_images_ipadhd_len();
-		*scale = 2;
-		
-	} else if( device == CCDeviceiPhoneRetinaDisplay || device == CCDeviceiPhone5RetinaDisplay ) {
-		*datapointer = cc_fps_images_hd_png;
-		*len = cc_fps_images_hd_len();
-		*scale = 2;
-
-	} else {
-		*datapointer = cc_fps_images_png;
-		*len = cc_fps_images_len();
-		*scale = 1;
-	}
+    *datapointer = cc_fps_images_png;
+    *len = cc_fps_images_len();
+    *scale = 1;
 }
 
 @end

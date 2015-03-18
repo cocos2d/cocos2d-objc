@@ -36,20 +36,6 @@
 #define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
 
 
-typedef NS_ENUM(NSUInteger, CCDevice) {
-	CCDeviceiPhone,
-	CCDeviceiPhoneRetinaDisplay,
-	CCDeviceiPhone5,
-	CCDeviceiPhone5RetinaDisplay,
-	CCDeviceiPhone6,
-	CCDeviceiPhone6Plus,
-	CCDeviceiPad,
-	CCDeviceiPadRetinaDisplay,
-
-	CCDeviceMac,
-	CCDeviceMacRetinaDisplay,
-};
-
 /**
  CCConfiguration contains some openGL variables
   */
@@ -84,12 +70,6 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
-
-///** returns the current device */
-//-(NSInteger)runningDevice;
-
-// TODO Temporary
-+(NSInteger)runningDevice;
 
 /** dumps in the console the CCConfiguration information.
  */
