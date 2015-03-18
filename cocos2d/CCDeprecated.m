@@ -60,6 +60,11 @@
     return self.runningScene.projection;
 }
 
+-(NSThread *)runningThread
+{
+    return [NSThread mainThread];
+}
+
 @end
 
 

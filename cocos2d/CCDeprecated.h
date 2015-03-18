@@ -353,6 +353,9 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 // Use CCScene.projectionDelegate instead.
 @property(nonatomic, readonly) GLKMatrix4 projectionMatrix __attribute__((deprecated));
 
+// Always returns the main thread.
+@property (weak, readonly, nonatomic ) NSThread *runningThread __attribute__((deprecated));
+
 @end
 
 

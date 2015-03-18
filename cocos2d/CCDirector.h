@@ -191,14 +191,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** @returns The director for the currently active CCView */
 +(CCDirector*)currentDirector;
 
-/** @name Accessing OpenGL Thread */
-
-/** If you want to run any Cocos2D task, run it in this thread. Any task that modifies Cocos2D's OpenGL state must be
- executed on this thread due to OpenGL state changes only being allowed on the OpenGL thread.
- 
- @returns The Cocos2D thread, typically this will be the main thread. */
-@property (weak, readonly, nonatomic ) NSThread *runningThread;
-
 #pragma mark Director - Stats
 
 #pragma mark Director - View Size

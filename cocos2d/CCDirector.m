@@ -162,7 +162,6 @@ CCDirectorStack()
 		_displayStats = NO;
 		_totalFrames = _frames = 0;
 		_isPaused = NO;
-		_runningThread = nil;
 		
 		_responderManager = [ [CCResponderManager alloc] initWithDirector:self ];
 		

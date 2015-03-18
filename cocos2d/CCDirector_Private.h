@@ -28,7 +28,6 @@
 @interface CCDirector () {
 	@protected
 	__weak id<CCDirectorDelegate> _delegate;
-	__weak NSThread *_runningThread;
 }
 
 -(instancetype)initWithView:(CC_VIEW<CCView> *)view;

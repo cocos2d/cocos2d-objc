@@ -80,19 +80,6 @@
 
 @implementation CCDirectorIOS
 
-- (id) init
-{
-	if( (self=[super init]) ) {
-		// running thread is main thread on iOS
-		_runningThread = [NSThread currentThread];
-		
-		// Apparently it comes with a default view, and we don't want it
-//		[self setView:nil];
-	}
-
-	return self;
-}
-
 #pragma mark Director Point Convertion
 
 -(CGPoint)convertTouchToGL:(CCTouch*)touch
