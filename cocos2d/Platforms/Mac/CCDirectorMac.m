@@ -39,6 +39,9 @@
 @implementation CCDirectorMac {
 	CVDisplayLinkRef _displayLink;
     dispatch_semaphore_t _semaphore;
+    
+    // Should only be accessed from the displaylink thread.
+    NSUInteger _frameCount;
 }
 
 -(instancetype)initWithView:(CCViewMacGL<CCView> *)view
@@ -54,6 +57,8 @@
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
     CCDirectorMac *director = (__bridge CCDirectorMac *)displayLinkContext;
+    if(director->_frameCount++ % director.frameSkipInterval != 0) return kCVReturnSuccess;
+    
     dispatch_semaphore_t semaphore = director->_semaphore;
     
     if(!dispatch_semaphore_wait(semaphore, 0)){

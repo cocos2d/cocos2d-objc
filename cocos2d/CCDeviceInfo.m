@@ -43,7 +43,7 @@ Class CCFrameBufferObjectClass;
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
-NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
+NSString* const CCSetupFrameSkipInterval = @"CCSetupFrameSkipInterval";
 NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
 NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";

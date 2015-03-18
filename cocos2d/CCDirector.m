@@ -679,21 +679,6 @@ CCDirectorStack()
 	CCLOG(@"cocos2d: Director#stopRunLoop. Override me");
 }
 
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	//CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
-}
-
-- (CCTime)fixedUpdateInterval
-{
-	return _runningScene.scheduler.fixedUpdateInterval;
-}
-
--(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
-{
-	_runningScene.scheduler.fixedUpdateInterval = fixedUpdateInterval;
-}
-
 @end
 
 

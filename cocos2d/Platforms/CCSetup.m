@@ -68,7 +68,9 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     if((self = [super init])){
         _contentScale = 1.0;
+        _assetScale = 1.0;
         _UIScale = 1.0;
+        _fixedUpdateInterval = 1.0/60.0;
     }
     
     return self;
@@ -149,12 +151,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     NSAssert(director, @"CCView failed to construct a director.");
     [CCDirector pushCurrentDirector:director];
     
-    // Display FSP and SPF
     [director setDisplayStats:[_config[CCSetupShowDebugStats] boolValue]];
 
-    // set FPS at 60
-    director.animationInterval = [(_config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
-    director.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    director.frameSkipInterval = [(_config[CCSetupFrameSkipInterval] ?: @(1)) unsignedIntegerValue];
+    self.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
     
     // TODO? Fixed screen mode is being replaced.
 //    if([_cocosConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
@@ -364,12 +364,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     NSAssert(director, @"CCView failed to construct a director.");
     [CCDirector pushCurrentDirector:director];
     
-    // Display FSP and SPF
     [director setDisplayStats:[_config[CCSetupShowDebugStats] boolValue]];
 
-    // set FPS at 60
-    director.animationInterval = [(_config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
-    director.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    director.frameSkipInterval = [(_config[CCSetupFrameSkipInterval] ?: @(1)) unsignedIntegerValue];
+    self.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
     
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];

@@ -44,7 +44,7 @@ extern Class CCFrameBufferObjectClass;
 extern NSString* const CCSetupPixelFormat;
 extern NSString* const CCSetupScreenMode;
 extern NSString* const CCSetupScreenOrientation;
-extern NSString* const CCSetupAnimationInterval;
+extern NSString* const CCSetupFrameSkipInterval;
 extern NSString* const CCSetupFixedUpdateInterval;
 extern NSString* const CCSetupShowDebugStats;
 extern NSString* const CCSetupTabletScale2X;

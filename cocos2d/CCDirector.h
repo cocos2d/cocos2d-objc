@@ -343,13 +343,14 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Animating the Active Scene */
 
-/** The animation interval is the time per frame. Typically specified as `1.0 / 60.0` where the latter number defines
- the framerate. The lowest value is 0.0166 (1/60).
- @see fixedUpdateInterval */
-@property (nonatomic, readwrite, assign) CCTime animationInterval;
-/** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine.
- @see animationInterval */
-@property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
+/**
+ Works similarly to CADisplayLink.frameInterval.
+ When the value is 1 every frame is drawn. When the value is 2, every second frame is drawn, etc.
+ Defaults to 1.
+
+ @since 4.0.0
+ */
+@property (nonatomic, assign) NSUInteger frameSkipInterval;
 
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;

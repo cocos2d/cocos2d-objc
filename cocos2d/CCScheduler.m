@@ -36,6 +36,8 @@
 #import <objc/message.h>
 #import "CCAction_Private.h"
 
+#import "CCSetup.h"
+
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
 
@@ -493,7 +495,7 @@ CompareTimers(const void *a, const void *b, void *context)
         } forTarget:self withDelay:0] retain];
         
         _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-        _fixedUpdateTimer.repeatInterval = 1.0/60.0;
+        _fixedUpdateTimer.repeatInterval = [CCSetup sharedSetup].fixedUpdateInterval;
     }
     
     return self;

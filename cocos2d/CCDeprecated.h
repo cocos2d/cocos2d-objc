@@ -356,6 +356,12 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 // Always returns the main thread.
 @property (weak, readonly, nonatomic ) NSThread *runningThread __attribute__((deprecated));
 
+// Use CCDirector.frameSkipInterval instead.
+@property (nonatomic, readwrite, assign) CCTime animationInterval __attribute__((deprecated));
+
+// Use [CCSetup sharedSetup].fixedUpdateInterval or CCScene.scheduler.fixedUpdateInterval depending on usage.
+@property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval __attribute__((deprecated));
+
 @end
 
 

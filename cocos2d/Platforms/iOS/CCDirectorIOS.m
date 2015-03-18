@@ -223,13 +223,10 @@
 	[self mainLoopBody];
 }
 
-- (void)setAnimationInterval:(NSTimeInterval)interval
+-(void)setFrameSkipInterval:(NSUInteger)frameSkipInterval
 {
-	_animationInterval = interval;
-	if(_displayLink){
-		[self stopRunLoop];
-		[self startRunLoop];
-	}
+    [super setFrameSkipInterval:frameSkipInterval];
+    _displayLink.frameInterval = frameSkipInterval;
 }
 
 - (void) startRunLoop

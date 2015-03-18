@@ -65,6 +65,30 @@
     return [NSThread mainThread];
 }
 
+-(CCTime)animationInterval
+{
+    // Assume 60 fps and make a guess.
+    // This is actually what it did before (or nothing at all), and why it's now deprecated.
+    
+    return self.frameSkipInterval/60.0;
+}
+
+-(void)setAnimationInterval:(CCTime)animationInterval
+{
+    self.frameSkipInterval = ceil(60.0*animationInterval);
+}
+
+- (CCTime)fixedUpdateInterval
+{
+	return self.runningScene.scheduler.fixedUpdateInterval;
+}
+
+-(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
+{
+    [CCSetup sharedSetup].fixedUpdateInterval = fixedUpdateInterval;
+	self.runningScene.scheduler.fixedUpdateInterval = fixedUpdateInterval;
+}
+
 @end
 
 

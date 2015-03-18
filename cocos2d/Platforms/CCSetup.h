@@ -86,6 +86,13 @@
 @property(nonatomic, assign) float UIScale;
 
 /**
+ Default fixed update interval that will be used when initializing schedulers.
+
+ @since 4.0.0
+ */
+@property(nonatomic, assign) CCTime fixedUpdateInterval;
+
+/**
 *  Loads configCocos2D.plist from disk or returns a default dictionary.
 *  Override to provide alternate configuration shared by all platforms.
 *
