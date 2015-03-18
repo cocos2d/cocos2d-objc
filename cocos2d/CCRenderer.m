@@ -171,7 +171,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 {
 	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	
-	[renderer bindBuffers:NO vertexPage:0];
+    CCRendererBindBuffers(renderer, NO, 0);
 	_block();
 	
 	CCRENDERER_DEBUG_POP_GROUP_MARKER();
@@ -426,7 +426,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
-	[self bindBuffers:NO vertexPage:0];
+    CCRendererBindBuffers(self, NO, 0);
 	
 	[_queue removeAllObjects];
 	
