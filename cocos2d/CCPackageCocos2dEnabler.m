@@ -2,7 +2,7 @@
 #import "CCTextureCache.h"
 #import "CCPackage.h"
 #import "CCFileLocator.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrame.h"
 #import "CCPackage_private.h"
 #import "CCPackageHelper.h"
 
@@ -61,7 +61,7 @@
 - (void)reloadCocos2dFiles
 {
     [[CCFileLocator sharedFileLocator] purgeCache];
-    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCSpriteFrame purgeCache];
     [CCTextureCache purgeSharedTextureCache];
     
     // TODO this should be unecessary by the time v4 is complete.

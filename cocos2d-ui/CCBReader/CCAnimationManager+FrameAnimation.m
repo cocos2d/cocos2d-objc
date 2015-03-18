@@ -9,7 +9,7 @@
 #import "CCAnimationManager+FrameAnimation.h"
 #import "CCAnimationManager_Private.h"
 #import "CCSpriteFrame.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrameCache_Private.h"
 #import "CCFileLocator.h"
 #import "CCFile.h"
 
@@ -64,7 +64,7 @@
 		}
 
 		for( NSString *frameName in frameNames ) {
-			CCSpriteFrame *spriteFrame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:frameName];
+			CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithImageNamed:frameName];
 			
 			if ( !spriteFrame ) {
 				CCLOG(@"Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache.  This frame will not be added to the animation - Skipping", name, frameName);
@@ -100,7 +100,7 @@
         
 		for( NSDictionary *entry in frameArray ) {
 			NSString *spriteFrameName = [entry objectForKey:@"spriteframe"];
-			CCSpriteFrame *spriteFrame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+			CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 			
 			if ( !spriteFrame ) {
 				CCLOG(@"Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache.  This frame will not be added to the animation - Skipping", name, spriteFrameName);
@@ -135,6 +135,7 @@
 	
 	NSArray *spritesheets = [properties objectForKey:@"spritesheets"];
     
+    #warning TODO uses old spriteframe cache API
     // Ensure Sheets Loaded
 	for( NSString *name in spritesheets ) {
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:name];

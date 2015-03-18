@@ -38,7 +38,6 @@
 #import "CCBSequence.h"
 #import "CCBKeyframe.h"
 #import "CCBLocalizationManager.h"
-#import "CCSpriteFrameCache.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCEffectStack.h"
 #import "CCTexture.h"

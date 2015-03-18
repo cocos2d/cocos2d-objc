@@ -43,20 +43,7 @@
  - zwoptex http://www.zwopple.com/zwoptex/
  */
 
-@interface CCSpriteFrameCache : NSObject {
-    
-    // Sprite frame dictionary.
-	NSMutableDictionary *_spriteFrames;
-    
-    // Sprite frame alias dictionary.
-	NSMutableDictionary *_spriteFramesAliases;
-    
-    // Sprite frame plist file name set.
-	NSMutableSet		*_loadedFilenames;
-    
-    // Sprite frame file lookup dictionary.
-    NSMutableDictionary *_spriteFrameFileLookup;
-}
+@interface CCSpriteFrameCache : NSObject
 
 /** Sprite frame cache shared instance. */
 + (CCSpriteFrameCache *) sharedSpriteFrameCache;

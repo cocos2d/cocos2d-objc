@@ -73,7 +73,7 @@
     [self addChild:_lblSubTitle];
     
     // Back button
-    CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-back.png"];
+    CCSpriteFrame* frame = [CCSpriteFrame frameWithImageNamed:@"Interface/btn-back.png"];
     
     _btnBack = [CCButton buttonWithTitle:NULL spriteFrame:frame];
     _btnBack.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
@@ -84,7 +84,7 @@
     [self addChild:_btnBack];
     
     // Prev button
-    _btnPrev = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-prev.png"]];
+    _btnPrev = [CCButton buttonWithTitle:NULL spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Interface/btn-prev.png"]];
     _btnPrev.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
     _btnPrev.position = ccp(22, 22);
     _btnPrev.background.opacity = 0;
@@ -93,7 +93,7 @@
     [self addChild:_btnPrev];
     
     // Next button
-    _btnNext = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-next.png"]];
+    _btnNext = [CCButton buttonWithTitle:NULL spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Interface/btn-next.png"]];
     _btnNext.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomRight);
     _btnNext.position = ccp(22, 22);
     _btnNext.background.opacity = 0;
@@ -102,7 +102,7 @@
     [self addChild:_btnNext];
     
     // Reload button
-    _btnReload = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-reload.png"]];
+    _btnReload = [CCButton buttonWithTitle:NULL spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Interface/btn-reload.png"]];
     _btnReload.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
     _btnReload.position = ccp(0.5, 22);
     _btnReload.background.opacity = 0;

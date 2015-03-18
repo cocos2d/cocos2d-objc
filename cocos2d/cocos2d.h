@@ -55,7 +55,6 @@
 // Singletons:
 #import "CCSetup.h"
 #import "CCDirector.h"
-#import "CCSpriteFrameCache.h"
 
 // Basic Types:
 #import "CCProtocols.h"

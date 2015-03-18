@@ -37,7 +37,7 @@
 #import "Platforms/CCNS.h"
 #import "ccMacros.h"
 #import "CCTextureCache.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrameCache_Private.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
 #import "CCFileLocator_Private.h"
@@ -51,7 +51,19 @@
 @end
 
 
-@implementation CCSpriteFrameCache
+@implementation CCSpriteFrameCache {
+    // Sprite frame dictionary.
+	NSMutableDictionary *_spriteFrames;
+    
+    // Sprite frame alias dictionary.
+	NSMutableDictionary *_spriteFramesAliases;
+    
+    // Sprite frame plist file name set.
+	NSMutableSet *_loadedFilenames;
+    
+    // Sprite frame file lookup dictionary.
+    NSMutableDictionary *_spriteFrameFileLookup;
+}
 
 #pragma mark CCSpriteFrameCache - Alloc, Init & Dealloc
 

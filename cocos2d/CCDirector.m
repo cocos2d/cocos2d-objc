@@ -43,7 +43,7 @@
 #import "CCLabelBMFont.h"
 #import "CCScene.h"
 #import "CCColor.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrame.h"
 #import "CCTexture.h"
 #import "ccFPSImages.h"
 #import "CCDeviceInfo.h"
@@ -559,7 +559,7 @@ CCDirectorStack()
 
 	// Purge all managers / caches
 	[CCAnimationCache purgeSharedAnimationCache];
-	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
+	[CCSpriteFrame purgeCache];
 	[CCTextureCache purgeSharedTextureCache];
 	[[CCFileLocator sharedFileLocator] purgeCache];
 

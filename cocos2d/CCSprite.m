@@ -28,8 +28,8 @@
 #import "ccUtils.h"
 
 #import "CCSprite_Private.h"
+#import "CCSpriteFrame.h"
 
-#import "CCSpriteFrameCache.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
@@ -77,7 +77,7 @@
 
 +(instancetype)spriteWithSpriteFrameName:(NSString*)spriteFrameName
 {
-	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 
 	NSAssert1(frame!=nil, @"Invalid spriteFrameName: %@", spriteFrameName);
 	return [self spriteWithSpriteFrame:frame];
@@ -179,7 +179,7 @@
 {
 	NSAssert(spriteFrameName!=nil, @"Invalid spriteFrameName for sprite");
 
-	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 	return [self initWithSpriteFrame:frame];
 }
 
