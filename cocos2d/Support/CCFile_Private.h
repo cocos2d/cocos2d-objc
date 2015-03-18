@@ -76,7 +76,7 @@ typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
  */
 +(void)setEncryptionKey:(NSString *)key;
 
--(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale;
+-(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale tagged:(BOOL)tagged;
 -(CGImageSourceRef)createCGImageSource;
 
 

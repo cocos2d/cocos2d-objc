@@ -426,12 +426,13 @@ static const CGDataProviderSequentialCallbacks callbacks = {
     [[NSScanner scannerWithString:[key substringWithRange:NSMakeRange(24, 8)]] scanHexInt:CCFILE_ENCRYPTION_KEY + 3];
 }
 
--(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale
+-(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale tagged:(BOOL)tagged;
 {
     if((self = [super init])){
         _name = [name copy];
         _url = [url copy];
         _contentScale = contentScale;
+        _hasResolutionTag = tagged;
         
         if([url.lastPathComponent hasSuffix:@".gz.ccp"]){
             _inputStreamClass = [CCEncryptedGZippedInputStream class];

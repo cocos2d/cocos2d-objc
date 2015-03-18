@@ -439,4 +439,19 @@
     }
 }
 
+-(void)setupAutoTextureScalingTest
+{
+    CCTexture *texture = [CCTexture textureWithFile:@"test_image_auto.png"];
+    CGSize sizeInPoints = texture.contentSize;
+    CGSize sizeInPixels = texture.sizeInPixels;
+    
+	self.subTitle = [NSString stringWithFormat:@"Auto texture scaling test.\nContent size is: %dx%d, (should be 32x32)\nSize in pixels: %dx%d\n",
+        (int)sizeInPoints.width, (int)sizeInPoints.height, (int)sizeInPixels.width, (int)sizeInPixels.height];
+    
+    CCSprite *img = [CCSprite spriteWithTexture:texture];
+    img.positionType = CCPositionTypeNormalized;
+    img.position = ccp(0.5, 0.5);
+    [self.contentNode addChild:img];
+}
+
 @end

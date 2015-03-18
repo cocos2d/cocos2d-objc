@@ -138,7 +138,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
         NSURL *fileURL = [NSURL fileURLWithPath:filename];
         if(trace) CCLOG(@"Checking absolute path: %@", fileURL);
         
-        result = [[CCFile alloc] initWithName:filename url:fileURL contentScale:1.0];
+        result = [[CCFile alloc] initWithName:filename url:fileURL contentScale:1.0 tagged:YES];
     }
     else
     {
@@ -262,7 +262,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fileURL.path isDirectory:&isDirectory] && !isDirectory)
         {
-            ret = [[CCFile alloc] initWithName:filename url:fileURL contentScale:contentScale];
+            ret = [[CCFile alloc] initWithName:filename url:fileURL contentScale:contentScale tagged:tagged];
             return YES;
         }
         
