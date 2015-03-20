@@ -56,9 +56,8 @@
     
     [self lockOpenGLContext];
     
-    NSRect rect = [self convertRectToBacking:self.bounds];
-    
     CCDirector *director = _director;
+    director.runningScene.contentSizeInPoints = self.bounds.size;
     
     // avoid flicker
     // Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
