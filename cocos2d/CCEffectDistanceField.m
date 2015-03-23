@@ -10,7 +10,10 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
+#import "CCColor.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
@@ -26,7 +29,32 @@
 
 -(id)initWithInterface:(CCEffectDistanceField *)interface
 {
+    NSArray *renderPasses = [CCEffectDistanceFieldImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDistanceFieldImpl buildShaders];
+
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    {
+        self.interface = interface;
+        self.debugName = @"CCEffectDistanceFieldImpl";
+    }
+    return self;
+}
+
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDistanceFieldImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectDistanceFieldImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"distanceField" inputs:nil]];
+    
     NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
                           [CCEffectUniform uniform:@"vec4" name:@"u_glowColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
                           [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
                           [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
@@ -37,16 +65,13 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_glowWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.3, 0.5)]],
                           ];
-
-    NSArray *fragFunctions = [CCEffectDistanceFieldImpl buildFragmentFunctions];
-    NSArray *renderPasses = [CCEffectDistanceFieldImpl buildRenderPassesWithInterface:interface];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
-    {
-        self.interface = interface;
-        self.debugName = @"CCEffectDistanceFieldImpl";
-    }
-    return self;
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -111,7 +136,7 @@
 
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outerGlowEffect"
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"distanceFieldFunc"
                                                                            body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
     return @[fragmentFunction];
 }

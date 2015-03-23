@@ -116,7 +116,7 @@
 
 -(void)enqueueTriangles:(CCEffectRenderPassInputs *)passInputs
 {
-    CCRenderState *renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:passInputs.shaderUniforms copyUniforms:YES];
+    CCRenderState *renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_effectShader.shader shaderUniforms:passInputs.shaderUniforms copyUniforms:YES];
     
     GLKMatrix4 transform = passInputs.transform;
     CCRenderBuffer buffer = [passInputs.renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];

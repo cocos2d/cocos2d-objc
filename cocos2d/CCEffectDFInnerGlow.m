@@ -10,7 +10,10 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
+#import "CCColor.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
@@ -33,26 +36,44 @@
 
 -(id)initWithInterface:(CCEffectDFInnerGlow *)interface
 {
-    NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"vec4" name:@"u_fillColor"
-                                             value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec4" name:@"u_glowColor"
-                                             value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec2" name:@"u_glowInnerWidth"
-                                             value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
-                          [CCEffectUniform uniform:@"vec2" name:@"u_glowOuterWidth"
-                                             value:[NSValue valueWithGLKVector2:GLKVector2Make(0.47, 0.5)]]
-                          ];
-    
-    NSArray *fragFunctions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectDFInnerGlowImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDFInnerGlowImpl buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFInnerGlowImpl";
     }
     return self;
+}
+
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFInnerGlowImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"innerGlow" inputs:nil]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_glowColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_glowInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_glowOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.47, 0.5)]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
 }
 
 +(NSArray *)buildFragmentFunctions
@@ -127,7 +148,7 @@
                                    
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"innerGlowFunc"
                                                                            body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
     return @[fragmentFunction];
 }
