@@ -8,6 +8,8 @@
 
 
 #import "CCEffect_Private.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCRenderer.h"
@@ -159,6 +161,53 @@ static NSString* vertBase =
     return self;
 }
 
+-(id)initWithRenderPasses:(NSArray *)renderPasses shaders:(NSArray *)shaders
+{
+    if((self = [super init]))
+    {
+        _stitchFlags = CCEffectFunctionStitchBoth;
+        _firstInStack = YES;
+        
+        // Copy these arrays so the caller can't mutate them
+        // behind our backs later (they could be NSMutableArray
+        // after all).
+        _renderPasses = [renderPasses copy];
+        _shaders = [shaders copy];
+        
+        _shaderUniforms = [[NSMutableDictionary alloc] init];
+        NSMutableArray *allUTTs = [[NSMutableArray alloc] init];
+        for (CCEffectShader *shader in _shaders)
+        {
+            NSAssert([shader isKindOfClass:[CCEffectShader class]], @"Expected a CCEffectShader but received something else.");
+            
+            NSMutableDictionary *shaderUniforms = [CCEffectImpl buildUniformDictionaryForShader:shader];
+            [_shaderUniforms addEntriesFromDictionary:shaderUniforms];
+            
+            [allUTTs addObject:[CCEffectImpl buildDefaultUniformTranslationTableFromUniformDictionary:shaderUniforms]];
+        }
+        
+        // Setup the pass shaders based on the pass shader indices and
+        // supplied shaders.
+        for (CCEffectRenderPass *pass in _renderPasses)
+        {
+            NSAssert([pass isKindOfClass:[CCEffectRenderPass class]], @"Expected a CCEffectRenderPass but received something else.");
+            NSAssert(pass.shaderIndex < _shaders.count, @"Supplied shader index out of range.");
+            
+            pass.effectShader = _shaders[pass.shaderIndex];
+            
+            // If a uniform translation table is not set already, set it to the default.
+            for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+            {
+                if (!blockContext.uniformTranslationTable)
+                {
+                    blockContext.uniformTranslationTable = allUTTs[pass.shaderIndex];
+                }
+            }
+        }
+    }
+    return self;
+}
+
 + (NSString *)buildShaderSourceFromBase:(NSString *)shaderBase functions:(NSArray *)functions uniforms:(NSArray *)uniforms varyings:(NSArray *)varyings firstInStack:(BOOL)firstInStack
 {
     // Build the varying string
@@ -182,7 +231,7 @@ static NSString* vertBase =
     
     for(CCEffectFunction* curFunction in functions)
     {
-        [functionString appendFormat:@"%@\n", curFunction.function];
+        [functionString appendFormat:@"%@\n", curFunction.definition];
         
         if([functions firstObject] == curFunction)
         {
@@ -213,7 +262,7 @@ static NSString* vertBase =
     [effectFunctionBody appendString:@"return tmp;\n"];
     
     CCEffectFunction* effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
-    [functionString appendFormat:@"%@\n", effectFunction.function];
+    [functionString appendFormat:@"%@\n", effectFunction.definition];
     
     // Put it all together
     NSString *shaderSource = [NSString stringWithFormat:shaderBase, uniformString, varyingString, functionString, [effectFunction callStringWithInputs:nil]];
@@ -238,6 +287,22 @@ static NSString* vertBase =
     return allUniforms;
 }
 
++ (NSMutableDictionary *)buildUniformDictionaryForShader:(CCEffectShader *)shader
+{
+    NSMutableDictionary *uniforms = [[NSMutableDictionary alloc] init];
+    
+    for(CCEffectUniform* uniform in shader.vertexShaderBuilder.uniforms)
+    {
+        uniforms[uniform.name] = uniform.value;
+    }
+    
+    for(CCEffectUniform* uniform in shader.fragmentShaderBuilder.uniforms)
+    {
+        uniforms[uniform.name] = uniform.value;
+    }
+    return uniforms;
+}
+
 + (NSMutableDictionary *)buildUniformTranslationTable:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
 {
     NSMutableDictionary *translationTable = [[NSMutableDictionary alloc] init];
@@ -251,6 +316,17 @@ static NSString* vertBase =
         translationTable[uniform.name] = uniform.name;
     }
     return translationTable;
+}
+
++ (NSMutableDictionary *)buildDefaultUniformTranslationTableFromUniformDictionary:(NSDictionary *)uniforms
+{
+    NSMutableDictionary *translationTable = [[NSMutableDictionary alloc] init];
+    for(NSString *key in uniforms)
+    {
+        translationTable[key] = key;
+    }
+    return translationTable;
+    
 }
 
 -(NSUInteger)renderPassCount

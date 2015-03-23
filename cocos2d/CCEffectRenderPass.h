@@ -9,6 +9,9 @@
 #import "CCEffect.h"
 
 
+@class CCEffectShader;
+
+
 typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 {
     CCEffectTexCoordMapMainTex              = 0,
@@ -54,13 +57,15 @@ typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffect
 @end
 
 
-@interface CCEffectRenderPass : NSObject
+@interface CCEffectRenderPass : NSObject <NSCopying>
 
 @property (nonatomic, readonly) NSUInteger indexInEffect;
+@property (nonatomic, assign) NSUInteger shaderIndex;
 @property (nonatomic, assign) CCEffectTexCoordMapping texCoord1Mapping;
 @property (nonatomic, assign) CCEffectTexCoordMapping texCoord2Mapping;
 @property (nonatomic, strong) CCBlendMode* blendMode;
 @property (nonatomic, strong) CCShader* shader;
+@property (nonatomic, strong) CCEffectShader* effectShader;
 @property (nonatomic, copy) NSArray* beginBlocks;
 @property (nonatomic, copy) NSArray* updateBlocks;
 @property (nonatomic, copy) NSString *debugLabel;

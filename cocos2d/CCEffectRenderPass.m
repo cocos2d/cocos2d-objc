@@ -7,6 +7,7 @@
 //
 
 #import "CCEffectRenderPass.h"
+#import "CCEffectShader.h"
 #import "CCColor.h"
 
 #pragma mark CCEffectRenderPassInputs
@@ -58,6 +59,7 @@
     if((self = [super init]))
     {
         _indexInEffect = indexInEffect;
+        _shaderIndex = 0;
         
         _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
         _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
@@ -83,10 +85,12 @@
 -(instancetype)copyWithZone:(NSZone *)zone
 {
     CCEffectRenderPass *newPass = [[CCEffectRenderPass allocWithZone:zone] initWithIndex:_indexInEffect];
+    newPass.shaderIndex = _shaderIndex;
     newPass.texCoord1Mapping = _texCoord1Mapping;
     newPass.texCoord2Mapping = _texCoord2Mapping;
     newPass.blendMode = _blendMode;
     newPass.shader = _shader;
+    newPass.effectShader = _effectShader;
     newPass.beginBlocks = [_beginBlocks copy];
     newPass.updateBlocks = [_updateBlocks copy];
     newPass.debugLabel = _debugLabel;
