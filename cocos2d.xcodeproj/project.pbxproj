@@ -2089,6 +2089,76 @@
 			name = Unzip;
 			sourceTree = "<group>";
 		};
+		9D5E58D21AC0C9EF00D87047 /* Effect Library */ = {
+			isa = PBXGroup;
+			children = (
+				D268FE05198078FF00ECBCD0 /* CCEffectBloom.h */,
+				D268FE06198078FF00ECBCD0 /* CCEffectBloom.m */,
+				D3903B081995285B003AA81A /* CCEffectBlur.h */,
+				D3903B091995285B003AA81A /* CCEffectBlur.m */,
+				9D85671B191B018200573093 /* CCEffectBrightness.h */,
+				9D85671C191B018200573093 /* CCEffectBrightness.m */,
+				9DBCA31219B68BE400EFE96D /* CCEffectColorChannelOffset.h */,
+				9DBCA31319B68BE400EFE96D /* CCEffectColorChannelOffset.m */,
+				9D85671F191B019900573093 /* CCEffectContrast.h */,
+				9D856720191B019900573093 /* CCEffectContrast.m */,
+				D27451BF19AFC44D006DA0A1 /* DistanceField */,
+				D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */,
+				D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */,
+				D268FE07198078FF00ECBCD0 /* CCEffectGlass.h */,
+				D268FE08198078FF00ECBCD0 /* CCEffectGlass.m */,
+				D268FE09198078FF00ECBCD0 /* CCEffectHue.h */,
+				D268FE0A198078FF00ECBCD0 /* CCEffectHue.m */,
+				839CE58419FFB139003369F0 /* CCEffectInvert.h */,
+				839CE58519FFB139003369F0 /* CCEffectInvert.m */,
+				9DDD047C19DE154400687820 /* CCEffectLighting.h */,
+				9DDD047D19DE154400687820 /* CCEffectLighting.m */,
+				D22907AC1A2F5E440038FF61 /* CCEffectOutline.h */,
+				D22907AD1A2F5E440038FF61 /* CCEffectOutline.m */,
+				9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */,
+				9DF37620191C594A00C6D27A /* CCEffectPixellate.m */,
+				D268FE0B198078FF00ECBCD0 /* CCEffectReflection.h */,
+				D268FE0C198078FF00ECBCD0 /* CCEffectReflection.m */,
+				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
+				D268FE161980791300ECBCD0 /* CCEffectRefraction.m */,
+				D24161061958F72B003673BD /* CCEffectSaturation.h */,
+				D24161071958F72B003673BD /* CCEffectSaturation.m */,
+			);
+			name = "Effect Library";
+			sourceTree = "<group>";
+		};
+		9D5E58DC1AC0CCC800D87047 /* Internals */ = {
+			isa = PBXGroup;
+			children = (
+				D272031718FC89A000B100FF /* CCEffect_Private.h */,
+				9D96F9841AA941A100937308 /* CCEffectRenderPass.h */,
+				9D96F9851AA941A100937308 /* CCEffectRenderPass.m */,
+				9D96F97C1AA9416A00937308 /* CCEffectVarying.h */,
+				9D96F97D1AA9416A00937308 /* CCEffectVarying.m */,
+				9D96F9741AA9411700937308 /* CCEffectUniform.h */,
+				9D96F9751AA9411700937308 /* CCEffectUniform.m */,
+				9D96F96A1AA933EE00937308 /* CCEffectFunction.h */,
+				9D96F96B1AA933EE00937308 /* CCEffectFunction.m */,
+				9DD4D1291AAE013900E5260A /* CCEffectShader.h */,
+				9DD4D12A1AAE013900E5260A /* CCEffectShader.m */,
+				9DD4D11F1AADF20100E5260A /* CCEffectShaderBuilder.h */,
+				9DD4D1201AADF20100E5260A /* CCEffectShaderBuilder.m */,
+				9DC1D4321AAE896C00BB3265 /* CCEffectStitcher.h */,
+				9DC1D4331AAE896C00BB3265 /* CCEffectStitcher.m */,
+				D272031818FC89A000B100FF /* CCEffect.h */,
+				D272031918FC89A000B100FF /* CCEffect.m */,
+				D24161041958F72B003673BD /* CCEffectRenderer.h */,
+				D24161051958F72B003673BD /* CCEffectRenderer.m */,
+				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
+				D272032018FC89A000B100FF /* CCEffectStack.h */,
+				D272032118FC89A000B100FF /* CCEffectStack.m */,
+				D24161081958F72B003673BD /* CCEffectStackProtocol.h */,
+				D268FE171980791300ECBCD0 /* CCEffectUtils.h */,
+				D268FE181980791300ECBCD0 /* CCEffectUtils.m */,
+			);
+			name = Internals;
+			sourceTree = "<group>";
+		};
 		A0D7D9D415E2E737000CA0C4 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
@@ -2237,62 +2307,8 @@
 		D272031618FC897D00B100FF /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				D272031718FC89A000B100FF /* CCEffect_Private.h */,
-				9D96F9841AA941A100937308 /* CCEffectRenderPass.h */,
-				9D96F9851AA941A100937308 /* CCEffectRenderPass.m */,
-				9D96F97C1AA9416A00937308 /* CCEffectVarying.h */,
-				9D96F97D1AA9416A00937308 /* CCEffectVarying.m */,
-				9D96F9741AA9411700937308 /* CCEffectUniform.h */,
-				9D96F9751AA9411700937308 /* CCEffectUniform.m */,
-				9D96F96A1AA933EE00937308 /* CCEffectFunction.h */,
-				9D96F96B1AA933EE00937308 /* CCEffectFunction.m */,
-				9DD4D1291AAE013900E5260A /* CCEffectShader.h */,
-				9DD4D12A1AAE013900E5260A /* CCEffectShader.m */,
-				9DD4D11F1AADF20100E5260A /* CCEffectShaderBuilder.h */,
-				9DD4D1201AADF20100E5260A /* CCEffectShaderBuilder.m */,
-				9DC1D4321AAE896C00BB3265 /* CCEffectStitcher.h */,
-				9DC1D4331AAE896C00BB3265 /* CCEffectStitcher.m */,
-				D272031818FC89A000B100FF /* CCEffect.h */,
-				D272031918FC89A000B100FF /* CCEffect.m */,
-				D268FE05198078FF00ECBCD0 /* CCEffectBloom.h */,
-				D268FE06198078FF00ECBCD0 /* CCEffectBloom.m */,
-				D3903B081995285B003AA81A /* CCEffectBlur.h */,
-				D3903B091995285B003AA81A /* CCEffectBlur.m */,
-				9D85671B191B018200573093 /* CCEffectBrightness.h */,
-				9D85671C191B018200573093 /* CCEffectBrightness.m */,
-				9DBCA31219B68BE400EFE96D /* CCEffectColorChannelOffset.h */,
-				9DBCA31319B68BE400EFE96D /* CCEffectColorChannelOffset.m */,
-				9D85671F191B019900573093 /* CCEffectContrast.h */,
-				9D856720191B019900573093 /* CCEffectContrast.m */,
-				D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */,
-				D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */,
-				D268FE07198078FF00ECBCD0 /* CCEffectGlass.h */,
-				D268FE08198078FF00ECBCD0 /* CCEffectGlass.m */,
-				D268FE09198078FF00ECBCD0 /* CCEffectHue.h */,
-				D268FE0A198078FF00ECBCD0 /* CCEffectHue.m */,
-				839CE58419FFB139003369F0 /* CCEffectInvert.h */,
-				839CE58519FFB139003369F0 /* CCEffectInvert.m */,
-				9DDD047C19DE154400687820 /* CCEffectLighting.h */,
-				9DDD047D19DE154400687820 /* CCEffectLighting.m */,
-				9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */,
-				9DF37620191C594A00C6D27A /* CCEffectPixellate.m */,
-				D268FE0B198078FF00ECBCD0 /* CCEffectReflection.h */,
-				D268FE0C198078FF00ECBCD0 /* CCEffectReflection.m */,
-				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
-				D268FE161980791300ECBCD0 /* CCEffectRefraction.m */,
-				D24161041958F72B003673BD /* CCEffectRenderer.h */,
-				D24161051958F72B003673BD /* CCEffectRenderer.m */,
-				D24161061958F72B003673BD /* CCEffectSaturation.h */,
-				D24161071958F72B003673BD /* CCEffectSaturation.m */,
-				D22907AC1A2F5E440038FF61 /* CCEffectOutline.h */,
-				D22907AD1A2F5E440038FF61 /* CCEffectOutline.m */,
-				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
-				D272032018FC89A000B100FF /* CCEffectStack.h */,
-				D272032118FC89A000B100FF /* CCEffectStack.m */,
-				D24161081958F72B003673BD /* CCEffectStackProtocol.h */,
-				D268FE171980791300ECBCD0 /* CCEffectUtils.h */,
-				D268FE181980791300ECBCD0 /* CCEffectUtils.m */,
-				D27451BF19AFC44D006DA0A1 /* DistanceField */,
+				9D5E58D21AC0C9EF00D87047 /* Effect Library */,
+				9D5E58DC1AC0CCC800D87047 /* Internals */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
