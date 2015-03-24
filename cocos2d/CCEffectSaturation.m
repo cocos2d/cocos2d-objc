@@ -42,7 +42,7 @@
 
 #import "CCEffectSaturation.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -78,7 +78,7 @@ static float conditionSaturation(float saturation);
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectSaturationImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectSaturationImpl fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
@@ -94,12 +94,12 @@ static float conditionSaturation(float saturation);
                           [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions

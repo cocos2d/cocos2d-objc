@@ -8,7 +8,7 @@
 
 #import "CCEffectColorChannelOffset.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -40,7 +40,7 @@
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectColorChannelOffsetImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectColorChannelOffsetImpl fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
@@ -58,12 +58,12 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_blueOffset" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions

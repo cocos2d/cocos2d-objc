@@ -8,7 +8,7 @@
 
 #import "CCEffectHue.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -43,7 +43,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImpl fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
@@ -59,12 +59,12 @@ static GLKMatrix4 matrixWithHue(float hue);
                           [CCEffectUniform uniform:@"mat4" name:@"u_hueRotationMtx" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions

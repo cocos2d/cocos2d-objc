@@ -8,7 +8,7 @@
 
 #import "CCEffectLighting.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
@@ -104,23 +104,23 @@ static float conditionShininess(float shininess);
     NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"lighting" inputs:@{@"inputValue" : @"tmp"}]];
     
-    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                                                                 functions:fragFunctions
-                                                                                     calls:fragCalls
-                                                                               temporaries:fragTemporaries
-                                                                                  uniforms:fragUniforms
-                                                                                  varyings:varyings];
-
-
+    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                                   functions:fragFunctions
+                                                                                       calls:fragCalls
+                                                                                 temporaries:fragTemporaries
+                                                                                    uniforms:fragUniforms
+                                                                                    varyings:varyings];
+    
+    
     NSArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:interface.closestLights];
     NSArray *vertCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:vertFunctions[0] outputName:@"lighting" inputs:nil]];
     
-    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                                                                 functions:vertFunctions
-                                                                                     calls:vertCalls
-                                                                               temporaries:nil
-                                                                                  uniforms:vertUniforms
-                                                                                  varyings:varyings];
+    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                                                                   functions:vertFunctions
+                                                                                       calls:vertCalls
+                                                                                 temporaries:nil
+                                                                                    uniforms:vertUniforms
+                                                                                    varyings:varyings];
     
 
     NSArray *shaders = @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];

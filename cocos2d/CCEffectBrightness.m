@@ -8,7 +8,7 @@
 
 #import "CCEffectBrightness.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -41,7 +41,7 @@ static float conditionBrightness(float brightness);
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectBrightnessImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectBrightnessImpl fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
@@ -57,12 +57,12 @@ static float conditionBrightness(float brightness);
                           [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions

@@ -433,6 +433,18 @@
 		9D1B4A991A02E90300B2DD9B /* CCLightGroups.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */; };
 		9D1B4A9A1A02E90300B2DD9B /* CCLightGroups.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */; };
 		9D1B4A9B1A02E90300B2DD9B /* CCLightGroups.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */; };
+		9D5E58E91AC0CEE400D87047 /* CCEffectShaderBuilderGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5E58E71AC0CEE400D87047 /* CCEffectShaderBuilderGL.h */; };
+		9D5E58EA1AC0CEE400D87047 /* CCEffectShaderBuilderGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5E58E71AC0CEE400D87047 /* CCEffectShaderBuilderGL.h */; };
+		9D5E58EB1AC0CEE400D87047 /* CCEffectShaderBuilderGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5E58E71AC0CEE400D87047 /* CCEffectShaderBuilderGL.h */; };
+		9D5E58EC1AC0CEE400D87047 /* CCEffectShaderBuilderGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5E58E81AC0CEE400D87047 /* CCEffectShaderBuilderGL.m */; };
+		9D5E58ED1AC0CEE400D87047 /* CCEffectShaderBuilderGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5E58E81AC0CEE400D87047 /* CCEffectShaderBuilderGL.m */; };
+		9D5E58EE1AC0CEE400D87047 /* CCEffectShaderBuilderGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5E58E81AC0CEE400D87047 /* CCEffectShaderBuilderGL.m */; };
+		9D5E58F71AC1CAF400D87047 /* CCEffectStitcherGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5E58F51AC1CAF400D87047 /* CCEffectStitcherGL.h */; };
+		9D5E58F81AC1CAF400D87047 /* CCEffectStitcherGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5E58F51AC1CAF400D87047 /* CCEffectStitcherGL.h */; };
+		9D5E58F91AC1CAF400D87047 /* CCEffectStitcherGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5E58F51AC1CAF400D87047 /* CCEffectStitcherGL.h */; };
+		9D5E58FA1AC1CAF400D87047 /* CCEffectStitcherGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5E58F61AC1CAF400D87047 /* CCEffectStitcherGL.m */; };
+		9D5E58FB1AC1CAF400D87047 /* CCEffectStitcherGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5E58F61AC1CAF400D87047 /* CCEffectStitcherGL.m */; };
+		9D5E58FC1AC1CAF400D87047 /* CCEffectStitcherGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5E58F61AC1CAF400D87047 /* CCEffectStitcherGL.m */; };
 		9D69E6D619DF604800C2749C /* CCLightNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D69E6D419DF604800C2749C /* CCLightNode.h */; };
 		9D69E6D719DF604800C2749C /* CCLightNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D69E6D519DF604800C2749C /* CCLightNode.m */; };
 		9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671B191B018200573093 /* CCEffectBrightness.h */; };
@@ -1304,6 +1316,10 @@
 		83E1A88D19C8C19D000A3BCA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLightNode_Private.h; sourceTree = "<group>"; };
 		9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLightGroups.h; sourceTree = "<group>"; };
+		9D5E58E71AC0CEE400D87047 /* CCEffectShaderBuilderGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectShaderBuilderGL.h; sourceTree = "<group>"; };
+		9D5E58E81AC0CEE400D87047 /* CCEffectShaderBuilderGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectShaderBuilderGL.m; sourceTree = "<group>"; };
+		9D5E58F51AC1CAF400D87047 /* CCEffectStitcherGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStitcherGL.h; sourceTree = "<group>"; };
+		9D5E58F61AC1CAF400D87047 /* CCEffectStitcherGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectStitcherGL.m; sourceTree = "<group>"; };
 		9D69E6D419DF604800C2749C /* CCLightNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLightNode.h; sourceTree = "<group>"; };
 		9D69E6D519DF604800C2749C /* CCLightNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLightNode.m; sourceTree = "<group>"; };
 		9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStack_Private.h; sourceTree = "<group>"; };
@@ -2143,8 +2159,12 @@
 				9DD4D12A1AAE013900E5260A /* CCEffectShader.m */,
 				9DD4D11F1AADF20100E5260A /* CCEffectShaderBuilder.h */,
 				9DD4D1201AADF20100E5260A /* CCEffectShaderBuilder.m */,
+				9D5E58E71AC0CEE400D87047 /* CCEffectShaderBuilderGL.h */,
+				9D5E58E81AC0CEE400D87047 /* CCEffectShaderBuilderGL.m */,
 				9DC1D4321AAE896C00BB3265 /* CCEffectStitcher.h */,
 				9DC1D4331AAE896C00BB3265 /* CCEffectStitcher.m */,
+				9D5E58F51AC1CAF400D87047 /* CCEffectStitcherGL.h */,
+				9D5E58F61AC1CAF400D87047 /* CCEffectStitcherGL.m */,
 				D272031818FC89A000B100FF /* CCEffect.h */,
 				D272031918FC89A000B100FF /* CCEffect.m */,
 				D24161041958F72B003673BD /* CCEffectRenderer.h */,
@@ -2523,6 +2543,7 @@
 				50F7B2780F28DE7C00057537 /* CCActionEase.h in Headers */,
 				571CD02819649E03003D460C /* CCPlatformTextField.h in Headers */,
 				B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */,
+				9D5E58E91AC0CEE400D87047 /* CCEffectShaderBuilderGL.h in Headers */,
 				D299CE7A19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */,
 				D22907AE1A2F5E440038FF61 /* CCEffectOutline.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
@@ -2549,6 +2570,7 @@
 				D2DDB09F19805E8400233D80 /* CCVector3.h in Headers */,
 				9D1B4A991A02E90300B2DD9B /* CCLightGroups.h in Headers */,
 				D3903B10199528A0003AA81A /* CCRenderDispatch.h in Headers */,
+				9D5E58F71AC1CAF400D87047 /* CCEffectStitcherGL.h in Headers */,
 				14B84C921A700B55002C4D20 /* CCAppController.h in Headers */,
 				D272032418FC89A000B100FF /* CCEffect_Private.h in Headers */,
 				9D03A5EB1A02F61700C651C8 /* CCLightNode_Private.h in Headers */,
@@ -2708,6 +2730,7 @@
 				9D96F9781AA9411700937308 /* CCEffectUniform.h in Headers */,
 				7A59466819E372EE00F65F90 /* CCEffectContrast.h in Headers */,
 				7A59466A19E372EE00F65F90 /* CCEffectPixellate.h in Headers */,
+				9D5E58F91AC1CAF400D87047 /* CCEffectStitcherGL.h in Headers */,
 				9D96F9881AA941A100937308 /* CCEffectRenderPass.h in Headers */,
 				7A59466C19E372EE00F65F90 /* CCEffectDropShadow.h in Headers */,
 				7A59466E19E372EE00F65F90 /* CCNode.h in Headers */,
@@ -2735,6 +2758,7 @@
 				7A59469E19E372F100F65F90 /* CCParticleSystem_Private.h in Headers */,
 				7A5946A119E372F100F65F90 /* CCTiledMap.h in Headers */,
 				7A5946A219E372F100F65F90 /* CCTiledMap.m in Headers */,
+				9D5E58EB1AC0CEE400D87047 /* CCEffectShaderBuilderGL.h in Headers */,
 				7A5946A319E372F100F65F90 /* CCTiledMapLayer.h in Headers */,
 				14B84C941A700B55002C4D20 /* CCAppController.h in Headers */,
 				7A5946A419E372F100F65F90 /* CCTiledMapLayer.m in Headers */,
@@ -3006,6 +3030,7 @@
 				D2FEB687194F6C9E00FC0574 /* CCAppDelegate.h in Headers */,
 				D2FEB688194F6C9E00FC0574 /* CCShader.h in Headers */,
 				D27451BE19AEC84F006DA0A1 /* CCEffectDistanceField.h in Headers */,
+				9D5E58F81AC1CAF400D87047 /* CCEffectStitcherGL.h in Headers */,
 				D268FE1E1980791400ECBCD0 /* CCEffectUtils.h in Headers */,
 				D2FEB68C194F6C9E00FC0574 /* CCShader_Private.h in Headers */,
 				BC9F4E9619DB643C00B25F01 /* CCPackage.h in Headers */,
@@ -3047,6 +3072,7 @@
 				D2FEB6B6194F6C9E00FC0574 /* UITouch+CC.h in Headers */,
 				D2FEB6B7194F6C9E00FC0574 /* CCBKeyframe.h in Headers */,
 				E525F42E42D4753126DB7834 /* CCNode+RecursiveDescription.h in Headers */,
+				9D5E58EA1AC0CEE400D87047 /* CCEffectShaderBuilderGL.h in Headers */,
 				E525F80E977C3BBE006A6902 /* CCFileUtils.h in Headers */,
 				E525FDDD741BA508C227F090 /* CCFile_Private.h in Headers */,
 				E525F2D10ACCAB26403D8A23 /* CCFile.h in Headers */,
@@ -3349,6 +3375,7 @@
 				B7D273141822F4AA0054849B /* CCBReader.m in Sources */,
 				571CD02B19649E03003D460C /* CCPlatformTextFieldIOS.m in Sources */,
 				83E1A86519C8ACA0000A3BCA /* CCPackageConstants.m in Sources */,
+				9D5E58FA1AC1CAF400D87047 /* CCEffectStitcherGL.m in Sources */,
 				D272032E18FC89A000B100FF /* CCEffectStack.m in Sources */,
 				50316AA710291280003ACFE7 /* CCRenderTexture.m in Sources */,
 				50316AD51029A126003ACFE7 /* CCMotionStreak.m in Sources */,
@@ -3436,6 +3463,7 @@
 				E525F091005B1446458856E4 /* CCFileLocatorDatabase.m in Sources */,
 				E525FAE62D515ED78AFBFA1E /* CCFileUtils.m in Sources */,
 				E525F6DA8219EB9F002899E7 /* CCFileLocator.m in Sources */,
+				9D5E58EC1AC0CEE400D87047 /* CCEffectShaderBuilderGL.m in Sources */,
 				E525F14AA900A39A508ED9F0 /* CCFile.m in Sources */,
 				E525F438C1815DEFBA6D4D1B /* CCFileMetaData.m in Sources */,
 			);
@@ -3505,8 +3533,10 @@
 				7A59480919E375A400F65F90 /* CCMotionStreak.m in Sources */,
 				7A59480B19E375A400F65F90 /* CCProgressNode.m in Sources */,
 				14B84C971A700B55002C4D20 /* CCAppController.m in Sources */,
+				9D5E58EE1AC0CEE400D87047 /* CCEffectShaderBuilderGL.m in Sources */,
 				7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */,
 				7A59481119E375A500F65F90 /* CCPackage.m in Sources */,
+				9D5E58FC1AC1CAF400D87047 /* CCEffectStitcherGL.m in Sources */,
 				7A59481319E375A500F65F90 /* CCPackageConstants.m in Sources */,
 				7A59481919E375A600F65F90 /* CCPackageDownload.m in Sources */,
 				7A59481C19E375A600F65F90 /* CCPackageDownloadManager.m in Sources */,
@@ -3632,6 +3662,7 @@
 				BC9F4E8E19DB632800B25F01 /* CCPackageConstants.m in Sources */,
 				57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */,
 				D2FEB6D3194F6C9E00FC0574 /* CCPhysicsShape.m in Sources */,
+				9D5E58ED1AC0CEE400D87047 /* CCEffectShaderBuilderGL.m in Sources */,
 				577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */,
 				D3737E3D1A1F22FB00782024 /* CCDeprecated.m in Sources */,
 				D2FEB6D5194F6C9E00FC0574 /* CCSlider.m in Sources */,
@@ -3713,6 +3744,7 @@
 				D2FEB72C194F6C9E00FC0574 /* CCTableView.m in Sources */,
 				D268FE291980791D00ECBCD0 /* CCEffectHue.m in Sources */,
 				D2FEB72D194F6C9E00FC0574 /* CCSprite9Slice.m in Sources */,
+				9D5E58FB1AC1CAF400D87047 /* CCEffectStitcherGL.m in Sources */,
 				D2FEB72E194F6C9E00FC0574 /* NSAttributedString+CCAdditions.m in Sources */,
 				D2FEB72F194F6C9E00FC0574 /* CCLayoutBox.m in Sources */,
 				D2FEB731194F6C9E00FC0574 /* CCColor.m in Sources */,
@@ -4284,6 +4316,7 @@
 				B7E7DE491A76DB7E004234B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d" */ = {
 			isa = XCConfigurationList;

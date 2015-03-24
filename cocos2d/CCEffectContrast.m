@@ -8,7 +8,7 @@
 
 #import "CCEffectContrast.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -42,7 +42,7 @@ static float conditionContrast(float contrast);
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectContrastImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectContrastImpl fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
@@ -58,12 +58,12 @@ static float conditionContrast(float contrast);
                           [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions

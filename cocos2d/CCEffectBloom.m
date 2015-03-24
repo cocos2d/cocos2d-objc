@@ -42,7 +42,7 @@
 
 #import "CCEffectBloom.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEFfectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
@@ -84,13 +84,13 @@
                               [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                                                                 functions:fragFunctions
-                                                                                     calls:fragCalls
-                                                                               temporaries:fragTemporaries
-                                                                                  uniforms:fragUniforms
-                                                                                  varyings:varyings];
-
+    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                                   functions:fragFunctions
+                                                                                       calls:fragCalls
+                                                                                 temporaries:fragTemporaries
+                                                                                    uniforms:fragUniforms
+                                                                                    varyings:varyings];
+    
     
     
     NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurParams:blurParams];
@@ -99,12 +99,12 @@
                               [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                                                                 functions:vertFunctions
-                                                                                     calls:vertCalls
-                                                                               temporaries:nil
-                                                                                  uniforms:vertUniforms
-                                                                                  varyings:varyings];
+    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                                                                   functions:vertFunctions
+                                                                                       calls:vertCalls
+                                                                                 temporaries:nil
+                                                                                    uniforms:vertUniforms
+                                                                                    varyings:varyings];
 
     
     NSArray *renderPasses = [CCEffectBloomImpl buildRenderPassesWithInterface:interface];

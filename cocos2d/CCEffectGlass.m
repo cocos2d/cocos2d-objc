@@ -8,7 +8,7 @@
 
 #import "CCEffectGlass.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
@@ -80,12 +80,12 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     
     NSArray *varyings = [CCEffectGlassImpl buildVaryings];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:varyings];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:varyings];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -176,12 +176,12 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                           ];
     NSArray *varyings = [CCEffectGlassImpl buildVaryings];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:nil
-                                              uniforms:uniforms
-                                              varyings:varyings];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:nil
+                                                uniforms:uniforms
+                                                varyings:varyings];
 }
 
 + (NSArray *)buildVertexFunctions

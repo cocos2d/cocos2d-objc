@@ -207,7 +207,7 @@
         NSArray *stitchList = stitchLists[stitchListIndex];
         
         NSString *prefix = [NSString stringWithFormat:@"SL%d_", stitchListIndex];
-        CCEffectStitcher *stitcher = [[CCEffectStitcher alloc] initWithEffects:stitchList manglePrefix:prefix mangleExclusions:[CCEffectImpl defaultUniformNames] stitchListIndex:stitchListIndex shaderStartIndex:outputShaders.count];
+        CCEffectStitcher *stitcher = [CCEffectStitcher stitcherWithEffects:stitchList manglePrefix:prefix mangleExclusions:[CCEffectImpl defaultUniformNames] stitchListIndex:stitchListIndex shaderStartIndex:outputShaders.count];
         
         [outputPasses addObjectsFromArray:stitcher.renderPasses];
         [outputShaders addObjectsFromArray:stitcher.shaders];
