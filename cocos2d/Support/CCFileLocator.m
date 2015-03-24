@@ -291,7 +291,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
 {
     if ([options[CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH] boolValue])
     {
-        block(filename, _untaggedContentScale, NO);
+        block(filename, 1.0, YES);
     }
     else
     {

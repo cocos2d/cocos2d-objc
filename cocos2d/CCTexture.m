@@ -298,7 +298,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
         
         _sizeInPixels = sizeInPixels;
         _contentScale = image.contentScale;
-        _contentSize = image.contentSize;
+        _contentSizeInPixels = CC_SIZE_SCALE(image.contentSize, _contentScale);
     }
     
 	return self;
@@ -331,7 +331,10 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     }
 }
 
-// -------------------------------------------------------------
+-(CGSize)contentSize
+{
+    return CC_SIZE_SCALE(_contentSizeInPixels, 1.0/_contentScale);
+}
 
 // TODO should move this to the Metal/GL impls.
 - (NSString*) description
@@ -402,7 +405,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
         _type = CCTextureTypeCubemap;
         _sizeInPixels = sizeInPixels;
         _contentScale = posX.contentScale;
-        _contentSize = posX.contentSize;
+        _contentSizeInPixels = CC_SIZE_SCALE(posX.contentSize, _contentScale);
     }
     
 	return self;
