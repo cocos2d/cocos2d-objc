@@ -9,6 +9,8 @@
 #import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
+#import "ccUtils.h"
+#import "CCSetup.h"
 #import "CCGL.h"
 #import "CCViewMacGL.h"
 #import "CCDirectorMac.h"
@@ -50,19 +52,15 @@
 
 - (void) reshape
 {
-    // We draw on a secondary thread through the display link
-    // When resizing the view, -reshape is called automatically on the main thread
-    // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
-    
     [self lockOpenGLContext];
-    
-    CCDirector *director = _director;
-    director.runningScene.contentSizeInPoints = self.bounds.size;
     
     // avoid flicker
     // Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
-    if(director.runningScene){
-        [director mainLoopBody];
+    if(_director.runningScene){
+        CGSize sizeInPixels = [self convertSizeFromBacking:self.bounds.size];
+        _director.runningScene.contentSizeInPoints = CC_SIZE_SCALE(sizeInPixels, 1.0/[CCSetup sharedSetup].contentScale);
+        
+        [_director mainLoopBody];
     }
     
     [self unlockOpenGLContext];
