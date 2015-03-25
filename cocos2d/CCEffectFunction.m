@@ -129,42 +129,83 @@
 
 -(id)initWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
 {
-    NSAssert(type, @"");
-    NSAssert(name, @"");
+    NSAssert(type.length, @"");
+    NSAssert(name.length, @"");
     
     if((self = [super init]))
     {
         _type = [type copy];
         _name = [name copy];
         _initializer = initializer;
+    }
+    return self;
+}
 
-        switch (initializer)
++(instancetype)temporaryWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer
+{
+    return [[CCEffectFunctionTemporaryGL alloc] initWithType:type name:name initializer:initializer];
+}
+
+- (NSString *)declaration
+{
+    NSAssert(0, @"Subclasses must override this.");
+    return nil;
+}
+
+@end
+
+
+#pragma mark CCEffectFunctionTemporaryGL
+
+@interface CCEffectFunctionTemporaryGL ()
+
+@property (nonatomic, strong) NSString *cachedDeclaration;
+
+@end
+
+@implementation CCEffectFunctionTemporaryGL
+
+-(id)initWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
+{
+    if((self = [super initWithType:type name:name initializer:initializer]))
+    {
+        _cachedDeclaration = nil;
+    }
+ 
+    return self;
+}
+
+- (NSString *)declaration
+{
+    if (!_cachedDeclaration)
+    {
+        switch (self.initializer)
         {
             case CCEffectInitFragColor:
-                _declaration = [NSString stringWithFormat:@"%@ %@ = cc_FragColor", _type, _name];
+                _cachedDeclaration = [NSString stringWithFormat:@"%@ %@ = cc_FragColor", self.type, self.name];
                 break;
             case CCEffectInitMainTexture:
-                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
-                                                          @"%@ %@ = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                _cachedDeclaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                      @"%@ %@ = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", self.name, self.type, self.name, self.name, self.name];
                 break;
             case CCEffectInitPreviousPass:
-                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
-                                                          @"%@ %@ = cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                _cachedDeclaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                      @"%@ %@ = cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", self.name, self.type, self.name, self.name, self.name];
                 break;
             case CCEffectInitReserved0:
-                _declaration = [NSString stringWithFormat:@"%@ %@ = vec4(1)", _type, _name];
+                _cachedDeclaration = [NSString stringWithFormat:@"%@ %@ = vec4(1)", self.type, self.name];
                 break;
             case CCEffectInitReserved1:
-                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
-                                                          @"%@ %@ = texture2D(cc_MainTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                _cachedDeclaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                      @"%@ %@ = texture2D(cc_MainTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", self.name, self.type, self.name, self.name, self.name];
                 break;
             case CCEffectInitReserved2:
-                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
-                                                          @"%@ %@ = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                _cachedDeclaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                      @"%@ %@ = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", self.name, self.type, self.name, self.name, self.name];
                 break;
         }
     }
-    return self;
+    return _cachedDeclaration;
 }
 
 @end

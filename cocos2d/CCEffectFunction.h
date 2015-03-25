@@ -68,6 +68,14 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionInitializer)
 @property (nonatomic, readonly) CCEffectFunctionInitializer initializer;
 
 -(id)initWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
++(instancetype)temporaryWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
+
+@end
+
+
+@interface CCEffectFunctionTemporaryGL : CCEffectFunctionTemporary
+
+-(id)initWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
 
 @end
 

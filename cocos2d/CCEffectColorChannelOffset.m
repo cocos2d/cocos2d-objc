@@ -46,7 +46,7 @@
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
     NSArray *functions = [CCEffectColorChannelOffsetImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"colorChannelOffset" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[

@@ -101,7 +101,7 @@ static float conditionShininess(float shininess);
     }
     
     NSArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:interface.closestLights normalMap:interface.needsNormalMap specular:interface.needsSpecular];
-    NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *fragTemporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"lighting" inputs:@{@"inputValue" : @"tmp"}]];
     
     CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment

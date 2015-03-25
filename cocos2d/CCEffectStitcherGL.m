@@ -384,13 +384,13 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
         if (stitchListIndex == 0)
         {
             // If this stitch group is the first in the stack, we only need to adjust each temporary's name.
-            temporaryReplacements[prefixedName] = [[CCEffectFunctionTemporary alloc] initWithType:temporary.type name:prefixedName initializer:temporary.initializer];
+            temporaryReplacements[prefixedName] = [CCEffectFunctionTemporary temporaryWithType:temporary.type name:prefixedName initializer:temporary.initializer];
         }
         else
         {
             // If this stitch group is not first in the stack, we need to adjust each temporary's name _and_ adjust
             // its initializer to make sure cc_FragColor doesn't contribute to the initializer expression again.
-            temporaryReplacements[prefixedName] = [[CCEffectFunctionTemporary alloc] initWithType:temporary.type name:prefixedName initializer:temporary.initializer + CCEffectInitReserveOffset];
+            temporaryReplacements[prefixedName] = [CCEffectFunctionTemporary temporaryWithType:temporary.type name:prefixedName initializer:temporary.initializer + CCEffectInitReserveOffset];
         }
     }
     return [temporaryReplacements copy];

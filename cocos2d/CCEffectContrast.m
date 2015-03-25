@@ -48,7 +48,7 @@ static float conditionContrast(float contrast);
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
     NSArray *functions = [CCEffectContrastImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"contrast" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[

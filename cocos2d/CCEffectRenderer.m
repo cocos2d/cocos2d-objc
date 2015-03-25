@@ -184,7 +184,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
         
         NSArray *functions = @[[[CCEffectFunction alloc] initWithName:@"copyFunc" body:effectBody inputs:@[input] returnType:@"vec4"]];
-        NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitMainTexture]];
+        NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitMainTexture]];
         NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"copied" inputs:@{@"inputValue" : @"tmp"}]];
         
         CCEffectShaderBuilder *fragBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment

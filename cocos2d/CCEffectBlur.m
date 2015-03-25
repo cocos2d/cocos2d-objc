@@ -65,7 +65,7 @@
                           ];
     
     NSArray *fragFunctions = [CCEffectBlurImpl buildFragmentFunctionsWithBlurParams:blurParams];
-    NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *fragTemporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"blur" inputs:@{@"inputValue" : @"tmp"}]];
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],

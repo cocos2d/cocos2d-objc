@@ -49,7 +49,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
     NSArray *functions = [CCEffectHueImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"hue" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[

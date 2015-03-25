@@ -84,7 +84,7 @@ static float conditionBlockSize(float blockSize);
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
     NSArray *functions = [CCEffectPixellateImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"pixellate" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
