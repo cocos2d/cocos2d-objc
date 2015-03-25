@@ -35,11 +35,10 @@ static NSString* fragTemplate =
     NSAssert(functions, @"");
     NSAssert(calls, @"");
     
-    if((self = [super initWithType:type functions:functions calls:calls uniforms:uniforms]))
+    if((self = [super initWithType:type functions:functions calls:calls temporaries:temporaries uniforms:uniforms]))
     {
         _cachedShaderSource = nil;
         
-        _temporaries = [temporaries copy];
         _varyings = [varyings copy];
         
     }

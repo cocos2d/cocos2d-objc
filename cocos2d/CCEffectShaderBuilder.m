@@ -13,7 +13,7 @@
 
 @implementation CCEffectShaderBuilder
 
-- (id)initWithType:(CCEffectShaderBuilderType)type functions:(NSArray *)functions calls:(NSArray *)calls uniforms:(NSArray *)uniforms
+- (id)initWithType:(CCEffectShaderBuilderType)type functions:(NSArray *)functions calls:(NSArray *)calls temporaries:(NSArray *)temporaries uniforms:(NSArray *)uniforms
 {
     NSAssert(functions, @"");
     NSAssert(calls, @"");
@@ -23,6 +23,7 @@
         _type = type;
         _functions = [functions copy];
         _calls = [calls copy];
+        _temporaries = [temporaries copy];
         _uniforms = [uniforms copy];
     }
     return self;
