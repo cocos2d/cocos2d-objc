@@ -14,6 +14,6 @@
 @property (nonatomic, readonly) NSArray *shaders;
 
 - (id)init;
-+ (instancetype)stitcherWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix mangleExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
++ (instancetype)stitcherWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
 
 @end

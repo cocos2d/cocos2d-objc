@@ -10,6 +10,6 @@
 
 @interface CCEffectStitcherGL : CCEffectStitcher
 
-- (id)initWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix mangleExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
+- (id)initWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
 
 @end

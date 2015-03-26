@@ -28,7 +28,6 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
 // Inputs
 @property (nonatomic, copy) NSArray *effects;
 @property (nonatomic, copy) NSString *manglePrefix;
-@property (nonatomic, copy) NSSet *mangleExclusions;
 @property (nonatomic, assign) NSUInteger stitchListIndex;
 @property (nonatomic, assign) NSUInteger shaderStartIndex;
 
@@ -41,7 +40,7 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
 
 @implementation CCEffectStitcherGL
 
-- (id)initWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix mangleExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
+- (id)initWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
 {
     // Make sure these aren't nil, empty, etc.
     NSAssert(effects.count, @"");
@@ -51,7 +50,6 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
     {
         _effects = [effects copy];
         _manglePrefix = [prefix copy];
-        _mangleExclusions = [exclusions copy];
         _stitchListIndex = stitchListIndex;
         _shaderStartIndex = shaderStartIndex;
         
@@ -70,7 +68,7 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
     if (!_cachedRenderPasses)
     {
         NSAssert(!_cachedShaders, @"The output render pass array is nil but the output shader array is not.");
-        [self stitchEffects:self.effects manglePrefix:self.manglePrefix mangleExclusions:self.mangleExclusions stitchListIndex:self.stitchListIndex shaderStartIndex:self.shaderStartIndex];
+        [self stitchEffects:self.effects manglePrefix:self.manglePrefix stitchListIndex:self.stitchListIndex shaderStartIndex:self.shaderStartIndex];
 
         NSAssert(_cachedRenderPasses, @"Failed to create an output render pass array.");
         NSAssert(_cachedShaders, @"Failed to create an output shader array.");
@@ -87,7 +85,7 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
     if (!_cachedShaders)
     {
         NSAssert(!_cachedRenderPasses, @"The output shader array is nil but the output render pass array is not.");
-        [self stitchEffects:self.effects manglePrefix:self.manglePrefix mangleExclusions:self.mangleExclusions stitchListIndex:self.stitchListIndex shaderStartIndex:self.shaderStartIndex];
+        [self stitchEffects:self.effects manglePrefix:self.manglePrefix stitchListIndex:self.stitchListIndex shaderStartIndex:self.shaderStartIndex];
 
         NSAssert(_cachedRenderPasses, @"Failed to create an output render pass array.");
         NSAssert(_cachedShaders, @"Failed to create an output shader array.");
@@ -95,7 +93,7 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
     return _cachedShaders;
 }
 
-- (void)stitchEffects:(NSArray *)effects manglePrefix:(NSString *)prefix mangleExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex
+- (void)stitchEffects:(NSArray *)effects manglePrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex
 {
     NSAssert(effects.count > 0, @"Unexpectedly empty shader array.");
     
@@ -116,12 +114,12 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
 
             NSAssert([shader.vertexShaderBuilder isKindOfClass:[CCEffectShaderBuilderGL class]], @"Supplied shader builder is not a GL shader builder.");
             CCEffectShaderBuilderGL *vtxBuilder = (CCEffectShaderBuilderGL *)shader.vertexShaderBuilder;
-            NSDictionary *prefixedVtxComponents = [CCEffectStitcherGL prefixComponentsFromBuilder:vtxBuilder withPrefix:shaderPrefix andExclusions:exclusions stitchListIndex:stitchListIndex];
+            NSDictionary *prefixedVtxComponents = [CCEffectStitcherGL prefixComponentsFromBuilder:vtxBuilder withPrefix:shaderPrefix stitchListIndex:stitchListIndex];
             [CCEffectStitcherGL mergePrefixedComponents:prefixedVtxComponents fromShaderAtIndex:shaderIndex intoAllComponents:allVtxComponents];
 
             NSAssert([shader.fragmentShaderBuilder isKindOfClass:[CCEffectShaderBuilderGL class]], @"Supplied shader builder is not a GL shader builder.");
             CCEffectShaderBuilderGL *fragBuilder = (CCEffectShaderBuilderGL *)shader.fragmentShaderBuilder;
-            NSDictionary *prefixedFragComponents = [CCEffectStitcherGL prefixComponentsFromBuilder:fragBuilder withPrefix:shaderPrefix andExclusions:exclusions stitchListIndex:stitchListIndex];
+            NSDictionary *prefixedFragComponents = [CCEffectStitcherGL prefixComponentsFromBuilder:fragBuilder withPrefix:shaderPrefix stitchListIndex:stitchListIndex];
             [CCEffectStitcherGL mergePrefixedComponents:prefixedFragComponents fromShaderAtIndex:shaderIndex intoAllComponents:allFragComponents];
             
             // Build a new translation table from the mangled vertex and fragment
@@ -318,11 +316,11 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
     }
 }
 
-+ (NSDictionary *)prefixComponentsFromBuilder:(CCEffectShaderBuilderGL *)builder withPrefix:(NSString *)prefix andExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex
++ (NSDictionary *)prefixComponentsFromBuilder:(CCEffectShaderBuilderGL *)builder withPrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex
 {
     NSMutableDictionary *prefixedComponents = [[NSMutableDictionary alloc] init];
     
-    prefixedComponents[CCEffectStitcherUniforms] = [CCEffectStitcherGL uniformsByApplyingPrefix:prefix toUniforms:builder.uniforms withExclusions:exclusions];
+    prefixedComponents[CCEffectStitcherUniforms] = [CCEffectStitcherGL uniformsByApplyingPrefix:prefix toUniforms:builder.uniforms withExclusions:[CCEffectShaderBuilderGL defaultUniformNames]];
     prefixedComponents[CCEffectStitcherVaryings] = [CCEffectStitcherGL varyingsByApplyingPrefix:prefix toVaryings:builder.varyings];
     prefixedComponents[CCEffectStitcherFunctions] = [CCEffectStitcherGL functionsByApplyingPrefix:prefix
                                                                               uniformReplacements:prefixedComponents[CCEffectStitcherUniforms]

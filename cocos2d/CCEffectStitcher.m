@@ -17,9 +17,9 @@
     return [super init];
 }
 
-+ (instancetype)stitcherWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix mangleExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex
++ (instancetype)stitcherWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex
 {
-    return [[CCEffectStitcherGL alloc] initWithEffects:effects manglePrefix:prefix mangleExclusions:exclusions stitchListIndex:stitchListIndex shaderStartIndex:shaderStartIndex];
+    return [[CCEffectStitcherGL alloc] initWithEffects:effects manglePrefix:prefix stitchListIndex:stitchListIndex shaderStartIndex:shaderStartIndex];
 }
 
 

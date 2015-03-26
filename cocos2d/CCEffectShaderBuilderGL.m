@@ -10,6 +10,7 @@
 #import "CCEffectFunction.h"
 #import "CCEffectUniform.h"
 #import "CCEffectVarying.h"
+#import "CCEffect_Private.h"
 
 
 static NSString* vtxTemplate =
@@ -58,6 +59,17 @@ static NSString* fragTemplate =
     }
     
     return _cachedShaderSource;
+}
+
++ (NSSet *)defaultUniformNames
+{
+    return [[NSSet alloc] initWithArray:@[
+                                          CCShaderUniformPreviousPassTexture,
+                                          CCShaderUniformTexCoord1Center,
+                                          CCShaderUniformTexCoord1Extents,
+                                          CCShaderUniformTexCoord2Center,
+                                          CCShaderUniformTexCoord2Extents
+                                          ]];
 }
 
 + (CCEffectShaderBuilder *)defaultVertexShaderBuilder

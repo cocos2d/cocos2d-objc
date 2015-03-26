@@ -14,6 +14,7 @@
 
 - (id)initWithType:(CCEffectShaderBuilderType)type functions:(NSArray *)functions calls:(NSArray *)calls temporaries:(NSArray *)temporaries uniforms:(NSArray *)uniforms varyings:(NSArray *)varyings;
 
++ (NSSet *)defaultUniformNames;
 + (CCEffectShaderBuilder *)defaultVertexShaderBuilder;
 
 @end
