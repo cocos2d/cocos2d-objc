@@ -14,24 +14,26 @@
 #import "CCTexture.h"
 
 
-@interface CCEffectColorChannelOffsetImpl : CCEffectImpl
+#pragma mark - CCEffectColorChannelOffsetImplGL
+
+@interface CCEffectColorChannelOffsetImplGL : CCEffectImpl
 
 @property (nonatomic, weak) CCEffectColorChannelOffset *interface;
 
 @end
 
 
-@implementation CCEffectColorChannelOffsetImpl
+@implementation CCEffectColorChannelOffsetImplGL
 
 -(id)initWithInterface:(CCEffectColorChannelOffset *)interface
 {
-    NSArray *renderPasses = [CCEffectColorChannelOffsetImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectColorChannelOffsetImpl buildShaders];
+    NSArray *renderPasses = [CCEffectColorChannelOffsetImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectColorChannelOffsetImplGL buildShaders];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectColorChannelOffsetImpl";
+        self.debugName = @"CCEffectColorChannelOffsetImplGL";
         self.stitchFlags = CCEffectFunctionStitchAfter;
     }
     
@@ -40,12 +42,12 @@
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectColorChannelOffsetImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectColorChannelOffsetImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectColorChannelOffsetImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectColorChannelOffsetImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"colorChannelOffset" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -94,18 +96,12 @@
     return @[fragmentFunction];
 }
 
-static GLKVector2
-GLKVector2fromCGPoint(CGPoint p)
-{
-    return GLKVector2Make(p.x, p.y);
-}
-
 + (NSArray *)buildRenderPassesWithInterface:(CCEffectColorChannelOffset *)interface
 {
     __weak CCEffectColorChannelOffset *weakInterface = interface;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    pass0.debugLabel = @"CCEffectPixellate pass 0";
+    pass0.debugLabel = @"CCEffectColorChannelOffset pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
@@ -147,7 +143,7 @@ GLKVector2fromCGPoint(CGPoint p)
         _greenOffset = greenOffset;
         _blueOffset = blueOffset;
         
-        self.effectImpl = [[CCEffectColorChannelOffsetImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectColorChannelOffsetImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectColorChannelOffset";
     }
     

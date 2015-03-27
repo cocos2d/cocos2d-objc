@@ -21,16 +21,16 @@
 #import "CCRendererBasicTypes.h"
 
 
-@interface CCEffectOutlineImpl : CCEffectImpl
+@interface CCEffectOutlineImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectOutline *interface;
 @end
 
-@implementation CCEffectOutlineImpl
+@implementation CCEffectOutlineImplGL
 
 -(id)initWithInterface:(CCEffectOutline *)interface
 {
-    NSArray *renderPasses = [CCEffectOutlineImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectOutlineImpl buildShaders];
+    NSArray *renderPasses = [CCEffectOutlineImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectOutlineImplGL buildShaders];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
@@ -43,12 +43,12 @@
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectOutlineImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectOutlineImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectOutlineImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectOutlineImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"outline" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -200,7 +200,7 @@
         _outlineColor = outlineColor;
         _outlineWidth = outlineWidth;
         
-        self.effectImpl = [[CCEffectOutlineImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectOutlineImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectHue";
     }
     return self;

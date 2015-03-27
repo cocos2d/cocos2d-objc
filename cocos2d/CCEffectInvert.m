@@ -15,32 +15,32 @@
 #import "CCTexture.h"
 
 
-@interface CCEffectInvertImpl : CCEffectImpl
+@interface CCEffectInvertImplGL : CCEffectImpl
 
 @end
 
-@implementation CCEffectInvertImpl
+@implementation CCEffectInvertImplGL
 
 -(id)init
 {
-    NSArray *renderPasses = [CCEffectInvertImpl buildRenderPasses];
-    NSArray *shaders = [CCEffectInvertImpl buildShaders];
+    NSArray *renderPasses = [CCEffectInvertImplGL buildRenderPasses];
+    NSArray *shaders = [CCEffectInvertImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
-        self.debugName = @"CCEffectInvertImpl";
+        self.debugName = @"CCEffectInvertImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectInvertImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectInvertImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectInvertImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectInvertImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"inverted" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -98,7 +98,7 @@
 {
     if((self = [super init]))
     {
-        self.effectImpl = [[CCEffectInvertImpl alloc] init];
+        self.effectImpl = [[CCEffectInvertImplGL alloc] init];
         self.debugName = @"CCEffectInvert";
     }
     return self;

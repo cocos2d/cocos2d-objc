@@ -25,34 +25,34 @@
 @end
 
 
-@interface CCEffectRefractionImpl : CCEffectImpl
+@interface CCEffectRefractionImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectRefraction *interface;
 @end
 
 
-@implementation CCEffectRefractionImpl
+@implementation CCEffectRefractionImplGL
 
 -(id)initWithInterface:(CCEffectRefraction *)interface
 {
-    NSArray *renderPasses = [CCEffectRefractionImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectRefractionImpl buildShaders];
+    NSArray *renderPasses = [CCEffectRefractionImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectRefractionImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectRefractionImpl";
+        self.debugName = @"CCEffectRefractionImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectRefractionImpl vertexShaderBuilder] fragmentShaderBuilder:[CCEffectRefractionImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectRefractionImplGL vertexShaderBuilder] fragmentShaderBuilder:[CCEffectRefractionImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectRefractionImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectRefractionImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"refraction" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -65,7 +65,7 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]]
                           ];
-    NSArray *varyings = [CCEffectRefractionImpl buildVaryings];
+    NSArray *varyings = [CCEffectRefractionImplGL buildVaryings];
     
     return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
                                                functions:functions
@@ -115,13 +115,13 @@
 
 + (CCEffectShaderBuilder *)vertexShaderBuilder
 {
-    NSArray *functions = [CCEffectRefractionImpl buildVertexFunctions];
+    NSArray *functions = [CCEffectRefractionImplGL buildVertexFunctions];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"refraction" inputs:nil]];
     
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"mat4" name:@"u_ndcToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
                           ];
-    NSArray *varyings = [CCEffectRefractionImpl buildVaryings];
+    NSArray *varyings = [CCEffectRefractionImplGL buildVaryings];
     
     return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
                                                functions:functions
@@ -233,7 +233,7 @@
 
         _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
         
-        self.effectImpl = [[CCEffectRefractionImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectRefractionImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectRefraction";
     }
     return self;

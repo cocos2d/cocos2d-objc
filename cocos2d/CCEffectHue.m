@@ -22,33 +22,33 @@ static GLKMatrix4 matrixWithHue(float hue);
 @end
 
 
-@interface CCEffectHueImpl : CCEffectImpl
+@interface CCEffectHueImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectHue *interface;
 @end
 
-@implementation CCEffectHueImpl
+@implementation CCEffectHueImplGL
 
 -(id)initWithInterface:(CCEffectHue *)interface
 {
-    NSArray *renderPasses = [CCEffectHueImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectHueImpl buildShaders];
+    NSArray *renderPasses = [CCEffectHueImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectHueImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectHueImpl";
+        self.debugName = @"CCEffectHueImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectHueImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectHueImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"hue" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -114,7 +114,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     if((self = [super init]))
     {
-        self.effectImpl = [[CCEffectHueImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectHueImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectHue";
 
         self.hue = hue;

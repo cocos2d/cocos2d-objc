@@ -20,34 +20,34 @@ static float conditionContrast(float contrast);
 @end
 
 
-@interface CCEffectContrastImpl : CCEffectImpl
+@interface CCEffectContrastImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectContrast *interface;
 @end
 
 
-@implementation CCEffectContrastImpl
+@implementation CCEffectContrastImplGL
 
 -(id)initWithInterface:(CCEffectContrast *)interface
 {
-    NSArray *renderPasses = [CCEffectContrastImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectContrastImpl buildShaders];
+    NSArray *renderPasses = [CCEffectContrastImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectContrastImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectContrastImpl";
+        self.debugName = @"CCEffectContrastImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectContrastImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectContrastImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectContrastImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectContrastImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"contrast" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -115,7 +115,7 @@ static float conditionContrast(float contrast);
         _contrast = contrast;
         _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 
-        self.effectImpl = [[CCEffectContrastImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectContrastImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectContrast";
     }
     return self;

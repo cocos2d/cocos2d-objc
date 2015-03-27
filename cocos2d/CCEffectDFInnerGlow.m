@@ -24,37 +24,37 @@
 @end
 
 
-@interface CCEffectDFInnerGlowImpl : CCEffectImpl
+@interface CCEffectDFInnerGlowImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectDFInnerGlow *interface;
 @end
 
 
-@implementation CCEffectDFInnerGlowImpl {
+@implementation CCEffectDFInnerGlowImplGL {
     float _innerMin;
     float _innerMax;
 }
 
 -(id)initWithInterface:(CCEffectDFInnerGlow *)interface
 {
-    NSArray *renderPasses = [CCEffectDFInnerGlowImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectDFInnerGlowImpl buildShaders];
+    NSArray *renderPasses = [CCEffectDFInnerGlowImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDFInnerGlowImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectDFInnerGlowImpl";
+        self.debugName = @"CCEffectDFInnerGlowImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFInnerGlowImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFInnerGlowImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectDFInnerGlowImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"innerGlow" inputs:nil]];
     
@@ -193,7 +193,7 @@
 {
     if((self = [super init]))
     {        
-        self.effectImpl = [[CCEffectDFInnerGlowImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectDFInnerGlowImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectDFInnerGlow";
 
         _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)

@@ -26,33 +26,33 @@
 @end
 
 
-@interface CCEffectDFOutlineImpl : CCEffectImpl
+@interface CCEffectDFOutlineImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectDFOutline *interface;
 @end
 
-@implementation CCEffectDFOutlineImpl
+@implementation CCEffectDFOutlineImplGL
 
 -(id)initWithInterface:(CCEffectDFOutline *)interface
 {
-    NSArray *renderPasses = [CCEffectDFOutlineImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectDFOutlineImpl buildShaders];
+    NSArray *renderPasses = [CCEffectDFOutlineImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDFOutlineImplGL buildShaders];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectDFOutlineImpl";
+        self.debugName = @"CCEffectDFOutlineImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFOutlineImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFOutlineImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectDFOutlineImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectDFOutlineImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"outline" inputs:nil]];
     
@@ -164,7 +164,7 @@
 {
     if((self = [super init]))
     {        
-        self.effectImpl = [[CCEffectDFOutlineImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectDFOutlineImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectDFOutline";
 
         _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)

@@ -54,22 +54,22 @@ static float conditionBlockSize(float blockSize);
 @property (nonatomic, assign) float conditionedBlockSize;
 @end
 
-@interface CCEffectPixellateImpl : CCEffectImpl
+@interface CCEffectPixellateImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectPixellate *interface;
 @end
 
 
-@implementation CCEffectPixellateImpl
+@implementation CCEffectPixellateImplGL
 
 -(id)initWithInterface:(CCEffectPixellate *)interface
 {
-    NSArray *renderPasses = [CCEffectPixellateImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectPixellateImpl buildShaders];
+    NSArray *renderPasses = [CCEffectPixellateImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectPixellateImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectPixellateImpl";
+        self.debugName = @"CCEffectPixellateImplGL";
         self.stitchFlags = CCEffectFunctionStitchAfter;
     }
     
@@ -78,12 +78,12 @@ static float conditionBlockSize(float blockSize);
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectPixellateImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectPixellateImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectPixellateImpl buildFragmentFunctions];
+    NSArray *functions = [CCEffectPixellateImplGL buildFragmentFunctions];
     NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"pixellate" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -157,7 +157,7 @@ static float conditionBlockSize(float blockSize);
         _blockSize = blockSize;
         _conditionedBlockSize = conditionBlockSize(blockSize);
 
-        self.effectImpl = [[CCEffectPixellateImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectPixellateImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectPixellate";
     }
     return self;

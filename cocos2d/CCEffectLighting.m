@@ -53,12 +53,12 @@ static float conditionShininess(float shininess);
 @end
 
 
-@interface CCEffectLightingImpl : CCEffectImpl
+@interface CCEffectLightingImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectLighting *interface;
 @end
 
 
-@implementation CCEffectLightingImpl
+@implementation CCEffectLightingImplGL
 
 -(id)initWithInterface:(CCEffectLighting *)interface
 {
@@ -100,7 +100,7 @@ static float conditionShininess(float shininess);
         [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
     }
     
-    NSArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:interface.closestLights normalMap:interface.needsNormalMap specular:interface.needsSpecular];
+    NSArray *fragFunctions = [CCEffectLightingImplGL buildFragmentFunctionsWithLights:interface.closestLights normalMap:interface.needsNormalMap specular:interface.needsSpecular];
     NSArray *fragTemporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"lighting" inputs:@{@"inputValue" : @"tmp"}]];
     
@@ -112,7 +112,7 @@ static float conditionShininess(float shininess);
                                                                                     varyings:varyings];
     
     
-    NSArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:interface.closestLights];
+    NSArray *vertFunctions = [CCEffectLightingImplGL buildVertexFunctionsWithLights:interface.closestLights];
     NSArray *vertCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:vertFunctions[0] outputName:@"lighting" inputs:nil]];
     
     CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
@@ -124,12 +124,12 @@ static float conditionShininess(float shininess);
     
 
     NSArray *shaders = @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
-    NSArray *renderPasses = [CCEffectLightingImpl buildRenderPassesWithInterface:interface];
+    NSArray *renderPasses = [CCEffectLightingImplGL buildRenderPassesWithInterface:interface];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectLightingImpl";
+        self.debugName = @"CCEffectLightingImplGL";
     }
     return self;
 }
@@ -385,7 +385,7 @@ static float conditionShininess(float shininess);
 {
     if((self = [super init]))
     {
-        self.effectImpl = [[CCEffectLightingImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectLightingImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectLighting";
         
         _groups = [groups copy];
@@ -430,7 +430,7 @@ static float conditionShininess(float shininess);
         self.shaderHasSpecular = self.needsSpecular;
         self.shaderHasNormalMap = _needsNormalMap;
         
-        self.effectImpl = [[CCEffectLightingImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectLightingImplGL alloc] initWithInterface:self];
 
         result.status = CCEffectPrepareSuccess;
         result.changes = CCEffectPrepareShaderChanged | CCEffectPrepareUniformsChanged;
