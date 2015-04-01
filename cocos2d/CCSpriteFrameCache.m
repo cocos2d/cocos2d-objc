@@ -37,10 +37,11 @@
 #import "Platforms/CCNS.h"
 #import "ccMacros.h"
 #import "CCTextureCache.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrameCache_Private.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator_Private.h"
+#import "CCFile.h"
 #import "CCTexture_Private.h"
 
 
@@ -50,14 +51,19 @@
 @end
 
 
-@interface CCSpriteFrameCache ()
-- (void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
-- (void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture;
-- (void) removeSpriteFramesFromDictionary:(NSDictionary*) dictionary;
-@end
-
-
-@implementation CCSpriteFrameCache
+@implementation CCSpriteFrameCache {
+    // Sprite frame dictionary.
+	NSMutableDictionary *_spriteFrames;
+    
+    // Sprite frame alias dictionary.
+	NSMutableDictionary *_spriteFramesAliases;
+    
+    // Sprite frame plist file name set.
+	NSMutableSet *_loadedFilenames;
+    
+    // Sprite frame file lookup dictionary.
+    NSMutableDictionary *_spriteFrameFileLookup;
+}
 
 #pragma mark CCSpriteFrameCache - Alloc, Init & Dealloc
 
@@ -108,60 +114,67 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - registering sprite sheets
 
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)plistFile
 {
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:filename];
-	if( fullpath ) {
-		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullpath];
-        
-		NSDictionary *metadata = [dict objectForKey:@"metadata"];
-		NSInteger version = [[metadata objectForKey:@"version"] integerValue];
-		if( version != 1) {
-			CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long)version, filename);
-			return;
-		}
-		
-		NSArray *spriteFrameFiles = [dict objectForKey:@"spriteFrameFiles"];
-		for (NSString* spriteFrameFile in spriteFrameFiles)
-        {
-            [self registerSpriteFramesFile:spriteFrameFile];
-        }
-	}
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+    
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
+    
+    NSDictionary *metadata = [dict objectForKey:@"metadata"];
+    NSInteger version = [[metadata objectForKey:@"version"] integerValue];
+    if( version != 1) {
+        CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long)version, plistFile);
+        return;
+    }
+    
+    NSArray *spriteFrameFiles = [dict objectForKey:@"spriteFrameFiles"];
+    for (NSString* spriteFrameFile in spriteFrameFiles)
+    {
+        [self registerSpriteFramesFile:spriteFrameFile];
+    }
 }
 
 - (void)loadSpriteFrameLookupsInAllSearchPathsWithName:(NSString *)filename
 {
-    NSArray *paths = [[CCFileUtils sharedFileUtils] fullPathsOfFileNameInAllSearchPaths:filename];
-
-    for (NSString *spriteFrameLookupFullPath in paths)
-    {
-        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:spriteFrameLookupFullPath];
-
-        NSDictionary *metadata = dict[@"metadata"];
-        NSInteger version = [metadata[@"version"] integerValue];
-        if (version != 1)
-        {
-            CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long) version, filename);
-            return;
-        }
-
-        NSArray *spriteFrameFiles = dict[@"spriteFrameFiles"];
-        for (NSString *spriteFrameFile in spriteFrameFiles)
-        {
-            [self registerSpriteFramesFile:spriteFrameFile];
-        }
-    }
+    NSAssert(NO, @"Needs to be removed from v4");
+//    NSArray *paths = [[CCFileUtils sharedFileUtils] fullPathsOfFileNameInAllSearchPaths:filename];
+//
+//    for (NSString *spriteFrameLookupFullPath in paths)
+//    {
+//        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:spriteFrameLookupFullPath];
+//
+//        NSDictionary *metadata = dict[@"metadata"];
+//        NSInteger version = [metadata[@"version"] integerValue];
+//        if (version != 1)
+//        {
+//            CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long) version, filename);
+//            return;
+//        }
+//
+//        NSArray *spriteFrameFiles = dict[@"spriteFrameFiles"];
+//        for (NSString *spriteFrameFile in spriteFrameFiles)
+//        {
+//            [self registerSpriteFramesFile:spriteFrameFile];
+//        }
+//    }
 }
 
-- (void) registerSpriteFramesFile:(NSString*)plist
+- (void) registerSpriteFramesFile:(NSString*)plistFile
 {
-	NSAssert(plist, @"plist filename should not be nil");
+    NSError *err = nil;
     
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
     
-    NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
-	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
+    
+    NSDictionary *metadataDict = [dict objectForKey:@"metadata"];
+	NSDictionary *framesDict = [dict objectForKey:@"frames"];
     
 	int format = 0;
     
@@ -174,13 +187,13 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
     
     for(NSString *frameDictKey in framesDict)
     {
-        [_spriteFrameFileLookup setObject:plist forKey:frameDictKey];
+        [_spriteFrameFileLookup setObject:plistFile forKey:frameDictKey];
     }
 }
 
 #pragma mark CCSpriteFrameCache - loading sprite frames
 
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureReference:(id)textureReference
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureReference:(id)textureReference prefix:(NSString *)pathPrefix
 {
 	/*
 	 Supported Zwoptex Formats:
@@ -296,32 +309,33 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 		// add sprite frame
 		[_spriteFrames setObject:spriteFrame forKey:frameDictKey];
+        
+        // Add an alias that allows spriteframe files to be treated as directories.
+        // Ex: A frame named "bar.png" in a spritesheet named "bar.plist" will add both "bar.png" and "foo/bar.png" to the dictionary.
+        if(pathPrefix && ![frameDictKey hasPrefix:pathPrefix]){
+            NSString *key = [pathPrefix stringByAppendingPathComponent:frameDictKey];
+            _spriteFrames[key] = spriteFrame;
+        }
 	}
 }
 
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)textureFilename
-{
-	return [self addSpriteFramesWithDictionary:dictionary textureReference:textureFilename];
-}
-
--(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture
-{
-	return [self addSpriteFramesWithDictionary:dictionary textureReference:texture];
-}
-
--(void) addSpriteFramesWithFile:(NSString*)plist textureReference:(id)textureReference
+-(void) addSpriteFramesWithFile:(NSString*)plistFile textureReference:(id)textureReference
 {
 	NSAssert(textureReference, @"textureReference should not be nil");
-	NSAssert(plist, @"plist filename should not be nil");
+	NSAssert(plistFile, @"plist filename should not be nil");
 	
-	if( ! [_loadedFilenames member:plist] ) {
+	if( ! [_loadedFilenames member:plistFile] ) {
+        NSError *err = nil;
+        
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+        NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+        
+        NSDictionary *dict = [file loadPlist:&err];
+        NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
 
-		NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-
-		[self addSpriteFramesWithDictionary:dict textureReference:textureReference];
+		[self addSpriteFramesWithDictionary:dict textureReference:textureReference prefix:[plistFile stringByDeletingPathExtension]];
 		
-		[_loadedFilenames addObject:plist];
+		[_loadedFilenames addObject:plistFile];
 	}
 	else
 		CCLOGINFO(@"cocos2d: CCSpriteFrameCache: file already loaded: %@", plist);
@@ -338,14 +352,19 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 }
 
 
--(void) addSpriteFramesWithFile:(NSString*)plist
+-(void) addSpriteFramesWithFile:(NSString*)plistFile
 {
-	NSAssert(plist, @"plist filename should not be nil");
+	NSAssert(plistFile, @"plist filename should not be nil");
 	
-	if( ! [_loadedFilenames member:plist] ) {
+	if( ! [_loadedFilenames member:plistFile] ) {
 
-		NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+        NSError *err = nil;
+        
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:plistFile error:&err];
+        NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+        
+        NSDictionary *dict = [file loadPlist:&err];
+        NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
 
 		NSString *texturePath = nil;
 		NSDictionary *metadataDict = [dict objectForKey:@"metadata"];
@@ -357,19 +376,19 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		if( texturePath )
 		{
 			// build texture path relative to plist file
-			NSString *textureBase = [plist stringByDeletingLastPathComponent];
+			NSString *textureBase = [plistFile stringByDeletingLastPathComponent];
 			texturePath = [textureBase stringByAppendingPathComponent:texturePath];
 		} else {
 			// build texture path by replacing file extension
-			texturePath = [plist stringByDeletingPathExtension];
+			texturePath = [plistFile stringByDeletingPathExtension];
 			texturePath = [texturePath stringByAppendingPathExtension:@"png"];
 
 			CCLOG(@"cocos2d: CCSpriteFrameCache: Trying to use file '%@' as texture", texturePath);
 		}
 
-		[self addSpriteFramesWithDictionary:dict textureFilename:texturePath];
+		[self addSpriteFramesWithDictionary:dict textureReference:texturePath prefix:[plistFile stringByDeletingPathExtension]];
 		
-		[_loadedFilenames addObject:plist];
+		[_loadedFilenames addObject:plistFile];
 	}
 	else 
 		CCLOGINFO(@"cocos2d: CCSpriteFrameCache: file already loaded: %@", plist);
@@ -426,15 +445,20 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	[_loadedFilenames removeAllObjects];
 }
 
-- (void) removeSpriteFramesFromFile:(NSString*) plist
+- (void) removeSpriteFramesFromFile:(NSString*) plistFile
 {
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+    
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
 
 	[self removeSpriteFramesFromDictionary:dict];
 	
 	// remove it from the cache
-	id ret = [_loadedFilenames member:plist];
+	id ret = [_loadedFilenames member:plistFile];
 	if( ret )
 		[_loadedFilenames removeObject:ret];
 }
@@ -467,31 +491,69 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - getting
 
--(CCSpriteFrame*) spriteFrameByName:(NSString*)name
+-(CCSpriteFrame *) spriteFrameByName:(NSString*)name
 {
-	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];
+    // Check to see if the frame is already in the cache.
+    CCSpriteFrame *frame = _spriteFrames[name];
     
-    if (!frame)
-    {
-        // Check fileLookup.plist
-        NSString *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];
-        name = newName ?: name;
-        
-        // Try finding the frame in one of the registered sprite sheets
-        NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
-        if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];
-        
-        // Attempt to load the frame again
-        frame = [_spriteFrames objectForKey:name];
+    // TODO try the FileLocator name alias.
+//        name = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name] ?: name;
+    
+    // Search for spritesheets by breaking down the spriteframe's name into paths.
+    if(frame == nil){
+        NSArray *pathComponents = [name pathComponents];
+        for(NSUInteger len = pathComponents.count - 1; len > 0; len--){
+            NSString *subpath = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, len)]];
+            NSString *path = [subpath stringByAppendingPathExtension:@"plist"];
+            
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:path options:@{CCFILELOCATOR_SEARCH_OPTION_NOTRACE: @(YES)} error:nil trace:NO];
+            if(file){
+                [self addSpriteFramesWithFile:path];
+                frame = _spriteFrames[name];
+                
+                if(frame) break;
+            }
+        }
     }
     
-	if( ! frame ) {
-		// try alias dictionary
-		NSString *key = [_spriteFramesAliases objectForKey:name];
-		frame = [_spriteFrames objectForKey:key];
+    // Last, try the alias dictionary.
+    // These are provided by format #3 when loading the sprite frame files.
+    // I have no idea what format #3 is other than there is code for it above...
+	if(frame == nil){
+		NSString *key = _spriteFramesAliases[name];
+		frame = _spriteFrames[key];
 	}
 
 	return (CCSpriteFrame *)frame.proxy;
 }
+
+//-(CCSpriteFrame*)_spriteFrameByName:(NSString*)name
+//{
+//	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];
+//    
+//    if (!frame)
+//    {
+//        // Check fileLookup.plist
+//        #warning Important TODO!
+//        // This was slightly broken in v3 since multiple search paths could define the same alias.
+////        NSString *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];
+////        name = newName ?: name;
+//        
+//        // Try finding the frame in one of the registered sprite sheets
+//        NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
+//        if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];
+//        
+//        // Attempt to load the frame again
+//        frame = [_spriteFrames objectForKey:name];
+//    }
+//    
+//	if( ! frame ) {
+//		// try alias dictionary
+//		NSString *key = [_spriteFramesAliases objectForKey:name];
+//		frame = [_spriteFrames objectForKey:key];
+//	}
+//
+//	return (CCSpriteFrame *)frame.proxy;
+//}
 
 @end

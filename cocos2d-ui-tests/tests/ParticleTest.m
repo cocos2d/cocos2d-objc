@@ -37,7 +37,7 @@
 
 - (void) setUp
 {
-	[[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
+//	[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
 }
 
 -(void) setupComet
@@ -319,7 +319,7 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint convertedLocation = [[CCDirector currentDirector] convertEventToGL:theEvent];
+	CGPoint convertedLocation = [(CCDirectorMac *)[CCDirector currentDirector] convertEventToGL:theEvent];
   
 	CGPoint pos = CGPointZero;
   

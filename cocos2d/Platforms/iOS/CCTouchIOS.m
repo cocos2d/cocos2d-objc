@@ -11,6 +11,7 @@
 #import "CCDirector.h"
 
 #if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
 
 @implementation CCTouchIOS
 

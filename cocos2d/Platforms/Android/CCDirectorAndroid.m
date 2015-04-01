@@ -68,10 +68,10 @@
             break;
         }
             
-        case CCDirectorProjectionCustom:
-			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				_projectionMatrix = [_delegate updateProjection];
-			break;
+//        case CCDirectorProjectionCustom:
+//			if( [_delegate respondsToSelector:@selector(updateProjection)] )
+//				_projectionMatrix = [_delegate updateProjection];
+//			break;
             
 		default:
 			CCLOG(@"cocos2d: Director: unrecognized projection");

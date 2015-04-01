@@ -36,6 +36,8 @@
 #import <objc/message.h>
 #import "CCAction_Private.h"
 
+#import "CCSetup.h"
+
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
 
@@ -76,7 +78,7 @@
 @end
 
 
-@interface CCScheduler() <CCSchedulableTarget>
+@interface CCScheduler()
 
 @property(nonatomic, strong) CCTimer *timers;
 
@@ -489,11 +491,10 @@ CompareTimers(const void *a, const void *b, void *context)
                 }
                 scheduler->_lastFixedUpdateTime = timer.invokeTime;
             }
-            
-        } forTarget:self withDelay:0] retain];
+        } forTarget:nil withDelay:0] retain];
         
         _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-        _fixedUpdateTimer.repeatInterval = 1.0/60.0;
+        _fixedUpdateTimer.repeatInterval = [CCSetup sharedSetup].fixedUpdateInterval;
     }
     
     return self;
@@ -513,18 +514,13 @@ CompareTimers(const void *a, const void *b, void *context)
     [super dealloc];
 }
 
--(NSInteger)priority
-{
-	return NSIntegerMax;
-}
-
 -(CCTime)fixedUpdateInterval {return _fixedUpdateTimer.repeatInterval;}
 -(void)setFixedUpdateInterval:(CCTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
 -(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulableTarget> *)target insert:(BOOL)insert
 {
 	// Need to transform nil -> NSNulls.
-	target = (target == nil ? [NSNull null] : target);
+	target = (target ?: [NSNull null]);
 	
 	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, target);
 	if(scheduledTarget == nil && insert){
@@ -735,9 +731,11 @@ CompareTimers(const void *a, const void *b, void *context)
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     
-    for(CCAction *action in [scheduledTarget.actions copy]){
+    NSArray *actions = [scheduledTarget.actions copy];
+    for(CCAction *action in actions){
         [scheduledTarget removeAction:action];
     }
+    [actions release];
     
     [_scheduledTargetsWithActions removeObject:scheduledTarget];
 }
@@ -746,11 +744,13 @@ CompareTimers(const void *a, const void *b, void *context)
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     
-    for (CCAction *action in [scheduledTarget.actions copy]) {
+    NSArray *actions = [scheduledTarget.actions copy];
+    for (CCAction *action in actions) {
         if ([action.name isEqualToString:name]){
             [scheduledTarget removeAction:action];
         }
     }
+    [actions release];
     
     if(!scheduledTarget.hasActions){
         [_scheduledTargetsWithActions removeObject:scheduledTarget];

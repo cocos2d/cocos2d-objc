@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "CCPackageManager.h"
 #import "CCPackage.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCPackage_private.h"
 #import "CCPackageConstants.h"
 #import "CCPackageManagerDelegate.h"

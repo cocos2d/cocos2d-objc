@@ -28,6 +28,7 @@
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
 #import "ccUtils.h"
+#import "CCSetup.h"
 
 #import "CCFile_Private.h"
 
@@ -146,6 +147,15 @@ NormalizeOptions(NSDictionary *options)
     CGImageSourceRef source = [file createCGImageSource];
     CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
     CFRelease(source);
+    
+    if(!file.hasResolutionTag){
+        float relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
+        float rescaleFactor = 1.0/CCNextPOT(relativeScale);
+        
+        NSMutableDictionary *mutableOptions = [NormalizeOptions(options) mutableCopy];
+        mutableOptions[CCImageOptionRescaleFactor] = @(rescaleFactor);
+        options = mutableOptions;
+    }
     
     self = [self initWithCGImage:image contentScale:file.contentScale options:options];
     CGImageRelease(image);

@@ -28,8 +28,8 @@
 #import "ccUtils.h"
 
 #import "CCSprite_Private.h"
+#import "CCSpriteFrame.h"
 
-#import "CCSpriteFrameCache.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
@@ -47,50 +47,50 @@
 
 +(instancetype)spriteWithImageNamed:(NSString*)imageName
 {
-    return [[self alloc] initWithImageNamed:imageName];
+    return [[[self alloc] initWithImageNamed:imageName] autorelease];
 }
 
 +(instancetype)spriteWithTexture:(CCTexture*)texture
 {
-	return [[self alloc] initWithTexture:texture];
+	return [[[self alloc] initWithTexture:texture] autorelease];
 }
 
 +(instancetype)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
-	return [[self alloc] initWithTexture:texture rect:rect];
+	return [[[self alloc] initWithTexture:texture rect:rect] autorelease];
 }
 
 +(instancetype)spriteWithFile:(NSString*)filename
 {
-	return [[self alloc] initWithFile:filename];
+	return [[[self alloc] initWithFile:filename] autorelease];
 }
 
 +(instancetype)spriteWithFile:(NSString*)filename rect:(CGRect)rect
 {
-	return [[self alloc] initWithFile:filename rect:rect];
+	return [[[self alloc] initWithFile:filename rect:rect] autorelease];
 }
 
 +(instancetype)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
-	return [[self alloc] initWithSpriteFrame:spriteFrame];
+	return [[[self alloc] initWithSpriteFrame:spriteFrame] autorelease];
 }
 
 +(instancetype)spriteWithSpriteFrameName:(NSString*)spriteFrameName
 {
-	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 
 	NSAssert1(frame!=nil, @"Invalid spriteFrameName: %@", spriteFrameName);
-	return [self spriteWithSpriteFrame:frame];
+	return [[self spriteWithSpriteFrame:frame] autorelease];
 }
 
 +(instancetype)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
 {
-	return [[self alloc] initWithCGImage:image key:key];
+	return [[[self alloc] initWithCGImage:image key:key] autorelease];
 }
 
 +(instancetype) emptySprite
 {
-    return [[self alloc] init];
+    return [[[self alloc] init] autorelease];
 }
 
 -(id) init
@@ -179,7 +179,7 @@
 {
 	NSAssert(spriteFrameName!=nil, @"Invalid spriteFrameName for sprite");
 
-	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 	return [self initWithSpriteFrame:frame];
 }
 
@@ -194,6 +194,16 @@
 	rect.size = texture.contentSize;
 
 	return [self initWithTexture:texture rect:rect];
+}
+
+-(void)dealloc
+{
+    [_spriteFrame release]; _spriteFrame = nil;
+    [_normalMapSpriteFrame release]; _normalMapSpriteFrame = nil;
+    [_effect release]; _effect = nil;
+    [_effectRenderer release]; _effectRenderer = nil;
+    
+    [super dealloc];
 }
 
 - (NSString*) description
@@ -333,11 +343,51 @@
 
 #pragma mark CCSprite - draw
 
-//Implemented in CCNoARC.m
-//-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+static inline void
+EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
+{
+	CCRenderState *state = self->_renderState ?: self.renderState;
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:state globalSortOrder:0];
+	
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(self->_verts.tl, transform));
 
-//Implemented in CCNoARC.m
-//-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+{
+	if(!CCRenderCheckVisibility(transform, _vertexCenter, _vertexExtents)) return;
+	
+	if (_effect)
+	{
+		_effectRenderer.contentSize = self.contentSizeInPoints;
+        
+        CCEffectPrepareResult prepResult = [self.effect prepareForRenderingWithSprite:self];
+        NSAssert(prepResult.status == CCEffectPrepareSuccess, @"Effect preparation failed.");
+        
+        if (prepResult.changes & CCEffectPrepareUniformsChanged)
+		{
+			// Preparing an effect for rendering can modify its uniforms
+			// dictionary which means we need to reinitialize our copy of the
+			// uniforms.
+			[self updateShaderUniformsFromEffect];
+		}
+		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
+	}
+	else
+	{
+		EnqueueTriangles(self, renderer, transform);
+	}
+}
+
+-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+	EnqueueTriangles(self, renderer, transform);
+}
 
 #pragma mark CCSprite - CCNode overrides
 
@@ -428,7 +478,8 @@
 -(void)setEffect:(CCEffect *)effect
 {
     if(effect != _effect){
-        _effect = effect;
+        [_effect release];
+        _effect = [effect retain];
         
         if(effect){
             if(_effectRenderer == nil){
@@ -437,6 +488,7 @@
             
             [self updateShaderUniformsFromEffect];
         } else {
+            [_shaderUniforms release];
             _shaderUniforms = nil;
         }
     }
@@ -460,7 +512,8 @@
 	// update rect
 	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
     
-    _spriteFrame = frame;
+    [_spriteFrame autorelease];
+    _spriteFrame = [frame retain];
 }
 
 -(void) setNormalMapSpriteFrame:(CCSpriteFrame*)frame
@@ -482,9 +535,11 @@
     
     // Set the normal map texture in the uniforms dictionary (if the dictionary exists).
     self.shaderUniforms[CCShaderUniformNormalMapTexture] = (frame.texture ?: [CCTexture none]);
+    [_renderState release];
     _renderState = nil;
     
-    _normalMapSpriteFrame = frame;
+    [_normalMapSpriteFrame autorelease];
+    _normalMapSpriteFrame = [frame retain];
 }
 
 
@@ -507,6 +562,7 @@
 {
     // Initialize the shader uniforms dictionary with the sprite's main texture and
     // normal map if it has them.
+    [_shaderUniforms release];
     _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
                           CCShaderUniformNormalMapTexture : (_normalMapSpriteFrame.texture ?: [CCTexture none]),
                           } mutableCopy];

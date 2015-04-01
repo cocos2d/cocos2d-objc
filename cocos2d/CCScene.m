@@ -31,6 +31,7 @@
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
 #import "CCColor.h"
+#import "CCProjectionDelegate.h"
 
 @implementation CCScene {
 
@@ -54,6 +55,9 @@
         
         _scheduler = [[CCScheduler alloc] init];
         _lights = [[CCLightCollection alloc] init];
+        
+        _projectionDelegate = [[CCOrthoProjection alloc] initWithTarget:self];
+        _projection = GLKMatrix4Identity;
 	}
 	
 	return( self );
@@ -73,6 +77,11 @@
     
     // mark starting scene as dirty, to make sure responder manager is updated
     [[_director responderManager] markAsDirty];
+}
+
+-(GLKMatrix4)projection
+{
+    return (_projectionDelegate ? _projectionDelegate.projection : _projection);
 }
 
 @end

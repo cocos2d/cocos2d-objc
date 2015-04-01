@@ -36,6 +36,7 @@
 #import "CCRenderDispatch_Private.h"
 #import "CCScheduler_Private.h"
 #import "CCScene+Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCScheduler.h"
 #import "CCTextureCache.h"
@@ -43,18 +44,20 @@
 #import "CCLabelBMFont.h"
 #import "CCScene.h"
 #import "CCColor.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrame.h"
 #import "CCTexture.h"
 #import "ccFPSImages.h"
 #import "CCDeviceInfo.h"
 #import "CCTransition.h"
 #import "Platforms/CCNS.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCImage.h"
 #import "ccUtils.h"
+#import "CCSetup.h"
 #import "CCDeprecated.h"
 
 #if __CC_PLATFORM_IOS
+#import <QuartzCore/CALayer.h>
 #import "Platforms/iOS/CCDirectorIOS.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #elif __CC_PLATFORM_MAC
@@ -67,9 +70,6 @@
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)
-
-// TODO: This global should not also be a property on specific instances of CCDirector. it should be global. probably belongs on a different class.
-float __ccContentScaleFactor = 1;
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -143,15 +143,11 @@ CCDirectorStack()
     [stack removeLastObject];
 }
 
-+(CCDirector *)director;
+-(instancetype)initWithView:(CC_VIEW<CCView> *)view
 {
-    return [[CC_DIRECTOR_DEFAULT alloc] init];
-}
-
-- (id) init
-{
-	if( (self=[super init] ) ) {
-
+	if((self = [super init])){
+		_view = view;
+        
 		// scenes
 		_runningScene = nil;
 		_nextScene = nil;
@@ -161,30 +157,20 @@ CCDirectorStack()
 		_oldAnimationInterval = _animationInterval = 1.0 / kDefaultFPS;
 		_scenesStack = [[NSMutableArray alloc] initWithCapacity:10];
 
-		// Set default projection (3D)
-		_projection = CCDirectorProjectionDefault;
-
-		// projection delegate if "Custom" projection is used
 		_delegate = nil;
 
 		// FPS
 		_displayStats = NO;
 		_totalFrames = _frames = 0;
 		_isPaused = NO;
-		_runningThread = nil;
 		
 		_responderManager = [ [CCResponderManager alloc] initWithDirector:self ];
-		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
-		
-		__ccContentScaleFactor = 1;
-		self.UIScaleFactor = 1;
 		
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
 		
 		// Force the graphics API to be selected if it hasn't already done so.
-		// Startup code is annoyingly different for iOS/Mac/Android.
-		[CCDeviceInfo graphicsAPI];
+		[[CCSetup sharedSetup] graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 
@@ -193,7 +179,8 @@ CCDirectorStack()
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, _winSizeInPoints.width, _winSizeInPoints.height, self.view];
+    CGSize size = self.viewSize;
+	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, size.width, size.height, self.view];
 }
 
 - (void) dealloc
@@ -222,7 +209,7 @@ CCDirectorStack()
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
-		GLKMatrix4 projection = self.projectionMatrix;
+		GLKMatrix4 projection = _runningScene.projection;
 		
 		// Synchronize the framebuffer with the view.
 		[_framebuffer syncWithView:self.view];
@@ -286,20 +273,14 @@ CCDirectorStack()
 
 -(void) calculateDeltaTime
 {
-	struct timeval now;
-
-	if( gettimeofday( &now, NULL) != 0 ) {
-		CCLOG(@"cocos2d: error in gettimeofday");
-		_dt = 0;
-		return;
-	}
+	CCTime now = CACurrentMediaTime();
 
 	// new delta time
 	if( _nextDeltaTimeZero ) {
 		_dt = 0;
 		_nextDeltaTimeZero = NO;
 	} else {
-		_dt = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+		_dt = now - _lastUpdate;
 		_dt = MAX(0,_dt);
 	}
 
@@ -325,92 +306,10 @@ CCDirectorStack()
 	[CCLabelBMFont purgeCachedData];
 	if ([[CCDirector currentDirector] view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
-	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
+	[[CCFileLocator sharedFileLocator] purgeCache];
 }
-
-#pragma mark Director - Scene OpenGL Helper
-
--(CCDirectorProjection) projection
-{
-	return _projection;
-}
-
--(float) getZEye
-{
-	return ( _winSizeInPixels.height / 1.1566f / __ccContentScaleFactor );
-}
-
--(void) setViewport
-{
-	CCLOG(@"cocos2d: override me");
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CCLOG(@"cocos2d: override me");
-}
-
-#pragma mark Director Integration with a UIKit view
-
--(void) setView:(CC_VIEW<CCView> *)view
-{
-#if __CC_PLATFORM_IOS
-		[super setView:view];
-#else 
-		_view = view;
-#endif
-
-		// set size
-		CGSize size = CCNSSizeToCGSize(self.view.bounds.size);
-#if __CC_PLATFORM_IOS
-		CGFloat scale = self.view.layer.contentsScale ?: 1.0;
-#elif __CC_PLATFORM_ANDROID
-        CGFloat scale = _view.contentScaleFactor;
-#else
-		//self.view.wantsBestResolutionOpenGLSurface = YES;
-		CGFloat scale = self.view.window.backingScaleFactor;
-#endif
-		
-		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
-		_winSizeInPoints = size;
-		__ccContentScaleFactor = scale;
-
-		// it could be nil
-		if( view ) {
-#if !__CC_PLATFORM_ANDROID
-			[self createStatsLabel];
-#endif
-			[self setProjection: _projection];
-		}
-
-#if !__CC_PLATFORM_ANDROID
-		// Dump info once OpenGL was initilized
-		[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
-#endif
-}
-
 
 #pragma mark Director Scene Landscape
-
--(CGFloat) contentScaleFactor
-{
-	return __ccContentScaleFactor;
-}
-
--(void) setContentScaleFactor:(CGFloat)scaleFactor
-{
-	NSAssert(scaleFactor > 0.0, @"scaleFactor must be positive.");
-	
-	if( scaleFactor != __ccContentScaleFactor ) {
-		__ccContentScaleFactor = scaleFactor;
-		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
-
-		// update projection
-		[self setProjection:_projection];
-		
-		[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
-	}
-}
 
 -(CGFloat)flipY
 {
@@ -419,7 +318,7 @@ CCDirectorStack()
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	GLKMatrix4 transform = self.projectionMatrix;
+	GLKMatrix4 transform = _runningScene.projection;
 	GLKMatrix4 invTransform = GLKMatrix4Invert(transform, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
@@ -436,7 +335,7 @@ CCDirectorStack()
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	GLKMatrix4 transform = self.projectionMatrix;
+	GLKMatrix4 transform = _runningScene.projection;
 		
 	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
 	
@@ -446,17 +345,17 @@ CCDirectorStack()
 
 -(CGSize)viewSize
 {
-	return _winSizeInPoints;
+	return CC_SIZE_SCALE(self.view.sizeInPixels, 1.0/[CCSetup sharedSetup].contentScale);
 }
 
 -(CGSize)viewSizeInPixels
 {
-	return _winSizeInPixels;
+	return self.view.sizeInPixels;
 }
 
 -(CGRect)viewportRect
 {
-	GLKMatrix4 projection = self.projectionMatrix;
+	GLKMatrix4 projection = _runningScene.projection;
 	
 	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
 	GLKMatrix4 projectionInv = GLKMatrix4Invert(projection, NULL);
@@ -479,16 +378,6 @@ CCDirectorStack()
 {
 	// Return the viewSize unless designSize has been set.
 	return (CGSizeEqualToSize(_designSize, CGSizeZero) ? self.viewSize : _designSize);
-}
-
--(void) reshapeProjection:(CGSize)newViewSize
-{
-	_winSizeInPixels = newViewSize;
-	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/self.contentScaleFactor);
-	
-	[self setProjection:_projection];
-	
-	[_runningScene viewDidResizeTo: _winSizeInPoints];
 }
 
 #pragma mark Director Scene Management
@@ -663,17 +552,15 @@ CCDirectorStack()
 	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
 
 	_delegate = nil;
-
-	[self setView:nil];
 	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers / caches
 	[CCAnimationCache purgeSharedAnimationCache];
-	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
+	[CCSpriteFrame purgeCache];
 	[CCTextureCache purgeSharedTextureCache];
-	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
+	[[CCFileLocator sharedFileLocator] purgeCache];
 
 	// OpenGL view
 
@@ -771,10 +658,8 @@ CCDirectorStack()
     }
     
 	[self setAnimationInterval: _oldAnimationInterval];
-
-	if( gettimeofday( &_lastUpdate, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
+    
+    _lastUpdate = CACurrentMediaTime();
 
 	[self willChangeValueForKey:@"isPaused"];
 	_isPaused = NO;
@@ -792,21 +677,6 @@ CCDirectorStack()
 - (void)stopRunLoop
 {
 	CCLOG(@"cocos2d: Director#stopRunLoop. Override me");
-}
-
-- (void)setAnimationInterval:(NSTimeInterval)interval
-{
-	//CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
-}
-
-- (CCTime)fixedUpdateInterval
-{
-	return _runningScene.scheduler.fixedUpdateInterval;
-}
-
--(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
-{
-	_runningScene.scheduler.fixedUpdateInterval = fixedUpdateInterval;
 }
 
 @end
@@ -906,18 +776,15 @@ static const float CCFPSLabelItemHeight = 32;
 		
 		// TODO should pass as a parameter instead? Requires changing method signatures...
 		CCRenderer *renderer = [CCRenderer currentRenderer];
-		[_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
-		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
-		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
+//		[_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
+//		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
+//		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
 	}
 }
 
 -(void) calculateMPF
 {
-	struct timeval now;
-	gettimeofday( &now, NULL);
-
-	_secondsPerFrame = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+	_secondsPerFrame = CACurrentMediaTime() - _lastUpdate;
 }
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
@@ -934,7 +801,7 @@ static const float CCFPSLabelItemHeight = 32;
 		_SPFLabel = nil;
 		_drawsLabel = nil;
 		
-		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
+		[[CCFileLocator sharedFileLocator] purgeCache];
 	}
 
 	unsigned char *data;

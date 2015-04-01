@@ -65,6 +65,9 @@
  */
 -(CCTexture*) addImage: (NSString*) fileimage;
 
+// TODO temporary method.
+-(void)addTexture:(CCTexture *)texture forKey:(NSString *)key;
+
 /**
  * Asynchronously, load a texture2d from a file.
  *

@@ -208,14 +208,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height depthStencilFormat:_transitionDepthStencilFormat];
     _outgoingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _outgoingTexture.contentScale /= _outgoingDownScale;
-		_outgoingTexture.projection = director.projectionMatrix;
+    _outgoingTexture.projection = _incomingScene.projection;
     [self addChild:_outgoingTexture z:_outgoingOverIncoming];
     
     // create texture for incoming scene
     _incomingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height depthStencilFormat:_transitionDepthStencilFormat];
     _incomingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _incomingTexture.contentScale /= _incomingDownScale;
-		_incomingTexture.projection = director.projectionMatrix;
+    _incomingTexture.projection = _incomingScene.projection;
     [self addChild:_incomingTexture];
     
     // make sure scene is rendered at least once at progress 0.0
