@@ -258,7 +258,7 @@ static CCTexture *CCTextureNone = nil;
 			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
 			
 			// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-			if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
+			if( pixelFormat == CCTexturePixelFormat_RGBA8888 || pixelFormat == CCTexturePixelFormat_BGRA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
 				glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 			else
 				glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -278,6 +278,9 @@ static CCTexture *CCTextureNone = nil;
 				case CCTexturePixelFormat_RGBA8888:
 					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 					break;
+        case CCTexturePixelFormat_BGRA8888:
+          glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+          break;
 				case CCTexturePixelFormat_RGBA4444:
 					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 					break;
