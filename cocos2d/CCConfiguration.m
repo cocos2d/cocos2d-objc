@@ -291,6 +291,8 @@ static char * glExtensions;
 		_supportsBGRA8888 = bgra8a | bgra8b;
 #elif __CC_PLATFORM_MAC
 		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
+#elif __CC_PLATFORM_ANDROID
+    _supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_texture_format_BGRA8888"];
 #endif
 			_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
