@@ -108,6 +108,11 @@ static const MTLPixelFormat MetalPixelFormats[] = {
 
 #endif
 
+#if __CC_PLATFORM_ANDROID
+  #ifndef GL_BGRA
+  #define GL_BGRA                                                 0x80E1
+  #endif
+#endif
 
 //CLASS IMPLEMENTATIONS:
 
