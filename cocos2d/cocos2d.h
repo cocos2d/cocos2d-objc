@@ -117,6 +117,7 @@
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
 #import "CCEffectDFInnerGlow.h"
+#import "CCEffectStereo.h"
 #endif
 
 // Actions:
