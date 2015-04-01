@@ -78,7 +78,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, _name ];
+	return [NSString stringWithFormat:@"<%@ = %p | Name = %@>", [self class], self, _name ];
 }
 
 @end
