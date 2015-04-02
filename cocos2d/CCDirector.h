@@ -33,8 +33,8 @@
 #import "CCRenderer.h"
 #import "CCView.h"
 
-@class CCDirector;
 
+@class CCDirector;
 
 /** CCDirectorDelegate may be subscribed to in order to get notifications about when the
  CCDirector is starting, pausing, unpausing, etc. */

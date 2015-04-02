@@ -20,7 +20,7 @@
 #import "CCTexture.h"
 #import "CCDirectorAndroid.h"
 #import "CCDirector_Private.h"
-
+#import "ccUtils.h"
 
 #import <CoreGraphics/CGGeometry.h>
 
@@ -34,6 +34,7 @@ static CCTouchEvent *currentEvent = nil;
 
 @implementation CCGLView {
     NSMutableSet *_gestureDetectors;
+    CCDirectorAndroid *_director;
 }
 
 
@@ -44,8 +45,6 @@ static CCTouchEvent *currentEvent = nil;
     {
         _contentScaleFactor = scaleFactor;
         _screenMode = screenMode;
-        
-        _director = [[CCDirector director] retain];
     }
     return self;
 }
@@ -56,6 +55,20 @@ static CCTouchEvent *currentEvent = nil;
     [_director release];
     
     [super dealloc];
+}
+
+-(CCDirector *)director
+{
+    if(_director == nil){
+        _director = [[CCDirectorDisplayLink alloc] initWithView:self];
+    }
+    
+    return _director;
+}
+
+-(CGSize)sizeInPixels
+{
+    return CC_SIZE_SCALE(self.bounds.size, self.contentScaleFactor);
 }
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector

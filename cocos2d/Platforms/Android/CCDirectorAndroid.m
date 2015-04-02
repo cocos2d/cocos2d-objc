@@ -44,44 +44,6 @@
 
 @implementation CCDirectorAndroid
 
--(void) setViewport
-{
-	CGSize size = _winSizeInPixels;
-	glViewport(0, 0, size.width, size.height );
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CGSize sizePoint = _winSizeInPoints;
-        
-	switch (projection) {
-		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			break;
-            
-		case CCDirectorProjection3D: {
-			float zeye = sizePoint.height*sqrtf(3.0f)/2.0f;
-			_projectionMatrix = GLKMatrix4Multiply(
-                                                   GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
-                                                   GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
-                                                   );
-            break;
-        }
-            
-//        case CCDirectorProjectionCustom:
-//			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-//				_projectionMatrix = [_delegate updateProjection];
-//			break;
-            
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
-	}
-    
-	_projection = projection;
-}
-
-
 // override default logic
 - (void)antiFlickrDrawCall
 {
@@ -94,17 +56,6 @@
 	[super end];
 }
 
--(void) setView:(CCGLView<CCView> *)view
-{
-		[super setView:view];
-		if( view ) {
-			// set size
-			CGFloat scale = view.contentScaleFactor;
-			CGSize size = view.bounds.size;
-			_winSizeInPixels = CGSizeMake(size.width * scale, size.height * scale);
-		}
-}
-
 - (void)runBlock:(dispatch_block_t)block
 {
     [[CCActivity currentActivity] runOnGameThread:block];
@@ -112,15 +63,14 @@
 
 // Unlike iOS, GL isn't initialized on Android before the config is read
 // Here we can perform the necessary configuration functions that operate on a GL context
-- (void) onGLInitialization
-{
-    [self setViewport];
-    [self createStatsLabel];
-
-	[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GL_INITIALIZED" object:nil];
-}
+//- (void) onGLInitialization
+//{
+//    [self createStatsLabel];
+//
+//	[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"GL_INITIALIZED" object:nil];
+//}
 @end
 
 
@@ -148,14 +98,14 @@
 	}
 }
 
-- (void) startRunLoop
+- (void)startRunLoop
 {
 	[super startRunLoop];
     
     if(_animating)
         return;
     
-	gettimeofday( &_lastUpdate, NULL);
+	_lastUpdate = CCAbsoluteTime();
     
 	// approximate frame rate
 	// assumes device refreshes at 60 fps

@@ -3,8 +3,10 @@
  *
  */
 
-#import "CGPointExtension.h"
 #import <stdlib.h>
+#import "ccTypes.h"
+#import "CGPointExtension.h"
+
 
 #ifndef __CC_UTILS_H
 #define __CC_UTILS_H
@@ -19,9 +21,30 @@ extern "C" {
     
 #endif
 
+
 /** @file ccUtils.h
  Misc free functions
  */
+
+
+/**
+  Get the current time in seconds.
+
+ @since 4.0.0
+ */
+static inline CCTime CCAbsoluteTime()
+{
+    // Should find a better place to put this so it doesn't need to be static inline.
+#if __CC_PLATFORM_ANDROID
+    struct timespec t;
+    clock_gettime(CLOCK_MONOTONIC, &t);
+    
+    return t.tv_sec + t.tv_nsec/1.0e-9;
+#else
+    return CACurrentMediaTime();
+#endif
+}
+
 
 /** @def CCRANDOM_MINUS1_1
  Returns a random float between -1 and 1.

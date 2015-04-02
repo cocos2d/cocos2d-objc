@@ -56,7 +56,6 @@ BRIDGE_CLASS("com.apportable.GLView")
 @property (nonatomic, readonly) EGLContext eglContext;
 @property (nonatomic, readonly) EGLConfig eglConfiguration;
 @property (nonatomic, readonly) enum CCAndroidScreenMode screenMode;
-@property(nonatomic, strong, readonly) CCDirector *director;
 
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector;

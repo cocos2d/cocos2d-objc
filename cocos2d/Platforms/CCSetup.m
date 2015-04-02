@@ -36,6 +36,8 @@
 #import "CCFileLocator.h"
 #import "ccUtils.h"
 
+#import "CCDeprecated.h"
+
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif
@@ -259,6 +261,18 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     _view = activity.glView;
     [activity scheduleInRunLoop];
 
+    CCDirector *director = _view.director;
+    NSAssert(director, @"CCView failed to construct a director.");
+    [CCDirector pushCurrentDirector:director];
+    
+    [director setDisplayStats:[_config[CCSetupShowDebugStats] boolValue]];
+
+    director.frameSkipInterval = [(_config[CCSetupFrameSkipInterval] ?: @(1)) unsignedIntegerValue];
+    self.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    
+    // Initialise OpenAL
+    [OALSimpleAudio sharedInstance];
+
     [[CCPackageManager sharedManager] loadPackages];
 
     /*
@@ -270,35 +284,32 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
                                           selector:@selector(performAndroidGLConfiguration)
                                           name:@"GL_INITIALIZED"
                                           object:nil];
-
 }
 
 
 - (void)performAndroidGLConfiguration
 {
     [self configureDirector:_view.director withConfig:_config withView:_view];
-
+    [_view.director startRunLoop];
+    
     [self runStartSceneAndroid];
 }
 
 - (void)configureDirector:(CCDirector*)director withConfig:(NSDictionary *)config withView:(CCGLView<CCView>*)view
 {
     director.delegate = [CCActivity currentActivity];
-    [director setView:view];
 
-    NSInteger device = [CCDeviceInfo runningDevice];
-    BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
+//    NSInteger device = [CCDeviceInfo runningDevice];
+    BOOL tablet = YES;//device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
 
     if(tablet && [config[CCSetupTabletScale2X] boolValue])
     {
         // Set the UI scale factor to show things at "native" size.
-        director.UIScaleFactor = 0.5;
+        [CCSetup sharedSetup].UIScale = 0.5;
     }
 
-    director.contentScaleFactor *= 1.83;
+    [CCSetup sharedSetup].contentScale *= 1.83;
 
-    [director setProjection:CCDirectorProjection2D];
-    
 //    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
 //    {
 //        [self setupFixedScreenMode:config];

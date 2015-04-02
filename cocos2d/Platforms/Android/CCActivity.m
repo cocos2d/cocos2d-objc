@@ -95,6 +95,44 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     currentActivity = self;
     _running = YES;
     _layout = [[AndroidAbsoluteLayout alloc] initWithContext:self];
+    
+    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+    [self.windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
+    
+//    // Configure Cocos2d with the options set in SpriteBuilder
+//    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
+//    
+//    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
+//    
+//    _cocos2dSetupConfig = [[NSMutableDictionary dictionaryWithContentsOfFile:configPath] retain];
+    
+    enum CCAndroidScreenMode screenMode = CCNativeScreenMode;
+
+//    if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFlexible] ||
+//       [_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+//    {
+//        screenMode = CCScreenScaledAspectFitEmulationMode;
+//    }
+    
+//    if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationPortrait])
+//    {
+//        self.requestedOrientation = AndroidActivityInfoScreenOrientationSensorPortrait;
+//    }
+//    else if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationLandscape])
+//    {
+//        self.requestedOrientation = AndroidActivityInfoScreenOrientationSensorLandscape;
+//    }
+//    else
+//    {
+//        self.requestedOrientation = AndroidActivityInfoScreenOrientationUnspecified;
+//    }
+    
+    _glView = [[CCGLView alloc] initWithContext:self screenMode:screenMode scaleFactor:metrics.density];
+    [metrics release];
+    
+    [_glView.holder addCallback:self];
+    [self.layout addView:_glView];
+    [self setContentView:_layout];
 }
 
 - (void)scheduleInRunLoop
@@ -133,7 +171,6 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     [_glView.holder addCallback:self];
     [self.layout addView:_glView];
     [self setContentView:_layout];
-
 }
 
 - (AndroidDisplayMetrics*)getDisplayMetrics
@@ -212,8 +249,10 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)reshape:(NSValue *)value
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
-    [director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
+    CGSize s = value.CGSizeValue;
+    NSLog(@"Reshape to size: %fx%f", s.width, s.height);
+//    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
+//    [director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
 }
 
 - (void)surfaceChanged:(JavaObject<AndroidSurfaceHolder> *)holder format:(int)format width:(int)width height:(int)height
@@ -239,14 +278,16 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 - (void)startGL:(JavaObject<AndroidSurfaceHolder> *)holder
 {
     @autoreleasepool {
-        CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
-
         _gameLoop = [NSRunLoop currentRunLoop];
         [_gameLoop addPort:[NSPort port] forMode:NSDefaultRunLoopMode]; // Ensure that _gameLoop always has a source.
 
         [self setupView:holder];
-        [director onGLInitialization];
-
+        
+        [CCDirector pushCurrentDirector:_glView.director];
+        
+        [[CCDeviceInfo sharedDeviceInfo] dumpInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GL_INITIALIZED" object:nil];
+        
 #if !USE_MAIN_THREAD
         [_gameLoop runUntilDate:[NSDate distantFuture]];
 #endif
