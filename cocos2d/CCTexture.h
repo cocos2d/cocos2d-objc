@@ -126,7 +126,7 @@ extern NSString * const CCTextureOptionAddressModeY;
 @interface CCTexture : NSObject {
     @private
     CGSize _sizeInPixels;
-    CGSize _contentSize;
+    CGSize _contentSizeInPixels;
     CCTextureType _type;
     
     // Deprecated
