@@ -11,7 +11,6 @@
 #if __CC_PLATFORM_ANDROID
 
 #import <android/native_window.h>
-#import <bridge/runtime.h>
 #import <AndroidKit/AndroidLooper.h>
 #import <AndroidKit/AndroidAbsoluteLayout.h>
 
