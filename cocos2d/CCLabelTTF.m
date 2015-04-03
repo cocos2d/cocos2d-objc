@@ -975,14 +975,16 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
                 return nil;
             }
             CTFontDescriptorRef descriptor = CFArrayGetValueAtIndex(descriptors, 0);
-            fontName = (__bridge NSString *)CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute);
+            CFTypeRef cfFontName = CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute);
+            fontName = [(__bridge NSString *)cfFontName copy];
+            CFRelease(cfFontName);
             CFRelease(descriptors);
-            
         } else {
             CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)fontURL);
             CGFontRef loadedFont = CGFontCreateWithDataProvider(fontDataProvider);
-            fontName = (__bridge NSString *)CGFontCopyPostScriptName(loadedFont);
-            
+            CFStringRef cfFontName = CGFontCopyPostScriptName(loadedFont);
+            fontName = [(__bridge NSString *)cfFontName copy];
+            CFRelease(cfFontName);
             CGFontRelease(loadedFont);
             CGDataProviderRelease(fontDataProvider);
         }
