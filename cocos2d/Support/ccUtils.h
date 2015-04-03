@@ -8,6 +8,7 @@
 #import "CGPointExtension.h"
 
 
+
 #ifndef __CC_UTILS_H
 #define __CC_UTILS_H
 
@@ -18,7 +19,8 @@ extern "C" {
 #if __CC_PLATFORM_ANDROID
 //
 //#import <AndroidKit/AndroidBase64.h>
-    
+#else
+#import <QuartzCore/CABase.h>
 #endif
 
 
