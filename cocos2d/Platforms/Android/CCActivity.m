@@ -260,7 +260,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     if(_glView == nil)
         return;
 
-    _glView.bounds = CGRectMake(0, 0, width/_glView.contentScaleFactor, height/_glView.contentScaleFactor);
+//    _glView.bounds = CGRectMake(0, 0, width/_glView.contentScaleFactor, height/_glView.contentScaleFactor);
 
 #if USE_MAIN_THREAD
     [self reshape:[NSValue valueWithCGSize:CGSizeMake(width, height)]];

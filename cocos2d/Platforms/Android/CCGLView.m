@@ -66,9 +66,9 @@ static CCTouchEvent *currentEvent = nil;
     return _director;
 }
 
--(CGSize)sizeInPixels
+-(CGRect)bounds
 {
-    return CC_SIZE_SCALE(self.bounds.size, self.contentScaleFactor);
+    return (CGRect){CGPointZero, CC_SIZE_SCALE(self.sizeInPixels, 1.0/self.contentScaleFactor)};
 }
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector
@@ -525,6 +525,8 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     }
 
 	CCLOG(@"cocos2d: surface size: %dx%d", (int)width, (int)height);
+    
+    _sizeInPixels = CGSizeMake(width, height);
 
     switch (_screenMode)
     {
@@ -557,8 +559,6 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     
     
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
-    
-    _bounds = CGRectMake(0, 0, width, height);
     
     return YES;
 }

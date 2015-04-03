@@ -289,35 +289,20 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)performAndroidGLConfiguration
 {
-    [self configureDirector:_view.director withConfig:_config withView:_view];
+    self.contentScale = _view.contentScaleFactor;
+    
+    BOOL tablet = YES;//device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
+    if(tablet && [_config[CCSetupTabletScale2X] boolValue])
+    {
+        self.contentScale *= 2.0;
+        self.UIScale *= 0.5;
+    }
+    
+    self.assetScale = self.contentScale;
+    
     [_view.director startRunLoop];
     
     [self runStartSceneAndroid];
-}
-
-- (void)configureDirector:(CCDirector*)director withConfig:(NSDictionary *)config withView:(CCGLView<CCView>*)view
-{
-    director.delegate = [CCActivity currentActivity];
-
-//    NSInteger device = [CCDeviceInfo runningDevice];
-    BOOL tablet = YES;//device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
-
-    if(tablet && [config[CCSetupTabletScale2X] boolValue])
-    {
-        // Set the UI scale factor to show things at "native" size.
-        [CCSetup sharedSetup].UIScale = 0.5;
-    }
-
-    [CCSetup sharedSetup].contentScale *= 1.83;
-
-//    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
-//    {
-//        [self setupFixedScreenMode:config];
-//    }
-//    else
-//    {
-//        [self setupFlexibleScreenMode:config];
-//    }
 }
 
 //- (void)setupFlexibleScreenMode:(NSDictionary*)config
