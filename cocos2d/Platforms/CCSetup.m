@@ -45,6 +45,9 @@
 #if __CC_PLATFORM_ANDROID
 #import "CCActivity.h"
 #import "CCDirectorAndroid.h"
+
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
 #endif
 
 #if __CC_PLATFORM_MAC
@@ -286,12 +289,25 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
                                           object:nil];
 }
 
+#define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
+
+// Oleg's Original code from CCConfiguration.m
+-(BOOL)isTablet
+{
+    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+    [[CCActivity currentActivity].windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
+
+    double yInches= metrics.heightPixels/metrics.ydpi;
+    double xInches= metrics.widthPixels/metrics.xdpi;
+    double diagonalInches = sqrt(xInches*xInches + yInches*yInches);
+    return (diagonalInches > CC_MINIMUM_TABLET_SCREEN_DIAGONAL);
+}
 
 - (void)performAndroidGLConfiguration
 {
     self.contentScale = _view.contentScaleFactor;
     
-    BOOL tablet = YES;//device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
+    BOOL tablet = [self isTablet];
     if(tablet && [_config[CCSetupTabletScale2X] boolValue])
     {
         self.contentScale *= 2.0;
