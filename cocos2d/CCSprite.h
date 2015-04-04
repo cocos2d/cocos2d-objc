@@ -281,6 +281,4 @@ typedef struct CCSpriteTexCoordSet {
  */
 - (GLKMatrix4)nodeToTextureTransform;
 
-
-
 @end

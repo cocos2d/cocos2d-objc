@@ -40,7 +40,8 @@
 #import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 #import "CCColor.h"
 #import "ccUtils.h"
 #import "CCDrawNode.h"
@@ -501,14 +502,18 @@ void FNTConfigRemoveCache( void )
 
 - (NSMutableString *)parseConfigFile:(NSString*)fntFile
 {
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fntFile];
-	NSError *error;
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:fntFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", fntFile, err);
+    
+    NSString *contents = [file loadString:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", fntFile, err);
   
 	NSMutableString *validCharsString = [[NSMutableString alloc] initWithCapacity:512];
     
 	if( ! contents ) {
-		NSLog(@"cocos2d: Error parsing FNTfile %@: %@", fntFile, error);
+		NSLog(@"cocos2d: Error parsing FNTfile %@: %@", fntFile, err);
 		return nil;
 	}
     

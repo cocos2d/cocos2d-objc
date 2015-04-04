@@ -34,66 +34,7 @@
 
 
 #define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
-extern Class CCTextureClass;
-extern Class CCGraphicsBufferClass;
-extern Class CCGraphicsBufferBindingsClass;
-extern Class CCRenderStateClass;
-extern Class CCRenderCommandDrawClass;
-extern Class CCFrameBufferObjectClass;
 
-extern NSString* const CCSetupPixelFormat;
-extern NSString* const CCSetupScreenMode;
-extern NSString* const CCSetupScreenOrientation;
-extern NSString* const CCSetupAnimationInterval;
-extern NSString* const CCSetupFixedUpdateInterval;
-extern NSString* const CCSetupShowDebugStats;
-extern NSString* const CCSetupTabletScale2X;
-
-extern NSString* const CCSetupDepthFormat;
-extern NSString* const CCSetupPreserveBackbuffer;
-extern NSString* const CCSetupMultiSampling;
-extern NSString* const CCSetupNumberOfSamples;
-extern NSString* const CCScreenModeFixedDimensions;
-
-// Landscape screen orientation. Used with CCSetupScreenOrientation.
-extern NSString* const CCScreenOrientationLandscape;
-
-// Portrait screen orientation.  Used with CCSetupScreenOrientation.
-extern NSString* const CCScreenOrientationPortrait;
-
-// Support all screen orientations.  Used with CCSetupScreenOrientation.
-extern NSString* const CCScreenOrientationAll;
-
-
-// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
-extern NSString* const CCScreenModeFlexible;
-
-// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
-extern NSString* const CCScreenModeFixed;
-
-// The desired default window size for mac
-extern NSString* const CCMacDefaultWindowSize;
-
-
-typedef NS_ENUM(NSUInteger, CCDevice) {
-	CCDeviceiPhone,
-	CCDeviceiPhoneRetinaDisplay,
-	CCDeviceiPhone5,
-	CCDeviceiPhone5RetinaDisplay,
-	CCDeviceiPhone6,
-	CCDeviceiPhone6Plus,
-	CCDeviceiPad,
-	CCDeviceiPadRetinaDisplay,
-
-	CCDeviceMac,
-	CCDeviceMacRetinaDisplay,
-};
-
-typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
-	CCGraphicsAPIInvalid = 0,
-	CCGraphicsAPIGL,
-	CCGraphicsAPIMetal,
-};
 
 /**
  CCConfiguration contains some openGL variables
@@ -102,12 +43,6 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 
 /** returns a shared instance of the CCConfiguration */
 +(CCDeviceInfo *)sharedDeviceInfo;
-
-///** Which graphics API Cococs2D is using. */
-+(CCGraphicsAPI)graphicsAPI;
-
-/** Which graphics API Cococs2D is using. */
-@property (nonatomic, readonly) CCGraphicsAPI graphicsAPI;
 
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;
@@ -135,12 +70,6 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
-
-///** returns the current device */
-//-(NSInteger)runningDevice;
-
-// TODO Temporary
-+(NSInteger)runningDevice;
 
 /** dumps in the console the CCConfiguration information.
  */

@@ -140,5 +140,12 @@
 /** Texture image file name used to create the texture. */
 @property (nonatomic, strong, readonly) NSString *textureFilename;
 
+/**
+ Purge all unused spriteframes from the cache.
+
+ @since 4.0.0
+ */
++(void)purgeCache;
+
 @end
 

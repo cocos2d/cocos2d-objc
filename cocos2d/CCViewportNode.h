@@ -8,12 +8,9 @@
 
 #import "ccMacros.h"
 #import "CCNode.h"
+#import "CCProjectionDelegate.h"
 
 @class CCCamera;
-
-@protocol CCProjectionDelegate
-@property(nonatomic, readonly) GLKMatrix4 projection;
-@end
 
 /**
  *  CCViewportNode
@@ -64,5 +61,23 @@
 
 // Setting the projection explicitly is an error if the projectionDelegate is non-nil;
 @property(nonatomic, assign) GLKMatrix4 projection;
+
+@end
+
+
+/**
+ Creates a projection that can be used to do parallax layers.
+ The CCNode.vertexZ property determines the parallax motion rate of a node. When vertexZ = 1, the object will not move at all, when it equals 0 it will move normally.
+ */
+@interface CCParallaxProjection : NSObject<CCProjectionDelegate>
+
+/**
+ Initialize a parallax projection delegate that is associated with a specific viewport node's camera.
+
+ @param viewport Viewport node whose camera the parallax is locked to.
+
+ @since 4.0.0
+ */
+-(instancetype)initWithViewportNode:(CCViewportNode *)viewport;
 
 @end

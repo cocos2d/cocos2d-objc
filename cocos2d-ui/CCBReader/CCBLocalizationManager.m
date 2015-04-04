@@ -24,7 +24,8 @@
 
 #import "CCBLocalizationManager.h"
 #import "CCBReader.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 
 @implementation CCBLocalizationManager
 
@@ -50,13 +51,15 @@
     return self;
 }
 
-- (void) loadStringsFile:(NSString*) file
+- (void) loadStringsFile:(NSString*)plistFile
 {
-    // Load default localization dictionary
-    NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file];
+    NSError *err = nil;
     
-    // Load strings file
-    NSDictionary* ser = [NSDictionary dictionaryWithContentsOfFile:path];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+    
+    NSDictionary *ser = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
     
     // Check that format of file is correct
     NSAssert([[ser objectForKey:@"fileType"] isEqualToString:@"SpriteBuilderTranslations"], @"Invalid file format for SpriteBuilder localizations");

@@ -16,6 +16,7 @@
 #import "CCEffectUtils.h"
 #import "CCTexture.h"
 #import "CCImage.h"
+#import "CCSetup.h"
 
 #import "CCEffect_Private.h"
 #import "CCRenderer_Private.h"
@@ -106,7 +107,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 		powH = CCNextPOT(size.height);
 	}
     
-    CGFloat contentScale = [CCDirector currentDirector].contentScaleFactor;
+    CGFloat contentScale = [CCSetup sharedSetup].assetScale;
     CCImage *image = [[CCImage alloc] initWithPixelSize:CGSizeMake(powW, powH) contentScale:contentScale pixelData:nil];
     image.contentSize = CC_SIZE_SCALE(size, 1.0/contentScale);
     
@@ -188,7 +189,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         _allRenderTargets = [[NSMutableArray alloc] init];
         _freeRenderTargets = [[NSMutableArray alloc] init];
         _contentSize = CGSizeMake(1.0f, 1.0f);
-        _contentScale = [CCDirector currentDirector].contentScaleFactor;
+        _contentScale = [CCSetup sharedSetup].assetScale;
     }
     return self;
 }

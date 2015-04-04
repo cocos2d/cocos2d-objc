@@ -26,6 +26,7 @@
 #import "CCAction_Private.h"
 
 #if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
 #elif __CC_PLATFORM_ANDROID
 #import "CCActivity.h"
@@ -42,6 +43,7 @@
 #import "CCResponderManager.h"
 #import "CCTouch.h"
 #import "CCDirector_Private.h"
+#import "CCProjectionDelegate.h"
 
 #pragma mark Constants
 

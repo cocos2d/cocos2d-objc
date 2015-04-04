@@ -13,7 +13,7 @@
 #import "CCTouch.h"
 #import "CCSprite.h"
 #import "CCSprite9Slice.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrame.h"
 #import "NSEvent+CC.h"
 
 @interface CCSlider (Inputs)

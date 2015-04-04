@@ -32,17 +32,18 @@
 #import "CCAnimationManager_Private.h"
 #import "CCScheduler_Private.h"
 
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 #import "CGPointExtension.h"
 #import "CCBSequence.h"
 #import "CCBKeyframe.h"
 #import "CCBLocalizationManager.h"
-#import "CCSpriteFrameCache.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCEffectStack.h"
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCProtocols.h"
+#import "CCSetup.h"
 
 
 #ifdef CCB_ENABLE_UNZIP
@@ -81,44 +82,7 @@
 
 + (void) configureCCFileUtils
 {
-    CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-    
-    // Setup file utils for use with SpriteBuilder
-    [sharedFileUtils setEnableiPhoneResourcesOniPad:NO];
-    
-    sharedFileUtils.directoriesDict =
-    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"resources-tablet", CCFileUtilsSuffixiPad,
-     @"resources-tablethd", CCFileUtilsSuffixiPadHD,
-     @"resources-phone", CCFileUtilsSuffixiPhone,
-     @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
-     @"resources-phone", CCFileUtilsSuffixiPhone5,
-     @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
-     @"resources-phone", CCFileUtilsSuffixMac,
-     @"resources-phonehd", CCFileUtilsSuffixMacHD,
-     @"", CCFileUtilsSuffixDefault,
-     nil];
-    
-#if __CC_PLATFORM_ANDROID
-    sharedFileUtils.searchPath =
-    [NSArray arrayWithObjects:
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"],
-     [[NSBundle mainBundle] resourcePath],
-     nil];
-#else
-    sharedFileUtils.searchPath =
-    [NSArray arrayWithObjects:
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"],
-     [[NSBundle mainBundle] resourcePath],
-     nil];
-#endif
-    
-	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
-    sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
-    [sharedFileUtils buildSearchResolutionsOrder];
-    
-    [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] loadSpriteFrameLookupDictionaryFromFile:@"spriteFrameFileList.plist"];
+    // TODO deprecate me!
 }
 
 - (id) init
@@ -564,7 +528,7 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-            if (sType == 1) f *= [CCDirector currentDirector].UIScaleFactor;
+            if (sType == 1) f *= [CCSetup sharedSetup].UIScale;
             [node setValue:[NSNumber numberWithFloat:f] forKey:name];
         }
     }
@@ -877,8 +841,14 @@ static inline float readFloat(CCBReader *self)
 #endif
 
         // Load sub file
-        NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:ccbFileName];
-        NSData* d = [NSData dataWithContentsOfFile:path];
+        NSError *err = nil;
+        
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:ccbFileName error:&err];
+        NSAssert(err == nil, @"Error finding %@: %@", ccbFileName, err);
+        
+        // TODO should load this as a stream instead.
+        NSData *d = [file loadData:&err];
+        NSAssert(err == nil, @"Error loading %@: %@", ccbFileName, err);
 
 #if DEBUG
         // Special case: scroll view missing content node
@@ -1875,17 +1845,21 @@ SelectorNameForProperty(objc_property_t property)
     return nodeGraph;
 }
 
-- (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)o parentSize:(CGSize)parentSize
+- (CCNode*) nodeGraphFromFile:(NSString*)ccbFileName owner:(id)o parentSize:(CGSize)parentSize
 {
     // Add ccbi suffix
-    if (![file hasSuffix:@".ccbi"]) file = [file stringByAppendingString:@".ccbi"];
+    if (![ccbFileName hasSuffix:@".ccbi"]) ccbFileName = [ccbFileName stringByAppendingString:@".ccbi"];
     
-    NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file];
-    NSData* d = [NSData dataWithContentsOfFile:path];
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:ccbFileName error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", ccbFileName, err);
+    
+    // TODO should load this as a stream instead.
+    NSData *d = [file loadData:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", ccbFileName, err);
 
-    NSAssert(d != nil, @"Could not load file: %@ at %@", file, path);
-    
-    self.currentCCBFile = file;
+    self.currentCCBFile = ccbFileName;
 
     return [self loadWithData:d owner:(id)o];
 }
@@ -1902,9 +1876,9 @@ SelectorNameForProperty(objc_property_t property)
 
 +(void) setResourcePath:(NSString *)searchPath
 {
-	NSMutableArray *array = [[[CCFileUtils sharedFileUtils] searchPath] mutableCopy];
+	NSMutableArray *array = [[CCFileLocator sharedFileLocator].searchPaths mutableCopy];
 	[array addObject:searchPath];
-	[[CCFileUtils sharedFileUtils] setSearchPath:array];
+	[CCFileLocator sharedFileLocator].searchPaths = array;
 }
 
 + (CCBReader*) reader

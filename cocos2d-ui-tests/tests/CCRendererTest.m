@@ -40,7 +40,7 @@
 	GLKVector2 extents = GLKVector2Make(size.width/2.0, size.height/2.0);
 	
 	// Now we just need to check if the sprite is visible.
-	if(CCRenderCheckVisbility(transform, center, extents)){
+	if(CCRenderCheckVisibility(transform, center, extents)){
 		// 2) Now we can request a buffer from the renderer with enough space for 2 triangles and 4 vertexes.
 		// Why two triangles instead of a rectangle? Modern GPUs really only draw triangles (and really bad lines/circles).
 		// To draw a "fancy" shape like a rectangle to put our sprite on, we need to split it into two triangles.

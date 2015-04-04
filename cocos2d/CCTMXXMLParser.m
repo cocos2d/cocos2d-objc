@@ -38,7 +38,7 @@
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
 #import "CCTiledMapObjectGroup.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 
 #import "CCFile_Private.h"
 
@@ -208,8 +208,15 @@
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
-	NSURL *url = [NSURL fileURLWithPath:[[CCFileUtils sharedFileUtils] fullPathForFilename:xmlFilename contentScale:&_contentScale]];
-	NSData *data = [NSData dataWithContentsOfURL:url];
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:xmlFilename error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", xmlFilename, err);
+    
+    NSData *data = [file loadData:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", xmlFilename, err);
+    
+    _contentScale = file.contentScale;
 	[self parseXMLData:data];
 }
 

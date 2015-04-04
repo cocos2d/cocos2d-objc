@@ -27,14 +27,10 @@
 
 @interface CCDirector () {
 	@protected
-	GLKMatrix4 _projectionMatrix;
 	__weak id<CCDirectorDelegate> _delegate;
-	__weak NSThread *_runningThread;
 }
 
-// Create a new director.
-// This returns the correct director type for the current platform.
-+(CCDirector *)director;
+-(instancetype)initWithView:(CC_VIEW<CCView> *)view;
 
 // Manage the currently bound CCDirector.
 +(void)pushCurrentDirector:(CCDirector *)director;
@@ -54,9 +50,6 @@
 
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
-
-/* Sets the glViewport*/
--(void) setViewport;
 
 /**
  Stops the run loop. Nothing will be drawn or simulated. The main loop won't be triggered anymore.

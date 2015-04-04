@@ -6,7 +6,7 @@
 #import "CCPackageConstants.h"
 #import "ccMacros.h"
 #import "CCPackage_private.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 
 @interface CCPackageDownload()
 
@@ -340,7 +340,7 @@
 {
     [self closeConnectionAndFileHandle];
     NSError *error;
-    if (![[[CCFileUtils sharedFileUtils] fileManager] moveItemAtURL:[NSURL fileURLWithPath:_tempPath] toURL:_localURL error:&error])
+    if (![[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:_tempPath] toURL:_localURL error:&error])
     {
         [self connection:connection didFailWithError:error];
         return;

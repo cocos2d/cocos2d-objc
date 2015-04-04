@@ -344,18 +344,36 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 // Use `[CCDirector currentDirector]` instead.
 +(CCDirector*)sharedDirector __attribute__((deprecated));
 
+// Use `CCSetup.contentScale` instead.
+@property(nonatomic, readonly) CGFloat contentScaleFactor __attribute__((deprecated));
+
+// Use `CCSetup.UIScale` instead.
+@property(nonatomic, readonly) float UIScaleFactor __attribute__((deprecated));
+
+// Use CCScene.projectionDelegate instead.
+@property(nonatomic, readonly) GLKMatrix4 projectionMatrix __attribute__((deprecated));
+
+// Always returns the main thread.
+@property (weak, readonly, nonatomic ) NSThread *runningThread __attribute__((deprecated));
+
+// Use CCDirector.frameSkipInterval instead.
+@property (nonatomic, readwrite, assign) CCTime animationInterval __attribute__((deprecated));
+
+// Use [CCSetup sharedSetup].fixedUpdateInterval or CCScene.scheduler.fixedUpdateInterval depending on usage.
+@property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval __attribute__((deprecated));
+
 @end
 
 
 @interface CCColor(Deprecated)
 
-+ (CCColor*)colorWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
-+ (CCColor*)colorWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
-+ (CCColor*)colorWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
++ (CCColor *)colorWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
++ (CCColor *)colorWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
++ (CCColor *)colorWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
 
-- (CCColor*)initWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
-- (CCColor*)initWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
-- (CCColor*) initWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
+- (CCColor *)initWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
+- (CCColor *)initWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
+- (CCColor *)initWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
 
 @property (nonatomic, readonly) ccColor3B ccColor3b __attribute__((deprecated));
 @property (nonatomic, readonly) ccColor4B ccColor4b __attribute__((deprecated));
@@ -436,3 +454,7 @@ enum {
 @property (nonatomic, readwrite, assign) NSInteger tag;
 
 @end
+
+
+// Mispelled. Use CCRenderCheckVisibility() instead.
+__attribute__((deprecated)) BOOL CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents);
