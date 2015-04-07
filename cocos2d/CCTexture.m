@@ -26,20 +26,20 @@
 #import "Platforms/CCNS.h"
 
 #import "CCTexture.h"
+#import "CCImage_Private.h"
+#import "CCTexture_Private.h"
+
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "CCRenderDispatch.h"
-#import "CCImage_Private.h"
-
-#import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
-
-#import "CCTexture_Private.h"
+#import "ccUtils.h"
+#import "CCFileLocator.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
+#import "CCSetup.h"
 #import "CCDeprecated.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
@@ -112,8 +112,8 @@ NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 #pragma mark -
 #pragma mark CCTexture2D - Main
 
-@implementation CCTexture
-{
+@implementation CCTexture {
+    CCSpriteFrame *_spriteFrame;
 	CCProxy __weak *_proxy;
 }
 
@@ -161,6 +161,20 @@ static NSDictionary *_DEFAULT_OPTIONS = nil;
 + (id) textureWithFile:(NSString*)file
 {
     return [[CCTextureCache sharedTextureCache] addImage:file];
+}
+
++(instancetype)textureForKey:(NSString *)key loader:(CCTexture *(^)())loader
+{
+    key = [NSString stringWithFormat:@"CCTEXTURECACHE_KEY:%@", key];
+    
+    CCTexture *texture = [[CCTextureCache sharedTextureCache] textureForKey:key];
+    
+    if(texture == nil){
+        texture = loader();
+        [[CCTextureCache sharedTextureCache] addTexture:texture forKey:key];
+    }
+    
+    return texture;
 }
 
 +(NSDictionary *)defaultOptions
@@ -251,9 +265,9 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 {
     options = [CCTexture normalizeOptions:options];
     
-    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
-	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
     NSUInteger maxTextureSize = [info maxTextureSize];
     CGSize sizeInPixels = image.sizeInPixels;
     
@@ -284,7 +298,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
         
         _sizeInPixels = sizeInPixels;
         _contentScale = image.contentScale;
-        _contentSize = image.contentSize;
+        _contentSizeInPixels = CC_SIZE_SCALE(image.contentSize, _contentScale);
     }
     
 	return self;
@@ -317,7 +331,10 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     }
 }
 
-// -------------------------------------------------------------
+-(CGSize)contentSize
+{
+    return CC_SIZE_SCALE(_contentSizeInPixels, 1.0/_contentScale);
+}
 
 // TODO should move this to the Metal/GL impls.
 - (NSString*) description
@@ -328,8 +345,12 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 
 -(CCSpriteFrame*)spriteFrame
 {
-	CGRect rectInPixels = {CGPointZero, _sizeInPixels};
-	return [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
+    if(_spriteFrame == nil){
+        CGRect rectInPixels = {CGPointZero, _sizeInPixels};
+        _spriteFrame = [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
+    }
+    
+    return _spriteFrame;
 }
 
 @end
@@ -344,9 +365,9 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 {
     options = [CCTexture normalizeOptions:options];
     
-    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
-	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
     NSUInteger maxTextureSize = [info maxTextureSize];
     CGSize sizeInPixels = posX.sizeInPixels;
     
@@ -384,7 +405,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
         _type = CCTextureTypeCubemap;
         _sizeInPixels = sizeInPixels;
         _contentScale = posX.contentScale;
-        _contentSize = posX.contentSize;
+        _contentSizeInPixels = CC_SIZE_SCALE(posX.contentSize, _contentScale);
     }
     
 	return self;
@@ -398,12 +419,13 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     NSMutableDictionary *opts = [options mutableCopy];
     opts[CCImageOptionFlipVertical] = @(YES);
     
-    return [self initCubemapFromImagesPosX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posXFilePath] options:opts]
-        negX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negXFilePath] options:opts]
-        posY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posYFilePath] options:opts]
-        negY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negYFilePath] options:opts]
-        posZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posZFilePath] options:opts]
-        negZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negZFilePath] options:opts]
+    CCFileLocator *locator = [CCFileLocator sharedFileLocator];
+    return [self initCubemapFromImagesPosX:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:posXFilePath error:nil] options:opts]
+        negX:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:negXFilePath error:nil] options:opts]
+        posY:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:posYFilePath error:nil] options:opts]
+        negY:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:negYFilePath error:nil] options:opts]
+        posZ:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:posZFilePath error:nil] options:opts]
+        negZ:[[CCImage alloc] initWithCCFile:[locator fileNamedWithResolutionSearch:negZFilePath error:nil] options:opts]
         options:opts
     ];
 }

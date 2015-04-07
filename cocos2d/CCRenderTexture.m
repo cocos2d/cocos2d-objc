@@ -27,16 +27,22 @@
 #import "ccMacros.h"
 #import "ccUtils.h"
 
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
+
 #import "CCRenderTexture_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 #import "CCRenderableNode_Private.h"
 #import "CCTexture_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
 #import "CCImage.h"
+#import "CCSetup.h"
 
 //#if __CC_PLATFORM_MAC
 //#import <ApplicationServices/ApplicationServices.h>
@@ -99,11 +105,7 @@
 	if((self = [super init])){
 		CCDirector *director = [CCDirector currentDirector];
 
-		// XXX multithread
-		if( [director runningThread] != [NSThread currentThread] )
-			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
-
-		_contentScale = director.contentScaleFactor;
+		_contentScale = [CCSetup sharedSetup].assetScale;
 		[self setContentSize:CGSizeMake(width, height)];
 		_depthStencilFormat = depthStencilFormat;
 
@@ -354,7 +356,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
 	// Workaround - use pixel buffers and a copy encoder?
-	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	NSAssert([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
 	CGSize s = CC_SIZE_SCALE(self.texture.contentSize, self.texture.contentScale);
 	int tx = s.width;
@@ -450,7 +452,7 @@ FlipY(GLKMatrix4 projection)
    	}
 
 #if __CC_PLATFORM_IOS
-   	CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
+   	CGFloat scale = _contentScale;
    	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
    	NSData *imageData = nil;
 
@@ -508,7 +510,7 @@ FlipY(GLKMatrix4 projection)
 {
 	CGImageRef imageRef = [self newCGImage];
 	
-	CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
+	CGFloat scale = _contentScale;
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
     
 	CGImageRelease( imageRef );

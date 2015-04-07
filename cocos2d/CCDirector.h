@@ -33,10 +33,6 @@
 #import "CCRenderer.h"
 #import "CCView.h"
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif
-
 @class CCDirector;
 
 
@@ -72,22 +68,11 @@
  */
 -(void) startRunLoop;
 
-#pragma mark Director - Memory Helper
-
 /** Removes all the cocos2d data that was cached automatically.
  It will purge the CCTextureCache, CCLabelBMFont cache.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  */
 -(void) purgeCachedData;
-
-/** Called by CCDirector when the projection is updated, and "custom" projection is used */
--(GLKMatrix4) updateProjection;
-
-#if __CC_PLATFORM_IOS
-/** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-
-#endif // __CC_PLATFORM_IOS
 
 @end
 
@@ -117,17 +102,11 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @class CCTransition;
 
 #if __CC_PLATFORM_IOS
-#define CC_VIEWCONTROLLER UIViewController
 #define CC_VIEW UIView
-
 #elif __CC_PLATFORM_MAC
-#define CC_VIEWCONTROLLER NSObject
 #define CC_VIEW CCViewMacGL
-
 #elif __CC_PLATFORM_ANDROID
-#define CC_VIEWCONTROLLER NSObject
 #define CC_VIEW CCGLView
-
 #endif
 
 /** The director creates and handles the main Window and the Cocos2D view. It also presents Scenes and initiates scene updates and drawing.
@@ -153,7 +132,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
   - `GL_COLOR_ARRAY` is enabled
   - `GL_TEXTURE_COORD_ARRAY` is enabled
 */
-@interface CCDirector : CC_VIEWCONTROLLER
+@interface CCDirector : NSObject
 {
 	// internal timer
 	NSTimeInterval _animationInterval;
@@ -195,20 +174,11 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	NSMutableArray *_scenesStack;
 
 	/* last time the main loop was updated */
-	struct timeval _lastUpdate;
+	CCTime _lastUpdate;
 	/* delta time since last tick to main loop */
 	CCTime _dt;
 	/* whether or not the next delta time will be zero */
 	BOOL _nextDeltaTimeZero;
-
-	/* projection used */
-	CCDirectorProjection _projection;
-
-	/* window size in points */
-	CGSize	_winSizeInPoints;
-
-	/* window size in pixels */
-	CGSize	_winSizeInPixels;
 
 	NSMutableArray *_rendererPool;
 }
@@ -221,30 +191,9 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** @returns The director for the currently active CCView */
 +(CCDirector*)currentDirector;
 
-/** @name Accessing OpenGL Thread */
-
-/** If you want to run any Cocos2D task, run it in this thread. Any task that modifies Cocos2D's OpenGL state must be
- executed on this thread due to OpenGL state changes only being allowed on the OpenGL thread.
- 
- @returns The Cocos2D thread, typically this will be the main thread. */
-@property (weak, readonly, nonatomic ) NSThread *runningThread;
-
 #pragma mark Director - Stats
 
 #pragma mark Director - View Size
-
-/** @name View Scale */
-
-/** Content scaling factor. Sets the ratio of points to pixels. Default value is initalized from the content scale of the GL view used by the director.
- @see UIScaleFactor
- @see [UIView contentScaleFactor](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instp/UIView/contentScaleFactor)
- */
-@property(nonatomic, assign) CGFloat contentScaleFactor;
-
-/** UI scaling factor, default value is 1. Positions and content sizes are scale by this factor if the position type is set to scale.
- @see contentScaleFactor
- */
-@property (nonatomic,readwrite,assign) float UIScaleFactor;
 
 /// User definable value that is used for default contentSizes of many node types (CCScene, CCNodeColor, etc).
 /// Defaults to the view size.
@@ -255,17 +204,11 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
 /// @see CCView
-@property(nonatomic, retain) CC_VIEW<CCView> *view;
-/** Sets an OpenGL projection
- @see CCDirectorProjection
- @see projectionMatrix */
-@property (nonatomic, readwrite) CCDirectorProjection projection;
-/// Projection matrix used for rendering.
-/// @see projection
-@property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
+@property(nonatomic, readonly, weak) CC_VIEW<CCView> *view;
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
+
 /** Whether or not to display statistics in the view's lower left corner. From top to bottom the numbers are:
  number of draw calls, time per frame (in seconds), framerate (average over most recent frames).
  @see totalFrames
@@ -281,13 +224,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  @see viewSize
  */
 - (CGSize) viewSizeInPixels;
-
-/**
- *  Changes the projection size.
- *
- *  @param newViewSize New projection size.
- */
--(void) reshapeProjection:(CGSize)newViewSize;
 
 /**
  *  Converts a UIKit coordinate to an OpenGL coordinate.
@@ -407,13 +343,14 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Animating the Active Scene */
 
-/** The animation interval is the time per frame. Typically specified as `1.0 / 60.0` where the latter number defines
- the framerate. The lowest value is 0.0166 (1/60).
- @see fixedUpdateInterval */
-@property (nonatomic, readwrite, assign) CCTime animationInterval;
-/** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine.
- @see animationInterval */
-@property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
+/**
+ Works similarly to CADisplayLink.frameInterval.
+ When the value is 1 every frame is drawn. When the value is 2, every second frame is drawn, etc.
+ Defaults to 1.
+
+ @since 4.0.0
+ */
+@property (nonatomic, assign) NSUInteger frameSkipInterval;
 
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;

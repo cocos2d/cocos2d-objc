@@ -4,7 +4,7 @@
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"
 #import "CCRenderableNode_Private.h"
-#import "CCDeviceInfo.h"
+#import "CCSetup_Private.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -17,57 +17,6 @@
 +(instancetype)allocWithZone:(struct _NSZone *)zone
 {
     return NSAllocateObject(CCTextureClass, 0, zone);
-}
-
-@end
-
-
-@implementation CCSprite(NoARC)
-
-static inline void
-EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
-{
-	CCRenderState *state = self->_renderState ?: self.renderState;
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:state globalSortOrder:0];
-	
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(self->_verts.tl, transform));
-
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-}
-
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
-{
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
-	if (_effect)
-	{
-		_effectRenderer.contentSize = self.contentSizeInPoints;
-        
-        CCEffectPrepareResult prepResult = [self.effect prepareForRenderingWithSprite:self];
-        NSAssert(prepResult.status == CCEffectPrepareSuccess, @"Effect preparation failed.");
-        
-        if (prepResult.changes & CCEffectPrepareUniformsChanged)
-		{
-			// Preparing an effect for rendering can modify its uniforms
-			// dictionary which means we need to reinitialize our copy of the
-			// uniforms.
-			[self updateShaderUniformsFromEffect];
-		}
-		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
-	}
-	else
-	{
-		EnqueueTriangles(self, renderer, transform);
-	}
-}
-
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
-	EnqueueTriangles(self, renderer, transform);
 }
 
 @end
@@ -154,114 +103,12 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 	return(CCRenderBuffer){vertexes, elements, vertexPageIndex};
 }
 
-static inline void
-CCRendererBindBuffers(CCRenderer *self, BOOL bind, NSUInteger vertexPage)
-{
- 	if(bind != self->_buffersBound || vertexPage != self->_vertexPageBound){
-		[self->_buffers bind:bind vertexPage:vertexPage];
-		self->_buffersBound = bind;
-		self->_vertexPageBound = vertexPage;
-	}
-}
-
--(void)bindBuffers:(BOOL)bind vertexPage:(NSUInteger)vertexPage
-{
-	CCRendererBindBuffers(self, bind, vertexPage);
-}
-
-
 -(void)setRenderState:(CCRenderState *)renderState
 {
 	if(renderState != _renderState){
 		[renderState transitionRenderer:self FromState:_renderState];
 		_renderState = renderState;
 	}
-}
-
-@end
-
-@interface CCRenderStateGL : CCRenderState @end
-@implementation CCRenderStateGL
-
-static void
-CCRenderStateGLTransition(CCRenderStateGL *self, CCRenderer *renderer, CCRenderStateGL *previous)
-{
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderStateGL: Transition");
-	
-	// Set the blending state.
-	if(previous ==  nil || self->_blendMode != previous->_blendMode){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("Blending mode");
-		
-		NSDictionary *blendOptions = self->_blendMode->_options;
-		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
-			glDisable(GL_BLEND);
-		} else {
-			glEnable(GL_BLEND);
-			
-			glBlendFuncSeparate(
-				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
-				[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
-				[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
-				[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
-			);
-			
-			glBlendEquationSeparate(
-				[blendOptions[CCBlendEquationColor] unsignedIntValue],
-				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
-			);
-		}
-	}
-	
-	// Bind the shader.
-	BOOL bindShader = (previous == nil || self->_shader != previous->_shader);
-	if(bindShader){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("Shader");
-		
-		glUseProgram(self->_shader->_program);
-	}
-	
-	// Set the shader's uniform state.
-	if(bindShader || self->_shaderUniforms != previous->_shaderUniforms){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("Uniforms");
-		
-		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
-		NSDictionary *setters = self->_shader->_uniformSetters;
-		for(NSString *uniformName in setters){
-			CCUniformSetter setter = setters[uniformName];
-			setter(renderer, self->_shaderUniforms, globalShaderUniforms);
-		}
-	}
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	CC_CHECK_GL_ERROR_DEBUG();
-}
-
--(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderStateGL *)previous
-{
-	CCRenderStateGLTransition(self, renderer, previous);
-}
-
-@end
-
-@interface CCRenderCommandDrawGL : CCRenderCommandDraw @end
-@implementation CCRenderCommandDrawGL
-
-static const CCRenderCommandDrawMode GLDrawModes[] = {
-	GL_TRIANGLES,
-	GL_LINES,
-};
-
--(void)invokeOnRenderer:(CCRenderer *)renderer
-{
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
-	
-	CCRendererBindBuffers(renderer, YES, _vertexPage);
-	CCRenderStateGLTransition((CCRenderStateGL *)_renderState, renderer, (CCRenderStateGL *)renderer->_renderState);
-	renderer->_renderState = _renderState;
-	
-	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_firstIndex*sizeof(GLushort)));
-    
-	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 @end

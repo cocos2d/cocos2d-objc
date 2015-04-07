@@ -25,10 +25,12 @@
  *
  */
 
+
 #include <sys/time.h>
 
 #import "ccMacros.h"
 #if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
 
 #import "ccUtils.h"
 
@@ -45,7 +47,7 @@
 #import "ccFPSImages.h"
 #import "CCDeviceInfo.h"
 #import "CCTouch.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator.h"
 
 #pragma mark -
 #pragma mark Director
@@ -78,62 +80,6 @@
 
 @implementation CCDirectorIOS
 
-- (id) init
-{
-	if( (self=[super init]) ) {
-		// running thread is main thread on iOS
-		_runningThread = [NSThread currentThread];
-		
-		// Apparently it comes with a default view, and we don't want it
-//		[self setView:nil];
-	}
-
-	return self;
-}
-
--(void) setViewport
-{
-	CGSize size = _winSizeInPixels;
-	CCRenderDispatch(YES, ^{
-		glViewport(0, 0, size.width, size.height );
-	});
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CGSize sizePoint = _winSizeInPoints;
-    
-	[self setViewport];
-
-	switch (projection) {
-		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			break;
-
-		case CCDirectorProjection3D: {
-			float zeye = sizePoint.height*sqrtf(3.0f)/2.0f;
-			_projectionMatrix = GLKMatrix4Multiply(
-				GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
-				GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
-			);
-
-			break;
-		}
-
-		case CCDirectorProjectionCustom:
-			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				_projectionMatrix = [_delegate updateProjection];
-			break;
-
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
-	}
-
-	_projection = projection;
-	[self createStatsLabel];
-}
-
 #pragma mark Director Point Convertion
 
 -(CGPoint)convertTouchToGL:(CCTouch*)touch
@@ -147,29 +93,15 @@
 	[super end];
 }
 
-#pragma mark Director - UIViewController delegate
-
--(void) setView:(CC_VIEW<CCView> *)view
-{
-		[super setView:view];
-
-		if( view ) {
-			// set size
-			CGFloat scale = view.contentScaleFactor;
-			CGSize size = view.bounds.size;
-			_winSizeInPixels = CGSizeMake(size.width * scale, size.height * scale);
-		}
-}
-
 // Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	BOOL ret =YES;
-	if( [_delegate respondsToSelector:_cmd] )
-		ret = (BOOL) [_delegate shouldAutorotateToInterfaceOrientation:interfaceOrientation];
-
-	return ret;
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//	BOOL ret =YES;
+//	if( [_delegate respondsToSelector:_cmd] )
+//		ret = (BOOL) [_delegate shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+//
+//	return ret;
+//}
 
 // Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
 //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -196,83 +128,69 @@
     }
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-
-    // This line was presumably added to deal with apps entering and leaving the background.
-    // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
-    // by the OS outside of normal control, so it's very hard to actually call stopRunLoop and expect it to work.
-//    [self startRunLoopIfPossible];
-}
-
--(void) viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-//	[self startRunLoop];
-}
-
--(void) viewWillDisappear:(BOOL)animated
-{
+//-(void) viewWillAppear:(BOOL)animated
+//{
+//	[super viewWillAppear:animated];
+//
+//    // This line was presumably added to deal with apps entering and leaving the background.
+//    // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
+//    // by the OS outside of normal control, so it's very hard to actually call stopRunLoop and expect it to work.
+////    [self startRunLoopIfPossible];
+//}
+//
+//-(void) viewDidAppear:(BOOL)animated
+//{
+//	[super viewDidAppear:animated];
+////	[self startRunLoop];
+//}
+//
+//-(void) viewWillDisappear:(BOOL)animated
+//{
+////	[self stopRunLoop];
+//
+//	[super viewWillDisappear:animated];
+//}
+//
+//-(void) viewDidDisappear:(BOOL)animated
+//{
 //	[self stopRunLoop];
-
-	[super viewWillDisappear:animated];
-}
-
--(void) viewDidDisappear:(BOOL)animated
-{
-	[self stopRunLoop];
-
-	[super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-	// Release any cached data, images, etc that aren't in use.
-	[super purgeCachedData];
-
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-}
-
--(void) viewDidLoad
-{
-	CCLOG(@"cocos2d: viewDidLoad");
-
-	[super viewDidLoad];
-}
-
-
-- (void)viewDidUnload
-{
-	CCLOG(@"cocos2d: viewDidUnload");
-
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
+//
+//	[super viewDidDisappear:animated];
+//}
+//
+//- (void)didReceiveMemoryWarning
+//{
+//	// Release any cached data, images, etc that aren't in use.
+//	[super purgeCachedData];
+//
+//    // Releases the view if it doesn't have a superview.
+//    [super didReceiveMemoryWarning];
+//}
+//
+//-(void) viewDidLoad
+//{
+//	CCLOG(@"cocos2d: viewDidLoad");
+//
+//	[super viewDidLoad];
+//}
+//
+//
+//- (void)viewDidUnload
+//{
+//	CCLOG(@"cocos2d: viewDidUnload");
+//
+//    [super viewDidUnload];
+//    // Release any retained subviews of the main view.
+//    // e.g. self.myOutlet = nil;
+//}
 
 #pragma mark helper
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	NSInteger device = [CCDeviceInfo runningDevice];
-
-	if( device == CCDeviceiPadRetinaDisplay) {
-		*datapointer = cc_fps_images_ipadhd_png;
-		*len = cc_fps_images_ipadhd_len();
-		*scale = 2;
-		
-	} else if( device == CCDeviceiPhoneRetinaDisplay || device == CCDeviceiPhone5RetinaDisplay ) {
-		*datapointer = cc_fps_images_hd_png;
-		*len = cc_fps_images_hd_len();
-		*scale = 2;
-
-	} else {
-		*datapointer = cc_fps_images_png;
-		*len = cc_fps_images_len();
-		*scale = 1;
-	}
+    *datapointer = cc_fps_images_png;
+    *len = cc_fps_images_len();
+    *scale = 1;
 }
 
 @end
@@ -281,21 +199,20 @@
 #pragma mark -
 #pragma mark DirectorDisplayLink
 
-@implementation CCDirectorDisplayLink
-
+@implementation CCDirectorDisplayLink {
+	CADisplayLink	*_displayLink;
+	CFTimeInterval	_lastDisplayTime;
+}
 
 -(void) mainLoop:(id)sender
 {
 	[self mainLoopBody];
 }
 
-- (void)setAnimationInterval:(NSTimeInterval)interval
+-(void)setFrameSkipInterval:(NSUInteger)frameSkipInterval
 {
-	_animationInterval = interval;
-	if(_displayLink){
-		[self stopRunLoop];
-		[self startRunLoop];
-	}
+    [super setFrameSkipInterval:frameSkipInterval];
+    _displayLink.frameInterval = frameSkipInterval;
 }
 
 - (void) startRunLoop
@@ -304,8 +221,8 @@
 
     if(_animating)
         return;
-
-	gettimeofday( &_lastUpdate, NULL);
+    
+    _lastUpdate = CACurrentMediaTime();
 
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
@@ -354,8 +271,9 @@
     _lastDisplayTime = _displayLink.timestamp;
 
 	// needed for SPF
-	if( _displayStats )
-		gettimeofday( &_lastUpdate, NULL);
+	if( _displayStats ){
+		_lastUpdate = CACurrentMediaTime();
+    }
 
 #if DEBUG
 	// If we are debugging our code, prevent big delta time

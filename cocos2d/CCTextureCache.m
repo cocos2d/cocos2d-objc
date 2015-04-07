@@ -33,9 +33,9 @@
 
 #import "Platforms/CCGL.h"
 #import "CCTexture_Private.h"
-#import "CCDeviceInfo.h"
+#import "CCSetup.h"
 #import "CCDirector.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCFile_Private.h"
 #import "CCImage.h"
 
@@ -79,7 +79,7 @@ static CCTextureCache *sharedTextureCache;
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 		
 		// Skip the GL context sharegroup code for Metal.
-		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
+		if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal) return self;
 
         NSAssert([CCDirector currentDirector], @"Do not initialize the TextureCache before the director is created and set");
         CC_VIEW<CCView> *view;
@@ -150,10 +150,6 @@ static CCTextureCache *sharedTextureCache;
 	NSAssert(target != nil, @"TextureCache: target can't be nil");
 	NSAssert(selector != NULL, @"TextureCache: selector can't be NULL");
 
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
-
 	// optimization
 	__block CCTexture * tex;
 		
@@ -181,7 +177,7 @@ static CCTextureCache *sharedTextureCache;
 			glFlush();
 
 			// callback should be executed in cocos2d thread
-			[target performSelector:selector onThread:[[CCDirector currentDirector] runningThread] withObject:texture waitUntilDone:NO];
+			[target performSelector:selector onThread:[NSThread mainThread] withObject:texture waitUntilDone:NO];
 
 			[EAGLContext setCurrentContext:nil];
 		} else {
@@ -198,7 +194,7 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 
 		// callback should be executed in cocos2d thread
-		[target performSelector:selector onThread:[[CCDirector currentDirector] runningThread] withObject:texture waitUntilDone:NO];
+		[target performSelector:selector onThread:[NSThread mainThread] withObject:texture waitUntilDone:NO];
 
 		[NSOpenGLContext clearCurrentContext];
 
@@ -207,13 +203,18 @@ static CCTextureCache *sharedTextureCache;
 	});
 }
 
+// TODO temporary method.
+-(void)addTexture:(CCTexture *)texture forKey:(NSString *)key
+{
+    dispatch_sync(_dictQueue, ^{
+        NSAssert(_textures[key] == nil, @"Texture is already in the cache?");
+        _textures[key] = texture;
+    });
+}
+
 -(CCTexture*) addImage: (NSString*) path
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
-
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
 
 	__block CCTexture * tex = nil;
 
@@ -222,7 +223,7 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
-        CCFile *file = [CCFileUtils fileNamed:path];
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:path error:nil];
         
 		if( ! file ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
@@ -231,7 +232,7 @@ static CCTextureCache *sharedTextureCache;
 
 		NSString *lowerCase = [file.absoluteFilePath lowercaseString];
 
-		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
+		// All images are handled by CoreGraphics except PVR files which are handled by Cocos2D.
 
         if([lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"]){
             tex = [self addPVRImage:path];
@@ -355,10 +356,6 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
-
 	__block CCTexture * tex;
 	
 	dispatch_sync(_dictQueue, ^{
@@ -369,7 +366,7 @@ static CCTextureCache *sharedTextureCache;
 		return((id)tex.proxy);
 	}
     
-	tex = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:path] options:nil];
+	tex = [[CCTexture alloc] initPVRWithCCFile:[[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:path error:nil] options:nil];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
 			[_textures setObject: tex forKey:path];

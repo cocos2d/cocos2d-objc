@@ -136,15 +136,22 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 
 @end
 
+static inline void
+CCRendererBindBuffers(CCRenderer *self, BOOL bind, NSUInteger vertexPage)
+{
+ 	if(bind != self->_buffersBound || vertexPage != self->_vertexPageBound){
+		[self->_buffers bind:bind vertexPage:vertexPage];
+		self->_buffersBound = bind;
+		self->_vertexPageBound = vertexPage;
+	}
+}
+
 
 @interface CCRenderer(NoARCPrivate)
 
 -(void)prepareWithProjection:(const GLKMatrix4 *)projection framebuffer:(CCFrameBufferObject *)framebuffer;
 
 -(void)setRenderState:(CCRenderState *)renderState;
-
-/// Bind the renderer's VAO if it is not currently bound.
--(void)bindBuffers:(BOOL)bind vertexPage:(NSUInteger)vertexPage;
 
 @end
 

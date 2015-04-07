@@ -22,7 +22,7 @@
 // Skip certain tests that are not supported by Metal
 -(BOOL)skipForMetal
 {
-    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+    if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
         [self pressedNext:nil];
         return YES;
     }
@@ -237,7 +237,8 @@
 	self.subTitle = @"Texture Repeat with Blocky Filtering";
 	
 	CGSize s = [[CCDirector currentDirector] viewSize];
-    CCImage *image = [[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:@"test_image.png"] options:nil];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"test_image.png" error:nil];
+    CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
     
 	CCTexture* texture = [[CCTexture alloc] initWithImage:image options:@{
         CCTextureOptionMagnificationFilter: @(CCTextureFilterNearest),
@@ -256,7 +257,9 @@
 -(void) setupGenerateMipMapTest
 {
 	self.subTitle = @"Mipmap Generation:\nLeft pixels should 'swim', right should not.";
-    CCImage *image = [[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:@"test_image.png"] options:nil];
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"test_image.png" error:nil];
+    CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
     
 	CCTexture* texture = [[CCTexture alloc] initWithImage:image options:@{
         CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
@@ -372,7 +375,8 @@
 {
 	self.subTitle = @"PVR (RGBA8) Cubemap";
     
-    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap.pvr.gz"] options:@{
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"Cubemap/Cubemap.pvr.gz" error:nil];
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
         CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
         CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
         CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
@@ -388,7 +392,8 @@
     
 	self.subTitle = @"PVR (pvrtc 2bpp) Cubemap";
     
-    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap-pvrtc.pvr.gz"] options:@{
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"Cubemap/Cubemap-pvrtc.pvr.gz" error:nil];
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
         CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
         CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
         CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
@@ -397,5 +402,56 @@
     [self showCubemap:cubemap];
 }
 #endif
+
+-(void)setupCustomCacheTest
+{
+    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+    
+	self.subTitle = @"Custom texture cache loading.\n"
+        @"Left is linear filtered. Right is nearest filtered.";
+	
+    {
+        CCTexture *texture = [CCTexture textureForKey:@"test1" loader:^CCTexture *{
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"test_image.png" error:nil];
+            CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+            return [[CCTexture alloc] initWithImage:image options:@{}];
+        }];
+        
+        CCSprite *img = [CCSprite spriteWithTexture:texture];
+        img.positionType = CCPositionTypeNormalized;
+        img.position = ccp(0.25, 0.5);
+        [self.contentNode addChild:img];
+    }
+	
+    {
+        CCTexture *texture = [CCTexture textureForKey:@"test2" loader:^CCTexture *{
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:@"test_image.png" error:nil];
+            CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+            return [[CCTexture alloc] initWithImage:image options:@{
+                CCTextureOptionMagnificationFilter: @(CCTextureFilterNearest)
+            }];
+        }];
+        
+        CCSprite *img = [CCSprite spriteWithTexture:texture];
+        img.positionType = CCPositionTypeNormalized;
+        img.position = ccp(0.75, 0.5);
+        [self.contentNode addChild:img];
+    }
+}
+
+-(void)setupAutoTextureScalingTest
+{
+    CCTexture *texture = [CCTexture textureWithFile:@"test_image_auto.png"];
+    CGSize sizeInPoints = texture.contentSize;
+    CGSize sizeInPixels = texture.sizeInPixels;
+    
+	self.subTitle = [NSString stringWithFormat:@"Auto texture scaling test.\nContent size is: %dx%d, (should be 32x32)\nSize in pixels: %dx%d\n",
+        (int)sizeInPoints.width, (int)sizeInPoints.height, (int)sizeInPixels.width, (int)sizeInPixels.height];
+    
+    CCSprite *img = [CCSprite spriteWithTexture:texture];
+    img.positionType = CCPositionTypeNormalized;
+    img.position = ccp(0.5, 0.5);
+    [self.contentNode addChild:img];
+}
 
 @end

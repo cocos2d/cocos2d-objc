@@ -57,7 +57,7 @@
                             </menuItem>
                             <menuItem title="Quit cocos2d-ui-tests-osx" keyEquivalent="q" id="136">
                                 <connections>
-                                    <action selector="terminate:" target="-3" id="449"/>
+                                    <action selector="terminate:" target="-2" id="ogC-ZC-N9n"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -66,11 +66,7 @@
                 <menuItem title="View" id="295">
                     <menu key="submenu" title="View" id="296">
                         <items>
-                            <menuItem title="Toggle Full Screen" keyEquivalent="f" id="540">
-                                <connections>
-                                    <action selector="toggleFullScreen:" target="494" id="541"/>
-                                </connections>
-                            </menuItem>
+                            <menuItem title="Toggle Full Screen" keyEquivalent="f" id="540"/>
                         </items>
                     </menu>
                 </menuItem>
@@ -112,32 +108,6 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="cocos2d-ui-tests-osx" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="435" width="1024" height="768"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
-            <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <openGLView colorSize="5bit_RGB_8bit_Alpha" depthSize="24bit" stencilSize="8bit" useAuxiliaryDepthBufferStencil="NO" useDoubleBufferingEnabled="YES" allowOffline="YES" wantsBestResolutionOpenGLSurface="YES" id="533" customClass="CCViewMacGL">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </openGLView>
-                </subviews>
-            </view>
-            <point key="canvasLocation" x="990" y="378"/>
-        </window>
-        <customObject id="494" customClass="AppDelegate">
-            <connections>
-                <outlet property="glView" destination="533" id="537"/>
-                <outlet property="window" destination="371" id="536"/>
-            </connections>
-        </customObject>
-        <customObject id="420" customClass="NSFontManager"/>
-        <menuItem title="Item" id="538">
-            <modifierMask key="keyEquivalentModifierMask"/>
-        </menuItem>
+        <customObject id="494" customClass="AppDelegate"/>
     </objects>
 </document>

@@ -32,17 +32,16 @@
 #import "CCSpriteFrame.h"
 
 #import "CCTextureCache.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrameCache_Private.h"
 #import "CCTexture_Private.h"
 
-@implementation CCSpriteFrame
-{
-	CGRect			_rectInPixels;
-	BOOL			_rotated;
-	CGPoint			_offsetInPixels;
-	CGSize			_originalSizeInPixels;
-	CCTexture		*_texture;
-	NSString		*_textureFilename;
+@implementation CCSpriteFrame {
+	CGRect _rectInPixels;
+	BOOL _rotated;
+	CGPoint _offsetInPixels;
+	CGSize _originalSizeInPixels;
+	CCTexture *_texture;
+	NSString *_textureFilename;
 	CCProxy __weak *_proxy;
 	__weak CCTexture *_lazyTexture;
 }
@@ -54,6 +53,7 @@
 
 +(instancetype) frameWithImageNamed:(NSString*)imageName
 {
+    // TODO not thread safe.
     CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
     if (!frame)
     {
@@ -185,6 +185,12 @@
 
 		return(proxy);
 	}
+}
+
++(void)purgeCache
+{
+    // TODO not thread safe.
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
 }
 
 @end

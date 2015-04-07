@@ -30,6 +30,7 @@
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCCache.h"
 #import "CCRenderDispatch.h"
@@ -109,7 +110,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 #if CC_DIRECTOR_IOS_THREADED_RENDERING
 		_renderState = [renderState copy];
 #else
-		_renderState = renderState;
+		_renderState = [renderState retain];
 #endif
 		_firstIndex = firstIndex;
 		_vertexPage = vertexPage;
@@ -118,6 +119,13 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    [_renderState release]; _renderState = nil;
+    
+    [super dealloc];
 }
 
 -(NSInteger)globalSortOrder
@@ -137,12 +145,8 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 
 
 #pragma mark Custom Block Command.
-@interface CCRenderCommandCustom : NSObject<CCRenderCommand>
-@end
-
-
-@implementation CCRenderCommandCustom
-{
+@interface CCRenderCommandCustom : NSObject<CCRenderCommand> @end
+@implementation CCRenderCommandCustom {
 	void (^_block)();
 	NSString *_debugLabel;
 	
@@ -152,13 +156,21 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 -(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
-		_block = block;
-		_debugLabel = debugLabel;
+		_block = [block copy];
+		_debugLabel = [debugLabel retain];
 		
 		_globalSortOrder = globalSortOrder;
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    [_block release]; _block = nil;
+    [_debugLabel release]; _debugLabel = nil;
+    
+    [super dealloc];
 }
 
 -(NSInteger)globalSortOrder
@@ -170,7 +182,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 {
 	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	
-	[renderer bindBuffers:NO vertexPage:0];
+    CCRendererBindBuffers(renderer, NO, 0);
 	_block();
 	
 	CCRENDERER_DEBUG_POP_GROUP_MARKER();
@@ -194,10 +206,7 @@ SortQueue(NSMutableArray *queue)
 	}];
 }
 
-@interface CCRenderCommandGroup : NSObject<CCRenderCommand>
-@end
-
-
+@interface CCRenderCommandGroup : NSObject<CCRenderCommand> @end
 @implementation CCRenderCommandGroup {
 	NSMutableArray *_queue;
 	NSString *_debugLabel;
@@ -208,13 +217,21 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)initWithQueue:(NSMutableArray *)queue debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
-		_queue = queue;
-		_debugLabel = debugLabel;
+		_queue = [queue retain];
+		_debugLabel = [debugLabel retain];
 		
 		_globalSortOrder = globalSortOrder;
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    [_queue release]; _queue = nil;
+    [_debugLabel release]; _debugLabel = nil;
+    
+    [super dealloc];
 }
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
@@ -239,23 +256,37 @@ SortQueue(NSMutableArray *queue)
 
 @implementation CCRenderer
 
--(void)invalidateState
-{
-	_lastDrawCommand = nil;
-	_renderState = nil;
-	_buffersBound = NO;
-}
-
 -(instancetype)init
 {
 	if((self = [super init])){
 		_buffers = [[CCGraphicsBufferBindingsClass alloc] init];
 				
 		_threadsafe = YES;
-		_queue = [NSMutableArray array];
+		_queue = [[NSMutableArray alloc] init];
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    [_buffers release]; _buffers = nil;
+    [_framebuffer release]; _framebuffer = nil;
+    
+    [_globalShaderUniforms release]; _globalShaderUniforms = nil;
+    [_globalShaderUniformBufferOffsets release]; _globalShaderUniformBufferOffsets = nil;
+    
+    [_queue release]; _queue = nil;
+    [_queueStack release]; _queueStack = nil;
+    
+    [super dealloc];
+}
+
+-(void)invalidateState
+{
+	_lastDrawCommand = nil;
+	_renderState = nil;
+	_buffersBound = NO;
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -312,12 +343,13 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	globalShaderUniforms[CCShaderUniformDefaultGlobals] = [NSValue valueWithBytes:&globals objCType:@encode(CCGlobalUniforms)];
 	
+    [_globalShaderUniforms release];
 	_globalShaderUniforms = globalShaderUniforms;
 		
 	// If we are using a uniform buffer (ex: Metal) copy the global uniforms into it.
 	CCGraphicsBuffer *uniformBuffer = _buffers->_uniformBuffer;
 	if(uniformBuffer){
-		NSMutableDictionary *offsets = [NSMutableDictionary dictionary];
+		NSMutableDictionary *offsets = [[NSMutableDictionary alloc] init];
 		size_t offset = 0;
 		
 		for(NSString *name in _globalShaderUniforms){
@@ -333,9 +365,11 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 			offset += alignedBytes;
 		}
 		
+        [_globalShaderUniformBufferOffsets release];
 		_globalShaderUniformBufferOffsets = offsets;
 	}
 	
+    [_framebuffer autorelease];
 	_framebuffer = framebuffer;
 }
 
@@ -354,7 +388,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		_clearDepth = depth;
 		_clearStencil = stencil;
 	} else {
-		NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
+		NSAssert([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
 		
 		[self enqueueBlock:^{
 			if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
@@ -368,7 +402,10 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
 {
-	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
+    CCRenderCommandCustom *command = [[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder];
+	[_queue addObject:command];
+    [command release];
+    
 	_lastDrawCommand = nil;
 	
 	if(!threadsafe) _threadsafe = NO;
@@ -376,10 +413,10 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)enqueueMethod:(SEL)selector target:(id)target
 {
-	[self enqueueBlock:^{
-    typedef void (*Func)(id, SEL);
-    ((Func)objc_msgSend)(target, selector);
-	} globalSortOrder:0 debugLabel:NSStringFromSelector(selector) threadSafe:NO];
+    [self enqueueBlock:^{
+        typedef void (*Func)(id, SEL);
+        ((Func)objc_msgSend)(target, selector);
+    } globalSortOrder:0 debugLabel:NSStringFromSelector(selector) threadSafe:NO];
 }
 
 -(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
@@ -397,7 +434,10 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 	
 	[_queueStack addObject:_queue];
+    
+    [_queue release];
 	_queue = [[NSMutableArray alloc] init];
+    
 	_lastDrawCommand = nil;
 }
 
@@ -406,10 +446,16 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	NSAssert(_queueStack.count > 0, @"Render queue stack underflow. (Unmatched pushQueue/popQueue calls.)");
 	
 	NSMutableArray *groupQueue = _queue;
-	_queue = [_queueStack lastObject];
+    
+	_queue = [[_queueStack lastObject] retain];
 	[_queueStack removeLastObject];
 	
-	[_queue addObject:[[CCRenderCommandGroup alloc] initWithQueue:groupQueue debugLabel:debugLabel globalSortOrder:globalSortOrder]];
+    CCRenderCommandGroup *command = [[CCRenderCommandGroup alloc] initWithQueue:groupQueue debugLabel:debugLabel globalSortOrder:globalSortOrder];
+    [groupQueue release];
+    
+	[_queue addObject:command];
+    [command release];
+    
 	_lastDrawCommand = nil;
 }
 
@@ -425,7 +471,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
-	[self bindBuffers:NO vertexPage:0];
+    CCRendererBindBuffers(self, NO, 0);
 	
 	[_queue removeAllObjects];
 	

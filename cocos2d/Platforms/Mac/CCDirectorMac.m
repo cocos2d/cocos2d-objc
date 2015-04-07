@@ -29,287 +29,101 @@
 #import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
-#import <sys/time.h>
-
 #import "CCDirectorMac.h"
-#import "CCWindow.h"
-
-#import "CCNode.h"
-#import "CCScene.h"
-#import "CCScheduler.h"
-#import "ccMacros.h"
-#import "CCShader.h"
-#import "ccFPSImages.h"
- 
-
 #import "CCDirector_Private.h"
-#import "CCRenderer_Private.h"
+
 #import "CCRenderDispatch.h"
-
-#pragma mark -
-#pragma mark Director Mac extensions
+#import "ccFPSImages.h"
 
 
-@interface CCDirector ()
--(void) setNextScene;
--(void) showStats;
--(void) calculateDeltaTime;
--(void) calculateMPF;
-@end
+@implementation CCDirectorMac {
+	CVDisplayLinkRef _displayLink;
+    dispatch_semaphore_t _semaphore;
+    
+    // Should only be accessed from the displaylink thread.
+    NSUInteger _frameCount;
+}
 
-@implementation CCDirector (MacExtension)
--(CGPoint) convertEventToGL:(NSEvent*)event
+-(instancetype)initWithView:(CCViewMacGL<CCView> *)view
+{
+    if((self = [super initWithView:view])){
+        _semaphore = dispatch_semaphore_create(1);
+    }
+    
+    return self;
+}
+
+// This is the renderer output callback function
+static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
+{
+    CCDirectorMac *director = (__bridge CCDirectorMac *)displayLinkContext;
+    NSUInteger skip = MAX(1, director.frameSkipInterval);
+    if(director->_frameCount++ % skip != 0) return kCVReturnSuccess;
+    
+    dispatch_semaphore_t semaphore = director->_semaphore;
+    
+    if(!dispatch_semaphore_wait(semaphore, 0)){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [director mainLoopBody];
+            dispatch_semaphore_signal(semaphore);
+        });
+    }
+    
+    return kCVReturnSuccess;
+}
+
+- (void) startRunLoop
+{
+	[super startRunLoop];
+    if(_animating) return;
+    
+    _lastUpdate = CACurrentMediaTime();
+
+	// Create a display link capable of being used with all active displays
+	CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+
+	// Set the renderer output callback function
+	CVDisplayLinkSetOutputCallback(_displayLink, &MyDisplayLinkCallback, (__bridge void *)(self));
+
+	// Set the display link for the current renderer
+	CCViewMacGL *openGLview = (CCViewMacGL *) self.view;
+	CGLContextObj cglContext = [[openGLview openGLContext] CGLContextObj];
+	CGLPixelFormatObj cglPixelFormat = [[openGLview pixelFormat] CGLPixelFormatObj];
+	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(_displayLink, cglContext, cglPixelFormat);
+
+	// Activate the display link
+	CVDisplayLinkStart(_displayLink);
+    
+    _animating = YES;
+}
+
+- (void) stopRunLoop
+{
+    if(!_animating) return;
+
+	CCLOG(@"cocos2d: stopAnimation");
+
+	if(_displayLink){
+		CVDisplayLinkStop(_displayLink);
+		CVDisplayLinkRelease(_displayLink);
+		_displayLink = NULL;
+	}
+    
+    _animating = NO;
+}
+
+-(void) dealloc
+{
+	if(_displayLink){
+		CVDisplayLinkStop(_displayLink);
+		CVDisplayLinkRelease(_displayLink);
+	}
+}
+
+-(CGPoint)convertEventToGL:(NSEvent *)event
 {
 	NSPoint point = [[self view] convertPoint:[event locationInWindow] fromView:nil];
-	CGPoint p = NSPointToCGPoint(point);
-
-	return  [(CCDirectorMac*)self convertToGL:p];
-}
-
-@end
-
-#pragma mark -
-#pragma mark Director Mac
-
-@implementation CCDirectorMac
-
-@synthesize isFullScreen = _isFullScreen;
-@synthesize originalWinSizeInPoints = _originalWinSizeInPoints;
-
--(id) init
-{
-	if( (self = [super init]) ) {
-		_isFullScreen = NO;
-		_resizeMode = kCCDirectorResize_NoScale;
-
-		_originalWinSizeInPoints = CGSizeZero;
-		_fullScreenWindow = nil;
-		_windowGLView = nil;
-		_winOffset = CGPointZero;
-	}
-
-	return self;
-}
-
-
-//
-// setFullScreen code taken from GLFullScreen example by Apple
-//
-- (void) setFullScreen:(BOOL)fullscreen
-{
-//	_isFullScreen = !_isFullScreen;
-//		
-//	if (_isFullScreen)
-//	{
-//		[self.view enterFullScreenMode:[[self.view window] screen] withOptions:nil];
-//	}
-//	else
-//	{
-//		[self.view exitFullScreenModeWithOptions:nil];
-//		[[self.view window] makeFirstResponder: self.view];
-//	}
-//	
-//	return;
-
-	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
-#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-
-    if (_isFullScreen == fullscreen)
-		return;
-
-    CC_VIEW<CCView> *view = self.view;
-    BOOL viewAcceptsTouchEvents = view.acceptsTouchEvents;
-
-    if( fullscreen ) {
-        _originalWinRect = [view frame];
-
-        // Cache normal window and superview of openGLView
-        if(!_windowGLView)
-            _windowGLView = [view window];
-
-        _superViewGLView = [view superview];
-
-
-        // Get screen size
-        NSRect displayRect = [[NSScreen mainScreen] frame];
-
-        // Create a screen-sized window on the display you want to take over
-        _fullScreenWindow = [[CCWindow alloc] initWithFrame:displayRect fullscreen:YES];
-
-        // Remove glView from window
-        [view removeFromSuperview];
-
-        // Set new frame
-        [view setFrame:displayRect];
-
-        // Attach glView to fullscreen window
-        [_fullScreenWindow setContentView:view];
-
-        // Show the fullscreen window
-        [_fullScreenWindow makeKeyAndOrderFront:self];
-        [_fullScreenWindow makeMainWindow];
-        // issue #632
-        self.view.wantsBestResolutionOpenGLSurface = NO;
-
-
-    } else {
-
-        // Remove glView from fullscreen window
-        [view removeFromSuperview];
-
-        // Release fullscreen window
-        _fullScreenWindow = nil;
-
-        // Attach glView to superview
-        [_superViewGLView addSubview:view];
-
-        // Set new frame
-        [view setFrame:_originalWinRect];
-
-        // Show the window
-        [_windowGLView makeKeyAndOrderFront:self];
-        [_windowGLView makeMainWindow];
-        // issue #632
-        self.view.wantsBestResolutionOpenGLSurface = YES;
-
-    }
-    // issue #681
-    [_windowGLView keyDown:nil];
-	
-	// issue #1189
-	[_windowGLView makeFirstResponder:view];
-
-    _isFullScreen = fullscreen;
-
-     // Retain +1
-
-    // re-configure glView
-    [self setView:view];
-    
-    [view setAcceptsTouchEvents:viewAcceptsTouchEvents];
-    
-     // Retain -1
-
-    [view setNeedsDisplay:YES];
-#else
-#error Full screen is not supported for Mac OS 10.5 or older yet
-#error If you don't want FullScreen support, you can safely remove these 2 lines
-#endif
-}
-
--(void) setView:(CC_VIEW<CCView> *)view
-{
-		[super setView:view];
-
-		// cache the NSWindow and NSOpenGLView created from the NIB
-		if( !_isFullScreen && CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero))
-		{
-			_originalWinSizeInPoints = _winSizeInPoints;
-		}
-}
-
-- (CGFloat)deviceContentScaleFactor {
-    if (self.view) {
-        NSRect backingBounds = [self.view convertRectToBacking:[self.view bounds]];
-        
-        return backingBounds.size.width / self.view.bounds.size.width;
-    }
-    
-    return 1.0;
-}
-
--(int) resizeMode
-{
-	return _resizeMode;
-}
-
--(void) setResizeMode:(int)mode
-{
-	if( mode != _resizeMode ) {
-
-		_resizeMode = mode;
-
-        [self setProjection:_projection];
-        [self.view setNeedsDisplay: YES];
-	}
-}
-
--(void) setViewport
-{
-	CGPoint offset = CGPointZero;
-	float widthAspect = _winSizeInPixels.width;
-	float heightAspect = _winSizeInPixels.height;
-
-
-	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
-		
-		float aspect = _originalWinSizeInPoints.width / _originalWinSizeInPoints.height;
-		widthAspect = _winSizeInPixels.width;
-		heightAspect = _winSizeInPixels.width / aspect;
-		
-		if( heightAspect > _winSizeInPixels.height ) {
-			widthAspect = _winSizeInPixels.height * aspect;
-			heightAspect = _winSizeInPixels.height;
-		}
-		
-		_winOffset.x = (_winSizeInPixels.width - widthAspect) / 2;
-		_winOffset.y =  (_winSizeInPixels.height - heightAspect) / 2;
-		
-		offset = _winOffset;
-	}
-	
-	CCRenderDispatch(NO, ^{
-		glViewport(offset.x, offset.y, widthAspect, heightAspect);
-	});
-}
-
--(void) setProjection:(CCDirectorProjection)projection
-{
-	CGSize sizePoint = _winSizeInPoints;
-   	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
-		sizePoint = _originalWinSizeInPoints;
-	}
-
-	[self setViewport];
-
-	switch (projection) {
-		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			break;
-
-
-		case CCDirectorProjection3D: {
-
-		}
-
-		case CCDirectorProjectionCustom:
-			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				[_delegate updateProjection];
-			break;
-
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
-	}
-
-	_projection = projection;
-	[self createStatsLabel];
-}
-
-
-// If scaling is supported, then it should always return the original size
-// otherwise it should return the "real" size.
--(CGSize) winSize
-{
-	if( _resizeMode == kCCDirectorResize_AutoScale )
-		return _originalWinSizeInPoints;
-
-	return _winSizeInPoints;
-}
-
--(CGSize) winSizeInPixels
-{
-	return _winSizeInPixels;
+	return  [self convertToGL:NSPointToCGPoint(point)];
 }
 
 -(CGFloat)flipY
@@ -321,130 +135,10 @@
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	// Mac Retina display?
-	if (self.view.wantsBestResolutionOpenGLSurface &&
-		self.view.window.backingScaleFactor == 2.0) {
-
-		*datapointer = cc_fps_images_hd_png;
-		*len = cc_fps_images_hd_len();
-		*scale = 2;
-	} else {
-
-		*datapointer = cc_fps_images_png;
-		*len = cc_fps_images_len();
-		*scale = 1;
-	}
+    *datapointer = cc_fps_images_hd_png;
+    *len = cc_fps_images_hd_len();
+    *scale = 2;
 }
 
 @end
-
-
-#pragma mark -
-#pragma mark DirectorDisplayLink
-
-
-@implementation CCDirectorDisplayLink
-
-- (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
-{
-    @autoreleasepool
-    {
-		[self performSelector:@selector(mainLoopBody) onThread:_runningThread withObject:nil waitUntilDone:YES];
-
-        return kCVReturnSuccess;
-    }
-}
-
-// This is the renderer output callback function
-static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
-{
-    CVReturn result = [(__bridge CCDirectorDisplayLink*)displayLinkContext getFrameForTime:outputTime];
-    return result;
-}
-
-- (void) startRunLoop
-{
-	[super startRunLoop];
-	
-    if(_animating)
-        return;
-
-	CCLOG(@"cocos2d: startRunLoop");
-    _runningThread = [NSThread mainThread];
-
-	gettimeofday( &_lastUpdate, NULL);
-
-	// Create a display link capable of being used with all active displays
-	CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
-
-	// Set the renderer output callback function
-	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, (__bridge void *)(self));
-
-	// Set the display link for the current renderer
-	CCViewMacGL *openGLview = (CCViewMacGL*) self.view;
-	CGLContextObj cglContext = [[openGLview openGLContext] CGLContextObj];
-	CGLPixelFormatObj cglPixelFormat = [[openGLview pixelFormat] CGLPixelFormatObj];
-	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
-
-	// Activate the display link
-	CVDisplayLinkStart(displayLink);
-    
-    _animating = YES;
-}
-
-- (void) stopRunLoop
-{
-    if(!_animating)
-        return;
-
-	CCLOG(@"cocos2d: stopRunLoop");
-
-	if( displayLink ) {
-		CVDisplayLinkStop(displayLink);
-		CVDisplayLinkRelease(displayLink);
-		displayLink = NULL;
-
-        _runningThread = nil;
-	}
-    
-    _animating = NO;
-}
-
--(void) dealloc
-{
-	if( displayLink ) {
-		CVDisplayLinkStop(displayLink);
-		CVDisplayLinkRelease(displayLink);
-	}
-}
-
-//
-// Mac Director has its own thread
-//
--(void) mainLoop
-{
-	while( ![[NSThread currentThread] isCancelled] ) {
-		// There is no autorelease pool when this method is called because it will be called from a background thread
-		// It's important to create one or you will leak objects
-		@autoreleasepool {
-
-			[[NSRunLoop currentRunLoop] run];
-
-		}
-	}
-}
-
-// set the event dispatcher
--(void) setView:(CC_VIEW<CCView> *)view
-{
-	// Synchronize buffer swaps with vertical refresh rate
-	[[view openGLContext] makeCurrentContext];
-	GLint swapInt = 1;
-	[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
-	
-	[super setView:view];
-}
-
-@end
-
-#endif // __CC_PLATFORM_MAC
+#endif

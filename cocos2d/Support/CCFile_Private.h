@@ -64,6 +64,9 @@ typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
 
 @interface CCFile(Private)
 
+@property(nonatomic, assign) CGFloat contentScale;
+@property(nonatomic, assign) BOOL hasResolutionTag;
+
 /**
  Set the key used on encrypted files the app will be loading.
  It's recommended to set this value only once in your app delegate.
@@ -76,7 +79,7 @@ typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
  */
 +(void)setEncryptionKey:(NSString *)key;
 
--(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale;
+-(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale tagged:(BOOL)tagged;
 -(CGImageSourceRef)createCGImageSource;
 
 

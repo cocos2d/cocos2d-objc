@@ -29,10 +29,12 @@
 
 #import "CCAnimationCache.h"
 #import "ccMacros.h"
-#import "CCSpriteFrameCache.h"
+#import "CCSpriteFrame.h"
+#import "CCSpriteFrameCache_Private.h"
 #import "CCAnimation.h"
 #import "CCSprite.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 
 
 @implementation CCAnimationCache
@@ -105,7 +107,6 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 -(void) parseVersion1:(NSDictionary*)animations
 {
 	NSArray* animationNames = [animations allKeys];
-	CCSpriteFrameCache *frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
 
 	for( NSString *name in animationNames ) {
 		NSDictionary* animationDict = [animations objectForKey:name];
@@ -121,7 +122,7 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 		NSMutableArray *frames = [NSMutableArray arrayWithCapacity:[frameNames count]];
 		
 		for( NSString *frameName in frameNames ) {
-			CCSpriteFrame *spriteFrame = [frameCache spriteFrameByName:frameName];
+			CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithImageNamed:frameName];
 			
 			if ( ! spriteFrame ) {
 				CCLOG(@"cocos2d: CCAnimationCache: Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache. This frame will not be added to the animation.", name, frameName);
@@ -149,7 +150,6 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 -(void) parseVersion2:(NSDictionary*)animations
 {
 	NSArray* animationNames = [animations allKeys];
-	CCSpriteFrameCache *frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
 	
 	for( NSString *name in animationNames )
 	{
@@ -170,7 +170,7 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 
 		for( NSDictionary *entry in frameArray ) {
 			NSString *spriteFrameName = [entry objectForKey:@"spriteframe"];
-			CCSpriteFrame *spriteFrame = [frameCache spriteFrameByName:spriteFrameName];
+			CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 			
 			if( ! spriteFrame ) {
 				CCLOG(@"cocos2d: CCAnimationCache: Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache. This frame will not be added to the animation.", name, spriteFrameName);
@@ -209,6 +209,7 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 	if( properties )
 		version = [[properties objectForKey:@"format"] intValue];
 	
+    #warning TODO uses old sprite frame cache API
 	NSArray *spritesheets = [properties objectForKey:@"spritesheets"];
 	for( NSString *name in spritesheets )
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:name];
@@ -227,15 +228,15 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 
 
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
--(void)addAnimationsWithFile:(NSString *)plist
+-(void)addAnimationsWithFile:(NSString *)plistFile
 {
-	NSAssert( plist, @"Invalid texture file name");
-
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-
-	NSAssert1( dict, @"CCAnimationCache: File could not be found: %@", plist);
-
+    NSError *err = nil;
+    
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
+    
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
 
 	[self addAnimationsWithDictionary:dict];
 }

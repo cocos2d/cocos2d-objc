@@ -29,6 +29,8 @@
 #import "CCImage.h"
 #import "CCDeviceInfo.h"
 #import "CCRenderDispatch.h"
+#import "CCSetup.h"
+#import "CCScene.h"
 
 #import "CCMetalSupport_Private.h"
 #import "CCTexture_Private.h"
@@ -41,6 +43,50 @@
 +(CCDirector *)sharedDirector
 {
     return [CCDirector currentDirector];
+}
+
+-(CGFloat)contentScaleFactor
+{
+	return [CCSetup sharedSetup].contentScale;
+}
+
+-(float)UIScaleFactor
+{
+    return [CCSetup sharedSetup].UIScale;
+}
+
+-(GLKMatrix4)projectionMatrix
+{
+    return self.runningScene.projection;
+}
+
+-(NSThread *)runningThread
+{
+    return [NSThread mainThread];
+}
+
+-(CCTime)animationInterval
+{
+    // Assume 60 fps and make a guess.
+    // This is actually what it did before (or nothing at all), and why it's now deprecated.
+    
+    return self.frameSkipInterval/60.0;
+}
+
+-(void)setAnimationInterval:(CCTime)animationInterval
+{
+    self.frameSkipInterval = ceil(60.0*animationInterval);
+}
+
+- (CCTime)fixedUpdateInterval
+{
+	return self.runningScene.scheduler.fixedUpdateInterval;
+}
+
+-(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
+{
+    [CCSetup sharedSetup].fixedUpdateInterval = fixedUpdateInterval;
+	self.runningScene.scheduler.fixedUpdateInterval = fixedUpdateInterval;
 }
 
 @end
@@ -140,13 +186,13 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 -(void)stopActionByTag:(NSInteger)tag
 {
 	NSAssert(tag != kCCActionTagInvalid, @"Invalid tag");
-	[self.scheduler removeActionByName:[NSString stringWithFormat:@"%d", tag] target:self];
+	[self.scheduler removeActionByName:[NSString stringWithFormat:@"%d", (int)tag] target:self];
 }
 
 -(CCAction *)getActionByTag:(NSInteger)tag
 {
 	NSAssert(tag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[self.scheduler getActionByName:[NSString stringWithFormat:@"%d", tag] target:self];
+	return [self.scheduler getActionByName:[NSString stringWithFormat:@"%d", (int)tag] target:self];
 }
 
 @end
@@ -214,3 +260,9 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 }
 
 @end
+
+BOOL
+CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
+{
+    return CCRenderCheckVisibility(transform, center, extents);
+}
