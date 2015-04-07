@@ -430,12 +430,14 @@ static NSInteger ccbAnimationManagerID = 0;
     [_currentActions addObject:seq];
 }
 
-- (id)actionForCallbackChannel:(CCBSequenceProperty*) channel {
-    float lastKeyframeTime = 0;
+- (id)actionForCallbackChannel:(CCBSequenceProperty*) channel startTime:(float)time {
+    float lastKeyframeTime = time;
     
     NSMutableArray* actions = [NSMutableArray array];
     
     for (CCBKeyframe* keyframe in channel.keyframes) {
+        
+        if(lastKeyframeTime>keyframe.time) continue;
         
         float timeSinceLastKeyframe = keyframe.time - lastKeyframeTime;
         lastKeyframeTime = keyframe.time;
@@ -463,13 +465,15 @@ static NSInteger ccbAnimationManagerID = 0;
     return [CCActionSequence actionWithArray:actions];
 }
 
-- (id)actionForSoundChannel:(CCBSequenceProperty*) channel {
+- (id)actionForSoundChannel:(CCBSequenceProperty*) channel startTime:(float)time {
     
-    float lastKeyframeTime = 0;
+    float lastKeyframeTime = time;
     
     NSMutableArray* actions = [NSMutableArray array];
     
     for (CCBKeyframe* keyframe in channel.keyframes) {
+        
+        if(lastKeyframeTime>keyframe.time) continue;
         
         float timeSinceLastKeyframe = keyframe.time - lastKeyframeTime;
         lastKeyframeTime = keyframe.time;
@@ -569,7 +573,7 @@ static NSInteger ccbAnimationManagerID = 0;
     // Playback callbacks and sounds
     if (seq.callbackChannel) {
         // Build sound actions for channel
-        CCAction* action = [self actionForCallbackChannel:seq.callbackChannel];
+        CCAction* action = [self actionForCallbackChannel:seq.callbackChannel startTime:time];
         if (action) {
             action.tag = (int)_animationManagerId;
             [action startWithTarget:self.rootNode];
@@ -579,7 +583,7 @@ static NSInteger ccbAnimationManagerID = 0;
     
     if (seq.soundChannel) {
         // Build sound actions for channel
-        CCAction* action = [self actionForSoundChannel:seq.soundChannel];
+        CCAction* action = [self actionForSoundChannel:seq.soundChannel startTime:time];
         if (action) {
             action.tag = (int)_animationManagerId;
             [action startWithTarget:self.rootNode];
