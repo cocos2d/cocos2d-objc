@@ -24,9 +24,10 @@
 
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
+#import "CCSetup_Private.h"
+#import "CCShader_Private.h"
 
 #import "CCRenderDispatch.h"
-#import "CCDeviceInfo.h"
 
 
 @implementation CCTextureGL
@@ -43,6 +44,8 @@
 			CCGL_DEBUG_POP_GROUP_MARKER();
 		});
 	}
+    
+    [super dealloc];
 }
 
 static GLenum
@@ -334,6 +337,8 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 {
 	GLuint vao = _vao;
 	CCRenderDispatch(YES, ^{glDeleteVertexArrays(1, &vao);});
+    
+    [super dealloc];
 }
 
 -(void)bind:(BOOL)bind vertexPage:(NSUInteger)vertexPage
@@ -456,6 +461,8 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			glDeleteRenderbuffers(1, &stencilRenderBuffer);
 		}
 	});
+    
+    [super dealloc];
 }
 
 -(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
@@ -481,6 +488,92 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 {
 	[super syncWithView:view];
 	_fbo = [view fbo];
+}
+
+@end
+
+@interface CCRenderStateGL : CCRenderState @end
+@implementation CCRenderStateGL
+
+static void
+CCRenderStateGLTransition(CCRenderStateGL *self, CCRenderer *renderer, CCRenderStateGL *previous)
+{
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderStateGL: Transition");
+	
+	// Set the blending state.
+	if(previous ==  nil || self->_blendMode != previous->_blendMode){
+		CCGL_DEBUG_INSERT_EVENT_MARKER("Blending mode");
+		
+		NSDictionary *blendOptions = self->_blendMode->_options;
+		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
+			glDisable(GL_BLEND);
+		} else {
+			glEnable(GL_BLEND);
+			
+			glBlendFuncSeparate(
+				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
+				[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
+				[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
+				[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
+			);
+			
+			glBlendEquationSeparate(
+				[blendOptions[CCBlendEquationColor] unsignedIntValue],
+				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
+			);
+		}
+	}
+	
+	// Bind the shader.
+	BOOL bindShader = (previous == nil || self->_shader != previous->_shader);
+	if(bindShader){
+		CCGL_DEBUG_INSERT_EVENT_MARKER("Shader");
+		
+		glUseProgram(self->_shader->_program);
+	}
+	
+	// Set the shader's uniform state.
+	if(bindShader || self->_shaderUniforms != previous->_shaderUniforms){
+		CCGL_DEBUG_INSERT_EVENT_MARKER("Uniforms");
+		
+		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
+		NSDictionary *setters = self->_shader->_uniformSetters;
+		for(NSString *uniformName in setters){
+			CCUniformSetter setter = setters[uniformName];
+			setter(renderer, self->_shaderUniforms, globalShaderUniforms);
+		}
+	}
+	
+	CCGL_DEBUG_POP_GROUP_MARKER();
+	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderStateGL *)previous
+{
+	CCRenderStateGLTransition(self, renderer, previous);
+}
+
+@end
+
+@interface CCRenderCommandDrawGL : CCRenderCommandDraw @end
+@implementation CCRenderCommandDrawGL
+
+static const CCRenderCommandDrawMode GLDrawModes[] = {
+	GL_TRIANGLES,
+	GL_LINES,
+};
+
+-(void)invokeOnRenderer:(CCRenderer *)renderer
+{
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
+	
+	CCRendererBindBuffers(renderer, YES, _vertexPage);
+	CCRenderStateGLTransition((CCRenderStateGL *)_renderState, renderer, (CCRenderStateGL *)renderer->_renderState);
+	renderer->_renderState = _renderState;
+	
+	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_firstIndex*sizeof(GLushort)));
+    
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 @end

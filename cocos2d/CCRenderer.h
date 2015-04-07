@@ -33,7 +33,7 @@
 
 /// Check if the given bounding box as specified by it's center and extents (half with/height) is visible onscreen.	
 static inline BOOL
-CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
+CCRenderCheckVisibility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
 {
 	// Center point in clip coordinates.
 	GLKVector4 csc = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(center.x, center.y, 0.0f, 1.0f));

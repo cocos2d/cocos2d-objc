@@ -16,7 +16,7 @@
     NSAssert(sb != nil, @"Unable to load spritebuilder file.");
     
     CCSprite *bird = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
-    [sb.children[0] addChild:bird];
+    [(CCNode *)sb.children[0] addChild:bird];
     
 	[self.contentNode addChild:sb];
 }
@@ -29,7 +29,7 @@
     
     CCNode *sb = [CCBReader load:@"Resources-shared/SimpleAnimation"];
     CCSprite *bird = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
-    [sb.children[0] addChild:bird];
+    [(CCNode *)sb.children[0] addChild:bird];
     
     [self.contentNode addChild:sb];
     
@@ -52,7 +52,7 @@
         
         CCNode *sb = [CCBReader load:@"Resources-shared/SimpleAnimation"];
         CCSprite *bird = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
-        [sb.children[0] addChild:bird];
+        [(CCNode *)sb.children[0] addChild:bird];
         
         sb.positionType = CCPositionTypeNormalized;
         sb.position = ccp(CCRANDOM_0_1() * 0.7f, CCRANDOM_0_1() * 0.5f);

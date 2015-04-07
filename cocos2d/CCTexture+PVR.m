@@ -431,7 +431,7 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
         _sizeInPixels = info.size;
         _type = info.type;
         self.contentScale = file.contentScale;
-        _contentSize = CC_SIZE_SCALE(info.size, 1.0/file.contentScale);
+        _contentSizeInPixels = info.size;
     }
     
     [stream close];

@@ -73,7 +73,7 @@ extern const NSString *CARD_NAME[];
 
 - (NSString *)randomCard
 {
-    return([NSString stringWithFormat:@"%@.%d.png", CARD_NAME[arc4random() % 4], 1 + (arc4random() % 13)]);
+    return([NSString stringWithFormat:@"Cards/cards_classic/%@.%d.png", CARD_NAME[arc4random() % 4], 1 + (arc4random() % 13)]);
 }
 
 - (void)setupPositioningTest
@@ -82,9 +82,6 @@ extern const NSString *CARD_NAME[];
 
     self.subTitle = @"Move cards around";
     
-    // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
-
     // add cards with normalized positioning
     for (int count = 0; count < NUMBER_OF_CARDS; count ++)
     {

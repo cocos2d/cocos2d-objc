@@ -65,7 +65,7 @@ const NSString *CARD_NAME[] =
 
 - (NSString *)randomCard
 {
-    return([NSString stringWithFormat:@"%@.%d.png", CARD_NAME[arc4random() % 4], 1 + (arc4random() % 13)]);
+    return([NSString stringWithFormat:@"Cards/cards_classic/%@.%d.png", CARD_NAME[arc4random() % 4], 1 + (arc4random() % 13)]);
 }
 
 - (void)setupVertexZTest
@@ -73,9 +73,6 @@ const NSString *CARD_NAME[] =
     self.subTitle = @"Tests vertexZ (hardware Z) for batch nodes";
 		
 		[self addButtons];
-
-    // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
 
     // add a card node to hold the cards
     _cardNode = [CCNode node];
@@ -102,9 +99,6 @@ const NSString *CARD_NAME[] =
     self.subTitle = @"Tests global sorting order.";
 		
 		[self addButtons];
-
-    // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
 
     // add a card node to hold the cards
     _cardNode = [CCNode node];

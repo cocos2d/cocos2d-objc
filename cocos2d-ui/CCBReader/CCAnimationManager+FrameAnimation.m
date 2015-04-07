@@ -9,8 +9,9 @@
 #import "CCAnimationManager+FrameAnimation.h"
 #import "CCAnimationManager_Private.h"
 #import "CCSpriteFrame.h"
-#import "CCSpriteFrameCache.h"
-#import "CCFileUtils.h"
+#import "CCSpriteFrameCache_Private.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 
 @implementation CCAnimationManager (FrameAnimation)
 
@@ -63,7 +64,7 @@
 		}
 
 		for( NSString *frameName in frameNames ) {
-			CCSpriteFrame *spriteFrame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:frameName];
+			CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithImageNamed:frameName];
 			
 			if ( !spriteFrame ) {
 				CCLOG(@"Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache.  This frame will not be added to the animation - Skipping", name, frameName);
@@ -99,7 +100,7 @@
         
 		for( NSDictionary *entry in frameArray ) {
 			NSString *spriteFrameName = [entry objectForKey:@"spriteframe"];
-			CCSpriteFrame *spriteFrame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+			CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithImageNamed:spriteFrameName];
 			
 			if ( !spriteFrame ) {
 				CCLOG(@"Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache.  This frame will not be added to the animation - Skipping", name, spriteFrameName);
@@ -134,6 +135,7 @@
 	
 	NSArray *spritesheets = [properties objectForKey:@"spritesheets"];
     
+    #warning TODO uses old spriteframe cache API
     // Ensure Sheets Loaded
 	for( NSString *name in spritesheets ) {
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:name];
@@ -152,12 +154,14 @@
 }
 
 
-- (void)addAnimationsWithFile:(NSString *)plist node:(CCNode*)node {
+- (void)addAnimationsWithFile:(NSString *)plistFile node:(CCNode*)node {
+    NSError *err = nil;
     
-    NSString *path     = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+    NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
     
-	NSAssert1( dict, @"Animation file could not be found: %@", plist);
+    NSDictionary *dict = [file loadPlist:&err];
+    NSAssert(err == nil, @"Error loading %@: %@", plistFile, err);
     
 	[self addAnimationsWithDictionary:dict node:node];
 }

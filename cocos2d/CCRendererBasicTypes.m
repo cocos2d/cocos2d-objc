@@ -25,10 +25,11 @@
 #import "CCRendererBasicTypes.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCCache.h"
-#import "CCDeviceInfo.h"
 #import "ccUtils.h"
+#import "CCSetup.h"
 
 #pragma mark Blend Option Keys.
 NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";
@@ -51,10 +52,7 @@ NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 @end
 
 
-@interface CCBlendModeCache : CCCache
-@end
-
-
+@interface CCBlendModeCache : CCCache @end
 @implementation CCBlendModeCache
 
 -(id)objectForKey:(id<NSCopying>)options
@@ -94,7 +92,7 @@ NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 -(id)createPublicObjectForSharedData:(NSDictionary *)options
 {
-	return [[CCBlendMode alloc] initWithOptions:options];
+	return [[[CCBlendMode alloc] initWithOptions:options] autorelease];
 }
 
 // Nothing special
@@ -116,10 +114,17 @@ NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 -(instancetype)initWithOptions:(NSDictionary *)options
 {
 	if((self = [super init])){
-		_options = options;
+		_options = [options retain];
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    [_options release]; _options = nil;
+    
+    [super dealloc];
 }
 
 static CCBlendModeCache *CCBLENDMODE_CACHE = nil;
@@ -141,28 +146,28 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 	CCBLENDMODE_CACHE = [[CCBlendModeCache alloc] init];
 	
 	// Add the default modes
-	CCBLEND_DISABLED = [self blendModeWithOptions:@{}];
+	CCBLEND_DISABLED = [[self blendModeWithOptions:@{}] retain];
 	CCBLEND_DISABLED_OPTIONS = CCBLEND_DISABLED.options;
 	
-	CCBLEND_ALPHA = [self blendModeWithOptions:@{
+	CCBLEND_ALPHA = [[self blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(GL_SRC_ALPHA),
 		CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
-	}];
+	}] retain];
 	
-	CCBLEND_PREMULTIPLIED_ALPHA = [self blendModeWithOptions:@{
+	CCBLEND_PREMULTIPLIED_ALPHA = [[self blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(GL_ONE),
 		CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
-	}];
+	}] retain];
 	
-	CCBLEND_ADD = [self blendModeWithOptions:@{
+	CCBLEND_ADD = [[self blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(GL_ONE),
 		CCBlendFuncDstColor: @(GL_ONE),
-	}];
+	}] retain];
 	
-	CCBLEND_MULTIPLY = [self blendModeWithOptions:@{
+	CCBLEND_MULTIPLY = [[self blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(GL_DST_COLOR),
 		CCBlendFuncDstColor: @(GL_ZERO),
-	}];
+	}] retain];
 }
 
 +(void)flushCache
@@ -310,15 +315,24 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		NSAssert(shader, @"CCRenderState: Shader is nil");
 		NSAssert(shaderUniforms, @"CCRenderState: shader uniform dictionary is nil.");
 		
-		_blendMode = blendMode;
-		_shader = shader;
-		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
+		_blendMode = [blendMode retain];
+		_shader = [shader retain];
+		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : [shaderUniforms retain]);
 		
 		// The renderstate as a whole is immutable if the uniforms are copied.
 		_immutable = copyUniforms;
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+    [_blendMode release]; _blendMode = nil;
+    [_shader release]; _shader = nil;
+    [_shaderUniforms release]; _shaderUniforms = nil;
+    
+    [super dealloc];
 }
 
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
@@ -328,18 +342,22 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		mainTexture = [CCTexture none];
 	}
 	
-	return [CCRENDERSTATE_CACHE objectForKey:[[CCRenderStateCacheKey alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture]];
+    CCRenderStateCacheKey *key = [[CCRenderStateCacheKey alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture];
+    CCRenderState *renderState = [CCRENDERSTATE_CACHE objectForKey:key];
+    [key release];
+    
+    return renderState;
 }
 
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
 {
-	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
+	return [[[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:copyUniforms] autorelease];
 }
 
 -(id)copyWithZone:(NSZone *)zone
 {
 	if(_immutable){
-		return self;
+		return [self retain];
 	} else {
 		return [[CCRenderStateClass allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
 	}
@@ -389,6 +407,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 -(void)dealloc
 {
 	[self destroy];
+    [super dealloc];
 }
 
 @end
@@ -398,6 +417,15 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 
 @implementation CCGraphicsBufferBindings
+
+-(void)dealloc
+{
+    [_vertexBuffer release]; _vertexBuffer = nil;
+    [_indexBuffer release]; _indexBuffer = nil;
+    [_uniformBuffer release]; _uniformBuffer = nil;
+    
+    [super dealloc];
+}
 
 // Base implementation does nothing.
 -(void)bind:(BOOL)bind vertexPage:(NSUInteger)vertexPage {}
@@ -427,7 +455,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 -(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if((self = [super init])){
-		_texture = texture;
+		_texture = [texture retain];
 		
 		_sizeInPixels = CC_SIZE_SCALE(texture.contentSize, texture.contentScale);
 		_contentScale = texture.contentScale;
@@ -438,14 +466,20 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return self;
 }
 
+-(void)dealloc
+{
+    [_texture release]; _texture = nil;
+    
+    [super dealloc];
+}
+
 -(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
 {NSAssert(NO, @"Must be overridden.");}
 
 -(void)syncWithView:(CC_VIEW<CCView> *)view;
 {
-	CCDirector *director = view.director;
-	self.sizeInPixels = director.viewSizeInPixels;
-	self.contentScale = director.contentScaleFactor;
+	self.sizeInPixels = view.sizeInPixels;
+	self.contentScale = [CCSetup sharedSetup].contentScale;
 }
 
 @end

@@ -85,22 +85,11 @@
 // -----------------------------------------------------------------
 
 @interface CCResponderTest : TestBase @end
-
-@implementation CCResponderTest
-
-// -----------------------------------------------------------------
-
-- (NSArray*) testConstructors
-{
-    return [NSArray arrayWithObjects:
-            @"setupSimpleMultiTouchTest",
-            @"setupExclusiveTouchTest",
-            @"setupTouchPositioning",
-            nil];
+@implementation CCResponderTest {
+    CCLabelTTF* _message;
 }
 
-// -----------------------------------------------------------------
-
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 - (void) setupSimpleMultiTouchTest
 {
     self.subTitle = @"All your touches should be tracked with sprites.";
@@ -147,7 +136,61 @@
     [self.contentNode addChild:button3];
 
 }
+#endif
 
-// -----------------------------------------------------------------
+#if __CC_PLATFORM_MAC
+- (void) setupBasicLoopTest
+{
+    self.subTitle = @"On desktop platforms, pressing a key should change the message on screen.";
+
+    _message = [CCLabelTTF labelWithString:@"Last Key:" fontName:@"HelveticaNeue-Light" fontSize:32];
+    _message.positionType = CCPositionTypeNormalized;
+    _message.position = ccp(0.5, 0.5);
+    _message.horizontalAlignment = CCTextAlignmentCenter;
+
+    self.userInteractionEnabled = YES;
+
+    CCNode *keycatcher = [CCNode node];
+    keycatcher.userInteractionEnabled = YES;
+    keycatcher.name = @"key catcher";
+
+    [self addChild:keycatcher];
+    [self addChild:_message];
+}
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    _message.string = [NSString stringWithFormat:@"Key Down:\n\tcode=%d\n\tchars=%@", theEvent.keyCode, theEvent.characters];
+}
+
+-(void)keyUp:(NSEvent *)theEvent
+{
+    _message.string = [NSString stringWithFormat:@"Key Up:\n\tcode=%d\n\tchars=%@", theEvent.keyCode, theEvent.characters];
+}
+
+-(void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button
+{
+    NSPoint location = theEvent.locationInWorld;
+    _message.string = [NSString stringWithFormat:@"MouseDown:\n\tloc=(% 3.1f, % 3.1f)\n\tbutton=%d", location.x, location.y, (int)theEvent.buttonNumber];
+}
+
+-(void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton)button
+{
+    NSPoint location = theEvent.locationInWorld;
+    _message.string = [NSString stringWithFormat:@"MouseUp:\n\tloc=(% 3.1f, % 3.1f)\n\tbutton=%d", location.x, location.y, (int)theEvent.buttonNumber];
+}
+
+-(void)mouseMoved:(NSEvent *)theEvent
+{
+    NSPoint location = theEvent.locationInWorld;
+    _message.string = [NSString stringWithFormat:@"MouseMoved:\n\tloc=(% 3.1f, % 3.1f)", location.x, location.y];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button
+{
+    NSPoint location = theEvent.locationInWorld;
+    _message.string = [NSString stringWithFormat:@"MouseDragged:\n\tloc=(% 3.1f, % 3.1f)\n\tbutton=%d", location.x, location.y, (int)theEvent.buttonNumber];
+}
+#endif
 
 @end

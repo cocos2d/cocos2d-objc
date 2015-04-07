@@ -3,7 +3,7 @@
 #import "CCPackage.h"
 #import "CCPackageCocos2dEnabler.h"
 #import "CCPackage_private.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCPackageHelper.h"
 
 

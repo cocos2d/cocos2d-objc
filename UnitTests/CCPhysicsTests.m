@@ -29,9 +29,7 @@
 
 - (void)setUp
 {
-    [super setUp];
-    
-    CCDirector *director = [CCDirector director];
+    CCDirector *director = [[CCDirector alloc] initWithView:nil];
     [CCDirector pushCurrentDirector:director];
 }
 

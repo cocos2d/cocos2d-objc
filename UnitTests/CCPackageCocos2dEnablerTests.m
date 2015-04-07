@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "CCPackageCocos2dEnabler.h"
 #import "CCPackage.h"
-#import "CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "CCSprite.h"
 #import "CCBReader.h"
 #import "AppDelegate.h"

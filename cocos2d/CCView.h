@@ -26,4 +26,6 @@
 @property(nonatomic, strong, readonly) CCDirector *director;
 @property(nonatomic, readonly) GLuint fbo;
 
+@property(nonatomic, readonly) CGSize sizeInPixels;
+
 @end

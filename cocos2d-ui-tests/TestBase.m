@@ -57,13 +57,13 @@
     [self addChild:_headerBg];
     
     // Header label
-    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
+    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCSetup sharedSetup].UIScale];
     _lblTitle.positionType = CCPositionTypeNormalized;
     _lblTitle.position = ccp(0.5f,0.5f);
     
     [_headerBg addChild:_lblTitle];
     
-    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
+    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCSetup sharedSetup].UIScale];
 		_lblSubTitle.shadowColor = [CCColor blackColor];
 		_lblSubTitle.shadowBlurRadius = 2.5;
     _lblSubTitle.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
@@ -73,7 +73,7 @@
     [self addChild:_lblSubTitle];
     
     // Back button
-    CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-back.png"];
+    CCSpriteFrame* frame = [CCSpriteFrame frameWithImageNamed:@"Interface/btn-back.png"];
     
     _btnBack = [CCButton buttonWithTitle:NULL spriteFrame:frame];
     _btnBack.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
@@ -84,7 +84,7 @@
     [self addChild:_btnBack];
     
     // Prev button
-    _btnPrev = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-prev.png"]];
+    _btnPrev = [CCButton buttonWithTitle:NULL spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Interface/btn-prev.png"]];
     _btnPrev.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
     _btnPrev.position = ccp(22, 22);
     _btnPrev.background.opacity = 0;
@@ -93,7 +93,7 @@
     [self addChild:_btnPrev];
     
     // Next button
-    _btnNext = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-next.png"]];
+    _btnNext = [CCButton buttonWithTitle:NULL spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Interface/btn-next.png"]];
     _btnNext.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomRight);
     _btnNext.position = ccp(22, 22);
     _btnNext.background.opacity = 0;
@@ -102,7 +102,7 @@
     [self addChild:_btnNext];
     
     // Reload button
-    _btnReload = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-reload.png"]];
+    _btnReload = [CCButton buttonWithTitle:NULL spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Interface/btn-reload.png"]];
     _btnReload.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
     _btnReload.position = ccp(0.5, 22);
     _btnReload.background.opacity = 0;
@@ -165,6 +165,10 @@
 {
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
     [[CCDirector currentDirector] presentScene:[MainMenu scene] withTransition:transition];
+    
+    // TODO this is sort of a dumb hack.
+    // Something is causing a retain cycle with self.contentNode, but I cannot find it.
+    [self.contentNode removeAllChildrenWithCleanup:YES];
 }
 
 - (void) pressedReset:(id)sender

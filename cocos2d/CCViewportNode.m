@@ -11,6 +11,8 @@
 #import "CCDirector.h"
 #import "ccUtils.h"
 #import "CCDeviceInfo.h"
+#import "CCProjectionDelegate.h"
+#import "CCSetup.h"
 
 #define NEAR_Z -1024
 #define FAR_Z 1024
@@ -194,7 +196,7 @@
 static void
 SetViewport(int minx, int miny, int maxx, int maxy)
 {
-    switch([CCDeviceInfo graphicsAPI]){
+    switch([CCSetup sharedSetup].graphicsAPI){
         case CCGraphicsAPIGL: {
             glViewport((GLint)minx, (GLint)miny, (GLint)(maxx - minx), (GLint)(maxy - miny));
             break;
@@ -260,6 +262,40 @@ SetViewport(int minx, int miny, int maxx, int maxy)
     // Reset the viewport.
     [renderer enqueueBlock:^{SetViewport(0, 0, framebufferSize.width, framebufferSize.height);} globalSortOrder:NSIntegerMax debugLabel:@"CCViewportNode: Reset viewport" threadSafe:YES];
     [renderer popGroupWithDebugLabel:@"CCViewportNode" globalSortOrder:0];
+}
+
+@end
+
+
+@implementation CCParallaxProjection {
+    __weak CCViewportNode *_viewport;
+}
+
+-(instancetype)initWithViewportNode:(CCViewportNode *)viewport
+{
+    if((self = [super init])){
+        _viewport = viewport;
+    }
+    
+    return self;
+}
+
+-(GLKMatrix4)projection
+{
+    CGSize size = _viewport.contentSizeInPoints;
+    float w = size.width, h = size.height;
+    
+    CGPoint p = _viewport.camera.position;
+    
+    return GLKMatrix4Multiply(
+        GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024),
+        GLKMatrix4Make(
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            -p.x, -p.y, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        )
+    );
 }
 
 @end

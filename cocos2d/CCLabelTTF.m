@@ -27,10 +27,11 @@
 
 
 #import "CCLabelTTF.h"
-#import "Support/CGPointExtension.h"
+#import "CGPointExtension.h"
 #import "ccMacros.h"
 #import "CCShader.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator.h"
+#import "CCFile.h"
 #import "ccMacros.h"
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
@@ -42,6 +43,7 @@
 #import "CCRenderableNode_Private.h"
 #import "CCColor.h"
 #import "CCImage_Private.h"
+#import "CCSetup.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -474,7 +476,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGSize originalDimensions = _dimensions;
   
-    CGFloat scale = __ccContentScaleFactor;
+    CGFloat scale = [CCSetup sharedSetup].assetScale;
     originalDimensions.width *= scale;
     originalDimensions.height *= scale;
     
@@ -638,7 +640,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGContextRelease(context);
     
-    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCDirector currentDirector].contentScaleFactor pixelData:pixelData];
+    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCSetup sharedSetup].assetScale pixelData:pixelData];
     image.contentSize = CC_SIZE_SCALE(dimensions, 1.0/image.contentScale);
 	return [[CCTexture alloc] initWithImage:image options:nil];
 }
@@ -674,11 +676,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if ([[fontFile lowercaseString] hasSuffix:@".ttf"] || [[fontFile lowercaseString] hasSuffix:@".otf"])
     {
         // This is a file, register font with font manager
-        NSString* fontPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fontFile];
-        NSCAssert(fontPath != nil, @"FontFile can not be located");
+        NSError *err = nil;
+        CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:fontFile error:&err];
+        NSCAssert(err == nil, @"Font could not be found %@: %@", fontFile, err);
         
-        NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
-        CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
+        CTFontManagerRegisterFontsForURL((__bridge CFURLRef)file.url, kCTFontManagerScopeProcess, NULL);
         NSString *fontName = nil;
 
         BOOL needsCGFontFailback = NO;
@@ -686,7 +688,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         needsCGFontFailback = YES;
 #endif
         if (needsCGFontFailback) {
-            CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
+            CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)file.url);
             if (!descriptors || CFArrayGetCount(descriptors)<1) {
                 return nil;
             }
@@ -695,7 +697,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             CFRelease(descriptors);
             
         } else {
-            CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)fontURL);
+            CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)file.url);
             CGFontRef loadedFont = CGFontCreateWithDataProvider(fontDataProvider);
             fontName = (__bridge NSString *)CGFontCopyPostScriptName(loadedFont);
             
