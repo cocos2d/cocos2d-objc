@@ -2,100 +2,8 @@
 #import "CCRenderer_Private.h"
 #import "CCNode_Private.h"
 #import "chipmunk/chipmunk.h"
-#import <objc/message.h>
 #import "CCViewportNode.h"
-
-@interface CCAbstractProjection : NSObject @end
-@implementation CCAbstractProjection {
-    @protected
-    __weak CCNode *_target;
-}
-
--(instancetype)initWithTarget:(CCNode *)target
-{
-    if((self = [super init])){
-        _target = target;
-    }
-    
-    return self;
-}
-
-@end
-
-
-@interface CCCentereredOrthoProjection : CCAbstractProjection<CCProjectionDelegate> @end
-@implementation CCCentereredOrthoProjection
-
--(GLKMatrix4)projection
-{
-    CGSize size = _target.contentSizeInPoints;
-    float w = size.width, h = size.height;
-    
-    // TODO magic numbers
-    return GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024);
-}
-
-@end
-
-
-@interface CCParallaxProjection : CCAbstractProjection<CCProjectionDelegate> @end
-@implementation CCParallaxProjection {
-    SEL _cameraSelector;
-}
-
--(instancetype)initWithTarget:(CCNode *)target cameraSelector:(SEL)cameraSelector
-{
-    if((self = [super initWithTarget:target])){
-        _cameraSelector = cameraSelector;
-    }
-    
-    return self;
-}
-
--(GLKMatrix4)projection
-{
-    CGSize size = _target.contentSizeInPoints;
-    float w = size.width, h = size.height;
-    
-    typedef CCNode *(*Func)(id, SEL);
-    CCNode *camera = ((Func)objc_msgSend)(_target, _cameraSelector);
-    CGPoint p = camera.position;
-    
-    return GLKMatrix4Multiply(
-        GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024),
-        GLKMatrix4Make(
-            1.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 0.0f,
-            -p.x, -p.y, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f
-        )
-    );
-}
-
-@end
-
-
-@interface CCPerspectiveProjection : CCAbstractProjection<CCProjectionDelegate> @end
-@implementation CCPerspectiveProjection
-
--(GLKMatrix4)projection
-{
-    CGSize size = _target.contentSizeInPoints;
-    float w = size.width, h = size.height;
-    
-    // TODO magic numbers
-    float eye = 1;
-    float near = eye;
-    float far = eye + 1;
-    float s = 2.0*eye/near;
-    
-    return GLKMatrix4Multiply(
-        GLKMatrix4MakeFrustum(-w/s, w/s, -h/s, h/s, near, far),
-        GLKMatrix4MakeTranslation(0, 0, -eye)
-    );
-}
-
-@end
+#import "CCProjectionDelegate.h"
 
 
 @interface CCViewportNodeTest : TestBase @end
@@ -103,9 +11,9 @@
     CCTime _time;
     
     CCViewportNode *_viewport;
-    id<CCProjectionDelegate> _orthoProjectionDelegate;
-    id<CCProjectionDelegate> _parallaxProjectionDelegate;
-    id<CCProjectionDelegate> _perspectiveProjectionDelegate;
+    CCCenteredOrthoProjection *_orthoProjectionDelegate;
+    CCParallaxProjection *_parallaxProjectionDelegate;
+    CCCenteredPerspectiveProjection *_perspectiveProjectionDelegate;
 }
 
 - (void)setupViewPortTest
@@ -117,9 +25,13 @@
     _viewport.contentSize = [CCDirector currentDirector].viewSize;
     [self.contentNode addChild:_viewport];
     
-    _orthoProjectionDelegate = [[CCCentereredOrthoProjection alloc] initWithTarget:_viewport];
-    _parallaxProjectionDelegate = [[CCParallaxProjection alloc] initWithTarget:_viewport cameraSelector:@selector(camera)];
-    _perspectiveProjectionDelegate = [[CCPerspectiveProjection alloc] initWithTarget:_viewport];
+    _orthoProjectionDelegate = [[CCCenteredOrthoProjection alloc] initWithTarget:_viewport];
+    _parallaxProjectionDelegate = [[CCParallaxProjection alloc] initWithViewportNode:_viewport];
+    _perspectiveProjectionDelegate = [[CCCenteredPerspectiveProjection alloc] initWithTarget:_viewport];
+    _perspectiveProjectionDelegate.eyeZ = 1.0;
+    _perspectiveProjectionDelegate.nearZ = 1.0;
+    _perspectiveProjectionDelegate.farZ = 2.0;
+    
     _viewport.projectionDelegate = _orthoProjectionDelegate;
         
     CCNodeColor *grey = [CCNodeColor nodeWithColor:[CCColor grayColor]];

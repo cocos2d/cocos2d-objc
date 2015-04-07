@@ -93,7 +93,7 @@ static CGPoint scrollPosition;
     [self addChild:headerBg];
     
     // Header label
-    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
+    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCSetup sharedSetup].UIScale];
     lblTitle.positionType = CCPositionTypeNormalized;
     lblTitle.position = ccp(0.5, 0.5);
     
@@ -147,7 +147,7 @@ static CGPoint scrollPosition;
     [cell.button setBackgroundSpriteFrame:frameNormal forState:CCControlStateNormal];
     [cell.button setBackgroundSpriteFrame:frameHilite forState:CCControlStateHighlighted];
     
-    CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
+    CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17 * [CCSetup sharedSetup].UIScale];
     label.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft);
     label.position = ccp(20, 0.5f);
     label.anchorPoint = ccp(0, 0.5f);

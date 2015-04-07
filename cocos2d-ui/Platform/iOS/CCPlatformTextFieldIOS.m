@@ -9,7 +9,8 @@
 #import "CCPlatformTextFieldIOS.h"
 #import "CCDirector.h"
 #import "CCControl.h"
-#import <UIKit/UITextField.h>
+#import "CCSetup.h"
+#import <UIKit/UIKit.h>
 
 @implementation CCPlatformTextFieldIOS {
     UITextField *_textField;
@@ -25,7 +26,7 @@
         _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         
         // UIKit might not be running in the same scale as us.
-        _scaleMultiplier = [CCDirector currentDirector].contentScaleFactor/[UIScreen mainScreen].scale;
+        _scaleMultiplier = [CCSetup sharedSetup].contentScale/[UIScreen mainScreen].scale;
         
     }
     return self;

@@ -79,6 +79,14 @@
 @property(nonatomic, readonly) CGFloat contentScale;
 
 /**
+ If the file is tagged with an explicit resolution. (ex: "Hero-2x.png" vs "Hero.png") This is important for certain assets such as images.
+ Untagged images are treated as having a content scale of CCFileLocator.untaggedContentScale and are rescaled to more closely match the device when loaded.
+
+ @since 4.0.0
+ */
+@property(nonatomic, readonly) BOOL hasResolutionTag;
+
+/**
  Assume the file is a plist and read it's contents.
 
  @param error If an error occurs, upon return contains an NSError object that describes the problem.

@@ -10,6 +10,10 @@
 #import "CCDirector.h"
 #import "CCNode.h"
 
+#if __CC_PLATFORM_IOS
+#import <UIKit/UITouch.h>
+#endif
+
 #if __CC_PLATFORM_ANDROID
 #import "CCTouchAndroid.h"
 #endif

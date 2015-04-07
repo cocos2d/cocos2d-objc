@@ -29,10 +29,14 @@
 #import <CoreText/CoreText.h>
 
 #import "ccMacros.h"
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
 
 #import "NSAttributedString+CCAdditions.h"
 
 #import "CCDirector.h"
+#import "CCSetup.h"
 #import "CCColor.h"
 
 
@@ -81,7 +85,7 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
-    CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
+    CGFloat scale = [CCSetup sharedSetup].contentScale;
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
@@ -287,7 +291,6 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
     NSMutableAttributedStringSetDefaultAttribute(string, NSParagraphStyleAttributeName, style);
     
     
-    
 #else
     // You betcha not to have those attributes on Android, they are not supported
     assert(!NSAttributedStringHasAttribute(string, @"NSParagraphStyle"));
@@ -330,7 +333,7 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
 #else
     NSString *foregroundColorAttributeName = (__bridge id)kCTForegroundColorAttributeName;
 #endif
-    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge id)defaultColor.CGColor);
+    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge_transfer id)defaultColor.CGColor);
     useFullColor |= (![defaultColor isEqualToColor:[CCColor whiteColor]]) && colorChanged;
     
     // Font

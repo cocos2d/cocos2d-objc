@@ -53,8 +53,8 @@
 #import "Platforms/CCGL.h"
 
 // Singletons:
+#import "CCSetup.h"
 #import "CCDirector.h"
-#import "CCSpriteFrameCache.h"
 
 // Basic Types:
 #import "CCProtocols.h"
@@ -117,6 +117,7 @@
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
 #import "CCEffectDFInnerGlow.h"
+#import "CCEffectStereo.h"
 #endif
 
 // Actions:
@@ -145,7 +146,7 @@
 #import "CCPackage.h"
 #import "CCDeviceInfo.h"
 #import "CCFile.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
 #import "Support/uthash.h"
@@ -165,13 +166,11 @@
 #import "Platforms/CCNS.h"
 
 #if __CC_PLATFORM_IOS
-#import "CCAppDelegate.h"
 #import "Platforms/iOS/CCViewiOSGL.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCViewMacGL.h"
 #import "Platforms/Mac/CCDirectorMac.h"
-#import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/NSEvent+CC.h"
 #elif __CC_PLATFORM_ANDROID
 #import "Platforms/Android/CCActivity.h"

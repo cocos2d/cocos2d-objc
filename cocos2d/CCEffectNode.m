@@ -14,7 +14,7 @@
 #import "CCShader.h"
 #import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileLocator.h"
 #import "Support/CGPointExtension.h"
 
 #import "CCTexture_Private.h"

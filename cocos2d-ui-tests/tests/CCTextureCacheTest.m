@@ -8,6 +8,7 @@
 
 #import "TestBase.h"
 #import "CCTextureCache.h"
+#import "CCSpriteFrameCache_Private.h"
 
 @interface CCTextureCacheTest : TestBase
 @property (nonatomic,strong) CCTexture* texture;

@@ -60,10 +60,7 @@
  */
 
 @interface CCDirectorDisplayLink : CCDirectorIOS
-{
-	CADisplayLink	*_displayLink;
-	CFTimeInterval	_lastDisplayTime;
-}
+
 -(void) mainLoop:(id)sender;
 @end
 

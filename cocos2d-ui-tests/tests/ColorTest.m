@@ -14,16 +14,16 @@
 
 - (void) setUp
 {
-    NSArray *searchPath = [NSArray arrayWithObjects:
-                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
-                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
-                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
-                           [[NSBundle mainBundle] resourcePath],
-                           @"Images",
-                           kCCFileUtilsDefaultSearchPath,
-                           nil];
-    
-	[[CCFileUtils sharedFileUtils] setSearchPath:searchPath];
+//    NSArray *searchPath = [NSArray arrayWithObjects:
+//                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+//                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+//                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+//                           [[NSBundle mainBundle] resourcePath],
+//                           @"Images",
+//                           kCCFileUtilsDefaultSearchPath,
+//                           nil];
+//    
+//	[[CCFileUtils sharedFileUtils] setSearchPath:searchPath];
 }
 
 - (CCSprite *) loadAndDisplayImageNamed:(NSString*) fileName withTitle:(NSString*) title{
