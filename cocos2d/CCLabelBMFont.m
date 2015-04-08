@@ -365,7 +365,6 @@ void FNTConfigRemoveCache( void )
     
 	// Character ID
 	propertyValue = [nse nextObject];
-	propertyValue = [propertyValue substringToIndex: [propertyValue rangeOfString: @" "].location];
 	characterDefinition->charID = [propertyValue intValue];
     
 	// Character x
