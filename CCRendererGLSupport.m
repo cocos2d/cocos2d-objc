@@ -28,6 +28,7 @@
 #import "CCShader_Private.h"
 
 #import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
 
 
 @implementation CCTextureGL

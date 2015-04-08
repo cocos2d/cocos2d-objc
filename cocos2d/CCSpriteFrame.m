@@ -53,14 +53,7 @@
 
 +(instancetype) frameWithImageNamed:(NSString*)imageName
 {
-    // TODO not thread safe.
-    CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
-    if (!frame)
-    {
-        frame = [CCTexture textureWithFile:imageName].spriteFrame;
-    }
-    
-    return frame;
+    return [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
 }
 
 +(instancetype) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
