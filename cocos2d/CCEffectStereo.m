@@ -10,6 +10,8 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -27,26 +29,47 @@
 
 -(id)initWithInterface:(CCEffectStereo *)interface
 {
-    NSArray *fragUniforms = @[
-                              [CCEffectUniform uniform:@"float" name:@"u_channelSelect" value:@(0.0f)]
-                              ];
-    
-    NSArray *fragFunctions = [CCEffectStereoImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectStereoImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectStereoImpl buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectColorChannelOffsetImpl";
+        self.debugName = @"CCEffectStereoImpl";
         self.stitchFlags = CCEffectFunctionStitchAfter;
     }
-    
     return self;
+}
+
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectStereoImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectStereoImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"stereoOffset" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"float" name:@"u_channelSelect" value:[NSNumber numberWithFloat:0.0f]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
     
     NSString* effectPrefix =
     @"#ifdef GL_ES\n"
@@ -71,8 +94,7 @@
                                    return result;
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"stereoEffect" body:[effectPrefix stringByAppendingString:effectBody] inputs:@[input] returnType:@"vec4"];
-    return @[fragmentFunction];
+    return @[[[CCEffectFunction alloc] initWithName:@"stereoEffect" body:[effectPrefix stringByAppendingString:effectBody] inputs:@[input] returnType:@"vec4"]];
 }
 
 + (NSArray *)buildRenderPassesWithInterface:(CCEffectStereo *)interface
@@ -114,7 +136,7 @@
         _channelSelect = channelSelect;
         
         self.effectImpl = [[CCEffectStereoImpl alloc] initWithInterface:self];
-        self.debugName = @"CCEffectColorChannelOffset";
+        self.debugName = @"CCEffectStereo";
     }
     
     return self;
