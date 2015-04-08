@@ -35,7 +35,7 @@
 
 #import "CCRenderer.h"
 #import "CCColor.h"
-#import "CCDeviceInfo.h"
+#import "CCSetup.h"
 
 // Vertex shader that performs the modelview-projection multiplication on the GPU.
 // Faster for draw nodes that draw many vertexes, but can't be batched.
@@ -83,7 +83,7 @@ CCShader *CCDRAWNODE_BATCH_SHADER = nil;
 +(void)initialize
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		NSAssert(library, @"Metal shader library not found.");
 		

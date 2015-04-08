@@ -466,7 +466,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 -(CCGraphicsAPI)graphicsAPI
 {
     if(_graphicsAPI == CCGraphicsAPIInvalid){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+        self.graphicsAPI = CCGraphicsAPIMetal;
+#else
         self.graphicsAPI = CCGraphicsAPIGL;
+#endif
     }
     
     return _graphicsAPI;
