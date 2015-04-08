@@ -2,6 +2,7 @@
 
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
+#import "CCSetup.h"
 #import "ccUtils.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
@@ -394,7 +395,7 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
             [self setupTexture:info.type rendertexture:NO sizeInPixels:info.size options:options];
             
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-            if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+            if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
                 // TODO add support for PVRTC
                 NSAssert(info.format == &PVRTableFormats[0], @"Metal only supports RGBA8 PVR files.");
                 

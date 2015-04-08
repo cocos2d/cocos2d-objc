@@ -221,7 +221,7 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 	if(_antialiased != antialiased){
 		CCRenderDispatch(NO, ^{
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-			if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+			if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
 				CCMetalContext *context = [CCMetalContext currentContext];
 				
 				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
