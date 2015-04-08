@@ -139,7 +139,7 @@ static CCTexture *CCTextureNone = nil;
 	CCTextureNone->_contentScale = 1.0;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
 		CCMetalContext *context = [CCMetalContext currentContext];
 		NSAssert(context, @"Metal context is nil.");
 		
