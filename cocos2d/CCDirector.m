@@ -28,8 +28,6 @@
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
 
-#include <sys/time.h>
-
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
 #import "CCRenderer_Private.h"
@@ -273,8 +271,8 @@ CCDirectorStack()
 
 -(void) calculateDeltaTime
 {
-	CCTime now = CACurrentMediaTime();
-
+    CCTime now = CCAbsoluteTime();
+    
 	// new delta time
 	if( _nextDeltaTimeZero ) {
 		_dt = 0;
@@ -659,7 +657,7 @@ CCDirectorStack()
     
 	[self setAnimationInterval: _oldAnimationInterval];
     
-    _lastUpdate = CACurrentMediaTime();
+    _lastUpdate = CCAbsoluteTime();
 
 	[self willChangeValueForKey:@"isPaused"];
 	_isPaused = NO;
@@ -784,7 +782,7 @@ static const float CCFPSLabelItemHeight = 32;
 
 -(void) calculateMPF
 {
-	_secondsPerFrame = CACurrentMediaTime() - _lastUpdate;
+	_secondsPerFrame = CCAbsoluteTime() - _lastUpdate;
 }
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale

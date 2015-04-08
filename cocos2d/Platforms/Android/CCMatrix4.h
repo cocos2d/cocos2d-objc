@@ -853,6 +853,7 @@ extern "C" {
 #define GLKMatrix4MultiplyAndProjectVector3Array CCMatrix4MultiplyAndProjectVector3Array
 #define GLKMatrix4MakeTranslation CCMatrix4MakeTranslation
 #define GLKMatrix4MakeOrtho CCMatrix4MakeOrtho
+#define GLKMatrix4MakeFrustum CCMatrix4MakeFrustum
 #define GLKMatrix4MakePerspective CCMatrix4MakePerspective
 #define GLKMatrix4MultiplyVector4 CCMatrix4MultiplyVector4
 

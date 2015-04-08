@@ -12,6 +12,7 @@
 #import "CCControl.h"
 #import "CCDirector.h"
 #import "CCEditText.h"
+#import "CCSetup.h"
 
 #import <AndroidKit/AndroidColorDrawable.h>
 #import <AndroidKit/AndroidColor.h>
@@ -55,7 +56,7 @@
 - (void) positionInControl:(CCControl *)control padding:(float)padding {
     CGPoint viewPos = [control convertToWorldSpace:CGPointZero];
     CGSize screenSize = [[CCDirector currentDirector] viewSizeInPixels];
-    CGFloat scale = [[CCDirector currentDirector] contentScaleFactor];
+    CGFloat scale = [CCSetup sharedSetup].contentScale;
     CGSize size = control.contentSizeInPoints;
 
     size.width *= scale;
