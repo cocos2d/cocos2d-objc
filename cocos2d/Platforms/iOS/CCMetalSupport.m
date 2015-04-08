@@ -29,6 +29,7 @@
 #import "CCMetalView.h"
 #import "CCTexture_Private.h"
 #import "CCShader_Private.h"
+#import "CCSetup_Private.h"
 
 #import "CCDeviceInfo.h"
 

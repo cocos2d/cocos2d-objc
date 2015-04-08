@@ -2,6 +2,7 @@
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
+#import <UIKit/UIKit.h>
 #import <QuartzCore/CAMetalLayer.h>
 #import <Metal/Metal.h>
 
@@ -61,15 +62,26 @@
         
         self.opaque = YES;
         self.backgroundColor = nil;
-        self.contentScaleFactor = [UIScreen mainScreen].scale;
+        
+        // Default to the screen's native scale.
+        UIScreen *screen = [UIScreen mainScreen];
+        if([screen respondsToSelector:@selector(nativeScale)]){
+            self.contentScaleFactor = screen.nativeScale;
+        } else {
+            self.contentScaleFactor = screen.scale;
+        }
         
         self.multipleTouchEnabled = YES;
         
-        _director = [[CCDirectorDisplayLink alloc] init];
-        _director.view = self;
+        _director = [[CCDirectorDisplayLink alloc] initWithView:self];
 	}
 
 	return self;
+}
+
+-(CGSize)sizeInPixels
+{
+    return CC_SIZE_SCALE(self.bounds.size, self.contentScaleFactor);
 }
 
 - (void) dealloc
@@ -87,7 +99,6 @@
 	_layerSizeDidUpdate = YES;
 
 	_surfaceSize = CC_SIZE_SCALE(self.bounds.size, self.contentScaleFactor);
-	[_director reshapeProjection:_surfaceSize];
 }
 
 -(void)beginFrame
