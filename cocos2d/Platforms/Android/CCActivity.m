@@ -52,9 +52,11 @@ extern ANativeWindow *ANativeWindow_fromSurface(JNIEnv *env, jobject surface);
 static CCActivity *currentActivity = nil;
 
 @implementation CCActivity {
-    NSThread *_thread;
     BOOL _running;
+#if !USE_MAIN_THREAD
+    NSThread *_thread;
     NSRunLoop *_gameLoop;
+#endif
 }
 @synthesize layout=_layout;
 
@@ -64,7 +66,10 @@ static CCActivity *currentActivity = nil;
     currentActivity = nil;
     [_glView release];
     [_layout release];
+#if !USE_MAIN_THREAD
     [_thread release];
+    [_gameLoop release];
+#endif
     [super dealloc];
 }
 
@@ -278,9 +283,10 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 - (void)startGL:(JavaObject<AndroidSurfaceHolder> *)holder
 {
     @autoreleasepool {
+#if !USE_MAIN_THREAD
         _gameLoop = [NSRunLoop currentRunLoop];
         [_gameLoop addPort:[NSPort port] forMode:NSDefaultRunLoopMode]; // Ensure that _gameLoop always has a source.
-
+#endif
         [self setupView:holder];
         
         [CCDirector pushCurrentDirector:_glView.director];
