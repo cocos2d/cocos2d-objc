@@ -11,7 +11,6 @@
 #if __CC_PLATFORM_ANDROID
 
 #import <android/native_window.h>
-#import <bridge/runtime.h>
 #import <AndroidKit/AndroidLooper.h>
 #import <AndroidKit/AndroidAbsoluteLayout.h>
 
@@ -90,6 +89,16 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 {
     if (_running) {
         return;
+    }
+    if ([[self class] instanceMethodForSelector:_cmd] == [[CCActivity class] instanceMethodForSelector:_cmd]) {
+        // 20150402 : Warn about backwards-incompatibility with previous SBAndroid startup codepath.
+        // What you should do if you hit this:
+        //    * Comment the NSAssert and see if everything "just works" =)
+        //      --OR--
+        //    * Make sure your CCActivity subclass implements -run method (and calls [super run] first thing)
+        //    * -[CCAppController setupApplication] ultimately needs to be invoked once on startup (usually from your subclassed -run)
+        //    * (You may wish to generate a new test project from SpriteBuilder as a reference to trace the startup codepath)
+        NSAssert(NO, @"Your CCActivity subclass appears to use an old startup codepath which may result in a black screen");
     }
     NSSetUncaughtExceptionHandler(&handler);
     currentActivity = self;

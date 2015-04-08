@@ -178,7 +178,6 @@
 #import "Platforms/Android/CCDirectorAndroid.h"
 
 #import <android/native_window.h>
-#import <bridge/runtime.h>
 #endif
 
 #ifdef __cplusplus
