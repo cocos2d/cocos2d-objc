@@ -36,6 +36,8 @@
 #import "CCFileLocator.h"
 #import "ccUtils.h"
 
+#import "CCDeprecated.h"
+
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif
@@ -43,6 +45,9 @@
 #if __CC_PLATFORM_ANDROID
 #import "CCActivity.h"
 #import "CCDirectorAndroid.h"
+
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
 #endif
 
 #if __CC_PLATFORM_MAC
@@ -259,6 +264,18 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     _view = activity.glView;
     [activity scheduleInRunLoop];
 
+    CCDirector *director = _view.director;
+    NSAssert(director, @"CCView failed to construct a director.");
+    [CCDirector pushCurrentDirector:director];
+    
+    [director setDisplayStats:[_config[CCSetupShowDebugStats] boolValue]];
+
+    director.frameSkipInterval = [(_config[CCSetupFrameSkipInterval] ?: @(1)) unsignedIntegerValue];
+    self.fixedUpdateInterval = [(_config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+    
+    // Initialise OpenAL
+    [OALSimpleAudio sharedInstance];
+
     [[CCPackageManager sharedManager] loadPackages];
 
     /*
@@ -270,43 +287,38 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
                                           selector:@selector(performAndroidGLConfiguration)
                                           name:@"GL_INITIALIZED"
                                           object:nil];
-
 }
 
+#define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
+
+// Oleg's Original code from CCConfiguration.m
+-(BOOL)isTablet
+{
+    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+    [[CCActivity currentActivity].windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
+
+    double yInches= metrics.heightPixels/metrics.ydpi;
+    double xInches= metrics.widthPixels/metrics.xdpi;
+    double diagonalInches = sqrt(xInches*xInches + yInches*yInches);
+    return (diagonalInches > CC_MINIMUM_TABLET_SCREEN_DIAGONAL);
+}
 
 - (void)performAndroidGLConfiguration
 {
-    [self configureDirector:_view.director withConfig:_config withView:_view];
-
-    [self runStartSceneAndroid];
-}
-
-- (void)configureDirector:(CCDirector*)director withConfig:(NSDictionary *)config withView:(CCGLView<CCView>*)view
-{
-    director.delegate = [CCActivity currentActivity];
-    [director setView:view];
-
-    NSInteger device = [CCDeviceInfo runningDevice];
-    BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
-
-    if(tablet && [config[CCSetupTabletScale2X] boolValue])
-    {
-        // Set the UI scale factor to show things at "native" size.
-        director.UIScaleFactor = 0.5;
-    }
-
-    director.contentScaleFactor *= 1.83;
-
-    [director setProjection:CCDirectorProjection2D];
+    self.contentScale = _view.contentScaleFactor;
     
-//    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
-//    {
-//        [self setupFixedScreenMode:config];
-//    }
-//    else
-//    {
-//        [self setupFlexibleScreenMode:config];
-//    }
+    BOOL tablet = [self isTablet];
+    if(tablet && [_config[CCSetupTabletScale2X] boolValue])
+    {
+        self.contentScale *= 2.0;
+        self.UIScale *= 0.5;
+    }
+    
+    self.assetScale = self.contentScale;
+    
+    [_view.director startRunLoop];
+    
+    [self runStartSceneAndroid];
 }
 
 //- (void)setupFlexibleScreenMode:(NSDictionary*)config

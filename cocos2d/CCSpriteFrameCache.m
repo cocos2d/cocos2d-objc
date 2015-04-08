@@ -493,11 +493,20 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 -(CCSpriteFrame *) spriteFrameByName:(NSString*)name
 {
+    // TODO Use the FileLocator name alias.
+//        name = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name] ?: name;
+    
     // Check to see if the frame is already in the cache.
     CCSpriteFrame *frame = _spriteFrames[name];
     
-    // TODO try the FileLocator name alias.
-//        name = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name] ?: name;
+    // TODO Find a better way to suppress the search failure than to search twice.
+    CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:name options:@{CCFILELOCATOR_SEARCH_OPTION_NOTRACE: @(YES)} error:nil trace:NO];
+    if(file){
+        CCTexture *texture = [CCTexture textureWithFile:name];
+        NSAssert(texture, @"Found a file but it couldn't be loaded?");
+        
+        return texture.spriteFrame;
+    }
     
     // Search for spritesheets by breaking down the spriteframe's name into paths.
     if(frame == nil){
@@ -526,34 +535,5 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 	return (CCSpriteFrame *)frame.proxy;
 }
-
-//-(CCSpriteFrame*)_spriteFrameByName:(NSString*)name
-//{
-//	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];
-//    
-//    if (!frame)
-//    {
-//        // Check fileLookup.plist
-//        #warning Important TODO!
-//        // This was slightly broken in v3 since multiple search paths could define the same alias.
-////        NSString *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];
-////        name = newName ?: name;
-//        
-//        // Try finding the frame in one of the registered sprite sheets
-//        NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
-//        if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];
-//        
-//        // Attempt to load the frame again
-//        frame = [_spriteFrames objectForKey:name];
-//    }
-//    
-//	if( ! frame ) {
-//		// try alias dictionary
-//		NSString *key = [_spriteFramesAliases objectForKey:name];
-//		frame = [_spriteFrames objectForKey:key];
-//	}
-//
-//	return (CCSpriteFrame *)frame.proxy;
-//}
 
 @end

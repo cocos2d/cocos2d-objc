@@ -48,14 +48,15 @@ BRIDGE_CLASS("com.apportable.GLView")
 - (BOOL)setupView:(ANativeWindow*)window;
 - (void)swapBuffers;
 
+@property (nonatomic, readonly) CGSize sizeInPixels;
+
 @property (nonatomic) CGFloat contentScaleFactor;
-@property (nonatomic) CGRect bounds;
+@property (nonatomic, readonly) CGRect bounds;
 @property (nonatomic, readonly) EGLDisplay eglDisplay;
 @property (nonatomic, readonly) EGLSurface eglSurface;
 @property (nonatomic, readonly) EGLContext eglContext;
 @property (nonatomic, readonly) EGLConfig eglConfiguration;
 @property (nonatomic, readonly) enum CCAndroidScreenMode screenMode;
-@property(nonatomic, strong, readonly) CCDirector *director;
 
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector;

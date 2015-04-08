@@ -86,6 +86,19 @@
 		D31307C41A302E1100A25431 /* CCFileTest.plist.gz.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */; };
 		D3269DEA19CCC11800406282 /* CCRendererSharedTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */; };
 		D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D32FDE8519B645CA0078CC16 /* CCTextureTests.m */; };
+		D334A7041ACF25460077321A /* HeadlessActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = D334A7021ACF25380077321A /* HeadlessActivity.m */; };
+		D334A7051ACF2D970077321A /* libcocos2dAndroid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763BBB19E72F85006C050D /* libcocos2dAndroid.a */; };
+		D334A70D1ACF2DBB0077321A /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7061ACF2DBA0077321A /* AndroidKit.framework */; };
+		D334A70E1ACF2DBB0077321A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7071ACF2DBA0077321A /* CoreGraphics.framework */; };
+		D334A70F1ACF2DBB0077321A /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7081ACF2DBA0077321A /* CoreJava.framework */; };
+		D334A7101ACF2DBB0077321A /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7091ACF2DBA0077321A /* GLActivityKit.framework */; };
+		D334A7111ACF2DBB0077321A /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A70A1ACF2DBA0077321A /* JavaFoundation.framework */; };
+		D334A7121ACF2DBB0077321A /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A70B1ACF2DBA0077321A /* JavaKit.framework */; };
+		D334A7131ACF2DBB0077321A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A70C1ACF2DBB0077321A /* OpenAL.framework */; };
+		D334A7151ACF2DEB0077321A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7141ACF2DEB0077321A /* CoreText.framework */; };
+		D334A7171ACF2E050077321A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7161ACF2E050077321A /* Foundation.framework */; };
+		D334A7191ACF2F2A0077321A /* libEGL.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D334A7181ACF2F2A0077321A /* libEGL.so */; };
+		D334A71A1ACF2F950077321A /* TestbedSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* TestbedSetup.m */; };
 		D3383AB81A099D7200E13478 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3383AB71A099D7200E13478 /* Launch Screen.xib */; };
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D33C9CF71A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */; };
@@ -160,6 +173,71 @@
 		D3DACC7C19E74BD100629E97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9519E7356C006C050D /* InfoPlist.strings */; };
 		D3DACC7D19E74BD500629E97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9819E7356C006C050D /* icon.icns */; };
 		D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */ = {isa = PBXBuildFile; fileRef = D3E1842A19E861FC00A08B01 /* MetalShaders */; };
+		D3F43AA01ACDD46F00B796F7 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
+		D3F43AA11ACDD46F00B796F7 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
+		D3F43AA21ACDD46F00B796F7 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
+		D3F43AA31ACDD46F00B796F7 /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697818186D5200B983FE /* CCTextFieldTest.m */; };
+		D3F43AA61ACDD46F00B796F7 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
+		D3F43AA71ACDD46F00B796F7 /* CCTextureCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060AA1832E3310043CC67 /* CCTextureCacheTest.m */; };
+		D3F43AA81ACDD46F00B796F7 /* PositioningTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A664A4EE18A3D9B8006184B8 /* PositioningTest.m */; };
+		D3F43AA91ACDD46F00B796F7 /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
+		D3F43AAA1ACDD46F00B796F7 /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
+		D3F43AAB1ACDD46F00B796F7 /* VertexZTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6167B92189A7D4D0044D391 /* VertexZTest.m */; };
+		D3F43AAC1ACDD46F00B796F7 /* CCResponderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B772F69E1811C8D9005C069B /* CCResponderTest.m */; };
+		D3F43AAD1ACDD46F00B796F7 /* CCEffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B4894B1917EE6700C3443A /* CCEffectsTest.m */; };
+		D3F43AAE1ACDD46F00B796F7 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060131831A17C0043CC67 /* ObjectALTest.m */; };
+		D3F43AAF1ACDD46F00B796F7 /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
+		D3F43AB01ACDD46F00B796F7 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */; };
+		D3F43AB11ACDD46F00B796F7 /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB2185A0A6900EEEFDE /* TextureTest.m */; };
+		D3F43AB21ACDD46F00B796F7 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
+		D3F43AB31ACDD46F00B796F7 /* CCSBLoadingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7513E66A1AAF5C4B00D8FE76 /* CCSBLoadingTest.m */; };
+		D3F43AB41ACDD46F00B796F7 /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB6185A64AD00EEEFDE /* ColorTest.m */; };
+		D3F43AB51ACDD46F00B796F7 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
+		D3F43AB61ACDD46F00B796F7 /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
+		D3F43AB71ACDD46F00B796F7 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2622017E7D3B2007067F0 /* MainMenu.m */; };
+		D3F43AB81ACDD46F00B796F7 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */; };
+		D3F43AB91ACDD46F00B796F7 /* CCActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F4EA241A69847C000E637B /* CCActionsTest.m */; };
+		D3F43ABA1ACDD46F00B796F7 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
+		D3F43ABB1ACDD46F00B796F7 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
+		D3F43ABC1ACDD46F00B796F7 /* CCTableViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */; };
+		D3F43ABD1ACDD46F00B796F7 /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
+		D3F43ABE1ACDD46F00B796F7 /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
+		D3F43AC01ACDD46F00B796F7 /* CCViewportNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C2D261A1BC83F00FF96B0 /* CCViewportNodeTest.m */; };
+		D3F43AD11ACDD46F00B796F7 /* CCRendererSharedTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */; };
+		D3F43AD21ACDD46F00B796F7 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6A1843E5BE00D1A8D2 /* TileMaps */; };
+		D3F43AD31ACDD46F00B796F7 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6B1843E5C500D1A8D2 /* Images */; };
+		D3F43AD41ACDD46F00B796F7 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		D3F43AD51ACDD46F00B796F7 /* CCFileTest.plist.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307BE1A302ABE00A25431 /* CCFileTest.plist.ccp */; };
+		D3F43AD61ACDD46F00B796F7 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D37A424D1A952C6B00D162C2 /* Fonts */; };
+		D3F43AD71ACDD46F00B796F7 /* RobotoSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90A1977100000261299 /* RobotoSlab-Regular.ttf */; };
+		D3F43AD81ACDD46F00B796F7 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
+		D3F43AD91ACDD46F00B796F7 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
+		D3F43ADA1ACDD46F00B796F7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620217E7D34D007067F0 /* Default-568h@2x.png */; };
+		D3F43ADB1ACDD46F00B796F7 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */; };
+		D3F43ADC1ACDD46F00B796F7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620417E7D34D007067F0 /* Default.png */; };
+		D3F43ADD1ACDD46F00B796F7 /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9071977100000261299 /* Paint Boy.ttf */; };
+		D3F43ADE1ACDD46F00B796F7 /* ThisFontIsAbdFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */; };
+		D3F43ADF1ACDD46F00B796F7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620517E7D34D007067F0 /* Default@2x.png */; };
+		D3F43AE01ACDD46F00B796F7 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620617E7D34D007067F0 /* Icon-72.png */; };
+		D3F43AE11ACDD46F00B796F7 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620717E7D34D007067F0 /* Icon-Small-50.png */; };
+		D3F43AE21ACDD46F00B796F7 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620817E7D34D007067F0 /* Icon-Small.png */; };
+		D3F43AE31ACDD46F00B796F7 /* CCFileTest.plist.gz in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */; };
+		D3F43AE41ACDD46F00B796F7 /* RobotoSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9081977100000261299 /* RobotoSlab-Bold.ttf */; };
+		D3F43AE51ACDD46F00B796F7 /* RobotoSlab-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90B1977100000261299 /* RobotoSlab-Thin.ttf */; };
+		D3F43AE61ACDD46F00B796F7 /* RobotoSlab-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9091977100000261299 /* RobotoSlab-Light.ttf */; };
+		D3F43AE71ACDD46F00B796F7 /* Schwarzwald Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90C1977100000261299 /* Schwarzwald Regular.ttf */; };
+		D3F43AE81ACDD46F00B796F7 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
+		D3F43AE91ACDD46F00B796F7 /* CCFileTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF91A2FF561004070CA /* CCFileTest.plist */; };
+		D3F43AEA1ACDD46F00B796F7 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620917E7D34D007067F0 /* Icon-Small@2x.png */; };
+		D3F43AEB1ACDD46F00B796F7 /* Scissor Cuts.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90D1977100000261299 /* Scissor Cuts.ttf */; };
+		D3F43AEC1ACDD46F00B796F7 /* MetalShaders in Resources */ = {isa = PBXBuildFile; fileRef = D3E1842A19E861FC00A08B01 /* MetalShaders */; };
+		D3F43AED1ACDD46F00B796F7 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
+		D3F43AEE1ACDD46F00B796F7 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620A17E7D34D007067F0 /* Icon.png */; };
+		D3F43AEF1ACDD46F00B796F7 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
+		D3F43AF01ACDD46F00B796F7 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620B17E7D34D007067F0 /* Icon@2x.png */; };
+		D3F43AF11ACDD46F00B796F7 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3383AB71A099D7200E13478 /* Launch Screen.xib */; };
+		D3F43AF21ACDD46F00B796F7 /* CCFileTest.plist.gz.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */; };
+		D3F43AF31ACDD46F00B796F7 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620D17E7D34D007067F0 /* iTunesArtwork */; };
 		D3F52E0D1A5B5EDB00A18F54 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F52E0C1A5B5EDB00A18F54 /* Metal.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
 		D4AFE9141977100000261299 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
@@ -261,6 +339,13 @@
 			remoteGlobalIDString = 7A4037A719E37038007B6E8F;
 			remoteInfo = "cocos2d-mac";
 		};
+		D3F43AFF1ACF0A7C00B796F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2FEB60D194F6C9E00FC0574;
+			remoteInfo = cocos2dAndroid;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -284,8 +369,6 @@
 		758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
-		75C72BFA1A82AD6600814F60 /* AppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppActivity.h; sourceTree = "<group>"; };
-		75C72BFB1A82AD6600814F60 /* AppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppActivity.m; sourceTree = "<group>"; };
 		75C72BFE1A82AD6600814F60 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		75C72BFF1A82AD6600814F60 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		75C72C021A82AD6600814F60 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -350,6 +433,18 @@
 		D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CCFileTest.plist.gz.ccp; path = Resources/CCFileTest.plist.gz.ccp; sourceTree = SOURCE_ROOT; };
 		D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCRendererSharedTypes.h; path = cocos2d/CCRendererSharedTypes.h; sourceTree = "<group>"; };
 		D32FDE8519B645CA0078CC16 /* CCTextureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureTests.m; sourceTree = "<group>"; };
+		D334A7011ACF25380077321A /* HeadlessActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeadlessActivity.h; path = "cocos2d-tests-android/Headless/HeadlessActivity.h"; sourceTree = SOURCE_ROOT; };
+		D334A7021ACF25380077321A /* HeadlessActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeadlessActivity.m; path = "cocos2d-tests-android/Headless/HeadlessActivity.m"; sourceTree = SOURCE_ROOT; };
+		D334A7061ACF2DBA0077321A /* AndroidKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AndroidKit.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/AndroidKit.framework"; sourceTree = "<group>"; };
+		D334A7071ACF2DBA0077321A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreGraphics.framework"; sourceTree = "<group>"; };
+		D334A7081ACF2DBA0077321A /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
+		D334A7091ACF2DBA0077321A /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
+		D334A70A1ACF2DBA0077321A /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
+		D334A70B1ACF2DBA0077321A /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
+		D334A70C1ACF2DBB0077321A /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/OpenAL.framework"; sourceTree = "<group>"; };
+		D334A7141ACF2DEB0077321A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreText.framework"; sourceTree = "<group>"; };
+		D334A7161ACF2E050077321A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/Foundation.framework"; sourceTree = "<group>"; };
+		D334A7181ACF2F2A0077321A /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../../Library/SBAndroidStarter/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/usr/lib/armv7a/libEGL.so"; sourceTree = "<group>"; };
 		D3383AB71A099D7200E13478 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
 		D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = CCFileTest.plist.gz; path = Resources/CCFileTest.plist.gz; sourceTree = SOURCE_ROOT; };
@@ -375,6 +470,8 @@
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 		D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
 		D3E1842A19E861FC00A08B01 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = "cocos2d-ui-tests/MetalShaders"; sourceTree = SOURCE_ROOT; };
+		D3F43AF71ACDD46F00B796F7 /* cocos2d-tests-android.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-tests-android.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3F43AF81ACDD47D00B796F7 /* cocos2d-tests-iosAndroid-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cocos2d-tests-iosAndroid-Info.plist"; path = "/Users/slembcke/Development/cocos2d-swift/cocos2d-tests-iosAndroid-Info.plist"; sourceTree = "<absolute>"; };
 		D3F52E0C1A5B5EDB00A18F54 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		D4AFE8D81977100000261299 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		D4AFE8D91977100000261299 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
@@ -454,6 +551,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D3F43AC11ACDD46F00B796F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D334A7191ACF2F2A0077321A /* libEGL.so in Frameworks */,
+				D334A7111ACF2DBB0077321A /* JavaFoundation.framework in Frameworks */,
+				D334A70F1ACF2DBB0077321A /* CoreJava.framework in Frameworks */,
+				D334A70D1ACF2DBB0077321A /* AndroidKit.framework in Frameworks */,
+				D334A7121ACF2DBB0077321A /* JavaKit.framework in Frameworks */,
+				D334A7051ACF2D970077321A /* libcocos2dAndroid.a in Frameworks */,
+				D334A7151ACF2DEB0077321A /* CoreText.framework in Frameworks */,
+				D334A7131ACF2DBB0077321A /* OpenAL.framework in Frameworks */,
+				D334A70E1ACF2DBB0077321A /* CoreGraphics.framework in Frameworks */,
+				D334A7171ACF2E050077321A /* Foundation.framework in Frameworks */,
+				D334A7101ACF2DBB0077321A /* GLActivityKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -515,8 +630,8 @@
 		75C72BF91A82AD6600814F60 /* Android */ = {
 			isa = PBXGroup;
 			children = (
-				75C72BFA1A82AD6600814F60 /* AppActivity.h */,
-				75C72BFB1A82AD6600814F60 /* AppActivity.m */,
+				D334A7011ACF25380077321A /* HeadlessActivity.h */,
+				D334A7021ACF25380077321A /* HeadlessActivity.m */,
 			);
 			path = Android;
 			sourceTree = SOURCE_ROOT;
@@ -600,6 +715,7 @@
 				D3763D9A19E7356C006C050D /* Resources-Mac */,
 				B7E2604A17E7D278007067F0 /* Frameworks */,
 				B7E2604917E7D278007067F0 /* Products */,
+				D3F43AF81ACDD47D00B796F7 /* cocos2d-tests-iosAndroid-Info.plist */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -612,6 +728,7 @@
 				B7E2604817E7D278007067F0 /* cocos2d-tests-ios.app */,
 				75556A02185636F100ED1B0F /* UnitTests.xctest */,
 				D3763C5A19E73188006C050D /* cocos2d-tests-mac.app */,
+				D3F43AF71ACDD46F00B796F7 /* cocos2d-tests-android.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -619,6 +736,16 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D334A7181ACF2F2A0077321A /* libEGL.so */,
+				D334A7161ACF2E050077321A /* Foundation.framework */,
+				D334A7141ACF2DEB0077321A /* CoreText.framework */,
+				D334A7061ACF2DBA0077321A /* AndroidKit.framework */,
+				D334A7071ACF2DBA0077321A /* CoreGraphics.framework */,
+				D334A7081ACF2DBA0077321A /* CoreJava.framework */,
+				D334A7091ACF2DBA0077321A /* GLActivityKit.framework */,
+				D334A70A1ACF2DBA0077321A /* JavaFoundation.framework */,
+				D334A70B1ACF2DBA0077321A /* JavaKit.framework */,
+				D334A70C1ACF2DBB0077321A /* OpenAL.framework */,
 				D3F52E0C1A5B5EDB00A18F54 /* Metal.framework */,
 				D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
@@ -850,6 +977,24 @@
 			productReference = D3763C5A19E73188006C050D /* cocos2d-tests-mac.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D3F43A9C1ACDD46F00B796F7 /* cocos2d-tests-android */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3F43AF41ACDD46F00B796F7 /* Build configuration list for PBXNativeTarget "cocos2d-tests-android" */;
+			buildPhases = (
+				D3F43A9F1ACDD46F00B796F7 /* Sources */,
+				D3F43AC11ACDD46F00B796F7 /* Frameworks */,
+				D3F43AD01ACDD46F00B796F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D3F43B001ACF0A7C00B796F7 /* PBXTargetDependency */,
+			);
+			name = "cocos2d-tests-android";
+			productName = "cocos2d-ui-tests-ios";
+			productReference = D3F43AF71ACDD46F00B796F7 /* cocos2d-tests-android.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -896,6 +1041,7 @@
 				B7E2604717E7D278007067F0 /* cocos2d-tests-ios */,
 				75556A01185636F100ED1B0F /* UnitTests */,
 				D3763BD619E73188006C050D /* cocos2d-tests-mac */,
+				D3F43A9C1ACDD46F00B796F7 /* cocos2d-tests-android */,
 			);
 		};
 /* End PBXProject section */
@@ -1040,6 +1186,48 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D3F43AD01ACDD46F00B796F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3F43AD11ACDD46F00B796F7 /* CCRendererSharedTypes.h in Resources */,
+				D3F43AD21ACDD46F00B796F7 /* TileMaps in Resources */,
+				D3F43AD31ACDD46F00B796F7 /* Images in Resources */,
+				D3F43AD41ACDD46F00B796F7 /* Sounds in Resources */,
+				D3F43AD51ACDD46F00B796F7 /* CCFileTest.plist.ccp in Resources */,
+				D3F43AD61ACDD46F00B796F7 /* Fonts in Resources */,
+				D3F43AD71ACDD46F00B796F7 /* RobotoSlab-Regular.ttf in Resources */,
+				D3F43AD81ACDD46F00B796F7 /* Particles in Resources */,
+				D3F43AD91ACDD46F00B796F7 /* A Damn Mess.ttf in Resources */,
+				D3F43ADA1ACDD46F00B796F7 /* Default-568h@2x.png in Resources */,
+				D3F43ADB1ACDD46F00B796F7 /* Default-Landscape~ipad.png in Resources */,
+				D3F43ADC1ACDD46F00B796F7 /* Default.png in Resources */,
+				D3F43ADD1ACDD46F00B796F7 /* Paint Boy.ttf in Resources */,
+				D3F43ADE1ACDD46F00B796F7 /* ThisFontIsAbdFont.ttf in Resources */,
+				D3F43ADF1ACDD46F00B796F7 /* Default@2x.png in Resources */,
+				D3F43AE01ACDD46F00B796F7 /* Icon-72.png in Resources */,
+				D3F43AE11ACDD46F00B796F7 /* Icon-Small-50.png in Resources */,
+				D3F43AE21ACDD46F00B796F7 /* Icon-Small.png in Resources */,
+				D3F43AE31ACDD46F00B796F7 /* CCFileTest.plist.gz in Resources */,
+				D3F43AE41ACDD46F00B796F7 /* RobotoSlab-Bold.ttf in Resources */,
+				D3F43AE51ACDD46F00B796F7 /* RobotoSlab-Thin.ttf in Resources */,
+				D3F43AE61ACDD46F00B796F7 /* RobotoSlab-Light.ttf in Resources */,
+				D3F43AE71ACDD46F00B796F7 /* Schwarzwald Regular.ttf in Resources */,
+				D3F43AE81ACDD46F00B796F7 /* Resources-shared in Resources */,
+				D3F43AE91ACDD46F00B796F7 /* CCFileTest.plist in Resources */,
+				D3F43AEA1ACDD46F00B796F7 /* Icon-Small@2x.png in Resources */,
+				D3F43AEB1ACDD46F00B796F7 /* Scissor Cuts.ttf in Resources */,
+				D3F43AEC1ACDD46F00B796F7 /* MetalShaders in Resources */,
+				D3F43AED1ACDD46F00B796F7 /* Abberancy.ttf in Resources */,
+				D3F43AEE1ACDD46F00B796F7 /* Icon.png in Resources */,
+				D3F43AEF1ACDD46F00B796F7 /* Music in Resources */,
+				D3F43AF01ACDD46F00B796F7 /* Icon@2x.png in Resources */,
+				D3F43AF11ACDD46F00B796F7 /* Launch Screen.xib in Resources */,
+				D3F43AF21ACDD46F00B796F7 /* CCFileTest.plist.gz.ccp in Resources */,
+				D3F43AF31ACDD46F00B796F7 /* iTunesArtwork in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1164,6 +1352,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D3F43A9F1ACDD46F00B796F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D334A71A1ACF2F950077321A /* TestbedSetup.m in Sources */,
+				D3F43AA01ACDD46F00B796F7 /* TestBase.m in Sources */,
+				D3F43AA11ACDD46F00B796F7 /* SpritePerformanceTest.m in Sources */,
+				D3F43AA21ACDD46F00B796F7 /* CCScrollViewTest.m in Sources */,
+				D3F43AA31ACDD46F00B796F7 /* CCTextFieldTest.m in Sources */,
+				D3F43AA61ACDD46F00B796F7 /* CCCacheTest.m in Sources */,
+				D3F43AA71ACDD46F00B796F7 /* CCTextureCacheTest.m in Sources */,
+				D3F43AA81ACDD46F00B796F7 /* PositioningTest.m in Sources */,
+				D334A7041ACF25460077321A /* HeadlessActivity.m in Sources */,
+				D3F43AA91ACDD46F00B796F7 /* CCSprite9SliceTest.m in Sources */,
+				D3F43AAA1ACDD46F00B796F7 /* CCSliderTest.m in Sources */,
+				D3F43AAB1ACDD46F00B796F7 /* VertexZTest.m in Sources */,
+				D3F43AAC1ACDD46F00B796F7 /* CCResponderTest.m in Sources */,
+				D3F43AAD1ACDD46F00B796F7 /* CCEffectsTest.m in Sources */,
+				D3F43AAE1ACDD46F00B796F7 /* ObjectALTest.m in Sources */,
+				D3F43AAF1ACDD46F00B796F7 /* CCLayoutTest.m in Sources */,
+				D3F43AB01ACDD46F00B796F7 /* CCLabelTTFTest.m in Sources */,
+				D3F43AB11ACDD46F00B796F7 /* TextureTest.m in Sources */,
+				D3F43AB21ACDD46F00B796F7 /* CCSchedulerTest.m in Sources */,
+				D3F43AB31ACDD46F00B796F7 /* CCSBLoadingTest.m in Sources */,
+				D3F43AB41ACDD46F00B796F7 /* ColorTest.m in Sources */,
+				D3F43AB51ACDD46F00B796F7 /* CCPackageTest.m in Sources */,
+				D3F43AB61ACDD46F00B796F7 /* TilemapTest.m in Sources */,
+				D3F43AB71ACDD46F00B796F7 /* MainMenu.m in Sources */,
+				D3F43AB81ACDD46F00B796F7 /* CCRendererTest.m in Sources */,
+				D3F43AB91ACDD46F00B796F7 /* CCActionsTest.m in Sources */,
+				D3F43ABA1ACDD46F00B796F7 /* CCTransitionTest.m in Sources */,
+				D3F43ABB1ACDD46F00B796F7 /* ParticleTest.m in Sources */,
+				D3F43ABC1ACDD46F00B796F7 /* CCTableViewTest.m in Sources */,
+				D3F43ABD1ACDD46F00B796F7 /* CCPhysicsTest.m in Sources */,
+				D3F43ABE1ACDD46F00B796F7 /* CCBMFontTest.m in Sources */,
+				D3F43AC01ACDD46F00B796F7 /* CCViewportNodeTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1186,6 +1413,11 @@
 			isa = PBXTargetDependency;
 			name = "cocos2d-mac";
 			targetProxy = D3763C5C19E731BA006C050D /* PBXContainerItemProxy */;
+		};
+		D3F43B001ACF0A7C00B796F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2dAndroid;
+			targetProxy = D3F43AFF1ACF0A7C00B796F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1560,6 +1792,96 @@
 			};
 			name = Release;
 		};
+		D3F43AF51ACDD46F00B796F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ANDROID_MANIFEST = "$(SRCROOT)/cocos2d-tests-android/Headless/src/main/AndroidManifest.xml";
+				ANDROID_RES_DIRS = "$(SRCROOT)/cocos2d-tests-android/Headless/src/main/res";
+				APPORTABLE_TARGET = Android;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "cocos2d-tests-android/Headless/Headless-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					COCOS2D_ANDROID,
+				);
+				INFOPLIST_FILE = "cocos2d-tests-android/Headless/Headless-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/local/lib/armv7a-neon",
+					"$(SDKROOT)/usr/lib/armeabi",
+					"$(SDKROOT)/usr/lib/armv7a",
+					"$(SDKROOT)/usr/lib/x86",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-landroid",
+					"-lgles_apportable",
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = sbandroid;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D3F43AF61ACDD46F00B796F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ANDROID_MANIFEST = "$(SRCROOT)/cocos2d-tests-android/Headless/src/main/AndroidManifest.xml";
+				ANDROID_RES_DIRS = "$(SRCROOT)/cocos2d-tests-android/Headless/src/main/res";
+				APPORTABLE_TARGET = Android;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "cocos2d-tests-android/Headless/Headless-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = COCOS2D_ANDROID;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "cocos2d-tests-android/Headless/Headless-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/local/lib/armv7a-neon",
+					"$(SDKROOT)/usr/lib/armeabi",
+					"$(SDKROOT)/usr/lib/armv7a",
+					"$(SDKROOT)/usr/lib/x86",
+				);
+				OTHER_LDFLAGS = (
+					"-landroid",
+					"-lgles_apportable",
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = sbandroid;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1595,6 +1917,15 @@
 			buildConfigurations = (
 				D3763C5819E73188006C050D /* Debug */,
 				D3763C5919E73188006C050D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3F43AF41ACDD46F00B796F7 /* Build configuration list for PBXNativeTarget "cocos2d-tests-android" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3F43AF51ACDD46F00B796F7 /* Debug */,
+				D3F43AF61ACDD46F00B796F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
