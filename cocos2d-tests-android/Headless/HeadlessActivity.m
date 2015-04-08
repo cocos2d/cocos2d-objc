@@ -8,47 +8,30 @@
 
 #import "HeadlessActivity.h"
 #import "MainMenu.h"
+#import "TestbedSetup.h"
 
 @implementation HeadlessActivity
 
-- (void)setupPaths
+-(void)run
 {
-    [super setupPaths];
-    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
-    NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-    sharedFileUtils.searchPath = @[
-                                   [resourcePath stringByAppendingPathComponent:@"Images"],
-                                   [resourcePath stringByAppendingPathComponent:@"Fonts"],
-                                   [resourcePath stringByAppendingPathComponent:@"Resources-shared"],
-                                   resourcePath
-                                   ];
-    
-    // Register spritesheets.
-    CCSpriteFrameCache *spriteFrameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-    [spriteFrameCache registerSpriteFramesFile:@"Interface.plist"];
-    [spriteFrameCache registerSpriteFramesFile:@"Sprites.plist"];
-    [spriteFrameCache registerSpriteFramesFile:@"TilesAtlassed.plist"];
+	[super run];
+	
+	[[TestbedSetup sharedSetup] setupApplication];
 }
 
-
-- (CCScene *)startScene
-{
-    return [MainMenu scene];
-}
-
-- (BOOL)onKeyUp:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
-{
-    if ([[CCDirector currentDirector] runningScene] == [self startScene])
-    {
-        return NO;
-    }
-    
-    [self runOnGameThread:^{
-        CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
-        [[CCDirector currentDirector] presentScene:[MainMenu scene] withTransition:transition];
-    }];
-    
-    return YES;
-}
+//- (BOOL)onKeyUp:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
+//{
+//    if ([[CCDirector currentDirector] runningScene] == [self startScene])
+//    {
+//        return NO;
+//    }
+//    
+//    [self runOnGameThread:^{
+//        CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
+//        [[CCDirector currentDirector] presentScene:[MainMenu scene] withTransition:transition];
+//    }];
+//    
+//    return YES;
+//}
 
 @end

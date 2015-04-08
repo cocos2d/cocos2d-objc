@@ -19,7 +19,7 @@
 #import "CCTexture.h"
 #import "CCDirectorAndroid.h"
 #import "CCDirector_Private.h"
-
+#import "ccUtils.h"
 
 #import <CoreGraphics/CGGeometry.h>
 
@@ -33,6 +33,7 @@ static CCTouchEvent *currentEvent = nil;
 
 @implementation CCGLView {
     NSMutableSet *_gestureDetectors;
+    CCDirectorAndroid *_director;
 }
 
 
@@ -43,8 +44,6 @@ static CCTouchEvent *currentEvent = nil;
     {
         _contentScaleFactor = scaleFactor;
         _screenMode = screenMode;
-        
-        _director = [[CCDirector director] retain];
     }
     return self;
 }
@@ -55,6 +54,20 @@ static CCTouchEvent *currentEvent = nil;
     [_director release];
     
     [super dealloc];
+}
+
+-(CCDirector *)director
+{
+    if(_director == nil){
+        _director = [[CCDirectorDisplayLink alloc] initWithView:self];
+    }
+    
+    return _director;
+}
+
+-(CGRect)bounds
+{
+    return (CGRect){CGPointZero, CC_SIZE_SCALE(self.sizeInPixels, 1.0/self.contentScaleFactor)};
 }
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector
@@ -511,6 +524,8 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     }
 
 	CCLOG(@"cocos2d: surface size: %dx%d", (int)width, (int)height);
+    
+    _sizeInPixels = CGSizeMake(width, height);
 
     switch (_screenMode)
     {
@@ -543,8 +558,6 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     
     
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
-    
-    _bounds = CGRectMake(0, 0, width, height);
     
     return YES;
 }
