@@ -307,7 +307,7 @@
     
     sprite.shaderUniforms[@"cube"] = sprite.texture;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
 		sprite.shader = [[CCShader alloc] initWithFragmentShaderSource:CC_METAL(
 			fragment half4 ShaderMain(
 				const CCFragData in [[stage_in]],

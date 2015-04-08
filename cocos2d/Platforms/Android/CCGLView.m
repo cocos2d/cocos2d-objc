@@ -11,7 +11,6 @@
 #if __CC_PLATFORM_ANDROID
 
 #import <android/native_window.h>
-#import <bridge/runtime.h>
 #import "CCTouchEvent.h"
 #import "CCTouch.h"
 #import "CCActivity.h"

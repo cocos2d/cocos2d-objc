@@ -30,6 +30,9 @@
 #import "MainMenu.h"
 #import "CCPackageConstants.h"
 
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import "CCMetalView.h"
+#endif
 
 @interface AppDelegate : NSObject
 @end
@@ -72,7 +75,27 @@
     ];
 
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds pixelFormat:kEAGLColorFormatRGBA8 depthFormat:GL_DEPTH24_STENCIL8_OES preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+    
+    switch([CCSetup sharedSetup].graphicsAPI){
+        case CCGraphicsAPIGL:
+        {
+            _view = [[CCViewiOSGL alloc] initWithFrame:_window.bounds
+                                           pixelFormat:kEAGLColorFormatRGBA8
+                                           depthFormat:GL_DEPTH24_STENCIL8_OES
+                                    preserveBackbuffer:NO
+                                            sharegroup:nil
+                                         multiSampling:NO
+                                       numberOfSamples:0];
+            break;
+        }
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+        case CCGraphicsAPIMetal:
+            // TODO support MSAA, depth buffers, etc.
+            _view = [[CCMetalView alloc] initWithFrame:_window.bounds];
+            break;
+#endif
+        default: NSAssert(NO, @"Internal error: Graphics API not set up.");
+    }
     
     UIViewController *viewController = [[UIViewController alloc] init];
     viewController.view = _view;
