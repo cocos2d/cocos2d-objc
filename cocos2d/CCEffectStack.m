@@ -7,6 +7,7 @@
 //
 
 #import "CCEffectStack.h"
+#import "CCEffectStitcher.h"
 #import "CCEffectStack_Private.h"
 #import "CCEffect_Private.h"
 
@@ -163,6 +164,58 @@
 }
 
 #pragma mark - Internal
+
++ (CCEffectImpl *)processEffectsWithStitcher:(NSArray *)effects withStitching:(BOOL)stitchingEnabled
+{
+    NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
+    
+    CCEffect *firstEffect = [effects firstObject];
+    NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[firstEffect.effectImpl]];
+    [stitchLists addObject:currentStitchList];
+    
+    // Iterate over the original effects array building sets of effects
+    // that can be stitched together.
+    for (CCEffect *effect in [effects subarrayWithRange:NSMakeRange(1, effects.count - 1)])
+    {
+        CCEffectImpl *prevEffectImpl = [currentStitchList lastObject];
+        CCEffectImpl *currEffectImpl = effect.effectImpl;
+        
+        // Two effects can be stitched together if stitching is enabled, the previous supports stitching
+        // to effects after it, and the current supports stitching to effects before it.
+        BOOL prevStitchCompatible = [prevEffectImpl stitchSupported:CCEffectFunctionStitchAfter];
+        BOOL currStitchCompatible = [currEffectImpl stitchSupported:CCEffectFunctionStitchBefore];
+        if (stitchingEnabled && prevStitchCompatible && currStitchCompatible)
+        {
+            // The current effect can be stitched to the previous effect so add
+            // it to the running stitch list.
+            [currentStitchList addObject:currEffectImpl];
+        }
+        else
+        {
+            // The current effect cannot be stitched to the previous effect so
+            // start a new stitch list.
+            currentStitchList = [[NSMutableArray alloc] initWithArray:@[currEffectImpl]];
+            [stitchLists addObject:currentStitchList];
+        }
+    }
+    
+    // Stitch the stitch lists and collect the resulting render passes and shaders.
+    NSMutableArray *outputPasses = [[NSMutableArray alloc] init];
+    NSMutableArray *outputShaders = [[NSMutableArray alloc] init];
+    for (int stitchListIndex = 0; stitchListIndex < stitchLists.count; stitchListIndex++)
+    {
+        NSArray *stitchList = stitchLists[stitchListIndex];
+        
+        NSString *prefix = [NSString stringWithFormat:@"SL%d_", stitchListIndex];
+        CCEffectStitcher *stitcher = [[CCEffectStitcher alloc] initWithEffects:stitchList manglePrefix:prefix mangleExclusions:[CCEffectImpl defaultEffectFragmentUniformNames] stitchListIndex:stitchListIndex shaderStartIndex:outputShaders.count];
+        
+        [outputPasses addObjectsFromArray:stitcher.renderPasses];
+        [outputShaders addObjectsFromArray:stitcher.shaders];
+    }
+    
+    // Create a new effect implementation from all the collected passes and shaders.
+    return [[CCEffectImpl alloc] initWithRenderPasses:outputPasses shaders:outputShaders];
+}
 
 + (CCEffectImpl *)processEffects:(NSArray *)effects withStitching:(BOOL)stitchingEnabled
 {

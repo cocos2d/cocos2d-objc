@@ -23,7 +23,7 @@
         _inputs = [inputs copy];
         _returnType = [returnType copy];
         
-        _inputString = @"void";
+        NSString *inputString = @"void";
         if (_inputs.count)
         {
             NSMutableString *tmpString = [[NSMutableString alloc] init];
@@ -31,8 +31,11 @@
             {
                 [tmpString appendFormat:@"%@ %@", input.type, input.name];
             }
-            _inputString = tmpString;
+            inputString = tmpString;
         }
+        
+        _declaration = [NSString stringWithFormat:@"%@ %@(%@)", _returnType, _name, inputString];
+        _definition = [NSString stringWithFormat:@"%@\n{\n%@\n}", _declaration, _body];
         
         return self;
     }
@@ -45,10 +48,10 @@
     return [[self alloc] initWithName:name body:body inputs:inputs returnType:returnType];
 }
 
--(NSString*)function
+-(instancetype)copyWithZone:(NSZone *)zone
 {
-    NSString* function = [NSString stringWithFormat:@"%@ %@(%@)\n{\n%@\n}", _returnType, _name, _inputString, _body];
-    return function;
+    CCEffectFunction *newFunction = [[CCEffectFunction allocWithZone:zone] initWithName:_name body:_body inputs:_inputs returnType:_returnType];
+    return newFunction;
 }
 
 -(NSString*)callStringWithInputs:(NSArray*)inputs
@@ -90,10 +93,93 @@
     return self;
 }
 
+-(id)initWithType:(NSString*)type name:(NSString*)name
+{
+    return [self initWithType:type name:name initialSnippet:nil snippet:nil];
+}
+
 +(instancetype)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet
 {
     return [[self alloc] initWithType:type name:name initialSnippet:initialSnippet snippet:snippet];
 }
 
++(instancetype)inputWithType:(NSString*)type name:(NSString*)name
+{
+    return [[self alloc] initWithType:type name:name];
+}
+
 @end
+
+
+#pragma mark CCEffectFunctionCall
+
+@implementation CCEffectFunctionCall
+
+-(id)initWithFunction:(CCEffectFunction *)function outputName:(NSString *)outputName inputs:(NSDictionary *)inputs
+{
+    NSAssert(function, @"");
+    NSAssert(outputName, @"");
+//    NSAssert(inputs, @"");
+    
+    if((self = [super init]))
+    {
+        _function = [function copy];
+        _outputName = [outputName copy];
+        _inputs = [inputs copy];
+        
+        // TODO Check that all of the functions inputs are represented in the inputs dictionary.
+    }
+    return self;
+}
+
+@end
+
+
+#pragma mark CCEffectFunctionTemporary
+
+@implementation CCEffectFunctionTemporary
+
+-(id)initWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
+{
+    NSAssert(type, @"");
+    NSAssert(name, @"");
+    
+    if((self = [super init]))
+    {
+        _type = [type copy];
+        _name = [name copy];
+        _initializer = initializer;
+
+        switch (initializer)
+        {
+            case CCEffectInitFragColor:
+                _declaration = [NSString stringWithFormat:@"%@ %@ = cc_FragColor", _type, _name];
+                break;
+            case CCEffectInitMainTexture:
+                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                                          @"%@ %@ = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                break;
+            case CCEffectInitPreviousPass:
+                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                                          @"%@ %@ = cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                break;
+            case CCEffectInitReserved0:
+                _declaration = [NSString stringWithFormat:@"%@ %@ = vec4(1)", _type, _name];
+                break;
+            case CCEffectInitReserved1:
+                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                                          @"%@ %@ = texture2D(cc_MainTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                break;
+            case CCEffectInitReserved2:
+                _declaration = [NSString stringWithFormat:@"vec2 compare_%@ = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\n"
+                                                          @"%@ %@ = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1) * step(0.0, min(compare_%@.x, compare_%@.y))", _name, _type, _name, _name, _name];
+                break;
+        }
+    }
+    return self;
+}
+
+@end
+
+
 

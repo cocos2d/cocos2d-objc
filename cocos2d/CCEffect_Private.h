@@ -75,6 +75,7 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
 
 @property (nonatomic, readonly) CCShader* shader;
+@property (nonatomic, readonly) NSArray* shaders;
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSArray* vertexFunctions;
 @property (nonatomic, readonly) NSArray* fragmentFunctions;
@@ -92,6 +93,7 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 -(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms;
+-(id)initWithRenderPasses:(NSArray *)renderPasses shaders:(NSArray *)shaders;
 
 -(CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
