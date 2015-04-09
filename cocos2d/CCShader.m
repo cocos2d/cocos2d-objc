@@ -608,8 +608,11 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		// Compile the vertex shader.
 		NSError *verr = nil;
 		id<MTLLibrary> vlib = [context.device newLibraryWithSource:vertexSource options:nil error:&verr];
-		if(verr) CCLOG(@"Error compiling metal vertex shader: %@", verr);
-		
+		if(verr)
+        {
+            CCLOG(@"Error compiling metal vertex shader: %@", verr);
+            CCLogShader(@"Vertex Shader", @[vertexSource]);
+        }
 		vertexFunction = [vlib newFunctionWithName:@"ShaderMain"];
 	}
 	
@@ -619,8 +622,12 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 	// compile the fragment shader.
 	NSError *ferr = nil;
 	id<MTLLibrary> flib = [context.device newLibraryWithSource:fragmentSource options:nil error:&ferr];
-	if(ferr) CCLOG(@"Error compiling metal fragment shader: %@", ferr);
-	
+	if(ferr)
+    {
+        CCLOG(@"Error compiling metal fragment shader: %@", ferr);
+        CCLogShader(@"Fragment Shader", @[fragmentSource]);
+    }
+    
 	id<MTLFunction> fragmentFunction = [flib newFunctionWithName:@"ShaderMain"];
 	
 	// Done!
@@ -657,8 +664,14 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		if(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog)){
 			blockself = [blockself initWithGLProgram:program uniformSetters:GLUniformSettersForProgram(program) ownsProgram:YES];
 		} else {
-            CCLogShader(@"Vertex Shader", vertexSources);
-            CCLogShader(@"Fragment Shader", fragmentSources);
+            if (vshader && fshader)
+            {
+                // Only output the shader sources when there's a link error if there were
+                // no compile errors. If there was a compile error then the shader sources
+                // have already been output.
+                CCLogShader(@"Vertex Shader", vertexSources);
+                CCLogShader(@"Fragment Shader", fragmentSources);
+            }
 			glDeleteProgram(program);
 			blockself = nil;
 		}
