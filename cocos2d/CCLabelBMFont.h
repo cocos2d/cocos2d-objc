@@ -152,14 +152,6 @@
  @see CCTextAlignment */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
 
-/** The opacity of the text, in the range 0.0 (fully transparent) to 1.0 (fully opaque). */
-@property (nonatomic,readwrite) CGFloat opacity;
-
-/** The color of the text.
- @see CCColor */
-@property (nonatomic,strong) CCColor* color;
-
-
 /// -----------------------------------------------------------------------
 /// @name Size and Alignment
 /// -----------------------------------------------------------------------
