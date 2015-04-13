@@ -46,8 +46,6 @@
 
 @end
 
-extern ANativeWindow *ANativeWindow_fromSurface(JNIEnv *env, jobject surface);
-
 static CCActivity *currentActivity = nil;
 
 @implementation CCActivity {
