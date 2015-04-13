@@ -1,7 +1,7 @@
 #import "png.h"
 
 #import "ccUtils.h"
-#import "CCImage.h"
+#import "CCImage_Private.h"
 
 #import "CCFile.h"
 #import "CCSetup.h"
@@ -217,18 +217,15 @@ LoadPNG(CCFile *file, BOOL flip, BOOL rgb, BOOL alpha, BOOL premultiply, NSUInte
 
 -(instancetype)initWithPNGFile:(CCFile *)file options:(NSDictionary *)options;
 {
-    NSUInteger rescaleFactor = 1.0/[options[CCImageOptionRescaleFactor] ?: @(1.0) doubleValue];
-    
-    if(!file.hasResolutionTag){
-        CGFloat relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
-        rescaleFactor = CCNextPOT(relativeScale);
-    }
+    options = NormalizeCCImageOptions(options);
+    CGFloat rescale = [self autoScaleFactor:file]*[options[CCImageOptionRescaleFactor] doubleValue];
     
     CGSize size = {};
     BOOL flip = [options[CCImageOptionFlipVertical] boolValue];
-    NSMutableData *data = LoadPNG(file, flip, TRUE, TRUE, TRUE, rescaleFactor, &size);
+    BOOL premultiply = [options[CCImageOptionPremultiply] boolValue];
+    NSMutableData *data = LoadPNG(file, flip, TRUE, TRUE, premultiply, 1.0/rescale, &size);
     
-    return [self initWithPixelSize:size contentScale:file.contentScale/(CGFloat)rescaleFactor pixelData:data];
+    return [self initWithPixelSize:size contentScale:file.contentScale*rescale pixelData:data options:options];
 }
 
 @end

@@ -121,19 +121,25 @@
 	return copy;
 }
 
+-(CGFloat)textureScale
+{
+    CCTexture *tex = self.texture;
+    return 1.0/(tex.contentScale);
+}
+
 -(CGRect) rect
 {
-	return CC_RECT_SCALE(_rectInPixels, 1.0/self.texture.contentScale);
+	return CC_RECT_SCALE(_rectInPixels, self.textureScale);
 }
 
 -(CGPoint)offset
 {
-	return ccpMult(_offsetInPixels, 1.0/self.texture.contentScale);
+	return ccpMult(_offsetInPixels, self.textureScale);
 }
 
 -(CGSize)originalSize
 {
-	return CC_SIZE_SCALE(_originalSizeInPixels, 1.0/self.texture.contentScale);
+	return CC_SIZE_SCALE(_originalSizeInPixels, self.textureScale);
 }
 
 -(void) setTexture:(CCTexture *)texture
