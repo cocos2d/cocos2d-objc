@@ -912,6 +912,12 @@
 		D316EB731AB77671003207E8 /* CCProjectionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D316EB701AB77671003207E8 /* CCProjectionDelegate.m */; };
 		D31C795019994126007921E1 /* CCMetalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D31C794F19994126007921E1 /* CCMetalSupport.m */; };
 		D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D31C795119994197007921E1 /* CCMetalSupport_Private.h */; };
+		D331FC101ADB80440013FFBE /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D331FBD11ADB7CAD0013FFBE /* libpng.a */; };
+		D331FC1C1ADB82580013FFBE /* CCImage+PNG.m in Sources */ = {isa = PBXBuildFile; fileRef = D331FC1B1ADB82580013FFBE /* CCImage+PNG.m */; };
+		D331FC1D1ADB82580013FFBE /* CCImage+PNG.m in Sources */ = {isa = PBXBuildFile; fileRef = D331FC1B1ADB82580013FFBE /* CCImage+PNG.m */; };
+		D331FC1E1ADB82580013FFBE /* CCImage+PNG.m in Sources */ = {isa = PBXBuildFile; fileRef = D331FC1B1ADB82580013FFBE /* CCImage+PNG.m */; };
+		D331FC5A1ADB93580013FFBE /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D331FC4B1ADB83560013FFBE /* libpng.a */; };
+		D331FC911ADB98520013FFBE /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D331FC8E1ADB984A0013FFBE /* libpng.a */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
@@ -1140,6 +1146,48 @@
 			proxyType = 2;
 			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
 			remoteInfo = "ObjectAL (Mac)";
+		};
+		D331FBD01ADB7CAD0013FFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D331FB3F1ADB74040013FFBE;
+			remoteInfo = libpng;
+		};
+		D331FBDA1ADB7D260013FFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D331FB3E1ADB74040013FFBE;
+			remoteInfo = "libpng-ios";
+		};
+		D331FC4A1ADB83560013FFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D331FC3A1ADB82B20013FFBE;
+			remoteInfo = "libpng (Mac)";
+		};
+		D331FC551ADB934D0013FFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D331FC211ADB82B20013FFBE;
+			remoteInfo = "libpng (Mac)";
+		};
+		D331FC8A1ADB98490013FFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D331FC6B1ADB97FE0013FFBE;
+			remoteInfo = "libpng (Android)";
+		};
+		D331FC8D1ADB984A0013FFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D331FC831ADB97FE0013FFBE;
+			remoteInfo = "libpng (Android)";
 		};
 		FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1499,6 +1547,8 @@
 		D316EB701AB77671003207E8 /* CCProjectionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProjectionDelegate.m; sourceTree = "<group>"; };
 		D31C794F19994126007921E1 /* CCMetalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMetalSupport.m; sourceTree = "<group>"; };
 		D31C795119994197007921E1 /* CCMetalSupport_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMetalSupport_Private.h; sourceTree = "<group>"; };
+		D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpng.xcodeproj; path = external/libpng/libpng.xcodeproj; sourceTree = "<group>"; };
+		D331FC1B1ADB82580013FFBE /* CCImage+PNG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCImage+PNG.m"; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
@@ -1587,6 +1637,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D331FC101ADB80440013FFBE /* libpng.a in Frameworks */,
 				83409E4919D5BADC004B7EB9 /* libSSZipArchive.a in Frameworks */,
 				FC64014019C79716003E595A /* libObjectAL.a in Frameworks */,
 				D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */,
@@ -1608,6 +1659,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D331FC5A1ADB93580013FFBE /* libpng.a in Frameworks */,
 				B77582CE1A76CDB200C8589F /* libz.dylib in Frameworks */,
 				7A59498319E38C9800F65F90 /* libSSZipArchiveMac.a in Frameworks */,
 				7A59493F19E380D700F65F90 /* libObjectiveChipmunk-Mac.a in Frameworks */,
@@ -1636,6 +1688,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D331FC911ADB98520013FFBE /* libpng.a in Frameworks */,
 				462D9B7F1A427E130040C5F2 /* JavaFoundation.framework in Frameworks */,
 				14EF47AA1A37F11C00A45BE4 /* JavaKit.framework in Frameworks */,
 				14C4C33E1A37E39E00DD3957 /* AndroidKit.framework in Frameworks */,
@@ -1731,6 +1784,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */,
 				83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */,
 				FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */,
 				B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */,
@@ -1948,6 +2002,7 @@
 				E0F924701224140400EF2362 /* CCTexture+PVR.m */,
 				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
 				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
+				D331FC1B1ADB82580013FFBE /* CCImage+PNG.m */,
 			);
 			name = Textures;
 			sourceTree = "<group>";
@@ -2347,6 +2402,16 @@
 			);
 			name = Math;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		D331FBCD1ADB7CAD0013FFBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D331FBD11ADB7CAD0013FFBE /* libpng.a */,
+				D331FC4B1ADB83560013FFBE /* libpng.a */,
+				D331FC8E1ADB984A0013FFBE /* libpng.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D34CAD5E19C3A070009BED7A /* Rendering */ = {
@@ -3054,6 +3119,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D331FBDB1ADB7D260013FFBE /* PBXTargetDependency */,
 				83409E4D19D5E8A1004B7EB9 /* PBXTargetDependency */,
 				FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */,
 				B759E5321880C70A00E8166C /* PBXTargetDependency */,
@@ -3074,6 +3140,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D331FC561ADB934D0013FFBE /* PBXTargetDependency */,
 				7A59497F19E38C8300F65F90 /* PBXTargetDependency */,
 				7A59492E19E37A2300F65F90 /* PBXTargetDependency */,
 				7A59492919E379B600F65F90 /* PBXTargetDependency */,
@@ -3113,6 +3180,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D331FC8B1ADB98490013FFBE /* PBXTargetDependency */,
 				7A9790D319E61DFE001FFC4D /* PBXTargetDependency */,
 				7A9790D119E61DDB001FFC4D /* PBXTargetDependency */,
 				FC39962119C3BB3A00C93E5E /* PBXTargetDependency */,
@@ -3156,6 +3224,10 @@
 				{
 					ProductGroup = B759E5291880C66900E8166C /* Products */;
 					ProjectRef = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
+				},
+				{
+					ProductGroup = D331FBCD1ADB7CAD0013FFBE /* Products */;
+					ProjectRef = D331FBCC1ADB7CAD0013FFBE /* libpng.xcodeproj */;
 				},
 				{
 					ProductGroup = FC39961419C3B92F00C93E5E /* Products */;
@@ -3232,6 +3304,27 @@
 			fileType = archive.ar;
 			path = "libObjectAL (Mac).a";
 			remoteRef = D28B2E7D19CBA89A00DC6E08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D331FBD11ADB7CAD0013FFBE /* libpng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpng.a;
+			remoteRef = D331FBD01ADB7CAD0013FFBE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D331FC4B1ADB83560013FFBE /* libpng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpng.a;
+			remoteRef = D331FC4A1ADB83560013FFBE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D331FC8E1ADB984A0013FFBE /* libpng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpng.a;
+			remoteRef = D331FC8D1ADB984A0013FFBE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FC39961B19C3B92F00C93E5E /* libObjectAL.a */ = {
@@ -3318,6 +3411,7 @@
 				D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */,
 				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
 				D37D197A18B6665700B23FDE /* CCTMXXMLParser.m in Sources */,
+				D331FC1C1ADB82580013FFBE /* CCImage+PNG.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				D37D197718B6665700B23FDE /* CCTiledMap.m in Sources */,
 				D36DFA2819996EC500DEC135 /* CCRendererGLSupport.m in Sources */,
@@ -3480,6 +3574,7 @@
 				7A5947F119E375A100F65F90 /* CCTiledMapObjectGroup.m in Sources */,
 				7A5947F319E375A200F65F90 /* CCTMXXMLParser.m in Sources */,
 				7A5947F619E375A200F65F90 /* CCScene.m in Sources */,
+				D331FC1E1ADB82580013FFBE /* CCImage+PNG.m in Sources */,
 				7A5947F819E375A200F65F90 /* CCTransition.m in Sources */,
 				7A5947FA19E375A200F65F90 /* CCPhysicsBody.m in Sources */,
 				7A5947FC19E375A200F65F90 /* CCPhysicsShape.m in Sources */,
@@ -3657,6 +3752,7 @@
 				D268FE251980791D00ECBCD0 /* CCEffectBloom.m in Sources */,
 				D2FEB6F7194F6C9E00FC0574 /* CCActionTween.m in Sources */,
 				BC9F4E9519DB635200B25F01 /* CCPackageInstaller.m in Sources */,
+				D331FC1D1ADB82580013FFBE /* CCImage+PNG.m in Sources */,
 				D268FE271980791D00ECBCD0 /* CCEffectGlass.m in Sources */,
 				D2FEB6FB194F6C9E00FC0574 /* CCTouchAndroid.m in Sources */,
 				9DC780BB1A11760A00DD5A4B /* CCLightNode.m in Sources */,
@@ -3769,6 +3865,21 @@
 			target = 7A4037A719E37038007B6E8F /* cocos2d-mac */;
 			targetProxy = B7E7DE4D1A76DB8B004234B7 /* PBXContainerItemProxy */;
 		};
+		D331FBDB1ADB7D260013FFBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libpng-ios";
+			targetProxy = D331FBDA1ADB7D260013FFBE /* PBXContainerItemProxy */;
+		};
+		D331FC561ADB934D0013FFBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libpng (Mac)";
+			targetProxy = D331FC551ADB934D0013FFBE /* PBXContainerItemProxy */;
+		};
+		D331FC8B1ADB98490013FFBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libpng (Android)";
+			targetProxy = D331FC8A1ADB98490013FFBE /* PBXContainerItemProxy */;
+		};
 		FC39962119C3BB3A00C93E5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ObjectAL (Android)";
@@ -3812,6 +3923,7 @@
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
 					"$(SRCROOT)/external/SSZipArchive/**",
+					"$(SRCROOT)/external/libpng/libpng",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3848,6 +3960,7 @@
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
 					"$(SRCROOT)/external/SSZipArchive/**",
+					"$(SRCROOT)/external/libpng/libpng",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3882,6 +3995,16 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+					"external/SSZipArchive/**",
+					"$(SRCROOT)/external/libpng/libpng",
+				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -3910,6 +4033,16 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+					"external/SSZipArchive/**",
+					"$(SRCROOT)/external/libpng/libpng",
+				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4159,7 +4292,6 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/external/kazmath/include",
 					"cocos2d/**",
 					"cocos2d-ui/**",
 					"cocos2d-ui-tests/**",
@@ -4167,6 +4299,7 @@
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/ObjectAL/ObjectAL/**",
 					"$(SRCROOT)/external/SSZipArchive/**",
+					"$(SRCROOT)/external/libpng/libpng",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4206,7 +4339,6 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/external/kazmath/include",
 					"cocos2d/**",
 					"cocos2d-ui/**",
 					"cocos2d-ui-tests/**",
@@ -4214,6 +4346,7 @@
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/ObjectAL/ObjectAL/**",
 					"$(SRCROOT)/external/SSZipArchive/**",
+					"$(SRCROOT)/external/libpng/libpng",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

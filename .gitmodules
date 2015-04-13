@@ -11,3 +11,6 @@ url=https://github.com/slembcke/Chipmunk2D.git
 [submodule "external/OCMock"]
 	path = external/OCMock
 	url = https://github.com/erikdoe/ocmock.git
+[submodule "external/libpng"]
+	path = external/libpng
+	url = https://github.com/slembcke/libpng.git

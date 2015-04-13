@@ -167,11 +167,10 @@ NormalizeOptions(NSDictionary *options)
 {
     NSAssert(file, @"file is nil.");
     
-    if(YES){
-        return [self initWithCoreGraphics:file options:options];
+    if([file.name hasSuffix:@".png"]){
+        return [self initWithPNGFile:file options:options];
     } else {
-        // TODO Add a libpng based loader.
-        // TODO Add pdf loading because it would be really easy?
+        return [self initWithCoreGraphics:file options:options];
     }
 }
 
