@@ -6,6 +6,8 @@
 #import "CCFile.h"
 #import "CCSetup.h"
 
+extern NSString * const CCImageOptionFlipVertical;
+
 
 static void
 Premultiply(png_structp png, png_row_infop row_info, png_bytep row)
@@ -29,18 +31,18 @@ Premultiply(png_structp png, png_row_infop row_info, png_bytep row)
 }
 
 struct ProgressiveInfo {
-	BOOL rgb, alpha, premultiply;
-	NSUInteger scale;
+	BOOL flip, rgb, alpha, premultiply;
+	png_uint_32 scale;
 	
 	// Original image width
-	NSUInteger width;
+	png_uint_32 width;
 	
 	// Accumulation buffer used when downscaling.
 	png_uint_16p accumulated_row;
 	png_size_t accumulated_row_bytes;
 	
 	// Final rescaled image.
-	NSUInteger scaled_width, scaled_height;
+	png_uint_32 scaled_width, scaled_height;
 	png_bytep scaled_pixels;
 	png_size_t scaled_row_bytes;
 };
@@ -52,7 +54,7 @@ ProgressiveInfo(png_structp png, png_infop png_info)
 	
 	info->width = png_get_image_width(png, png_info);
 	
-	NSUInteger scale = info->scale;
+	png_uint_32 scale = info->scale;
 	info->scaled_width = (info->width + scale - 1)/scale;
 	info->scaled_height = (png_get_image_height(png, png_info) + scale - 1)/scale;
 	
@@ -112,6 +114,18 @@ ProgressiveInfo(png_structp png, png_infop png_info)
 	info->scaled_pixels = malloc(info->scaled_row_bytes*info->scaled_height);
 }
 
+static png_bytep
+GetScaledRowPixels(struct ProgressiveInfo *info, png_uint_32 row)
+{
+    png_uint_32 scaled_row = row/info->scale;
+    
+    if(!info->flip){
+        scaled_row = info->scaled_height - scaled_row - 1;
+    }
+    
+    return info->scaled_pixels + (scaled_row)*info->scaled_row_bytes;
+}
+
 static void
 ProgressiveRow(png_structp png, png_bytep rowPixels, png_uint_32 row, int pass)
 {
@@ -122,9 +136,9 @@ ProgressiveRow(png_structp png, png_bytep rowPixels, png_uint_32 row, int pass)
 	NSUInteger width = info->width;
 	png_uint_16p accumulated = info->accumulated_row;
 	
-    png_bytep pixels = info->scaled_pixels + (info->scaled_height - row/scale - 1)*row_bytes;
+    png_bytep row_pixels = GetScaledRowPixels(info, row);
 	if(scale == 1){
-		memcpy(pixels, rowPixels, row_bytes);
+		memcpy(row_pixels, rowPixels, row_bytes);
 	} else {
 		for(int i=0; i<width; i++){
 			accumulated[(i/scale)*4 + 0] += rowPixels[i*4 + 0];
@@ -137,7 +151,7 @@ ProgressiveRow(png_structp png, png_bytep rowPixels, png_uint_32 row, int pass)
 		if((row & mask) == mask){
 			for(int i=0; i<row_bytes; i++){
 				// Divde and copy the accumulated value
-				pixels[i] = (accumulated[i] >> scale);
+				row_pixels[i] = (accumulated[i] >> scale);
 				// Clear the accumulated value
 				accumulated[i] = 0;
 			}
@@ -146,7 +160,7 @@ ProgressiveRow(png_structp png, png_bytep rowPixels, png_uint_32 row, int pass)
 }
 
 static NSMutableData *
-LoadPNG(CCFile *file, BOOL rgb, BOOL alpha, BOOL premultiply, NSUInteger scale, CGSize *size)
+LoadPNG(CCFile *file, BOOL flip, BOOL rgb, BOOL alpha, BOOL premultiply, NSUInteger scale, CGSize *size)
 {
 	NSCAssert(scale == 1 || scale == 2 || scale == 4, @"Scale must be 1, 2 or 4.");
 	
@@ -173,10 +187,11 @@ LoadPNG(CCFile *file, BOOL rgb, BOOL alpha, BOOL premultiply, NSUInteger scale, 
 //	png_read_info(png, info);
 	
 	struct ProgressiveInfo info = {};
+    info.flip = flip;
 	info.rgb = rgb;
 	info.alpha = alpha;
 	info.premultiply = premultiply;
-	info.scale = scale;
+	info.scale = (png_uint_32)scale;
 	
 	png_set_progressive_read_fn(png, &info, ProgressiveInfo, ProgressiveRow, NULL);
 	
@@ -202,11 +217,17 @@ LoadPNG(CCFile *file, BOOL rgb, BOOL alpha, BOOL premultiply, NSUInteger scale, 
 
 -(instancetype)initWithPNGFile:(CCFile *)file options:(NSDictionary *)options;
 {
-    CGFloat relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
-    NSUInteger rescaleFactor = CCNextPOT(relativeScale);
-    CGSize size = {};
+    NSUInteger rescaleFactor = 1.0/[options[CCImageOptionRescaleFactor] ?: @(1.0) doubleValue];
     
-    NSMutableData *data = LoadPNG(file, TRUE, TRUE, TRUE, rescaleFactor, &size);
+    if(!file.hasResolutionTag){
+        CGFloat relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
+        rescaleFactor = CCNextPOT(relativeScale);
+    }
+    
+    CGSize size = {};
+    BOOL flip = [options[CCImageOptionFlipVertical] boolValue];
+    NSMutableData *data = LoadPNG(file, flip, TRUE, TRUE, TRUE, rescaleFactor, &size);
+    
     return [self initWithPixelSize:size contentScale:file.contentScale/(CGFloat)rescaleFactor pixelData:data];
 }
 
