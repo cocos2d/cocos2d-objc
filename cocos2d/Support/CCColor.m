@@ -178,10 +178,14 @@
 
 - (CGColorRef) CGColor
 {
-    CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    _color = CGColorCreate(colorspace, components);
-    CGColorSpaceRelease(colorspace);
+    if (_color == NULL)
+    {
+        CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
+        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+        _color = CGColorCreate(colorspace, components);
+        CGColorSpaceRelease(colorspace);
+    }
+    
     return _color;
 }
 
