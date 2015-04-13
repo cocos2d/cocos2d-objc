@@ -46,7 +46,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    [self loadStringsFile:@"Strings.ccbLang"];
+    [self loadStringsFile:@"Strings.sbLang"];
     
     return self;
 }
@@ -56,6 +56,13 @@
     NSError *err = nil;
     
     CCFile *file = [[CCFileLocator sharedFileLocator] fileNamed:plistFile error:&err];
+
+    //Compatibility for ccb -> sb renaming
+    if(err)
+    {
+        file = [[CCFileLocator sharedFileLocator] fileNamed:@"Strings.ccbLang" error:&err];
+    }
+
     NSAssert(err == nil, @"Error finding %@: %@", plistFile, err);
     
     NSDictionary *ser = [file loadPlist:&err];
