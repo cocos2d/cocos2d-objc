@@ -448,9 +448,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Update texture and content size
 	[self setTexture:tex];
 	
-	CGRect rect = CGRectZero;
-	rect.size = [self.texture contentSize];
-	[self setTextureRect: rect];
+    CGSize contentSize = tex.contentSize;
+    CGSize size = CC_SIZE_SCALE(tex.sizeInPixels, 1.0/tex.contentScale);
+	[self setTextureRect:CGRectMake(0.0, size.height - contentSize.height, contentSize.width, contentSize.height)];
 	
 	return YES;
 

@@ -118,7 +118,13 @@
 
 -(CGRect) rect
 {
-	return CC_RECT_SCALE(_rectInPixels, self.textureScale);
+    CCTexture *texture = self.texture;
+    CGRect rect = _rectInPixels;
+    
+    CGFloat h = (_rotated ? rect.size.width : rect.size.height);
+    rect.origin.y = texture.sizeInPixels.height - (rect.origin.y + h);
+    
+	return CC_RECT_SCALE(rect, 1.0/texture.contentScale);
 }
 
 -(CGPoint)trimOffset

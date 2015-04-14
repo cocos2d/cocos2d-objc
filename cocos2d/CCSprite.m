@@ -269,6 +269,7 @@
     CCSpriteTexCoordSet result;
 	if(!texture) return result;
 	
+    // Need to convert te texel coords for the texel stretch hack. (Bah)
 	CGFloat scale = texture.contentScale;
 	rect = CC_RECT_SCALE(rect, scale);
 	
@@ -279,18 +280,18 @@
 	if(rotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
-		float right  = left+(rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
-		float top    = 1.0f - (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
-		float bottom = 1.0f - top+(rect.size.width*2.0f - 2.0f)/(2.0f*atlasHeight);
+		float right  = left + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
+		float bottom = (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
+		float top    = bottom + (rect.size.width*2.0f - 2.0f)/(2.0f*atlasHeight);
 #else
 		float left   = rect.origin.x/atlasWidth;
 		float right  = (rect.origin.x + rect.size.height)/atlasWidth;
-		float top    = 1.0f - rect.origin.y/atlasHeight;
-		float bottom = 1.0f - (rect.origin.y + rect.size.width)/atlasHeight;
+		float bottom = rect.origin.y/atlasHeight;
+		float top    = (rect.origin.y + rect.size.width)/atlasHeight;
 #endif
 
-		if(flipX) CC_SWAP(top,bottom);
-		if(flipY) CC_SWAP(left,right);
+		if(flipX) CC_SWAP(top, bottom);
+		if(flipY) CC_SWAP(left, right);
 		
 		result.bl = GLKVector2Make( left,    top);
 		result.br = GLKVector2Make( left, bottom);
@@ -300,17 +301,17 @@
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
 		float right  = left + (rect.size.width*2.0f - 2.0f)/(2.0f*atlasWidth);
-		float top    = 1.0f - (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
-		float bottom = 1.0f - top + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasHeight);
+		float bottom = (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
+		float top    = bottom + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasHeight);
 #else
 		float left   = rect.origin.x/atlasWidth;
 		float right  = (rect.origin.x + rect.size.width)/atlasWidth;
-		float top    = 1.0f - rect.origin.y/atlasHeight;
-		float bottom = 1.0f - (rect.origin.y + rect.size.height)/atlasHeight;
+		float bottom = rect.origin.y/atlasHeight;
+		float top    = (rect.origin.y + rect.size.height)/atlasHeight;
 #endif
 
-		if(flipX) CC_SWAP(left,right);
-		if(flipY) CC_SWAP(top,bottom);
+		if(flipX) CC_SWAP(left, right);
+		if(flipY) CC_SWAP(top, bottom);
 
 		result.bl = GLKVector2Make( left, bottom);
 		result.br = GLKVector2Make(right, bottom);

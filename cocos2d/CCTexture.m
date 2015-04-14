@@ -40,7 +40,6 @@
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "CCSetup.h"
-#import "CCDeprecated.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -347,7 +346,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 {
     if(_spriteFrame == nil){
         CGRect rectInPixels = {CGPointZero, _sizeInPixels};
-        _spriteFrame = [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
+        _spriteFrame = [[CCSpriteFrame alloc] initWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO trimOffsetInPixels:CGPointZero untrimmedSizeInPixels:_sizeInPixels];
     }
     
     return _spriteFrame;
