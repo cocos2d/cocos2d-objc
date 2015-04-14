@@ -184,7 +184,7 @@
 	
 	CGSize sizeInPixels = CC_SIZE_SCALE(texture.contentSize, texture.contentScale);
 	CGRect rectInPixels = {CGPointZero, sizeInPixels};
-	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:sizeInPixels];
+	CCSpriteFrame *spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture rectInPixels:rectInPixels rotated:NO trimOffsetInPixels:CGPointZero untrimmedSizeInPixels:sizeInPixels];
 
 	[self addSpriteFrame:spriteFrame];
 }
@@ -192,7 +192,7 @@
 -(void) addSpriteFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	CGRect rectInPixels = CC_RECT_SCALE(rect, texture.contentScale);
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
+	CCSpriteFrame *frame = [[CCSpriteFrame alloc] initWithTexture:texture rectInPixels:rectInPixels rotated:NO trimOffsetInPixels:CGPointZero untrimmedSizeInPixels:rectInPixels.size];
 	[self addSpriteFrame:frame];
 }
 

@@ -38,8 +38,8 @@
 @implementation CCSpriteFrame {
 	CGRect _rectInPixels;
 	BOOL _rotated;
-	CGPoint _offsetInPixels;
-	CGSize _originalSizeInPixels;
+	CGPoint _trimOffsetInPixels;
+	CGSize _untrimmedSizeInPixels;
 	CCTexture *_texture;
 	NSString *_textureFilename;
 	CCProxy __weak *_proxy;
@@ -73,8 +73,8 @@
     {
 		self.texture = texture;
 		_rectInPixels = rect;
-		_offsetInPixels = offset;
-		_originalSizeInPixels = originalSize;
+		_trimOffsetInPixels = offset;
+		_untrimmedSizeInPixels = originalSize;
         _rotated = rotated;
 	}
 	return self;
@@ -87,8 +87,8 @@
 		_texture = nil;
 		_textureFilename = [filename copy];
 		_rectInPixels = rect;
-		_offsetInPixels = offset;
-		_originalSizeInPixels = originalSize;
+		_trimOffsetInPixels = offset;
+		_untrimmedSizeInPixels = originalSize;
         _rotated = rotated;
 	}
 	return self;
@@ -104,8 +104,8 @@
 			rect.size.width,
 			rect.size.height,
 			_rotated,
-            _offsetInPixels.x,
-            _offsetInPixels.y
+            _trimOffsetInPixels.x,
+            _trimOffsetInPixels.y
 			];
 }
 
@@ -116,7 +116,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTextureFilename:_textureFilename rectInPixels:_rectInPixels rotated:_rotated offset:_offsetInPixels originalSize:_originalSizeInPixels];
+	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTextureFilename:_textureFilename rectInPixels:_rectInPixels rotated:_rotated offset:_trimOffsetInPixels originalSize:_untrimmedSizeInPixels];
 	copy.texture = _texture;
 	return copy;
 }
@@ -132,14 +132,14 @@
 	return CC_RECT_SCALE(_rectInPixels, self.textureScale);
 }
 
--(CGPoint)offset
+-(CGPoint)trimOffset
 {
-	return ccpMult(_offsetInPixels, self.textureScale);
+	return ccpMult(_trimOffsetInPixels, self.textureScale);
 }
 
--(CGSize)originalSize
+-(CGSize)untrimmedSize
 {
-	return CC_SIZE_SCALE(_originalSizeInPixels, self.textureScale);
+	return CC_SIZE_SCALE(_untrimmedSizeInPixels, self.textureScale);
 }
 
 -(void) setTexture:(CCTexture *)texture

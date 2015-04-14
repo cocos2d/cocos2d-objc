@@ -60,74 +60,47 @@
 +(instancetype) frameWithImageNamed:(NSString*)imageName;
 
 /**
- *  Create and return a sprite frame object from the specified texture, texture rectangle, rotation status, offset and originalSize values.
- *
- *  @param texture      Texture to use.
- *  @param rect         Texture rectangle (in pixels) to use.
- *  @param rotated      Is rectangle rotated?
- *  @param offset       Offset (in pixels) to use.
- *  @param originalSize Original size (in pixels) before being trimmed.
- *
- *  @return The CCSpriteFrame Object.
- *  @see CCTexture
- */
-+(instancetype) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-/**
- *  Create and return a sprite frame object from the specified texture file name, texture rectangle, rotation status, offset and originalSize values.
- *
- *  @param filename     Image file name to use.
- *  @param rect         Texture rectangle (in pixels) to use.
- *  @param rotated      Is rectangle rotated?
- *  @param offset       Offset (in pixels) to use.
- *  @param originalSize Original size (in pixels) before being trimmed.
- *
- *  @return The CCSpriteFrame Object.
- */
-+(instancetype) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-/**
  *  Initializes and returns a sprite frame object from the specified texture, texture rectangle, rotation status, offset and originalSize values.
  *
- *  @param texture      Texture to use.
- *  @param rect         Texture rectangle (in pixels) to use.
- *  @param rotated      Is rectangle rotated?
- *  @param offset       Offset (in pixels) to use.
- *  @param originalSize Original size (in pixels) before being trimmed.
+ *  @param texture Texture to use.
+ *  @param rectInPixels Texture rectangle (in pixels) to use.
+ *  @param rotated Is rectangle rotated?
+ *  @param trimOffsetInPixels Offset (in pixels) to use.
+ *  @param untrimmedSizeInPixels Original size (in pixels) before being trimmed.
  *
  *  @return An initialized CCSpriteFrame Object.
  *  @see CCTexture
  */
--(id) initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
+-(instancetype)initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rectInPixels rotated:(BOOL)rotated trimOffsetInPixels:(CGPoint)trimOffsetInPixels untrimmedSizeInPixels:(CGSize)untrimmedSizeInPixels;
 
 /**
  *  Initializes and returns a sprite frame object from the specified texture file name, texture rectangle, rotation status, offset and originalSize values.
  *
- *  @param filename     Image file name to use.
- *  @param rect         Texture rectangle (in pixels) to use.
- *  @param rotated      Is rectangle rotated?
- *  @param offset       Offset (in pixels) to use.
- *  @param originalSize Original size (in pixels) before being trimmed.
+ *  @param filename Image file name to use.
+ *  @param rectInPixels Texture rectangle (in pixels) to use.
+ *  @param rotated Is rectangle rotated?
+ *  @param trimOffsetInPixels Offset (in pixels) to use.
+ *  @param untrimmedSizeInPixels Original size (in pixels) before being trimmed.
  *
  *  @return An initialized CCSpriteFrame Object.
  */
--(id) initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
+-(instancetype)initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rectInPixels rotated:(BOOL)rotated trimOffsetInPixels:(CGPoint)trimOffsetInPixels untrimmedSizeInPixels:(CGSize)untrimmedSizeInPixels;
 
 /// -----------------------------------------------------------------------
 /// @name Sprite Frame Properties
 /// -----------------------------------------------------------------------
 
-/** Rectangle of the frame within the texture, in points. If it is updated, then rectInPixels will also be updated. */
+/** Rectangle of the frame within the texture, in points. */
 @property (nonatomic, readonly) CGRect rect;
 
 /** If YES, the frame rectangle is rotated. */
 @property (nonatomic, readonly) BOOL rotated;
 
-/** Offset of the frame from the texture's origin, in points. If it is updated, then offsetInPixels will also be updated. */
-@property (nonatomic, readonly) CGPoint offset;
+/** To save space in a spritesheet, the transparent edges of a frame may be trimmed. This is the original size in points of a frame before it was trimmed. */
+@property (nonatomic, readonly) CGSize untrimmedSize;
 
-/** Original size of the trimmed image, in points. */
-@property (nonatomic, readonly) CGSize originalSize;
+/** To save space in a spritesheet, the transparent edges of a frame may be trimmed. This is offset of the sprite caused by trimming in points. */
+@property (nonatomic, readonly) CGPoint trimOffset;
 
 /// -----------------------------------------------------------------------
 /// @name Texture Properties
