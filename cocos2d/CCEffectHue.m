@@ -7,6 +7,8 @@
 
 
 #import "CCEffectHue.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -28,23 +30,46 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 -(id)initWithInterface:(CCEffectHue *)interface
 {
-    NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"mat4" name:@"u_hueRotationMtx" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
-                          ];
-    
-    NSArray *fragFunctions = [CCEffectHueImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectHueImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectHueImpl buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
+        self.interface = interface;
         self.debugName = @"CCEffectHueImpl";
     }
     return self;
 }
 
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectHueImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"hue" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"mat4" name:@"u_hueRotationMtx" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
+}
+
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
 
     // The non-color matrix shader is based on the hue filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(

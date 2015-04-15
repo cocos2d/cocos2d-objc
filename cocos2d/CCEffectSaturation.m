@@ -41,6 +41,8 @@
 
 
 #import "CCEffectSaturation.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -63,12 +65,10 @@ static float conditionSaturation(float saturation);
 
 -(id)initWithInterface:(CCEffectSaturation *)interface
 {
-    CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
-    
-    NSArray *fragFunctions = [CCEffectSaturationImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectSaturationImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectSaturationImpl buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectSaturationImpl";
@@ -76,9 +76,35 @@ static float conditionSaturation(float saturation);
     return self;
 }
 
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectSaturationImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectSaturationImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"saturation" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
+}
+
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
 
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(

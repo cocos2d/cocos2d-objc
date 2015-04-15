@@ -10,7 +10,10 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
+#import "CCColor.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
@@ -31,22 +34,44 @@
 
 -(id)initWithInterface:(CCEffectDFOutline *)interface
 {
-    NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec2" name:@"u_outlineOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
-                          [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]]
-                          ];
-  
-    NSArray *fragFunctions = [CCEffectDFOutlineImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectDFOutlineImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDFOutlineImpl buildShaders];
 
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFOutlineImpl";
     }
     return self;
+}
+
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFOutlineImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectDFOutlineImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"outline" inputs:nil]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_outlineOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions

@@ -7,6 +7,8 @@
 //
 
 #import "CCEffectGlass.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
@@ -37,39 +39,11 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 @implementation CCEffectGlassImpl
 
 -(id)initWithInterface:(CCEffectGlass *)interface
-{
-    NSArray *fragUniforms = @[
-                              [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
-                              
-                              [CCEffectUniform uniform:@"float" name:@"u_shininess" value:[NSNumber numberWithFloat:1.0f]],
-                              [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
-                              [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
-                              
-                              [CCEffectUniform uniform:@"sampler2D" name:@"u_refractEnvMap" value:(NSValue*)[CCTexture none]],
-                              [CCEffectUniform uniform:@"vec2" name:@"u_refractTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
-                              [CCEffectUniform uniform:@"vec2" name:@"u_refractBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
-                              
-                              [CCEffectUniform uniform:@"sampler2D" name:@"u_reflectEnvMap" value:(NSValue*)[CCTexture none]],
-                              [CCEffectUniform uniform:@"vec2" name:@"u_reflectTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
-                              [CCEffectUniform uniform:@"vec2" name:@"u_reflectBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
-                              
-                          ];
-    
-    NSArray *vertUniforms = @[
-                              [CCEffectUniform uniform:@"mat4" name:@"u_ndcToReflectEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
-                              [CCEffectUniform uniform:@"mat4" name:@"u_ndcToRefractEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
-                              ];
-    
-    NSArray *varyings = @[
-                          [CCEffectVarying varying:@"vec2" name:@"v_refractEnvSpaceTexCoords"],
-                          [CCEffectVarying varying:@"vec2" name:@"v_reflectEnvSpaceTexCoords"]
-                          ];
-    
-    NSArray *fragFunctions = [CCEffectGlassImpl buildFragmentFunctions];
-    NSArray *vertFunctions = [CCEffectGlassImpl buildVertexFunctions];
+{    
     NSArray *renderPasses = [CCEffectGlassImpl buildRenderPassesWithInterface:interface];
-    
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
+    NSArray *shaders = [CCEffectGlassImpl buildShaders];
+
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectGlass";
@@ -77,9 +51,46 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     return self;
 }
 
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectGlassImpl vertexShaderBuilder] fragmentShaderBuilder:[CCEffectGlassImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectGlassImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"glass" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_shininess" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_refractEnvMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_refractTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_refractBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_reflectEnvMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_reflectTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_reflectBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
+                          ];
+    
+    NSArray *varyings = [CCEffectGlassImpl buildVaryings];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:varyings];
+}
+
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
     
     NSString* effectBody = CC_GLSL(
                                    const float EPSILON = 0.000001;
@@ -154,6 +165,25 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     return @[fragmentFunction];
 }
 
++ (CCEffectShaderBuilder *)vertexShaderBuilder
+{
+    NSArray *functions = [CCEffectGlassImpl buildVertexFunctions];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"glass" inputs:nil]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"mat4" name:@"u_ndcToReflectEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
+                          [CCEffectUniform uniform:@"mat4" name:@"u_ndcToRefractEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
+                          ];
+    NSArray *varyings = [CCEffectGlassImpl buildVaryings];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:nil
+                                              uniforms:uniforms
+                                              varyings:varyings];
+}
+
 + (NSArray *)buildVertexFunctions
 {
     NSString* effectBody = CC_GLSL(
@@ -172,6 +202,15 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     
     CCEffectFunction *vertexFunction = [[CCEffectFunction alloc] initWithName:@"glassEffectVtx" body:effectBody inputs:nil returnType:@"vec4"];
     return @[vertexFunction];
+}
+
++ (NSArray *)buildVaryings
+{
+    NSArray *varyings = @[
+                          [CCEffectVarying varying:@"vec2" name:@"v_refractEnvSpaceTexCoords"],
+                          [CCEffectVarying varying:@"vec2" name:@"v_reflectEnvSpaceTexCoords"]
+                          ];
+    return varyings;
 }
 
 + (NSArray *)buildRenderPassesWithInterface:(CCEffectGlass *)interface

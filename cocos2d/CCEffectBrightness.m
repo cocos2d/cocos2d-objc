@@ -7,6 +7,8 @@
 //
 
 #import "CCEffectBrightness.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -26,12 +28,10 @@ static float conditionBrightness(float brightness);
 
 -(id)initWithInterface:(CCEffectBrightness *)interface
 {
-    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
-    
-    NSArray *fragFunctions = [CCEffectBrightnessImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectBrightnessImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectBrightnessImpl buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformBrightness] vertexUniforms:nil varyings:nil]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectBrightnessImpl";
@@ -39,9 +39,35 @@ static float conditionBrightness(float brightness);
     return self;
 }
 
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectBrightnessImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectBrightnessImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"brightness" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
+}
+
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
 
     NSString* effectBody = CC_GLSL(
                                    return vec4((inputValue.rgb + vec3(u_brightness * inputValue.a)), inputValue.a);

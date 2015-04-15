@@ -7,6 +7,8 @@
 //
 
 #import "CCEffectContrast.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -27,12 +29,10 @@ static float conditionContrast(float contrast);
 
 -(id)initWithInterface:(CCEffectContrast *)interface
 {
-    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
-    
-    NSArray *fragFunctions = [CCEffectContrastImpl buildFragmentFunctions];
     NSArray *renderPasses = [CCEffectContrastImpl buildRenderPassesWithInterface:interface];
-
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil]))
+    NSArray *shaders = [CCEffectContrastImpl buildShaders];
+    
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectContrastImpl";
@@ -40,9 +40,35 @@ static float conditionContrast(float contrast);
     return self;
 }
 
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectContrastImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectContrastImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"contrast" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]]
+                          ];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:@[]];
+}
+
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
 
     NSString* effectBody = CC_GLSL(
                                    vec3 offset = vec3(0.5) * inputValue.a;

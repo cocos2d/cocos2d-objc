@@ -7,6 +7,8 @@
 //
 
 #import "CCEffectReflection.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
@@ -33,29 +35,11 @@
 @implementation CCEffectReflectionImpl
 
 -(id)initWithInterface:(CCEffectReflection *)interface
-{
-    NSArray *fragUniforms = @[
-                              [CCEffectUniform uniform:@"float" name:@"u_shininess" value:[NSNumber numberWithFloat:1.0f]],
-                              [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:1.0f]],
-                              [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
-                              [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
-                              [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
-                              [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
-                              ];
-    
-    NSArray *vertUniforms = @[
-                              [CCEffectUniform uniform:@"mat4" name:@"u_ndcToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
-                              ];
-    
-    NSArray *varyings = @[
-                          [CCEffectVarying varying:@"vec2" name:@"v_envSpaceTexCoords"]
-                         ];
-    
-    NSArray *fragFunctions = [CCEffectReflectionImpl buildFragmentFunctions];
-    NSArray *vertFunctions = [CCEffectReflectionImpl buildVertexFunctions];
+{    
     NSArray *renderPasses = [CCEffectReflectionImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectReflectionImpl buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectReflectionImpl";
@@ -63,9 +47,41 @@
     return self;
 }
 
++ (NSArray *)buildShaders
+{
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectReflectionImpl vertexShaderBuilder] fragmentShaderBuilder:[CCEffectReflectionImpl fragShaderBuilder]]];
+}
+
++ (CCEffectShaderBuilder *)fragShaderBuilder
+{
+    NSArray *functions = [CCEffectReflectionImpl buildFragmentFunctions];
+    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"reflection" inputs:@{@"inputValue" : @"tmp"}]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"float" name:@"u_shininess" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
+                          ];
+    NSArray *varyings = [CCEffectReflectionImpl buildVaryings];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:temporaries
+                                              uniforms:uniforms
+                                              varyings:varyings];
+}
+
 + (NSArray *)buildFragmentFunctions
 {
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
 
     NSString* effectBody = CC_GLSL(
                                    const float EPSILON = 0.000001;
@@ -116,6 +132,24 @@
     return @[fragmentFunction];
 }
 
++ (CCEffectShaderBuilder *)vertexShaderBuilder
+{
+    NSArray *functions = [CCEffectReflectionImpl buildVertexFunctions];
+    NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"reflection" inputs:nil]];
+    
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"mat4" name:@"u_ndcToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
+                          ];
+    NSArray *varyings = [CCEffectReflectionImpl buildVaryings];
+    
+    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
+                                             functions:functions
+                                                 calls:calls
+                                           temporaries:nil
+                                              uniforms:uniforms
+                                              varyings:varyings];
+}
+
 + (NSArray *)buildVertexFunctions
 {
     NSString* effectBody = CC_GLSL(
@@ -127,6 +161,11 @@
     
     CCEffectFunction *vertexFunction = [[CCEffectFunction alloc] initWithName:@"reflectionEffectVtx" body:effectBody inputs:nil returnType:@"vec4"];
     return @[vertexFunction];
+}
+
++ (NSArray *)buildVaryings
+{
+    return @[[CCEffectVarying varying:@"vec2" name:@"v_envSpaceTexCoords"]];
 }
 
 + (NSArray *)buildRenderPassesWithInterface:(CCEffectReflection *)interface
