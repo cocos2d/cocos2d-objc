@@ -350,8 +350,8 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 -(CCSpriteFrame*)spriteFrame
 {
     if(_spriteFrame == nil){
-        CGRect rectInPixels = {CGPointZero, _sizeInPixels};
-        _spriteFrame = [[CCSpriteFrame alloc] initWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO trimOffsetInPixels:CGPointZero untrimmedSizeInPixels:_sizeInPixels];
+        CGRect rect = {CGPointZero, self.contentSize};
+        _spriteFrame = [[CCSpriteFrame alloc] initWithTexture:(CCTexture *)self.proxy rect:rect rotated:NO trimOffset:CGPointZero untrimmedSize:rect.size];
     }
     
     return _spriteFrame;

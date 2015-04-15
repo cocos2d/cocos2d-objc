@@ -36,18 +36,25 @@
 
 #import "Platforms/CCNS.h"
 #import "ccMacros.h"
-#import "CCTextureCache.h"
+
+#import "CCTexture_Private.h"
 #import "CCSpriteFrameCache_Private.h"
+#import "CCFileLocator_Private.h"
+
+#import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
-#import "CCFileLocator_Private.h"
 #import "CCFile.h"
-#import "CCTexture_Private.h"
+#import "ccUtils.h"
 
 
-@interface CCSpriteFrame(Proxy)
+@interface CCSpriteFrame(Cache)
+
 - (BOOL)hasProxy;
 - (CCProxy *)proxy;
+
+@property (nonatomic, copy) NSString *textureFilename;
+
 @end
 
 
@@ -138,8 +145,21 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - loading sprite frames
 
+static CCSpriteFrame *MakeFrame(CGRect rect, BOOL rotated, CGPoint offset, CGSize untrimmedSize, CGFloat textureHeight, CGFloat contentScale)
+{
+    // Flip the y values before scaling.
+    CGFloat h = (rotated ? rect.size.width : rect.size.height);
+    rect.origin.y = textureHeight - (rect.origin.y + h);
+    
+	rect = CC_RECT_SCALE(rect, 1.0/contentScale);
+    offset = ccpMult(offset, 1.0/contentScale);
+    untrimmedSize = CC_SIZE_SCALE(untrimmedSize, 1.0/contentScale);
+    
+    return [[CCSpriteFrame alloc] initWithTexture:nil rect:rect rotated:rotated trimOffset:offset untrimmedSize:untrimmedSize];
+}
+
 static CCSpriteFrame *
-SpriteFrameFromDict(int format, NSDictionary *frameDict, NSString *textureFilename, NSArray **aliases)
+SpriteFrameFromDict(int format, NSDictionary *frameDict, NSArray **aliases, CGFloat textureHeight, CGFloat contentScale)
 {
     // Formats 0 and 1 are very old. I think both are pre-v1.0.
     // I (slembcke) removed support for them in v4. If you are using a version of TexturePacker from 2010, you'll have to update, sorry.
@@ -147,23 +167,24 @@ SpriteFrameFromDict(int format, NSDictionary *frameDict, NSString *textureFilena
     // Format 3 is only used by Zwoptex. AFAIK. I don't know when the last time this was officially tested.
     
     if(format == 2) {
-        CGRect frame = CCRectFromString([frameDict objectForKey:@"frame"]);
+        CGRect rect = CCRectFromString([frameDict objectForKey:@"frame"]);
         BOOL rotated = [[frameDict objectForKey:@"rotated"] boolValue];
         CGPoint offset = CCPointFromString([frameDict objectForKey:@"offset"]);
-        CGSize sourceSize = CCSizeFromString([frameDict objectForKey:@"sourceSize"]);
+        CGSize untrimmedSize = CCSizeFromString([frameDict objectForKey:@"sourceSize"]);
 
-        return [[CCSpriteFrame alloc] initWithTextureFilename:textureFilename rectInPixels:frame rotated:rotated trimOffsetInPixels:offset untrimmedSizeInPixels:sourceSize];
+        return MakeFrame(rect, rotated, offset, untrimmedSize, textureHeight, contentScale);
     } else if(format == 3) {
         CGSize spriteSize = CCSizeFromString([frameDict objectForKey:@"spriteSize"]);
-        CGPoint spriteOffset = CCPointFromString([frameDict objectForKey:@"spriteOffset"]);
-        CGSize spriteSourceSize = CCSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
         CGRect textureRect = CCRectFromString([frameDict objectForKey:@"textureRect"]);
-        BOOL textureRotated = [[frameDict objectForKey:@"textureRotated"] boolValue];
+        
+        CGRect rect = {textureRect.origin, spriteSize};
+        CGPoint offset = CCPointFromString([frameDict objectForKey:@"spriteOffset"]);
+        CGSize untrimmedSize = CCSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
+        BOOL rotated = [[frameDict objectForKey:@"textureRotated"] boolValue];
         
         (*aliases) = [frameDict objectForKey:@"aliases"];
 
-        CGRect rect = {textureRect.origin, spriteSize};
-        return [[CCSpriteFrame alloc] initWithTextureFilename:textureFilename rectInPixels:rect rotated:textureRotated trimOffsetInPixels:spriteOffset untrimmedSizeInPixels:spriteSourceSize];
+        return MakeFrame(rect, rotated, offset, untrimmedSize, textureHeight, contentScale);
     } else {
         return nil;
     }
@@ -195,6 +216,9 @@ SpriteFrameFromDict(int format, NSDictionary *frameDict, NSString *textureFilena
         int format = [metadata[@"format"] intValue];
         NSAssert( format >= 2 && format <= 3, @"Format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
         
+        CGSize textureSize = CCSizeFromString(metadata[@"size"]);
+        CGFloat contentScale = file.contentScale;
+        
         NSDictionary *framesDict = dict[@"frames"];
         NSAssert(framesDict, @"Frames dictionary not found!");
         
@@ -205,7 +229,10 @@ SpriteFrameFromDict(int format, NSDictionary *frameDict, NSString *textureFilena
         
         for(NSString *frameDictKey in framesDict) {
             NSArray *aliases = nil;
-            CCSpriteFrame *spriteFrame = SpriteFrameFromDict(format, framesDict[frameDictKey], textureFilename, &aliases);
+            
+            CCSpriteFrame *spriteFrame = SpriteFrameFromDict(format, framesDict[frameDictKey], &aliases, textureSize.height, contentScale);
+            spriteFrame.textureFilename = textureFilename;
+            
             [_spriteFrames setObject:spriteFrame forKey:frameDictKey];
             
             for(NSString *alias in aliases){

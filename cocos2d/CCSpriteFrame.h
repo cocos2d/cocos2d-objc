@@ -63,28 +63,15 @@
  *  Initializes and returns a sprite frame object from the specified texture, texture rectangle, rotation status, offset and originalSize values.
  *
  *  @param texture Texture to use.
- *  @param rectInPixels Texture rectangle (in pixels) to use.
+ *  @param rect Texture rectangle (in points) to use.
  *  @param rotated Is rectangle rotated?
- *  @param trimOffsetInPixels Offset (in pixels) to use.
- *  @param untrimmedSizeInPixels Original size (in pixels) before being trimmed.
+ *  @param trimOffset Offset (in points) to use.
+ *  @param untrimmedSize Original size (in points) before being trimmed.
  *
  *  @return An initialized CCSpriteFrame Object.
  *  @see CCTexture
  */
--(instancetype)initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rectInPixels rotated:(BOOL)rotated trimOffsetInPixels:(CGPoint)trimOffsetInPixels untrimmedSizeInPixels:(CGSize)untrimmedSizeInPixels;
-
-/**
- *  Initializes and returns a sprite frame object from the specified texture file name, texture rectangle, rotation status, offset and originalSize values.
- *
- *  @param filename Image file name to use.
- *  @param rectInPixels Texture rectangle (in pixels) to use.
- *  @param rotated Is rectangle rotated?
- *  @param trimOffsetInPixels Offset (in pixels) to use.
- *  @param untrimmedSizeInPixels Original size (in pixels) before being trimmed.
- *
- *  @return An initialized CCSpriteFrame Object.
- */
--(instancetype)initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rectInPixels rotated:(BOOL)rotated trimOffsetInPixels:(CGPoint)trimOffsetInPixels untrimmedSizeInPixels:(CGSize)untrimmedSizeInPixels;
+-(instancetype)initWithTexture:(CCTexture*)texture rect:(CGRect)rect rotated:(BOOL)rotated trimOffset:(CGPoint)trimOffset untrimmedSize:(CGSize)untrimmedSize;
 
 /// -----------------------------------------------------------------------
 /// @name Sprite Frame Properties
@@ -110,7 +97,7 @@
  @see CCTexture */
 @property (nonatomic, strong, readonly) CCTexture *texture;
 
-/** Texture image file name used to create the texture. */
+/** Texture image file name used to create the texture. Set by the sprite frame cache */
 @property (nonatomic, strong, readonly) NSString *textureFilename;
 
 /**
