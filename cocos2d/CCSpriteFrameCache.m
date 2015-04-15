@@ -164,7 +164,7 @@ SpriteFrameFromDict(int format, NSDictionary *frameDict, NSArray **aliases, CGFl
     // Formats 0 and 1 are very old. I think both are pre-v1.0.
     // I (slembcke) removed support for them in v4. If you are using a version of TexturePacker from 2010, you'll have to update, sorry.
     // Format 2 seems to be used consistently from v1.0 and on. (Used by TexturePacker and SpriteBuilder)
-    // Format 3 is only used by Zwoptex. AFAIK. I don't know when the last time this was officially tested.
+    // Format 3 is only used by Zwoptex AFAIK.
     
     if(format == 2) {
         CGRect rect = CCRectFromString([frameDict objectForKey:@"frame"]);
@@ -187,6 +187,18 @@ SpriteFrameFromDict(int format, NSDictionary *frameDict, NSArray **aliases, CGFl
         return MakeFrame(rect, rotated, offset, untrimmedSize, textureHeight, contentScale);
     } else {
         return nil;
+    }
+}
+
+-(void)addSpriteFrame:(CCSpriteFrame *)frame name:(NSString *)frameName pathPrefix:(NSString *)pathPrefix
+{
+    _spriteFrames[frameName] = frame;
+
+    // Add an alias that allows spriteframe files to be treated as directories.
+    // Ex: A frame named "bar.png" in a spritesheet named "bar.plist" will add both "bar.png" and "foo/bar.png" to the dictionary.
+    if(pathPrefix && ![frameName hasPrefix:pathPrefix]){
+        NSString *key = [pathPrefix stringByAppendingPathComponent:frameName];
+        _spriteFrames[key] = frame;
     }
 }
 
@@ -227,23 +239,15 @@ SpriteFrameFromDict(int format, NSDictionary *frameDict, NSArray **aliases, CGFl
         // (Ex: Foobar/Sprites/Hero.png will use Hero.png from an atlas named Foobar/Sprites.plist)
         NSString *pathPrefix = [plistFile stringByDeletingPathExtension];
         
-        for(NSString *frameDictKey in framesDict) {
+        for(NSString *name in framesDict) {
             NSArray *aliases = nil;
             
-            CCSpriteFrame *spriteFrame = SpriteFrameFromDict(format, framesDict[frameDictKey], &aliases, textureSize.height, contentScale);
-            spriteFrame.textureFilename = textureFilename;
+            CCSpriteFrame *frame = SpriteFrameFromDict(format, framesDict[name], &aliases, textureSize.height, contentScale);
+            frame.textureFilename = texturePath;
             
-            [_spriteFrames setObject:spriteFrame forKey:frameDictKey];
-            
+            [self addSpriteFrame:frame name:name pathPrefix:pathPrefix];
             for(NSString *alias in aliases){
-                _spriteFrames[alias] = spriteFrame;
-            }
-            
-            // Add an alias that allows spriteframe files to be treated as directories.
-            // Ex: A frame named "bar.png" in a spritesheet named "bar.plist" will add both "bar.png" and "foo/bar.png" to the dictionary.
-            if(pathPrefix && ![frameDictKey hasPrefix:pathPrefix]){
-                NSString *key = [pathPrefix stringByAppendingPathComponent:frameDictKey];
-                _spriteFrames[key] = spriteFrame;
+                [self addSpriteFrame:frame name:alias pathPrefix:pathPrefix];
             }
         }
         

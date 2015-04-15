@@ -14,7 +14,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-#if 0
+#if 1
     [[TestbedSetup sharedSetup] setupApplication];
     _window = [TestbedSetup sharedSetup].window;
     _view = [TestbedSetup sharedSetup].view;
