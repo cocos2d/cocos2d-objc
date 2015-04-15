@@ -89,17 +89,10 @@
     float wide = self.texture.sizeInPixels.width;
 	float high = self.texture.sizeInPixels.height;
 
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-	float left = (rect.origin.x*2+1) / (wide*2);
-	float bottom = (rect.origin.y*2+1) / (high*2);
-	float right = left + (rect.size.width*2-2) / (wide*2);
-	float top = bottom + (rect.size.height*2-2) / (high*2);
-#else
 	float left = rect.origin.x / wide;
 	float bottom = rect.origin.y / high;
 	float right = left + rect.size.width / wide;
 	float top = bottom + rect.size.height / high;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 	_texCoord1[0] = GLKVector2Make(left, bottom);
 	_texCoord1[1] = GLKVector2Make(right, bottom);

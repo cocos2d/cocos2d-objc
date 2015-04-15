@@ -278,17 +278,10 @@
 	float atlasHeight = sizeInPixels.height;
 
 	if(rotated){
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
-		float right  = left + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
-		float bottom = (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
-		float top    = bottom + (rect.size.width*2.0f - 2.0f)/(2.0f*atlasHeight);
-#else
 		float left   = rect.origin.x/atlasWidth;
 		float right  = (rect.origin.x + rect.size.height)/atlasWidth;
 		float bottom = rect.origin.y/atlasHeight;
 		float top    = (rect.origin.y + rect.size.width)/atlasHeight;
-#endif
 
 		if(flipX) CC_SWAP(top, bottom);
 		if(flipY) CC_SWAP(left, right);
@@ -298,17 +291,10 @@
 		result.tr = GLKVector2Make(right, bottom);
 		result.tl = GLKVector2Make(right,    top);
 	} else {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
-		float right  = left + (rect.size.width*2.0f - 2.0f)/(2.0f*atlasWidth);
-		float bottom = (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
-		float top    = bottom + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasHeight);
-#else
 		float left   = rect.origin.x/atlasWidth;
 		float right  = (rect.origin.x + rect.size.width)/atlasWidth;
 		float bottom = rect.origin.y/atlasHeight;
 		float top    = (rect.origin.y + rect.size.height)/atlasHeight;
-#endif
 
 		if(flipX) CC_SWAP(left, right);
 		if(flipY) CC_SWAP(top, bottom);

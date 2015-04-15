@@ -41,30 +41,6 @@
 #define CC_ENABLE_STACKABLE_ACTIONS 1
 #endif
 
-
-/** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
- If enabled, the texture coordinates will be calculated by using this formula:
-   - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
-   - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
-
- The same for bottom and top.
-
- This formula prevents artifacts by using 99% of the texture.
- The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
-
- Affected nodes:
-	- CCSprite / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXLayer
-	- CCLabelAtlas
-	- CCParticleSystemQuad
-	- CCTileMap
-
- To enabled set it to 1. Disabled by default.
-
- */
-#ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-#define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
-#endif
-
 /** @def CC_DIRECTOR_STATS_INTERVAL
  Seconds between stats updates.
  0.5 seconds, means that the stats will be updated every 0.5 seconds.
