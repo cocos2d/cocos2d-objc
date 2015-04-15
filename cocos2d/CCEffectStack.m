@@ -147,10 +147,10 @@
     
     if (!self.effectImpl.renderPasses.count || finalResult.changes)
     {
-        self.effectImpl = [CCEffectStack processEffects:_flattenedEffects withStitching:_stitchingEnabled];
+        self.effectImpl = [CCEffectStack processEffectsWithStitcher:_flattenedEffects withStitching:_stitchingEnabled];
         if (!self.effectImpl)
         {
-            self.effectImpl = [CCEffectStack processEffects:_flattenedEffects withStitching:NO];
+            self.effectImpl = [CCEffectStack processEffectsWithStitcher:_flattenedEffects withStitching:NO];
             NSAssert(self.effectImpl, @"Effect creation failed with stitching disabled.");
         }
         

@@ -12,6 +12,8 @@
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCEffect.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEffectStack.h"
 #import "CCEffectUtils.h"
 #import "CCTexture.h"
@@ -164,24 +166,40 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
 
-+(CCShader *)sharedCopyShader;
++(CCEffectShader *)sharedCopyShader;
 
 @end
 
 
 @implementation CCEffectRenderer
 
-+ (CCShader *)sharedCopyShader
++ (CCEffectShader *)sharedCopyShader
 {
-	static dispatch_once_t once;
-	static CCShader *copyShader = nil;
-	dispatch_once(&once, ^{
-        copyShader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
-        copyShader.debugName = @"CCEffectRendererTextureCopyShader";
-	});
-	return copyShader;
+    static dispatch_once_t once;
+    static CCEffectShader *copyShader = nil;
+    dispatch_once(&once, ^{
+        
+        NSString* effectBody = CC_GLSL(
+                                       return inputValue;
+                                       );
+        CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
+        
+        NSArray *functions = @[[[CCEffectFunction alloc] initWithName:@"copyFunc" body:effectBody inputs:@[input] returnType:@"vec4"]];
+        NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitMainTexture]];
+        NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"copied" inputs:@{@"inputValue" : @"tmp"}]];
+        
+        CCEffectShaderBuilder *fragBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                               functions:functions
+                                                                                   calls:calls
+                                                                             temporaries:temporaries
+                                                                                uniforms:@[]
+                                                                                varyings:@[]];
+        
+        copyShader = [[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:fragBuilder];
+        
+    });
+    return copyShader;
 }
-
 -(id)init
 {
     if((self = [super init]))
@@ -248,7 +266,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         {
             renderPass = [[CCEffectRenderPass alloc] init];
             renderPass.debugLabel = @"CCEffectRenderer composite pass";
-            renderPass.shader = [CCEffectRenderer sharedCopyShader];
+            renderPass.effectShader = [CCEffectRenderer sharedCopyShader];
             renderPass.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
                 
                 passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;

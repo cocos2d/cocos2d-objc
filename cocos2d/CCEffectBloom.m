@@ -41,6 +41,8 @@
 
 
 #import "CCEffectBloom.h"
+#import "CCEffectShader.h"
+#import "CCEffectShaderBuilder.h"
 #import "CCEFfectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
@@ -62,25 +64,53 @@
 -(id)initWithInterface:(CCEffectBloom *)interface
 {
     CCEffectBlurParams blurParams = CCEffectUtilsComputeBlurParams(interface.blurRadius);
-
-    CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:0.0f]];
-    CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:0.0f]];
-    CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
-    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection"
-                                                          value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
-    
-    NSArray *fragUniforms = @[u_enableGlowMap, u_luminanceThreshold, u_intensity, u_blurDirection];
-    NSArray *vertUniforms = @[u_blurDirection];
     
     unsigned long count = (unsigned long)(1 + (blurParams.numberOfOptimizedOffsets * 2));
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     NSArray *varyings = @[v_blurCoords];
     
     NSArray *fragFunctions = [CCEffectBloomImpl buildFragmentFunctionsWithBlurParams:blurParams];
-    NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurParams:blurParams];
-    NSArray *renderPasses = [CCEffectBloomImpl buildRenderPassesWithInterface:interface];
+    NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"bloom" inputs:@{@"inputValue" : @"tmp"}]];
+    NSArray *fragUniforms = @[
+                              [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+                              [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                              [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                              [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord2Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                              [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord2Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                              [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:0.0f]],
+                              [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:0.0f]],
+                              [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]],
+                              [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
+                              ];
+    
+    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                                 functions:fragFunctions
+                                                                                     calls:fragCalls
+                                                                               temporaries:fragTemporaries
+                                                                                  uniforms:fragUniforms
+                                                                                  varyings:varyings];
 
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
+    
+    
+    NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurParams:blurParams];
+    NSArray *vertCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:vertFunctions[0] outputName:@"bloom" inputs:nil]];
+    NSArray *vertUniforms = @[
+                              [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
+                              ];
+    
+    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
+                                                                                 functions:vertFunctions
+                                                                                     calls:vertCalls
+                                                                               temporaries:nil
+                                                                                  uniforms:vertUniforms
+                                                                                  varyings:varyings];
+
+    
+    NSArray *renderPasses = [CCEffectBloomImpl buildRenderPassesWithInterface:interface];
+    NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
+
+    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectBloomImpl";
@@ -210,7 +240,7 @@
 
     free(standardGaussianWeights);
     
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"bloomEffect" body:shaderString inputs:@[input] returnType:@"vec4"];
     return @[fragmentFunction];
 }
