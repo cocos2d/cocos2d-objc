@@ -15,6 +15,8 @@
 
 @implementation CCLightNode
 
+@dynamic color; // Stops a warning that the superclass defines it, but we like our own extra documentation so want the re-definition
+
 -(id)init
 {
     return [self initWithType:CCLightPoint groups:nil color:[CCColor whiteColor] intensity:1.0f];
