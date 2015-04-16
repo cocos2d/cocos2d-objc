@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
-  <image source="tmw_desert_spacing.png" width="265" height="199"/>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="128" tileheight="128">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="128" tileheight="128" spacing="4" margin="4">
+  <image source="tmw_desert_spacing.png"/>
  </tileset>
- <tileset firstgid="49" name="ortho-test2" tilewidth="32" tileheight="32" spacing="2" margin="2">
-  <image source="ortho-test2.png" width="640" height="400"/>
+ <tileset firstgid="49" name="ortho-test2" tilewidth="128" tileheight="128" spacing="8" margin="8">
+  <image source="ortho-test2.png"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="gzip">
