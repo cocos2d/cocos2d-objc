@@ -32,8 +32,15 @@ extern NSString * const CCImageOptionFlipVertical;
 extern NSString * const CCImageOptionFlipHorizontal;
 
 
+NSDictionary *NormalizeCCImageOptions(NSDictionary *options);
+
+
 @interface CCImage(Private)
 
 @property(nonatomic, readonly) CGAffineTransform loadingTransform;
+
+-(CGFloat)autoScaleFactor:(CCFile *)file;
+
+-(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSMutableData *)pixelData options:(NSDictionary *)options;
 
 @end

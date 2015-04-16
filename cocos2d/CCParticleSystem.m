@@ -122,7 +122,7 @@
 -(void) setSpriteFrame:(CCSpriteFrame *)spriteFrame
 {
 
-	NSAssert( CGPointEqualToPoint( spriteFrame.offset , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
+	NSAssert( CGPointEqualToPoint( spriteFrame.trimOffset , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
     
 	// update texture before updating texture rect
 	if(spriteFrame.texture != self.texture){

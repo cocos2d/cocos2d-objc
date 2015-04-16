@@ -300,11 +300,11 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 		if ( textureFileName )
 		{
-			spriteFrame = [[CCSpriteFrame alloc] initWithTextureFilename:textureFileName rectInPixels:rectInPixels rotated:isRotated offset:frameOffset originalSize:originalSize];
+			spriteFrame = [[CCSpriteFrame alloc] initWithTextureFilename:textureFileName rectInPixels:rectInPixels rotated:isRotated trimOffsetInPixels:frameOffset untrimmedSizeInPixels:originalSize];
 		}
 		else
 		{
-			spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture rectInPixels:rectInPixels rotated:isRotated offset:frameOffset originalSize:originalSize];
+			spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture rectInPixels:rectInPixels rotated:isRotated trimOffsetInPixels:frameOffset untrimmedSizeInPixels:originalSize];
 		}
 
 		// add sprite frame
