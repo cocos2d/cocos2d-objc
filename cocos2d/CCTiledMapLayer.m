@@ -117,7 +117,7 @@
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
 		[self setPosition:ccpMult(offset, pixelsToPoints)];
 
-		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth * pixelsToPoints, _mapRows * _tileHeight * pixelsToPoints )];
+		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth, _mapRows * _tileHeight )];
 
 		_useAutomaticVertexZ= NO;
 		_vertexZvalue = 0;
