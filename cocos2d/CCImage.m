@@ -58,8 +58,8 @@ NSDictionary *DEFAULT_OPTIONS = nil;
     };
 }
 
-static NSDictionary *
-NormalizeOptions(NSDictionary *options)
+NSDictionary *
+NormalizeCCImageOptions(NSDictionary *options)
 {
     if(options == nil || options == DEFAULT_OPTIONS){
         return DEFAULT_OPTIONS;
@@ -81,7 +81,7 @@ NormalizeOptions(NSDictionary *options)
         _contentScale = contentScale;
         _contentSize = CC_SIZE_SCALE(pixelSize, 1.0/contentScale);
         
-        _options = NormalizeOptions(options);
+        _options = NormalizeCCImageOptions(options);
         
         _pixelData = pixelData;
     }
@@ -109,30 +109,30 @@ NormalizeOptions(NSDictionary *options)
     return [self initWithPixelSize:pixelSize contentScale:contentScale pixelData:pixelData options:options];
 }
 
--(instancetype)initWithCGImage:(CGImageRef)image contentScale:(CGFloat)contentScale options:(NSDictionary *)options
+-(instancetype)initWithCGImage:(CGImageRef)image contentScale:(CGFloat)contentScale autoScaleFactor:(CGFloat)autoScaleFactor options:(NSDictionary *)options
 {
     // Make the options are filled in and that it's not nil.
-    options = NormalizeOptions(options);
+    options = NormalizeCCImageOptions(options);
     
     if(![options[CCImageOptionPremultiply] boolValue]){
         CCLOGWARN(@"CCImagePremultiply: NO ignored by the CoreGraphics loader.");
     }
     
-    CGFloat rescaleFactor = [options[CCImageOptionRescaleFactor] doubleValue];
-    contentScale *= rescaleFactor;
+    CGFloat rescale = autoScaleFactor*[options[CCImageOptionRescaleFactor] doubleValue];
+    contentScale *= rescale;
     
-    // Original size of the image in pixels after rescaling.
-    CGSize originalSizeInPixels = CC_SIZE_SCALE(CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image)), rescaleFactor);
+    // Scaled size of the image in pixels after rescaling.
+    CGSize scaledSizeInPixels = CC_SIZE_SCALE(CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image)), rescale);
     
     // Size of the bitmap in pixels including POT padding.
-    CGSize sizeInPixels = originalSizeInPixels;
+    CGSize sizeInPixels = scaledSizeInPixels;
 	if(![[CCDeviceInfo sharedDeviceInfo] supportsNPOT] || [options[CCImageOptionExpandToPOT] boolValue]){
 		sizeInPixels.width = CCNextPOT(sizeInPixels.width);
 		sizeInPixels.height = CCNextPOT(sizeInPixels.height);
 	}
     
     if((self = [self initWithPixelSize:sizeInPixels contentScale:contentScale clearColor:[CCColor clearColor] options:options])){
-        _contentSize = CC_SIZE_SCALE(originalSizeInPixels, 1.0/contentScale);
+        _contentSize = CC_SIZE_SCALE(scaledSizeInPixels, 1.0/contentScale);
         
         CGContextRef context = [self createCGContext];
         CGContextDrawImage(context, (CGRect){CGPointZero, _contentSize}, image);
@@ -142,22 +142,25 @@ NormalizeOptions(NSDictionary *options)
     return self;
 }
 
+-(instancetype)initWithCGImage:(CGImageRef)image contentScale:(CGFloat)contentScale options:(NSDictionary *)options
+{
+    return [self initWithCGImage:image contentScale:contentScale autoScaleFactor:1.0 options:options];
+}
+
+-(CGFloat)autoScaleFactor:(CCFile *)file
+{
+    float relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
+    return 1.0/CCNextPOT(relativeScale);
+}
+
 -(instancetype)initWithCoreGraphics:(CCFile *)file options:(NSDictionary *)options;
 {
     CGImageSourceRef source = [file createCGImageSource];
     CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
     CFRelease(source);
     
-    if(!file.hasResolutionTag){
-        float relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
-        float rescaleFactor = 1.0/CCNextPOT(relativeScale);
-        
-        NSMutableDictionary *mutableOptions = [NormalizeOptions(options) mutableCopy];
-        mutableOptions[CCImageOptionRescaleFactor] = @(rescaleFactor);
-        options = mutableOptions;
-    }
-    
-    self = [self initWithCGImage:image contentScale:file.contentScale options:options];
+    CGFloat autoScaleFactor = [self autoScaleFactor:file];
+    self = [self initWithCGImage:image contentScale:file.contentScale autoScaleFactor:autoScaleFactor options:options];
     CGImageRelease(image);
     
     return self;
@@ -167,11 +170,10 @@ NormalizeOptions(NSDictionary *options)
 {
     NSAssert(file, @"file is nil.");
     
-    if(YES){
-        return [self initWithCoreGraphics:file options:options];
+    if([file.name hasSuffix:@".png"]){
+        return [self initWithPNGFile:file options:options];
     } else {
-        // TODO Add a libpng based loader.
-        // TODO Add pdf loading because it would be really easy?
+        return [self initWithCoreGraphics:file options:options];
     }
 }
 

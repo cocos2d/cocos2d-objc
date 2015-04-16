@@ -501,7 +501,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 -(void) setSpriteFrame:(CCSpriteFrame*)frame
 {
-	_unflippedOffsetPositionFromCenter = frame.offset;
+	_unflippedOffsetPositionFromCenter = frame.trimOffset;
 
 	CCTexture *newTexture = [frame texture];
 	// update texture before updating texture rect
@@ -510,7 +510,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	}
 
 	// update rect
-	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
+	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.untrimmedSize];
     
     [_spriteFrame autorelease];
     _spriteFrame = [frame retain];
@@ -523,7 +523,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
         // If there is no texture set on the sprite, set the sprite's texture rect from the
         // normal map's sprite frame. Note that setting the main texture, then the normal map,
         // and then removing the main texture will leave the texture rect from the main texture.
-        [self setTextureRect:frame.rect forTexture:frame.texture rotated:frame.rotated untrimmedSize:frame.originalSize];
+        [self setTextureRect:frame.rect forTexture:frame.texture rotated:frame.rotated untrimmedSize:frame.untrimmedSize];
     }
 
     // Set the second texture coordinate set from the normal map's sprite frame.

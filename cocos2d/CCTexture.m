@@ -88,9 +88,9 @@ NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 
 // Make concrete implementations for CCSpriteFrame methods commonly called at runtime.
 -(CGRect)rect {return [_target rect];}
--(CGPoint)offset {return [(CCSpriteFrame *)_target offset];}
 -(BOOL)rotated {return [_target rotated];}
--(CGSize)originalSize {return [_target originalSize];}
+-(CGPoint)trimOffset {return [_target trimOffset];}
+-(CGSize)untrimmedSize {return [_target untrimmedSize];}
 -(CCTexture *)texture {return [_target texture];}
 
 // Let the rest fall back to a slow forwarded path.

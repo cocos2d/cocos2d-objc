@@ -117,7 +117,7 @@
     {
         _background = [CCSprite9Slice spriteWithSpriteFrame:spriteFrame];
         [self setBackgroundSpriteFrame:spriteFrame forState:CCControlStateNormal];
-        self.preferredSize = spriteFrame.originalSize;
+        self.preferredSize = spriteFrame.untrimmedSize;
     }
     else
     {

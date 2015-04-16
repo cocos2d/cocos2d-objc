@@ -55,6 +55,8 @@
 #define DEBUG_READER_PROPERTIES 0
 #endif
 
+static const  NSString * const CCBI_PREFIX = @".ccbi";
+static const  NSString * const SBI_PREFIX = @".sbi";
 
 @interface CCBFile : CCNode
 {
@@ -852,7 +854,7 @@ static inline float readFloat(CCBReader *self)
 
 #if DEBUG
         // Special case: scroll view missing content node
-        if (!d && [ccbFileName isEqualToString:@".ccbi"] && [NSStringFromClass([node class]) isEqualToString:@"CCScrollView"])
+        if (!d && [ccbFileName isEqualToString:CCBI_PREFIX] && [NSStringFromClass([node class]) isEqualToString:@"CCScrollView"])
         {
             NSLog(@"*** [PROPERTY] ERROR HINT: Did you forget to set the content node for your CCScrollView?");
         }
@@ -1848,7 +1850,7 @@ SelectorNameForProperty(objc_property_t property)
 - (CCNode*) nodeGraphFromFile:(NSString*)ccbFileName owner:(id)o parentSize:(CGSize)parentSize
 {
     // Add ccbi suffix
-    if (![ccbFileName hasSuffix:@".ccbi"]) ccbFileName = [ccbFileName stringByAppendingString:@".ccbi"];
+    if (![ccbFileName hasSuffix:SBI_PREFIX] || ![ccbFileName hasSuffix:CCBI_PREFIX]) ccbFileName = [ccbFileName stringByAppendingString:SBI_PREFIX];
     
     NSError *err = nil;
     

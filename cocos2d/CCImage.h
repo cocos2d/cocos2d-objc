@@ -147,3 +147,10 @@ extern NSString * const CCImageOptionPremultiply;
 // * Method to capture the screen as a CCImage?
 
 @end
+
+
+@interface CCImage(PNG)
+
+-(instancetype)initWithPNGFile:(CCFile *)file options:(NSDictionary *)options;
+
+@end
