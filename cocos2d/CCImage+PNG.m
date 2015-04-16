@@ -2,8 +2,8 @@
 
 #import "ccUtils.h"
 #import "CCImage_Private.h"
+#import "CCFile_Private.h"
 
-#import "CCFile.h"
 #import "CCSetup.h"
 
 extern NSString * const CCImageOptionFlipVertical;
@@ -218,7 +218,7 @@ LoadPNG(CCFile *file, BOOL flip, BOOL rgb, BOOL alpha, BOOL premultiply, NSUInte
 -(instancetype)initWithPNGFile:(CCFile *)file options:(NSDictionary *)options;
 {
     options = NormalizeCCImageOptions(options);
-    CGFloat rescale = [self autoScaleFactor:file]*[options[CCImageOptionRescaleFactor] doubleValue];
+    CGFloat rescale = file.autoScaleFactor*[options[CCImageOptionRescaleFactor] doubleValue];
     
     CGSize size = {};
     BOOL flip = [options[CCImageOptionFlipVertical] boolValue];

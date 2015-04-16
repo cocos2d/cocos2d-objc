@@ -147,20 +147,13 @@ NormalizeCCImageOptions(NSDictionary *options)
     return [self initWithCGImage:image contentScale:contentScale autoScaleFactor:1.0 options:options];
 }
 
--(CGFloat)autoScaleFactor:(CCFile *)file
-{
-    float relativeScale = MAX(1.0, file.contentScale/[CCSetup sharedSetup].assetScale);
-    return 1.0/CCNextPOT(relativeScale);
-}
-
 -(instancetype)initWithCoreGraphics:(CCFile *)file options:(NSDictionary *)options;
 {
     CGImageSourceRef source = [file createCGImageSource];
     CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
     CFRelease(source);
     
-    CGFloat autoScaleFactor = [self autoScaleFactor:file];
-    self = [self initWithCGImage:image contentScale:file.contentScale autoScaleFactor:autoScaleFactor options:options];
+    self = [self initWithCGImage:image contentScale:file.contentScale autoScaleFactor:file.autoScaleFactor options:options];
     CGImageRelease(image);
     
     return self;

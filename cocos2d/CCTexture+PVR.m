@@ -374,16 +374,22 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
     CCDeviceInfo *device = [CCDeviceInfo sharedDeviceInfo];
     NSUInteger maxTextureSize = [device maxTextureSize];
     
-    if(info.size.width > maxTextureSize || info.size.height > maxTextureSize){
+    CGFloat autoScale = file.autoScaleFactor;
+    int skipMips = -log2(autoScale);
+    // TODO need some error checking here?
+    
+    CGSize size = CC_SIZE_SCALE(info.size, autoScale);
+    
+    if(size.width > maxTextureSize || size.height > maxTextureSize){
         CCLOGWARN(@"PVR file (%d x %d) is bigger than the maximum supported texture size %d",
-            (int)info.size.width, (int)info.size.height, (int)maxTextureSize
+            (int)(size.width), (int)(size.height), (int)maxTextureSize
         );
         
         [stream close];
         return nil;
     }
     
-    if(!CCSizeIsPOT(info.size) && !device.supportsNPOT){
+    if(!CCSizeIsPOT(size) && !device.supportsNPOT){
         CCLOGWARN(@"This device does not support NPOT textures.");
         
         [stream close];
@@ -392,7 +398,7 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
     
 	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
-            [self setupTexture:info.type rendertexture:NO sizeInPixels:info.size options:options];
+            [self setupTexture:info.type rendertexture:NO sizeInPixels:size options:options];
             
 #if __CC_METAL_SUPPORTED_AND_ENABLED
             if([CCSetup sharedSetup].graphicsAPI == CCGraphicsAPIMetal){
@@ -400,6 +406,8 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
                 NSAssert(info.format == &PVRTableFormats[0], @"Metal only supports RGBA8 PVR files.");
                 
                 ReadPVRData(stream, info, ^(GLenum target, NSUInteger miplevel, NSUInteger width, NSUInteger height, NSData *data){
+                    if(mipmap < skipMips) return;
+                    
                     CGSize size = CGSizeMake(width, height);
                     const void *pixelData = data.bytes;
                     
@@ -415,10 +423,13 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
             {
                 const struct PVRTexturePixelFormatInfo *format = info.format;
                 ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
+                    GLint mip = mipmap - skipMips;
+                    if(mip < 0) return;
+                    
                     if(format->compressed){
-                        glCompressedTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, (GLsizei)data.length, data.bytes);
+                        glCompressedTexImage2D(target, mip, format->internalFormat, (GLint)width, (GLint)height, 0, (GLsizei)data.length, data.bytes);
                     } else {
-                        glTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, format->format, format->type, data.bytes);
+                        glTexImage2D(target, mip, format->internalFormat, (GLint)width, (GLint)height, 0, format->format, format->type, data.bytes);
                     }
                 });
             }
@@ -429,10 +440,10 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
             }
 		});
         
-        _sizeInPixels = info.size;
+        _sizeInPixels = size;
         _type = info.type;
-        self.contentScale = file.contentScale;
-        _contentSizeInPixels = info.size;
+        self.contentScale = file.contentScale*autoScale;
+        _contentSizeInPixels = size;
     }
     
     [stream close];
