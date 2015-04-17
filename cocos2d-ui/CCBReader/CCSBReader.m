@@ -55,8 +55,8 @@
 #define DEBUG_READER_PROPERTIES 0
 #endif
 
-static const  NSString * const CCBI_PREFIX = @".ccbi";
-static const  NSString * const SBI_PREFIX = @".sbi";
+static NSString * const CCBI_PREFIX = @".ccbi";
+static NSString * const SBI_PREFIX = @".sbi";
 
 @interface CCBFile : CCNode
 {
