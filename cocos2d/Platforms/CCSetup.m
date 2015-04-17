@@ -29,7 +29,7 @@
 #import "CCDirector_Private.h"
 
 #import "CCScene.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCDeviceInfo.h"
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
@@ -154,7 +154,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (CCScene *)createFirstScene
 {
-    return [CCBReader loadAsScene:@"MainScene"];
+    return [CCSBReader loadAsScene:@"MainScene"];
 }
 
 - (CCScene *)startScene
