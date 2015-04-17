@@ -39,8 +39,6 @@ NSDictionary *NormalizeCCImageOptions(NSDictionary *options);
 
 @property(nonatomic, readonly) CGAffineTransform loadingTransform;
 
--(CGFloat)autoScaleFactor:(CCFile *)file;
-
 -(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSMutableData *)pixelData options:(NSDictionary *)options;
 
 @end

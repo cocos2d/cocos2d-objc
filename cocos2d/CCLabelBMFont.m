@@ -713,7 +713,6 @@ void FNTConfigRemoveCache( void )
     
 	// Character ID
 	propertyValue = [nse nextObject];
-	propertyValue = [propertyValue substringToIndex: [propertyValue rangeOfString: @" "].location];
 	characterDefinition->charID = [propertyValue intValue];
     
 	// Character x
@@ -998,6 +997,7 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
+    CGFloat textureHeight = _texture.contentSize.height;
 	CGFloat contentScale = 1.0/_texture.contentScale;
     [_characterSprites setCommonHeight:_configuration->_commonHeight];
 
@@ -1036,6 +1036,9 @@ void FNTConfigRemoveCache( void )
 		
 		rect.origin.x += _imageOffset.x;
 		rect.origin.y += _imageOffset.y;
+        
+        // Y axis points up in the points coordinate system. Need to flip the rect.
+        rect.origin.y = textureHeight - (rect.origin.y + rect.size.height);
         
         CCBMFontCharacter *fontChar = [_characterSprites createNewCharacterForSequenceWithParent:self];
         [fontChar setTexture:_texture];

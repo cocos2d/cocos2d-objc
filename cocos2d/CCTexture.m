@@ -40,7 +40,6 @@
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "CCSetup.h"
-#import "CCDeprecated.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -54,6 +53,11 @@ NSString * const CCTextureOptionMipmapFilter = @"CCTextureOptionMipmapFilter";
 NSString * const CCTextureOptionAddressModeX = @"CCTextureOptionAddressModeX";
 NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 
+#if __CC_PLATFORM_ANDROID
+  #ifndef GL_BGRA
+  #define GL_BGRA                                                 0x80E1
+  #endif
+#endif
 
 //CLASS IMPLEMENTATIONS:
 
@@ -346,8 +350,8 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 -(CCSpriteFrame*)spriteFrame
 {
     if(_spriteFrame == nil){
-        CGRect rectInPixels = {CGPointZero, _sizeInPixels};
-        _spriteFrame = [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
+        CGRect rect = {CGPointZero, self.contentSize};
+        _spriteFrame = [[CCSpriteFrame alloc] initWithTexture:(CCTexture *)self.proxy rect:rect rotated:NO trimOffset:CGPointZero untrimmedSize:rect.size];
     }
     
     return _spriteFrame;

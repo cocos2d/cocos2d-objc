@@ -444,29 +444,6 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 @end
 
 
-@interface CCSpriteFrame(Deprecated)
-
-// Use [CCSpriteFrame initWithTexture:rectInPixels:rotated:trimOffsetInPixels:untrimmedSizeInPixels:] instead.
-+(instancetype) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-// Use [CCSpriteFrame initWithTextureFilename:rectInPixels:rotated:trimOffsetInPixels:untrimmedSizeInPixels:] instead.
-+(instancetype) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-// Use [CCSpriteFrame initWithTexture:rectInPixels:rotated:trimOffsetInPixels:untrimmedSizeInPixels:] instead.
--(instancetype) initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-// Use [CCSpriteFrame initWithTextureFilename:rectInPixels:rotated:trimOffsetInPixels:untrimmedSizeInPixels:] instead.
--(instancetype) initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-// Use CCSpriteFrame.trimOffset instead.
-@property (nonatomic, readonly) CGPoint offset;
-
-// Use CCSpriteFrame.untrimmedSize instead.
-@property (nonatomic, readonly) CGSize originalSize;
-
-@end
-
-
 enum {
 	//! Default tag
 	kCCActionTagInvalid = -1,

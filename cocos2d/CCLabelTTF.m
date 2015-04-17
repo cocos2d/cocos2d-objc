@@ -448,9 +448,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Update texture and content size
 	[self setTexture:tex];
 	
-	CGRect rect = CGRectZero;
-	rect.size = [self.texture contentSize];
-	[self setTextureRect: rect];
+    CGSize contentSize = tex.contentSize;
+    CGSize size = CC_SIZE_SCALE(tex.sizeInPixels, 1.0/tex.contentScale);
+	[self setTextureRect:CGRectMake(0.0, size.height - contentSize.height, contentSize.width, contentSize.height)];
 	
 	return YES;
 
@@ -693,13 +693,12 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
                 return nil;
             }
             CTFontDescriptorRef descriptor = CFArrayGetValueAtIndex(descriptors, 0);
-            fontName = (__bridge NSString *)CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute);
+            fontName = (__bridge_transfer NSString *)CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute);
             CFRelease(descriptors);
-            
         } else {
             CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)file.url);
             CGFontRef loadedFont = CGFontCreateWithDataProvider(fontDataProvider);
-            fontName = (__bridge NSString *)CGFontCopyPostScriptName(loadedFont);
+            fontName = (__bridge_transfer NSString *)CGFontCopyPostScriptName(loadedFont);
             
             CGFontRelease(loadedFont);
             CGDataProviderRelease(fontDataProvider);

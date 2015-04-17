@@ -333,7 +333,7 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
 #else
     NSString *foregroundColorAttributeName = (__bridge id)kCTForegroundColorAttributeName;
 #endif
-    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge_transfer id)defaultColor.CGColor);
+    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge id)defaultColor.CGColor);
     useFullColor |= (![defaultColor isEqualToColor:[CCColor whiteColor]]) && colorChanged;
     
     // Font

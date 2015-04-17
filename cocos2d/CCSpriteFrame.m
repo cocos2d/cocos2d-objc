@@ -36,48 +36,26 @@
 #import "CCTexture_Private.h"
 
 @implementation CCSpriteFrame {
-	CGRect _rectInPixels;
 	BOOL _rotated;
-	CGPoint _trimOffsetInPixels;
-	CGSize _untrimmedSizeInPixels;
 	CCTexture *_texture;
 	NSString *_textureFilename;
 	CCProxy __weak *_proxy;
 	__weak CCTexture *_lazyTexture;
 }
 
-@synthesize textureFilename = _textureFilename;
-@synthesize rotated = _rotated;
-
-@dynamic rect;
-
 +(instancetype) frameWithImageNamed:(NSString*)imageName
 {
     return [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
 }
 
--(id) initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated trimOffsetInPixels:(CGPoint)trimOffsetInPixels untrimmedSizeInPixels:(CGSize)untrimmedSizeInPixels
+-(instancetype)initWithTexture:(CCTexture*)texture rect:(CGRect)rect rotated:(BOOL)rotated trimOffset:(CGPoint)trimOffset untrimmedSize:(CGSize)untrimmedSize;
 {
 	if( (self=[super init]) )
     {
 		self.texture = texture;
-		_rectInPixels = rect;
-		_trimOffsetInPixels = trimOffsetInPixels;
-		_untrimmedSizeInPixels = untrimmedSizeInPixels;
-        _rotated = rotated;
-	}
-	return self;
-}
-
--(id) initWithTextureFilename:(NSString *)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated trimOffsetInPixels:(CGPoint)trimOffsetInPixels untrimmedSizeInPixels:(CGSize)untrimmedSizeInPixels
-{
-	if( (self=[super init]) )
-    {
-		_texture = nil;
-		_textureFilename = [filename copy];
-		_rectInPixels = rect;
-		_trimOffsetInPixels = trimOffsetInPixels;
-		_untrimmedSizeInPixels = untrimmedSizeInPixels;
+		_rect = rect;
+		_trimOffset = trimOffset;
+		_untrimmedSize = untrimmedSize;
         _rotated = rotated;
 	}
 	return self;
@@ -93,8 +71,8 @@
 			rect.size.width,
 			rect.size.height,
 			_rotated,
-            _trimOffsetInPixels.x,
-            _trimOffsetInPixels.y
+            _trimOffset.x,
+            _trimOffset.y
 			];
 }
 
@@ -105,30 +83,10 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTextureFilename:_textureFilename rectInPixels:_rectInPixels rotated:_rotated trimOffsetInPixels:_trimOffsetInPixels untrimmedSizeInPixels:_untrimmedSizeInPixels];
-	copy.texture = _texture;
+	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:_texture rect:_rect rotated:_rotated trimOffset:_trimOffset untrimmedSize:_untrimmedSize];
+    copy->_textureFilename = _textureFilename;
+    
 	return copy;
-}
-
--(CGFloat)textureScale
-{
-    CCTexture *tex = self.texture;
-    return 1.0/(tex.contentScale);
-}
-
--(CGRect) rect
-{
-	return CC_RECT_SCALE(_rectInPixels, self.textureScale);
-}
-
--(CGPoint)trimOffset
-{
-	return ccpMult(_trimOffsetInPixels, self.textureScale);
-}
-
--(CGSize)untrimmedSize
-{
-	return CC_SIZE_SCALE(_untrimmedSizeInPixels, self.textureScale);
 }
 
 -(void) setTexture:(CCTexture *)texture
@@ -151,6 +109,16 @@
 -(CCTexture*) texture
 {
 	return (_texture ?: self.lazyTexture);
+}
+
+// This is a private setter used by the cache.
+-(void)setTextureFilename:(NSString *)textureFilename
+{
+    _textureFilename = [textureFilename copy];
+    
+    // Make sure any previously loaded texture is cleared.
+    _texture = nil;
+    _lazyTexture = nil;
 }
 
 - (BOOL)hasProxy

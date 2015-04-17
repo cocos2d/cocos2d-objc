@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
+<map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="404" tileheight="324">
  <tileset firstgid="1" source="orthogonal-test1.tsx"/>
  <layer name="Layer 0" width="12" height="12">
   <data encoding="base64" compression="gzip">

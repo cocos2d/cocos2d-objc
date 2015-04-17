@@ -2049,7 +2049,8 @@
     CCLightNode *lightNode = [CCLightNode lightWithType:CCLightPoint groups:@[] color:[CCColor whiteColor] intensity:1.0f];
     [self.contentNode addChild:lightNode];
     
-    CCSpriteFrame *normalMapFrame = [CCSpriteFrame frameWithTextureFilename:@"Images/fire.png" rectInPixels:CGRectMake(0.0f, 0.0f, 4.0f, 4.0f) rotated:NO offset:CGPointZero originalSize:CGSizeMake(32.0f, 32.0f)];
+    CCTexture *texture = [CCTexture textureWithFile:@"Images/fire.png"];
+    CCSpriteFrame *normalMapFrame = [[CCSpriteFrame alloc] initWithTexture:texture rect:CGRectMake(0, 0, 4, 4) rotated:NO trimOffset:CGPointZero untrimmedSize:CGSizeMake(32, 32)];
         
     NSArray *effects = @[
                          [CCEffectBloom effectWithBlurRadius:1 intensity:0.0f luminanceThreshold:0.0f],

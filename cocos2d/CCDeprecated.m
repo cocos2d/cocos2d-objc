@@ -262,34 +262,6 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 @end
 
 
-@implementation CCSpriteFrame(Deprecated)
-
-+(instancetype) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-{
-    return [[self alloc] initWithTexture:texture rectInPixels:rect rotated:rotated trimOffsetInPixels:offset untrimmedSizeInPixels:originalSize];
-}
-
-+(instancetype) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-{
-    return [[self alloc] initWithTextureFilename:filename rectInPixels:rect rotated:rotated trimOffsetInPixels:offset untrimmedSizeInPixels:originalSize];
-}
-
--(instancetype) initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-{
-    return [self initWithTexture:texture rectInPixels:rect rotated:rotated trimOffsetInPixels:offset untrimmedSizeInPixels:originalSize];
-}
-
--(instancetype) initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-{
-    return [self initWithTextureFilename:filename rectInPixels:rect rotated:rotated trimOffsetInPixels:offset untrimmedSizeInPixels:originalSize];
-}
-
--(CGPoint)offset {return self.trimOffset;}
--(CGSize)originalSize {return self.untrimmedSize;}
-
-@end
-
-
 BOOL
 CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
 {

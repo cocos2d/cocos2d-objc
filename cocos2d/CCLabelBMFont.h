@@ -152,13 +152,6 @@
  @see CCTextAlignment */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
 
-/** The opacity of the text, in the range 0.0 (fully transparent) to 1.0 (fully opaque). */
-@property (nonatomic,readwrite) CGFloat opacity;
-
-/** The color of the text.
- @see CCColor */
-@property (nonatomic,strong) CCColor* color;
-
 /**
  * Enable debug drawing.  When enabled a frame is drawn around the label to indicate
  * the extent of its content area.

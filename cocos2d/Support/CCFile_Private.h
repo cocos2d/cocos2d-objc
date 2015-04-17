@@ -57,6 +57,7 @@ typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
 
 @interface CCFile()
 
+@property (nonatomic, readonly) CGFloat autoScaleFactor;
 @property (nonatomic, assign, readwrite) BOOL useUIScale;
 
 @end

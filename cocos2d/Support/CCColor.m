@@ -180,10 +180,14 @@
 
 - (CGColorRef) CGColor
 {
-    CGFloat components[4] = {(CGFloat)_vec4.r, (CGFloat)_vec4.g, (CGFloat)_vec4.b, (CGFloat)_vec4.a};
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    _color = CGColorCreate(colorspace, components);
-    CGColorSpaceRelease(colorspace);
+    if (_color == NULL)
+    {
+        CGFloat components[4] = {(CGFloat)_vec4.r, (CGFloat)_vec4.g, (CGFloat)_vec4.b, (CGFloat)_vec4.a};
+        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+        _color = CGColorCreate(colorspace, components);
+        CGColorSpaceRelease(colorspace);
+    }
+    
     return _color;
 }
 

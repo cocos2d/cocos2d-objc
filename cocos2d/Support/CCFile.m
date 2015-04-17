@@ -25,7 +25,10 @@
 
 #import <zlib.h>
 
+#import "ccUtils.h"
 #import "CCFile_Private.h"
+
+#import "CCSetup.h"
 
 
 #pragma mark Wrapped Streams
@@ -458,6 +461,16 @@ static const CGDataProviderSequentialCallbacks callbacks = {
         return _url.path;
     } else {
         return nil;
+    }
+}
+
+-(CGFloat)autoScaleFactor
+{
+    if(self.hasResolutionTag){
+        return 1.0;
+    } else {
+        float relativeScale = MAX(1.0, self.contentScale/[CCSetup sharedSetup].assetScale);
+        return 1.0/CCNextPOT(relativeScale);
     }
 }
 

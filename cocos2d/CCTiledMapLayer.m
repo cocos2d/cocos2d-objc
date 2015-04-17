@@ -37,6 +37,8 @@
 #import "CCShader.h"
 #import "CCTexture.h"
 #import "CCRenderer.h"
+#import "CCFileLocator.h"
+#import "CCImage.h"
 
 #pragma mark -
 #pragma mark CCTMXLayer
@@ -74,8 +76,20 @@
 	CGSize size = layerInfo.layerSize;
 
 	CCTexture *tex = nil;
-	if( tilesetInfo )
-		tex = [[CCTextureCache sharedTextureCache] addImage:tilesetInfo.sourceImage];
+	if( tilesetInfo ){
+        NSString *filename = tilesetInfo.sourceImage;
+        tex = [CCTexture textureForKey:[NSString stringWithFormat:@"CCTiledMapLayer_%@", filename] loader:^CCTexture *{
+            NSError *err = nil;
+            CCFile *file = [[CCFileLocator sharedFileLocator] fileNamedWithResolutionSearch:filename error:&err];
+            NSAssert(err == nil, @"Error loading tileset image (%@): %@", filename, err);
+            
+            CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+            return [[CCTexture alloc] initWithImage:image options:@{
+                CCTextureOptionMagnificationFilter: @(CCTextureFilterNearest),
+                CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+            }];
+        }];
+    }
 
 	if((self = [super init])) {
 		self.texture = tex;
@@ -103,7 +117,7 @@
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
 		[self setPosition:ccpMult(offset, pixelsToPoints)];
 
-		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth * pixelsToPoints, _mapRows * _tileHeight * pixelsToPoints )];
+		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth, _mapRows * _tileHeight )];
 
 		_useAutomaticVertexZ= NO;
 		_vertexZvalue = 0;

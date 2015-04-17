@@ -166,6 +166,9 @@
 		D37A424F1A952C6B00D162C2 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D37A424D1A952C6B00D162C2 /* Fonts */; };
 		D3867DBF1A32EB38009AFFF3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */; };
 		D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
+		D3AA3B671ADF259E006F0AA0 /* SpriteSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA3B661ADF259E006F0AA0 /* SpriteSheetTest.m */; };
+		D3AA3B681ADF259E006F0AA0 /* SpriteSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA3B661ADF259E006F0AA0 /* SpriteSheetTest.m */; };
+		D3AA3B691ADF259E006F0AA0 /* SpriteSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA3B661ADF259E006F0AA0 /* SpriteSheetTest.m */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 		D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */; };
@@ -465,6 +468,7 @@
 		D37A424D1A952C6B00D162C2 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Resources/Fonts; sourceTree = SOURCE_ROOT; };
 		D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		D3870C5F18B440150033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
+		D3AA3B661ADF259E006F0AA0 /* SpriteSheetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteSheetTest.m; path = "cocos2d-ui-tests/tests/SpriteSheetTest.m"; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 		D3C1281C199D43E0005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CCShaders.metal; path = cocos2d/Platforms/iOS/CCShaders.metal; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
@@ -696,6 +700,7 @@
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
 				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
 				D35C2D261A1BC83F00FF96B0 /* CCViewportNodeTest.m */,
+				D3AA3B661ADF259E006F0AA0 /* SpriteSheetTest.m */,
 			);
 			name = Tests;
 			path = "cocos2d-ui-tests/tests";
@@ -1283,6 +1288,7 @@
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				75C72C051A82AD6600814F60 /* AppDelegate.m in Sources */,
 				B7E2620017E7D321007067F0 /* TestbedSetup.m in Sources */,
+				D3AA3B671ADF259E006F0AA0 /* SpriteSheetTest.m in Sources */,
 				0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */,
 				B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */,
 				A664A4EF18A3D9B8006184B8 /* PositioningTest.m in Sources */,
@@ -1325,6 +1331,7 @@
 				7513E66C1AAF5C4B00D8FE76 /* CCSBLoadingTest.m in Sources */,
 				D3763D3C19E734C5006C050D /* CCRendererTest.m in Sources */,
 				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
+				D3AA3B681ADF259E006F0AA0 /* SpriteSheetTest.m in Sources */,
 				75C72C091A82AD7900814F60 /* main.m in Sources */,
 				D3763D3D19E734C5006C050D /* SpritePerformanceTest.m in Sources */,
 				D35C2D281A1BC83F00FF96B0 /* CCViewportNodeTest.m in Sources */,
@@ -1364,6 +1371,7 @@
 				D3F43AA61ACDD46F00B796F7 /* CCCacheTest.m in Sources */,
 				D3F43AA71ACDD46F00B796F7 /* CCTextureCacheTest.m in Sources */,
 				D3F43AA81ACDD46F00B796F7 /* PositioningTest.m in Sources */,
+				D3AA3B691ADF259E006F0AA0 /* SpriteSheetTest.m in Sources */,
 				D334A7041ACF25460077321A /* HeadlessActivity.m in Sources */,
 				D3F43AA91ACDD46F00B796F7 /* CCSprite9SliceTest.m in Sources */,
 				D3F43AAA1ACDD46F00B796F7 /* CCSliderTest.m in Sources */,
