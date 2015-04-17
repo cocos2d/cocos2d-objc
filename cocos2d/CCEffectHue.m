@@ -8,7 +8,7 @@
 
 #import "CCEffectHue.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -22,34 +22,34 @@ static GLKMatrix4 matrixWithHue(float hue);
 @end
 
 
-@interface CCEffectHueImpl : CCEffectImpl
+@interface CCEffectHueImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectHue *interface;
 @end
 
-@implementation CCEffectHueImpl
+@implementation CCEffectHueImplGL
 
 -(id)initWithInterface:(CCEffectHue *)interface
 {
-    NSArray *renderPasses = [CCEffectHueImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectHueImpl buildShaders];
+    NSArray *renderPasses = [CCEffectHueImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectHueImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectHueImpl";
+        self.debugName = @"CCEffectHueImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectHueImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectHueImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectHueImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"hue" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -59,12 +59,12 @@ static GLKMatrix4 matrixWithHue(float hue);
                           [CCEffectUniform uniform:@"mat4" name:@"u_hueRotationMtx" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -114,7 +114,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     if((self = [super init]))
     {
-        self.effectImpl = [[CCEffectHueImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectHueImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectHue";
 
         self.hue = hue;

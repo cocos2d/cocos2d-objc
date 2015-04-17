@@ -13,7 +13,7 @@
 #import "CCDirector.h"
 #import "CCEffect.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffectStack.h"
 #import "CCEffectUtils.h"
 #import "CCTexture.h"
@@ -185,17 +185,17 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue"];
         
         NSArray *functions = @[[[CCEffectFunction alloc] initWithName:@"copyFunc" body:effectBody inputs:@[input] returnType:@"vec4"]];
-        NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitMainTexture]];
+        NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitMainTexture]];
         NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"copied" inputs:@{@"inputValue" : @"tmp"}]];
         
-        CCEffectShaderBuilder *fragBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
+        CCEffectShaderBuilder *fragBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
                                                                                functions:functions
                                                                                    calls:calls
                                                                              temporaries:temporaries
                                                                                 uniforms:@[]
                                                                                 varyings:@[]];
         
-        copyShader = [[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:fragBuilder];
+        copyShader = [[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:fragBuilder];
         
     });
     return copyShader;

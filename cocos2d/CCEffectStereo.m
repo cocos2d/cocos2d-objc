@@ -11,26 +11,26 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
 
 
-@interface CCEffectStereoImpl : CCEffectImpl
+@interface CCEffectStereoImplGL : CCEffectImpl
 
 @property (nonatomic, weak) CCEffectStereo *interface;
 
 @end
 
 
-@implementation CCEffectStereoImpl
+@implementation CCEffectStereoImplGL
 
 -(id)initWithInterface:(CCEffectStereo *)interface
 {
-    NSArray *renderPasses = [CCEffectStereoImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectStereoImpl buildShaders];
+    NSArray *renderPasses = [CCEffectStereoImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectStereoImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
@@ -43,13 +43,13 @@
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectStereoImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectStereoImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectStereoImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectStereoImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"stereoOffset" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -59,12 +59,12 @@
                           [CCEffectUniform uniform:@"float" name:@"u_channelSelect" value:[NSNumber numberWithFloat:0.0f]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -135,7 +135,7 @@
     {
         _channelSelect = channelSelect;
         
-        self.effectImpl = [[CCEffectStereoImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectStereoImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectStereo";
     }
     

@@ -8,7 +8,7 @@
 
 #import "CCEffectBrightness.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -19,35 +19,35 @@ static float conditionBrightness(float brightness);
 @property (nonatomic, strong) NSNumber *conditionedBrightness;
 @end
 
-@interface CCEffectBrightnessImpl : CCEffectImpl
+@interface CCEffectBrightnessImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectBrightness *interface;
 @end
 
 
-@implementation CCEffectBrightnessImpl
+@implementation CCEffectBrightnessImplGL
 
 -(id)initWithInterface:(CCEffectBrightness *)interface
 {
-    NSArray *renderPasses = [CCEffectBrightnessImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectBrightnessImpl buildShaders];
+    NSArray *renderPasses = [CCEffectBrightnessImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectBrightnessImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectBrightnessImpl";
+        self.debugName = @"CCEffectBrightnessImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectBrightnessImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectBrightnessImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectBrightnessImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectBrightnessImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"brightness" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -57,12 +57,12 @@ static float conditionBrightness(float brightness);
                           [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -113,7 +113,7 @@ static float conditionBrightness(float brightness);
         _brightness = brightness;
         _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
 
-        self.effectImpl = [[CCEffectBrightnessImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectBrightnessImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectBrightness";
     }
     return self;

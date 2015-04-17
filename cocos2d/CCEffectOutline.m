@@ -11,7 +11,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture.h"
@@ -21,16 +21,16 @@
 #import "CCRendererBasicTypes.h"
 
 
-@interface CCEffectOutlineImpl : CCEffectImpl
+@interface CCEffectOutlineImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectOutline *interface;
 @end
 
-@implementation CCEffectOutlineImpl
+@implementation CCEffectOutlineImplGL
 
 -(id)initWithInterface:(CCEffectOutline *)interface
 {
-    NSArray *renderPasses = [CCEffectOutlineImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectOutlineImpl buildShaders];
+    NSArray *renderPasses = [CCEffectOutlineImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectOutlineImplGL buildShaders];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
@@ -43,13 +43,13 @@
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectOutlineImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectOutlineImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectOutlineImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectOutlineImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"outline" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -61,12 +61,12 @@
                           [CCEffectUniform uniform:@"float" name:@"u_currentPass" value:[NSNumber numberWithFloat:0.0]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -200,7 +200,7 @@
         _outlineColor = outlineColor;
         _outlineWidth = outlineWidth;
         
-        self.effectImpl = [[CCEffectOutlineImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectOutlineImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectHue";
     }
     return self;

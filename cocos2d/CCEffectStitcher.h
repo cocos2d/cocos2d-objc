@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class CCEffectRenderPass;
-@class CCEffectShader;
-
 @interface CCEffectStitcher : NSObject
 
 @property (nonatomic, readonly) NSArray *renderPasses;
 @property (nonatomic, readonly) NSArray *shaders;
 
-- (id)initWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix mangleExclusions:(NSSet *)exclusions stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
+- (id)init;
++ (instancetype)stitcherWithEffects:(NSArray *)effects manglePrefix:(NSString *)prefix stitchListIndex:(NSUInteger)stitchListIndex shaderStartIndex:(NSUInteger)shaderStartIndex;
 
 @end

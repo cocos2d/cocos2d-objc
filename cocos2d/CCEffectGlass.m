@@ -8,7 +8,7 @@
 
 #import "CCEffectGlass.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
@@ -32,16 +32,16 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 @end
 
 
-@interface CCEffectGlassImpl : CCEffectImpl
+@interface CCEffectGlassImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectGlass *interface;
 @end
 
-@implementation CCEffectGlassImpl
+@implementation CCEffectGlassImplGL
 
 -(id)initWithInterface:(CCEffectGlass *)interface
 {    
-    NSArray *renderPasses = [CCEffectGlassImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectGlassImpl buildShaders];
+    NSArray *renderPasses = [CCEffectGlassImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectGlassImplGL buildShaders];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
@@ -53,13 +53,13 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectGlassImpl vertexShaderBuilder] fragmentShaderBuilder:[CCEffectGlassImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectGlassImplGL vertexShaderBuilder] fragmentShaderBuilder:[CCEffectGlassImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectGlassImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectGlassImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"glass" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -78,14 +78,14 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                           [CCEffectUniform uniform:@"vec2" name:@"u_reflectBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
                           ];
     
-    NSArray *varyings = [CCEffectGlassImpl buildVaryings];
+    NSArray *varyings = [CCEffectGlassImplGL buildVaryings];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:varyings];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:varyings];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -167,21 +167,21 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 
 + (CCEffectShaderBuilder *)vertexShaderBuilder
 {
-    NSArray *functions = [CCEffectGlassImpl buildVertexFunctions];
+    NSArray *functions = [CCEffectGlassImplGL buildVertexFunctions];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"glass" inputs:nil]];
     
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"mat4" name:@"u_ndcToReflectEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
                           [CCEffectUniform uniform:@"mat4" name:@"u_ndcToRefractEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
                           ];
-    NSArray *varyings = [CCEffectGlassImpl buildVaryings];
+    NSArray *varyings = [CCEffectGlassImplGL buildVaryings];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:nil
-                                              uniforms:uniforms
-                                              varyings:varyings];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:nil
+                                                uniforms:uniforms
+                                                varyings:varyings];
 }
 
 + (NSArray *)buildVertexFunctions
@@ -333,7 +333,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(_fresnelBias);
         _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(_fresnelPower);
 
-        self.effectImpl = [[CCEffectGlassImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectGlassImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectGlass";
     }
     return self;

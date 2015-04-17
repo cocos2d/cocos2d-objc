@@ -42,7 +42,7 @@
 
 #import "CCEffectSaturation.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -56,35 +56,35 @@ static float conditionSaturation(float saturation);
 @end
 
 
-@interface CCEffectSaturationImpl : CCEffectImpl
+@interface CCEffectSaturationImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectSaturation *interface;
 @end
 
 
-@implementation CCEffectSaturationImpl
+@implementation CCEffectSaturationImplGL
 
 -(id)initWithInterface:(CCEffectSaturation *)interface
 {
-    NSArray *renderPasses = [CCEffectSaturationImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectSaturationImpl buildShaders];
+    NSArray *renderPasses = [CCEffectSaturationImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectSaturationImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectSaturationImpl";
+        self.debugName = @"CCEffectSaturationImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectSaturationImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectSaturationImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectSaturationImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectSaturationImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"saturation" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -94,12 +94,12 @@ static float conditionSaturation(float saturation);
                           [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -156,7 +156,7 @@ static float conditionSaturation(float saturation);
         _saturation = saturation;
         _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 
-        self.effectImpl = [[CCEffectSaturationImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectSaturationImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectSaturation";
     }
     return self;

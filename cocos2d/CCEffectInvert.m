@@ -8,40 +8,40 @@
 
 #import "CCEffectInvert.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCProtocols.h"
 #import "CCRendererBasicTypes.h"
 #import "CCTexture.h"
 
 
-@interface CCEffectInvertImpl : CCEffectImpl
+@interface CCEffectInvertImplGL : CCEffectImpl
 
 @end
 
-@implementation CCEffectInvertImpl
+@implementation CCEffectInvertImplGL
 
 -(id)init
 {
-    NSArray *renderPasses = [CCEffectInvertImpl buildRenderPasses];
-    NSArray *shaders = [CCEffectInvertImpl buildShaders];
+    NSArray *renderPasses = [CCEffectInvertImplGL buildRenderPasses];
+    NSArray *shaders = [CCEffectInvertImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
-        self.debugName = @"CCEffectInvertImpl";
+        self.debugName = @"CCEffectInvertImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectInvertImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectInvertImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectInvertImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectInvertImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"inverted" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -50,12 +50,12 @@
                           [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                                                           functions:functions
-                                                                               calls:calls
-                                                                         temporaries:temporaries
-                                                                            uniforms:uniforms
-                                                                            varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -98,7 +98,7 @@
 {
     if((self = [super init]))
     {
-        self.effectImpl = [[CCEffectInvertImpl alloc] init];
+        self.effectImpl = [[CCEffectInvertImplGL alloc] init];
         self.debugName = @"CCEffectInvert";
     }
     return self;

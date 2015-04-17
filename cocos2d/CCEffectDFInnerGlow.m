@@ -11,7 +11,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCColor.h"
 #import "CCRenderer.h"
@@ -24,38 +24,38 @@
 @end
 
 
-@interface CCEffectDFInnerGlowImpl : CCEffectImpl
+@interface CCEffectDFInnerGlowImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectDFInnerGlow *interface;
 @end
 
 
-@implementation CCEffectDFInnerGlowImpl {
+@implementation CCEffectDFInnerGlowImplGL {
     float _innerMin;
     float _innerMax;
 }
 
 -(id)initWithInterface:(CCEffectDFInnerGlow *)interface
 {
-    NSArray *renderPasses = [CCEffectDFInnerGlowImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectDFInnerGlowImpl buildShaders];
+    NSArray *renderPasses = [CCEffectDFInnerGlowImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDFInnerGlowImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectDFInnerGlowImpl";
+        self.debugName = @"CCEffectDFInnerGlowImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFInnerGlowImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFInnerGlowImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectDFInnerGlowImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"innerGlow" inputs:nil]];
     
     NSArray *uniforms = @[
@@ -68,12 +68,12 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_glowOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.47, 0.5)]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 +(NSArray *)buildFragmentFunctions
@@ -193,7 +193,7 @@
 {
     if((self = [super init]))
     {        
-        self.effectImpl = [[CCEffectDFInnerGlowImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectDFInnerGlowImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectDFInnerGlow";
 
         _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)

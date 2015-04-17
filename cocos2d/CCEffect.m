@@ -27,17 +27,6 @@ const CCEffectPrepareResult CCEffectPrepareNoop     = { CCEffectPrepareSuccess, 
 
 @implementation CCEffectImpl
 
-+ (NSSet *)defaultUniformNames
-{
-    return [[NSSet alloc] initWithArray:@[
-                                          CCShaderUniformPreviousPassTexture,
-                                          CCShaderUniformTexCoord1Center,
-                                          CCShaderUniformTexCoord1Extents,
-                                          CCShaderUniformTexCoord2Center,
-                                          CCShaderUniformTexCoord2Extents
-                                          ]];
-}
-
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaders:(NSArray *)shaders
 {
     if((self = [super init]))

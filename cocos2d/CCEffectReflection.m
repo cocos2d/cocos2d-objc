@@ -8,7 +8,7 @@
 
 #import "CCEffectReflection.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
@@ -28,34 +28,34 @@
 @end
 
 
-@interface CCEffectReflectionImpl : CCEffectImpl
+@interface CCEffectReflectionImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectReflection *interface;
 @end
 
-@implementation CCEffectReflectionImpl
+@implementation CCEffectReflectionImplGL
 
 -(id)initWithInterface:(CCEffectReflection *)interface
 {    
-    NSArray *renderPasses = [CCEffectReflectionImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectReflectionImpl buildShaders];
+    NSArray *renderPasses = [CCEffectReflectionImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectReflectionImplGL buildShaders];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectReflectionImpl";
+        self.debugName = @"CCEffectReflectionImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectReflectionImpl vertexShaderBuilder] fragmentShaderBuilder:[CCEffectReflectionImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectReflectionImplGL vertexShaderBuilder] fragmentShaderBuilder:[CCEffectReflectionImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectReflectionImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectReflectionImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"reflection" inputs:@{@"inputValue" : @"tmp"}]];
     
     NSArray *uniforms = @[
@@ -69,14 +69,14 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
                           ];
-    NSArray *varyings = [CCEffectReflectionImpl buildVaryings];
+    NSArray *varyings = [CCEffectReflectionImplGL buildVaryings];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:varyings];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:varyings];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -134,20 +134,20 @@
 
 + (CCEffectShaderBuilder *)vertexShaderBuilder
 {
-    NSArray *functions = [CCEffectReflectionImpl buildVertexFunctions];
+    NSArray *functions = [CCEffectReflectionImplGL buildVertexFunctions];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"reflection" inputs:nil]];
     
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"mat4" name:@"u_ndcToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
                           ];
-    NSArray *varyings = [CCEffectReflectionImpl buildVaryings];
+    NSArray *varyings = [CCEffectReflectionImplGL buildVaryings];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:nil
-                                              uniforms:uniforms
-                                              varyings:varyings];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:nil
+                                                uniforms:uniforms
+                                                varyings:varyings];
 }
 
 + (NSArray *)buildVertexFunctions
@@ -265,7 +265,7 @@
         _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(_fresnelBias);
         _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(_fresnelPower);
         
-        self.effectImpl = [[CCEffectReflectionImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectReflectionImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectReflection";
     }
     return self;

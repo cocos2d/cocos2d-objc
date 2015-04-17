@@ -90,7 +90,5 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
 
-+ (NSSet *)defaultUniformNames;
-
 @end
 

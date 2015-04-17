@@ -41,7 +41,7 @@
 
 #import "CCEffectBlur.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCTexture.h"
@@ -49,11 +49,11 @@
 #import "NSValue+CCRenderer.h"
 
 
-@interface CCEffectBlurImpl : CCEffectImpl
+@interface CCEffectBlurImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectBlur *interface;
 @end
 
-@implementation CCEffectBlurImpl
+@implementation CCEffectBlurImplGL
 
 -(id)initWithInterface:(CCEffectBlur *)interface
 {
@@ -64,8 +64,8 @@
                           [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count]
                           ];
     
-    NSArray *fragFunctions = [CCEffectBlurImpl buildFragmentFunctionsWithBlurParams:blurParams];
-    NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *fragFunctions = [CCEffectBlurImplGL buildFragmentFunctionsWithBlurParams:blurParams];
+    NSArray *fragTemporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"blur" inputs:@{@"inputValue" : @"tmp"}]];
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
@@ -74,34 +74,34 @@
                               [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                                                                 functions:fragFunctions
-                                                                                     calls:fragCalls
-                                                                               temporaries:fragTemporaries
-                                                                                  uniforms:fragUniforms
-                                                                                  varyings:varyings];
+    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                                   functions:fragFunctions
+                                                                                       calls:fragCalls
+                                                                                 temporaries:fragTemporaries
+                                                                                    uniforms:fragUniforms
+                                                                                    varyings:varyings];
     
     
-    NSArray *vertFunctions = [CCEffectBlurImpl buildVertexFunctionsWithBlurParams:blurParams];
+    NSArray *vertFunctions = [CCEffectBlurImplGL buildVertexFunctionsWithBlurParams:blurParams];
     NSArray *vertCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:vertFunctions[0] outputName:@"blur" inputs:nil]];
     NSArray *vertUniforms = @[
                               [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
-
-    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                                                                 functions:vertFunctions
-                                                                                     calls:vertCalls
-                                                                               temporaries:nil
-                                                                                  uniforms:vertUniforms
-                                                                                  varyings:varyings];
     
-    NSArray *renderPasses = [CCEffectBlurImpl buildRenderPasses];
+    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                                                                   functions:vertFunctions
+                                                                                       calls:vertCalls
+                                                                                 temporaries:nil
+                                                                                    uniforms:vertUniforms
+                                                                                    varyings:varyings];
+    
+    NSArray *renderPasses = [CCEffectBlurImplGL buildRenderPasses];
     NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectBlurImpl";
+        self.debugName = @"CCEffectBlurImplGL";
         self.stitchFlags = 0;
         return self;
     }
@@ -330,7 +330,7 @@
     {
         self.blurRadius = blurRadius;
         
-        self.effectImpl = [[CCEffectBlurImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectBlurImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectBlur";
         return self;
     }
@@ -357,7 +357,7 @@
     CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
-        self.effectImpl = [[CCEffectBlurImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectBlurImplGL alloc] initWithInterface:self];
 
         _shaderDirty = NO;
         

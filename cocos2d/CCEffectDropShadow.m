@@ -41,7 +41,7 @@
 
 #import "CCEffectDropShadow.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCTexture.h"
@@ -49,14 +49,14 @@
 #import "CCRenderer.h"
 
 
-@interface CCEffectDropShadowImpl : CCEffectImpl
+@interface CCEffectDropShadowImplGL : CCEffectImpl
 
 @property (nonatomic, weak) CCEffectDropShadow *interface;
 
 @end
 
 
-@implementation CCEffectDropShadowImpl
+@implementation CCEffectDropShadowImplGL
 
 -(id)initWithInterface:(CCEffectDropShadow *)interface
 {
@@ -80,8 +80,8 @@
     NSArray *varyings = @[v_blurCoords];
 
     
-    NSArray *fragFunctions = [CCEffectDropShadowImpl buildFragmentFunctionsWithBlurParams:blurParams];
-    NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *fragFunctions = [CCEffectDropShadowImplGL buildFragmentFunctionsWithBlurParams:blurParams];
+    NSArray *fragTemporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"dropShadow" inputs:@{@"inputValue" : @"tmp"}]];
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
@@ -93,32 +93,32 @@
                               u_shadowColor
                               ];
 
-    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                                                                 functions:fragFunctions
-                                                                                     calls:fragCalls
-                                                                               temporaries:fragTemporaries
-                                                                                  uniforms:fragUniforms
-                                                                                  varyings:varyings];
-
+    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                                   functions:fragFunctions
+                                                                                       calls:fragCalls
+                                                                                 temporaries:fragTemporaries
+                                                                                    uniforms:fragUniforms
+                                                                                    varyings:varyings];
     
-    NSArray *vertFunctions = [CCEffectDropShadowImpl buildVertexFunctionsWithBlurParams:blurParams];
+    
+    NSArray *vertFunctions = [CCEffectDropShadowImplGL buildVertexFunctionsWithBlurParams:blurParams];
     NSArray *vertCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:vertFunctions[0] outputName:@"dropShadow" inputs:nil]];
     NSArray *vertUniforms = @[u_blurDirection];
+    
+    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                                                                   functions:vertFunctions
+                                                                                       calls:vertCalls
+                                                                                 temporaries:nil
+                                                                                    uniforms:vertUniforms
+                                                                                    varyings:varyings];
 
-    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                                                                 functions:vertFunctions
-                                                                                     calls:vertCalls
-                                                                               temporaries:nil
-                                                                                  uniforms:vertUniforms
-                                                                                  varyings:varyings];
-
-    NSArray *renderPasses = [CCEffectDropShadowImpl buildRenderPassesWithInterface:interface];
+    NSArray *renderPasses = [CCEffectDropShadowImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
     
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectDropShadowImpl";        
+        self.debugName = @"CCEffectDropShadowImplGL";        
         self.stitchFlags = 0;
         return self;
     }
@@ -349,7 +349,7 @@
         _shadowOffset = shadowOffset;
         self.blurRadius = blurRadius;
         
-        self.effectImpl = [[CCEffectDropShadowImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectDropShadowImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectDropShadow";
     }
     return self;
@@ -374,7 +374,7 @@
     CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
-        self.effectImpl = [[CCEffectDropShadowImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectDropShadowImplGL alloc] initWithInterface:self];
         
         _shaderDirty = NO;
         

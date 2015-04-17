@@ -11,7 +11,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEffect_Private.h"
 #import "CCColor.h"
 #import "CCRenderer.h"
@@ -26,34 +26,34 @@
 @end
 
 
-@interface CCEffectDFOutlineImpl : CCEffectImpl
+@interface CCEffectDFOutlineImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectDFOutline *interface;
 @end
 
-@implementation CCEffectDFOutlineImpl
+@implementation CCEffectDFOutlineImplGL
 
 -(id)initWithInterface:(CCEffectDFOutline *)interface
 {
-    NSArray *renderPasses = [CCEffectDFOutlineImpl buildRenderPassesWithInterface:interface];
-    NSArray *shaders = [CCEffectDFOutlineImpl buildShaders];
+    NSArray *renderPasses = [CCEffectDFOutlineImplGL buildRenderPassesWithInterface:interface];
+    NSArray *shaders = [CCEffectDFOutlineImplGL buildShaders];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectDFOutlineImpl";
+        self.debugName = @"CCEffectDFOutlineImplGL";
     }
     return self;
 }
 
 + (NSArray *)buildShaders
 {
-    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilder defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFOutlineImpl fragShaderBuilder]]];
+    return @[[[CCEffectShader alloc] initWithVertexShaderBuilder:[CCEffectShaderBuilderGL defaultVertexShaderBuilder] fragmentShaderBuilder:[CCEffectDFOutlineImplGL fragShaderBuilder]]];
 }
 
 + (CCEffectShaderBuilder *)fragShaderBuilder
 {
-    NSArray *functions = [CCEffectDFOutlineImpl buildFragmentFunctions];
-    NSArray *temporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
+    NSArray *functions = [CCEffectDFOutlineImplGL buildFragmentFunctions];
+    NSArray *temporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitPreviousPass]];
     NSArray *calls = @[[[CCEffectFunctionCall alloc] initWithFunction:functions[0] outputName:@"outline" inputs:nil]];
     
     NSArray *uniforms = @[
@@ -66,12 +66,12 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]]
                           ];
     
-    return [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                             functions:functions
-                                                 calls:calls
-                                           temporaries:temporaries
-                                              uniforms:uniforms
-                                              varyings:@[]];
+    return [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                               functions:functions
+                                                   calls:calls
+                                             temporaries:temporaries
+                                                uniforms:uniforms
+                                                varyings:@[]];
 }
 
 + (NSArray *)buildFragmentFunctions
@@ -164,7 +164,7 @@
 {
     if((self = [super init]))
     {        
-        self.effectImpl = [[CCEffectDFOutlineImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectDFOutlineImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectDFOutline";
 
         _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)

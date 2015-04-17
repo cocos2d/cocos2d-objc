@@ -42,7 +42,7 @@
 
 #import "CCEffectBloom.h"
 #import "CCEffectShader.h"
-#import "CCEffectShaderBuilder.h"
+#import "CCEffectShaderBuilderGL.h"
 #import "CCEFfectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
@@ -55,11 +55,11 @@
 @end
 
 
-@interface CCEffectBloomImpl : CCEffectImpl
+@interface CCEffectBloomImplGL : CCEffectImpl
 @property (nonatomic, weak) CCEffectBloom *interface;
 @end
 
-@implementation CCEffectBloomImpl
+@implementation CCEffectBloomImplGL
 
 -(id)initWithInterface:(CCEffectBloom *)interface
 {
@@ -69,8 +69,8 @@
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     NSArray *varyings = @[v_blurCoords];
     
-    NSArray *fragFunctions = [CCEffectBloomImpl buildFragmentFunctionsWithBlurParams:blurParams];
-    NSArray *fragTemporaries = @[[[CCEffectFunctionTemporary alloc] initWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
+    NSArray *fragFunctions = [CCEffectBloomImplGL buildFragmentFunctionsWithBlurParams:blurParams];
+    NSArray *fragTemporaries = @[[CCEffectFunctionTemporary temporaryWithType:@"vec4" name:@"tmp" initializer:CCEffectInitFragColor]];
     NSArray *fragCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:fragFunctions[0] outputName:@"bloom" inputs:@{@"inputValue" : @"tmp"}]];
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
@@ -84,36 +84,36 @@
                               [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderFragment
-                                                                                 functions:fragFunctions
-                                                                                     calls:fragCalls
-                                                                               temporaries:fragTemporaries
-                                                                                  uniforms:fragUniforms
-                                                                                  varyings:varyings];
-
+    CCEffectShaderBuilder *fragShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderFragment
+                                                                                   functions:fragFunctions
+                                                                                       calls:fragCalls
+                                                                                 temporaries:fragTemporaries
+                                                                                    uniforms:fragUniforms
+                                                                                    varyings:varyings];
     
     
-    NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurParams:blurParams];
+    
+    NSArray *vertFunctions = [CCEffectBloomImplGL buildVertexFunctionsWithBlurParams:blurParams];
     NSArray *vertCalls = @[[[CCEffectFunctionCall alloc] initWithFunction:vertFunctions[0] outputName:@"bloom" inputs:nil]];
     NSArray *vertUniforms = @[
                               [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilder alloc] initWithType:CCEffectShaderBuilderVertex
-                                                                                 functions:vertFunctions
-                                                                                     calls:vertCalls
-                                                                               temporaries:nil
-                                                                                  uniforms:vertUniforms
-                                                                                  varyings:varyings];
+    CCEffectShaderBuilder *vertShaderBuilder = [[CCEffectShaderBuilderGL alloc] initWithType:CCEffectShaderBuilderVertex
+                                                                                   functions:vertFunctions
+                                                                                       calls:vertCalls
+                                                                                 temporaries:nil
+                                                                                    uniforms:vertUniforms
+                                                                                    varyings:varyings];
 
     
-    NSArray *renderPasses = [CCEffectBloomImpl buildRenderPassesWithInterface:interface];
+    NSArray *renderPasses = [CCEffectBloomImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
 
     if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
     {
         self.interface = interface;
-        self.debugName = @"CCEffectBloomImpl";
+        self.debugName = @"CCEffectBloomImplGL";
         self.stitchFlags = 0;
         return self;
     }
@@ -402,7 +402,7 @@
         self.intensity = intensity;
         self.luminanceThreshold = luminanceThreshold;
         
-        self.effectImpl = [[CCEffectBloomImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectBloomImplGL alloc] initWithInterface:self];
         self.debugName = @"CCEffectBloom";
         return self;
     }
@@ -441,7 +441,7 @@
     CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
-        self.effectImpl = [[CCEffectBloomImpl alloc] initWithInterface:self];
+        self.effectImpl = [[CCEffectBloomImplGL alloc] initWithInterface:self];
         
         _shaderDirty = NO;
         
