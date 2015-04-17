@@ -42,12 +42,8 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionInitializer)
 
 @property (nonatomic, readonly) NSString* type;
 @property (nonatomic, readonly) NSString* name;
-@property (nonatomic, readonly) NSString* initialSnippet;
-@property (nonatomic, readonly) NSString* snippet;
 
--(id)initWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
 -(id)initWithType:(NSString*)type name:(NSString*)name;
-+(instancetype)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
 +(instancetype)inputWithType:(NSString*)type name:(NSString*)name;
 
 @end
@@ -74,5 +70,4 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionInitializer)
 -(id)initWithType:(NSString*)type name:(NSString*)name initializer:(CCEffectFunctionInitializer)initializer;
 
 @end
-
 

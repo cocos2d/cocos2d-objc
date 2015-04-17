@@ -89,7 +89,6 @@
     newPass.texCoord1Mapping = _texCoord1Mapping;
     newPass.texCoord2Mapping = _texCoord2Mapping;
     newPass.blendMode = _blendMode;
-    newPass.shader = _shader;
     newPass.effectShader = _effectShader;
     newPass.beginBlocks = [_beginBlocks copy];
     newPass.updateBlocks = [_updateBlocks copy];

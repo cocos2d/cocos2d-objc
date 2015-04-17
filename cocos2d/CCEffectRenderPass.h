@@ -64,7 +64,6 @@ typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffect
 @property (nonatomic, assign) CCEffectTexCoordMapping texCoord1Mapping;
 @property (nonatomic, assign) CCEffectTexCoordMapping texCoord2Mapping;
 @property (nonatomic, strong) CCBlendMode* blendMode;
-@property (nonatomic, strong) CCShader* shader;
 @property (nonatomic, strong) CCEffectShader* effectShader;
 @property (nonatomic, copy) NSArray* beginBlocks;
 @property (nonatomic, copy) NSArray* updateBlocks;

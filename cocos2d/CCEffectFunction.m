@@ -79,28 +79,16 @@
 
 @implementation CCEffectFunctionInput
 
--(id)initWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet
+-(id)initWithType:(NSString*)type name:(NSString*)name
 {
     if((self = [super init]))
     {
         _type = [type copy];
         _name = [name copy];
-        _initialSnippet = [initialSnippet copy];
-        _snippet = [snippet copy];
         return self;
     }
     
     return self;
-}
-
--(id)initWithType:(NSString*)type name:(NSString*)name
-{
-    return [self initWithType:type name:name initialSnippet:nil snippet:nil];
-}
-
-+(instancetype)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet
-{
-    return [[self alloc] initWithType:type name:name initialSnippet:initialSnippet snippet:snippet];
 }
 
 +(instancetype)inputWithType:(NSString*)type name:(NSString*)name
@@ -180,6 +168,3 @@
 }
 
 @end
-
-
-
