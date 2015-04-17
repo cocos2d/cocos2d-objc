@@ -405,16 +405,17 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
                 // TODO add support for PVRTC
                 NSAssert(info.format == &PVRTableFormats[0], @"Metal only supports RGBA8 PVR files.");
                 
-                ReadPVRData(stream, info, ^(GLenum target, NSUInteger miplevel, NSUInteger width, NSUInteger height, NSData *data){
-                    if(mipmap < skipMips) return;
+                ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
+                    int mip = (int)mipmap - skipMips;
+                    if(mip < 0) return;
                     
-                    CGSize size = CGSizeMake(width, height);
+                    CGSize mipsize = CGSizeMake(width, height);
                     const void *pixelData = data.bytes;
                     
                     if(target == GL_TEXTURE_2D){
-                        [self _uploadTexture2D:size miplevel:miplevel pixelData:pixelData];
+                        [self _uploadTexture2D:mipsize miplevel:mip pixelData:pixelData];
                     } else {
-                        [self _uploadTextureCubeFace:target - GL_TEXTURE_CUBE_MAP_POSITIVE_X sizeInPixels:size miplevel:miplevel pixelData:pixelData];
+                        [self _uploadTextureCubeFace:target - GL_TEXTURE_CUBE_MAP_POSITIVE_X sizeInPixels:mipsize miplevel:mip pixelData:pixelData];
                     }
                 });
                 
@@ -423,7 +424,7 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
             {
                 const struct PVRTexturePixelFormatInfo *format = info.format;
                 ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
-                    GLint mip = mipmap - skipMips;
+                    GLint mip = (GLint)mipmap - skipMips;
                     if(mip < 0) return;
                     
                     if(format->compressed){

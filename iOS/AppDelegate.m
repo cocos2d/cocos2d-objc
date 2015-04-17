@@ -46,7 +46,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#if 1
+#if 0
     [[TestbedSetup sharedSetup] setupApplication];
     _window = [TestbedSetup sharedSetup].window;
     _view = [TestbedSetup sharedSetup].view;
