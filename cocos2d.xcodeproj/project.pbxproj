@@ -2198,7 +2198,7 @@
 			isa = PBXGroup;
 			children = (
 				571CD01A19649E03003D460C /* Platform */,
-				B7D272FA1822F4920054849B /* CCBReader */,
+				B7D272FA1822F4920054849B /* CCSBReader */,
 				B7C6237917EA7D8600928F91 /* cocos2d-ui.h */,
 				B78AE45C17E7AF1C0028BE0B /* CCControl.h */,
 				B750162218124B6000708A2F /* CCControlSubclass.h */,
@@ -2217,7 +2217,7 @@
 			name = "cocos2d-ui";
 			sourceTree = "<group>";
 		};
-		B7D272FA1822F4920054849B /* CCBReader */ = {
+		B7D272FA1822F4920054849B /* CCSBReader */ = {
 			isa = PBXGroup;
 			children = (
 				D24160F61958F6EE003673BD /* CCAnimationManager_Private.h */,
@@ -2240,7 +2240,7 @@
 				B7D2730C1822F4AA0054849B /* CCBuilderReader.h */,
 				B77060CE18341AD50043CC67 /* CCBReader_Private.h */,
 			);
-			name = CCBReader;
+			name = CCSBReader;
 			sourceTree = "<group>";
 		};
 		B7E7DE351A76DB7D004234B7 /* cocos2dMacFramework */ = {
