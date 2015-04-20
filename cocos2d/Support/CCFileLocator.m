@@ -26,7 +26,7 @@
 
 #import "CCFile.h"
 #import "CCFile_Private.h"
-#import "CCFileLocatorDatabaseProtocol.h"
+#import "CCFileLocatorDatabase.h"
 #import "CCFileMetaData.h"
 #import "ccUtils.h"
 #import "CCSetup.h"
@@ -103,6 +103,16 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
     }
 
     _searchPaths = [searchPaths copy];
+    
+    
+    NSDictionary *options = @{CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH: @(YES)};
+    for(NSString *searchPath in _searchPaths)
+    {
+        CCFile *file = [self findFilename:@"metadata.plist" inSearchPath:searchPath options:options trace:NO];
+        if(file)
+        {
+        }
+    }
 
     [self purgeCache];
 }
@@ -130,21 +140,7 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
     CCFile *cachedFile = _cache[filename];
     if (cachedFile) return cachedFile;
 
-    CCFileResolvedMetaData *metaData = [self resolvedMetaDataForFilename:filename trace:trace];
-    
-    CCFile *result = nil;
-    if (filename.isAbsolutePath)
-    {
-        NSURL *fileURL = [NSURL fileURLWithPath:filename];
-        if(trace) CCLOG(@"Checking absolute path: %@", fileURL);
-        
-        result = [[CCFile alloc] initWithName:filename url:fileURL contentScale:1.0 tagged:YES];
-    }
-    else
-    {
-        result = [self findFileInAllSearchPaths:filename metaData:metaData options:options trace:trace];
-    }
-
+    CCFile *result = [self findFileInAllSearchPaths:filename options:options trace:trace];
     if (result)
     {
         return result;
@@ -166,15 +162,16 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
     }
 }
 
-- (CCFile *)findFileInAllSearchPaths:(NSString *)filename metaData:(CCFileResolvedMetaData *)metaData options:(NSDictionary *)options trace:(BOOL)trace
+- (CCFile *)findFileInAllSearchPaths:(NSString *)filename options:(NSDictionary *)options trace:(BOOL)trace
 {
     for (NSString *searchPath in _searchPaths)
     {
         NSString *resolvedFilename = filename;
-
+        
+        CCFileMetaData *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
         if (metaData)
         {
-            resolvedFilename = metaData.filename;
+            resolvedFilename = [self resolveMetaData:metaData trace:trace].filename;
         }
 
         CCFile *aFile = [self findFilename:resolvedFilename inSearchPath:searchPath options:options trace:trace];
@@ -190,29 +187,6 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
             return aFile;
         }
     }
-    return nil;
-}
-
-- (CCFileResolvedMetaData *)resolvedMetaDataForFilename:(NSString *)filename trace:(BOOL)trace
-{
-    if (!_database)
-    {
-        return nil;
-    }
-
-    for (NSString *searchPath in _searchPaths)
-    {
-        CCFileMetaData *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
-
-        if (!metaData)
-        {
-            continue;
-        }
-
-        if(trace) CCLOG(@"Metadata found: %@", metaData);
-        return [self resolveMetaData:metaData trace:trace];
-    }
-
     return nil;
 }
 
