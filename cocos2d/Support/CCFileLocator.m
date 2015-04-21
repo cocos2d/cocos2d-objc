@@ -26,8 +26,6 @@
 
 #import "CCFile.h"
 #import "CCFile_Private.h"
-#import "CCFileLocatorDatabase.h"
-#import "CCFileMetaData.h"
 #import "ccUtils.h"
 #import "CCSetup.h"
 
@@ -35,21 +33,44 @@
 NSString * const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
 NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OPTION_NOTRACE";
 
-#pragma mark - CCFileResolvedMetaData helper class
+@implementation CCFileMetaData
 
-@interface CCFileResolvedMetaData : NSObject
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    if((self = [super init])){
+        self.filename = dictionary[@"filename"];
+        self.useUIScale = [dictionary[@"UIScale"] boolValue];
+        self.localizations = dictionary[@"localizations"];
+        
+        NSAssert(self.filename && [self.filename isKindOfClass:[NSString class]], @"Filename must not be a string.");
+    }
 
-@property (nonatomic, copy) NSString *filename;
-@property (nonatomic) BOOL useUIScale;
+    return self;
+}
+
+- (NSString *)localizedFilename
+{
+    if (self.localizations){
+        for (NSString *languageID in [NSLocale preferredLanguages])
+        {
+            NSString *filenameForLanguageID = self.localizations[languageID];
+            if (filenameForLanguageID)
+            {
+                return filenameForLanguageID;
+            }
+        }
+    }
+
+    return self.filename;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"filename: %@, UIScale: %d, localizations: %@", _filename, _useUIScale, _localizations];
+}
 
 @end
 
-@implementation CCFileResolvedMetaData
-
-@end
-
-
-#pragma mark - CCFileLocator
 
 @interface CCFileLocator ()
 
@@ -104,17 +125,37 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
 
     _searchPaths = [searchPaths copy];
     
-    
     NSDictionary *options = @{CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH: @(YES)};
+    NSMutableDictionary *metaDataDictionaries = [NSMutableDictionary dictionary];
     for(NSString *searchPath in _searchPaths)
     {
         CCFile *file = [self findFilename:@"metadata.plist" inSearchPath:searchPath options:options trace:NO];
         if(file)
         {
+            NSError *err = nil;
+            NSDictionary *metaData = [file loadPlist:&err];
+            metaDataDictionaries[searchPath] = metaData[@"data"];
+            
+            NSAssert(err == nil, @"Error loading %@", file.url);
         }
     }
+    self.metaDataDictionaries = metaDataDictionaries;
 
     [self purgeCache];
+}
+
+-(CCFileMetaData *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath
+{
+    NSDictionary *metaData = _metaDataDictionaries[searchPath][filename];
+    
+    if(metaData)
+    {
+        return [[CCFileMetaData alloc] initWithDictionary:metaData];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (CCFile *)fileNamedWithResolutionSearch:(NSString *)filename error:(NSError **)error
@@ -166,16 +207,10 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
 {
     for (NSString *searchPath in _searchPaths)
     {
-        NSString *resolvedFilename = filename;
-        
-        CCFileMetaData *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
-        if (metaData)
-        {
-            resolvedFilename = [self resolveMetaData:metaData trace:trace].filename;
-        }
+        CCFileMetaData *metaData = [self metaDataForFileNamed:filename inSearchPath:searchPath];
+        NSString *resolvedFilename = metaData.localizedFilename ?: filename;
 
         CCFile *aFile = [self findFilename:resolvedFilename inSearchPath:searchPath options:options trace:trace];
-
         if (aFile)
         {
             if (metaData)
@@ -187,38 +222,6 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
             return aFile;
         }
     }
-    return nil;
-}
-
-- (CCFileResolvedMetaData *)resolveMetaData:(CCFileMetaData *)metaData trace:(BOOL)trace
-{
-    CCFileResolvedMetaData *fileLocatorResolvedMetaData = [[CCFileResolvedMetaData alloc] init];
-
-    NSString *localizedFileName = [self localizedFilenameWithMetaData:metaData trace:trace];
-
-    fileLocatorResolvedMetaData.filename = localizedFileName ?: metaData.filename;
-    fileLocatorResolvedMetaData.useUIScale = metaData.useUIScale;
-
-    return fileLocatorResolvedMetaData;
-}
-
-- (NSString *)localizedFilenameWithMetaData:(CCFileMetaData *)metaData trace:(BOOL)trace
-{
-    if (!metaData.localizations)
-    {
-        return nil;
-    }
-
-    for (NSString *languageID in [NSLocale preferredLanguages])
-    {
-        NSString *filenameForLanguageID = metaData.localizations[languageID];
-        if (filenameForLanguageID)
-        {
-            if(trace) CCLOG(@"Filename alias found:'%@' for languageID:'%@'", filenameForLanguageID, languageID);
-            return filenameForLanguageID;
-        }
-    }
-
     return nil;
 }
 

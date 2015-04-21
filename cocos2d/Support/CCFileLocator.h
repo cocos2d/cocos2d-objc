@@ -24,7 +24,7 @@
 #import "ccTypes.h"
 
 @class CCFile;
-@protocol CCFileLocatorDatabaseProtocol;
+@class CCFileMetaData;
 
 // CCFileLocator NSError code values.
 typedef NS_ENUM(NSInteger, CCFileLocatorError){
@@ -42,6 +42,43 @@ typedef NS_ENUM(NSInteger, CCFileLocatorError){
      */
     CCFileLocatorErrorNoFileFound = 20001,
 };
+
+
+/**
+ Meta data of a file describing certain details.
+ 
+ @since 4.0
+ */
+@interface CCFileMetaData : NSObject
+
+/**
+ The filename to be actually used. Spritebuilder is making use of this to alias filenames, like a wav file becoming an ogg file for Android platforms.
+ 
+ @since 4.0
+ */
+@property (nonatomic, copy) NSString *filename;
+
+/**
+ A dictionary containing a filename per languageID. Structure looks like this:
+ 
+ {
+    "es" : "path/to/file-es.exension",
+    "en" : "path/to/file-en.exension"
+ }
+ 
+ @since 4.0
+ */
+@property (nonatomic, copy) NSDictionary *localizations;
+
+/**
+ Whether an image should be scaled for UI purposes or not.
+ 
+ @since 4.0
+ */
+@property (nonatomic) BOOL useUIScale;
+
+@end
+
 
 /**
  Class to find assets in search paths taking localization and image content scales into account.
@@ -86,14 +123,6 @@ typedef NS_ENUM(NSInteger, CCFileLocatorError){
 @property (nonatomic, copy) NSArray *searchPaths;
 
 /**
- A database that can be queried for metadata and filepaths of an asset.
- Refer to the CCFileLocatorDatabaseProtocol for more details about the interface required.
- 
- @since 4.0
- */
-@property (nonatomic, strong) id <CCFileLocatorDatabaseProtocol> database;
-
-/**
  Base content scale for untagged, automatically resized assets.
  Required to be a power of two. Fully supported values: 4, 2 and 1
  
@@ -109,6 +138,18 @@ typedef NS_ENUM(NSInteger, CCFileLocatorError){
  @since 4.0
  */
 + (CCFileLocator *)sharedFileLocator;
+
+/**
+ Returns an instance of CCFileMetaData for a given filename and search path.
+ 
+ @param filename   The filename to search for. Note: filenames are the relative path to a search path including the filename, e.g. images/vehicles/car
+ @param searchPath A search path for the filename.
+ 
+ @return Metadata of the filename and search path pair.
+ 
+ @since 4.0
+ */
+- (CCFileMetaData  *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
 
 /**
  Returns an instance of CCFile if a file was found.

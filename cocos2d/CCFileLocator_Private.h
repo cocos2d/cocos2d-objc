@@ -29,6 +29,8 @@ extern NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE;
 
 @interface CCFileLocator()
 
+@property(nonatomic, strong) NSDictionary *metaDataDictionaries;
+
 - (CCFile *)fileNamed:(NSString *)filename options:(NSDictionary *)options error:(NSError **)error trace:(BOOL)trace;
 
 @end
