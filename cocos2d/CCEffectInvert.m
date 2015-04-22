@@ -26,7 +26,7 @@
     NSArray *renderPasses = [CCEffectInvertImplGL buildRenderPasses];
     NSArray *shaders = [CCEffectInvertImplGL buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.debugName = @"CCEffectInvertImplGL";
     }
@@ -75,7 +75,7 @@
 
 + (NSArray *)buildRenderPasses
 {
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectInvert pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){

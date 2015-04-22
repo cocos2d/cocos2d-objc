@@ -264,14 +264,20 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         }
         else
         {
-            renderPass = [[CCEffectRenderPass alloc] init];
-            renderPass.debugLabel = @"CCEffectRenderer composite pass";
-            renderPass.effectShader = [CCEffectRenderer sharedCopyShader];
-            renderPass.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+            NSArray *beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
                 
                 passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
                 passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
             }]];
+            
+            renderPass = [[CCEffectRenderPass alloc] initWithIndex:0
+                                                  texCoordsMapping:CCEffectTexCoordsMappingDefault
+                                                         blendMode:[CCBlendMode premultipliedAlphaMode]
+                                                       shaderIndex:0
+                                                      effectShader:[CCEffectRenderer sharedCopyShader]
+                                                       beginBlocks:beginBlocks
+                                                      updateBlocks:nil
+                                                        debugLabel:@"CCEffectRenderer composite pass"];
         }
         
         if (fromIntermediate && (renderPass.indexInEffect == 0))
@@ -292,8 +298,8 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         // - Later pass into intermediate RT : Pad vertices, overwrite texture coordiates so they are lower-left (0,0) upper right (1, 1), add padding to RT, adjust ortho matrix
         //
         
-        CCEffectTexCoordFunc tc1 = selectTexCoordFunc(renderPass.texCoord1Mapping, CCEffectTexCoordSource1, fromIntermediate, padMainTexCoords);
-        CCEffectTexCoordFunc tc2 = selectTexCoordFunc(renderPass.texCoord2Mapping, CCEffectTexCoordSource2, fromIntermediate, padMainTexCoords);
+        CCEffectTexCoordFunc tc1 = selectTexCoordFunc(renderPass.texCoordsMapping.tc1, CCEffectTexCoordSource1, fromIntermediate, padMainTexCoords);
+        CCEffectTexCoordFunc tc2 = selectTexCoordFunc(renderPass.texCoordsMapping.tc2, CCEffectTexCoordSource2, fromIntermediate, padMainTexCoords);
         
         renderPassInputs.verts = padVertices(sprite.vertexes, effect.padding, tc1, tc2);
         

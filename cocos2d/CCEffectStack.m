@@ -200,7 +200,7 @@
     }
     
     // Stitch the stitch lists and collect the resulting render passes and shaders.
-    NSMutableArray *outputPasses = [[NSMutableArray alloc] init];
+    NSMutableArray *outputPassDescriptors = [[NSMutableArray alloc] init];
     NSMutableArray *outputShaders = [[NSMutableArray alloc] init];
     for (int stitchListIndex = 0; stitchListIndex < stitchLists.count; stitchListIndex++)
     {
@@ -209,12 +209,12 @@
         NSString *prefix = [NSString stringWithFormat:@"SL%d_", stitchListIndex];
         CCEffectStitcher *stitcher = [CCEffectStitcher stitcherWithEffects:stitchList manglePrefix:prefix stitchListIndex:stitchListIndex shaderStartIndex:outputShaders.count];
         
-        [outputPasses addObjectsFromArray:stitcher.renderPasses];
+        [outputPassDescriptors addObjectsFromArray:stitcher.renderPassDescriptors];
         [outputShaders addObjectsFromArray:stitcher.shaders];
     }
     
     // Create a new effect implementation from all the collected passes and shaders.
-    return [[CCEffectImpl alloc] initWithRenderPasses:outputPasses shaders:outputShaders];
+    return [[CCEffectImpl alloc] initWithRenderPassDescriptors:outputPassDescriptors shaders:outputShaders];
 }
 
 @end

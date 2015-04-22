@@ -20,6 +20,16 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
     CCEffectTexCoordMapCustomTexNoTransform = 3
 };
 
+typedef struct CCEffectTexCoordsMapping
+{
+    CCEffectTexCoordMapping tc1;
+    CCEffectTexCoordMapping tc2;
+    
+} CCEffectTexCoordsMapping;
+
+static const CCEffectTexCoordsMapping CCEffectTexCoordsMappingDefault = { CCEffectTexCoordMapPreviousPassTex, CCEffectTexCoordMapCustomTex };
+
+
 
 @interface CCEffectRenderPassInputs : NSObject
 
@@ -47,12 +57,28 @@ typedef void (^CCEffectRenderPassBeginBlock)(CCEffectRenderPass *pass, CCEffectR
 typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
 
 
-@interface CCEffectRenderPassBeginBlockContext : NSObject
+@interface CCEffectRenderPassBeginBlockContext : NSObject <NSCopying>
 
-@property (nonatomic, copy) CCEffectRenderPassBeginBlock block;
-@property (nonatomic, strong) NSDictionary *uniformTranslationTable;
+@property (nonatomic, readonly) CCEffectRenderPassBeginBlock block;
+@property (nonatomic, readonly) NSDictionary *uniformTranslationTable;
 
+-(id)initWithBlock:(CCEffectRenderPassBeginBlock)block uniformTranslationTable:(NSDictionary *)utt;
 -(id)initWithBlock:(CCEffectRenderPassBeginBlock)block;
+
+@end
+
+
+@interface CCEffectRenderPassDescriptor : NSObject <NSCopying>
+
+@property (nonatomic, assign) NSUInteger shaderIndex;
+@property (nonatomic, assign) CCEffectTexCoordsMapping texCoordsMapping;
+@property (nonatomic, strong) CCBlendMode* blendMode;
+@property (nonatomic, copy) NSArray* beginBlocks;
+@property (nonatomic, copy) NSArray* updateBlocks;
+@property (nonatomic, copy) NSString *debugLabel;
+
+-(id)init;
++(instancetype)descriptor;
 
 @end
 
@@ -60,16 +86,22 @@ typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffect
 @interface CCEffectRenderPass : NSObject <NSCopying>
 
 @property (nonatomic, readonly) NSUInteger indexInEffect;
-@property (nonatomic, assign) NSUInteger shaderIndex;
-@property (nonatomic, assign) CCEffectTexCoordMapping texCoord1Mapping;
-@property (nonatomic, assign) CCEffectTexCoordMapping texCoord2Mapping;
-@property (nonatomic, strong) CCBlendMode* blendMode;
-@property (nonatomic, strong) CCEffectShader* effectShader;
-@property (nonatomic, copy) NSArray* beginBlocks;
-@property (nonatomic, copy) NSArray* updateBlocks;
-@property (nonatomic, copy) NSString *debugLabel;
+@property (nonatomic, readonly) CCEffectTexCoordsMapping texCoordsMapping;
+@property (nonatomic, readonly) CCBlendMode *blendMode;
+@property (nonatomic, readonly) NSUInteger shaderIndex;
+@property (nonatomic, readonly) CCEffectShader *effectShader;
+@property (nonatomic, readonly) NSArray *beginBlocks;
+@property (nonatomic, readonly) NSArray *updateBlocks;
+@property (nonatomic, readonly) NSString *debugLabel;
 
--(id)initWithIndex:(NSUInteger)indexInEffect;
+-(id)initWithIndex:(NSUInteger)indexInEffect
+  texCoordsMapping:(CCEffectTexCoordsMapping)texCoordsMapping
+         blendMode:(CCBlendMode *)blendMode
+       shaderIndex:(NSUInteger)shaderIndex
+      effectShader:(CCEffectShader *)effectShader
+       beginBlocks:(NSArray *)beginBlocks
+      updateBlocks:(NSArray *)updateBlocks
+        debugLabel:(NSString *)debugLabel;
 
 -(void)begin:(CCEffectRenderPassInputs *)passInputs;
 -(void)update:(CCEffectRenderPassInputs *)passInputs;

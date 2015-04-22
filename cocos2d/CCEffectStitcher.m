@@ -23,7 +23,7 @@
 }
 
 
-- (NSArray *)renderPasses
+- (NSArray *)renderPassDescriptors
 {
     NSAssert(0, @"Subclasses must override this.");
     return nil;

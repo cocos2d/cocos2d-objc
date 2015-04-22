@@ -33,7 +33,7 @@ static GLKMatrix4 matrixWithHue(float hue);
     NSArray *renderPasses = [CCEffectHueImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders = [CCEffectHueImplGL buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectHueImplGL";
@@ -84,7 +84,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     __weak CCEffectHue *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectHue pass 0";
     pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 

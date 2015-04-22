@@ -115,7 +115,7 @@
     NSArray *renderPasses = [CCEffectDropShadowImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
     
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDropShadowImplGL";        
@@ -279,7 +279,7 @@
     
     __weak CCEffectDropShadow *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectDropShadow pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
@@ -294,7 +294,7 @@
     }]];
 
     
-    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass1 = [CCEffectRenderPassDescriptor descriptor];
     pass1.debugLabel = @"CCEffectDropShadow pass 1";
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
@@ -306,7 +306,7 @@
         
     }]];
     
-    CCEffectRenderPass *pass3 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass3 = [CCEffectRenderPassDescriptor descriptor];
     pass3.debugLabel = @"CCEffectDropShadow pass 3";
     pass3.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass3.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){

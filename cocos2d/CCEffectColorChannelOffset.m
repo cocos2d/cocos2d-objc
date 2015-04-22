@@ -30,7 +30,7 @@
     NSArray *renderPasses = [CCEffectColorChannelOffsetImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders = [CCEffectColorChannelOffsetImplGL buildShaders];
 
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectColorChannelOffsetImplGL";
@@ -100,7 +100,7 @@
 {
     __weak CCEffectColorChannelOffset *weakInterface = interface;
     
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectColorChannelOffset pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){

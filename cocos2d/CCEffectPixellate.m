@@ -66,7 +66,7 @@ static float conditionBlockSize(float blockSize);
     NSArray *renderPasses = [CCEffectPixellateImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders = [CCEffectPixellateImplGL buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectPixellateImplGL";
@@ -121,7 +121,7 @@ static float conditionBlockSize(float blockSize);
 {
     __weak CCEffectPixellate *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectPixellate pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
