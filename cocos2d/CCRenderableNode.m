@@ -135,8 +135,24 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 		_renderState = nil;
 		
 		// Set the main texture in the uniforms dictionary (if the dictionary exists).
-		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);
+		_shaderUniforms[CCShaderUniformMainTexture] = (texture ?: [CCTexture none]);
 	}
+}
+
+-(CCTexture *)secondaryTexture
+{
+    return _secondaryTexture;
+}
+
+-(void)setSecondaryTexture:(CCTexture *)texture
+{
+    if(_secondaryTexture != texture){
+        _secondaryTexture = texture;
+        _renderState = nil;
+        
+		// Set the secondary texture in the uniforms dictionary (if the dictionary exists).
+		_shaderUniforms[CCShaderUniformSecondaryTexture] = (texture ?: [CCTexture none]);
+    }
 }
 
 @end

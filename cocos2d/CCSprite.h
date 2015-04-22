@@ -240,9 +240,9 @@ typedef struct CCSpriteTexCoordSet {
  @see CCSpriteFrame */
 @property (nonatomic,strong) CCSpriteFrame* spriteFrame;
 
-/** The current normal map spriteFrame.
+/** The secondary spriteFrame used by effect shaders. (Ex: Custom shaders or normal mapping)
  @see CCSpriteFrame */
-@property (nonatomic,strong) CCSpriteFrame* normalMapSpriteFrame;
+@property (nonatomic,strong) CCSpriteFrame* spriteFrame2;
 
 /// -----------------------------------------------------------------------
 /// @name Working with the Sprite's Texture

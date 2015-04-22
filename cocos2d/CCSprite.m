@@ -199,7 +199,7 @@
 -(void)dealloc
 {
     [_spriteFrame release]; _spriteFrame = nil;
-    [_normalMapSpriteFrame release]; _normalMapSpriteFrame = nil;
+    [_spriteFrame2 release]; _spriteFrame2 = nil;
     [_effect release]; _effect = nil;
     [_effectRenderer release]; _effectRenderer = nil;
     
@@ -490,29 +490,25 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 {
 	_unflippedOffsetPositionFromCenter = frame.trimOffset;
 
-	CCTexture *newTexture = [frame texture];
-	// update texture before updating texture rect
-	if(newTexture != self.texture){
-		[self setTexture: newTexture];
-	}
-
-	// update rect
+    self.texture = frame.texture;
 	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.untrimmedSize];
     
     [_spriteFrame autorelease];
     _spriteFrame = [frame retain];
 }
 
--(void) setNormalMapSpriteFrame:(CCSpriteFrame*)frame
+-(void) setSpriteFrame2:(CCSpriteFrame *)frame
 {
     if (!self.texture)
     {
+        #warning TODO Thayer wanted to fix this up somehow?
         // If there is no texture set on the sprite, set the sprite's texture rect from the
-        // normal map's sprite frame. Note that setting the main texture, then the normal map,
+        // secondary sprite frame. Note that setting the main texture, then the normal map,
         // and then removing the main texture will leave the texture rect from the main texture.
         [self setTextureRect:frame.rect forTexture:frame.texture rotated:frame.rotated untrimmedSize:frame.untrimmedSize];
     }
-
+    
+    self.secondaryTexture = frame.texture;
     // Set the second texture coordinate set from the normal map's sprite frame.
     CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:frame.texture withRect:frame.rect rotated:frame.rotated xFlipped:_flipX yFlipped:_flipY];
     _verts.bl.texCoord2 = texCoords.bl;
@@ -520,13 +516,8 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
     _verts.tr.texCoord2 = texCoords.tr;
     _verts.tl.texCoord2 = texCoords.tl;
     
-    // Set the normal map texture in the uniforms dictionary (if the dictionary exists).
-    self.shaderUniforms[CCShaderUniformNormalMapTexture] = (frame.texture ?: [CCTexture none]);
-    [_renderState release];
-    _renderState = nil;
-    
-    [_normalMapSpriteFrame autorelease];
-    _normalMapSpriteFrame = [frame retain];
+    [_spriteFrame2 autorelease];
+    _spriteFrame2 = [frame retain];
 }
 
 
@@ -551,7 +542,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
     // normal map if it has them.
     [_shaderUniforms release];
     _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
-                          CCShaderUniformNormalMapTexture : (_normalMapSpriteFrame.texture ?: [CCTexture none]),
+                          CCShaderUniformSecondaryTexture : (_secondaryTexture ?: [CCTexture none]),
                           } mutableCopy];
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.

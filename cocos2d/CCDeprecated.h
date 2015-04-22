@@ -30,6 +30,7 @@
 #import "CCTexture.h"
 #import "CCSpriteFrame.h"
 #import "CCAction.h"
+#import "CCSprite.h"
 
 
 /** RGB color composed of bytes 3 bytes
@@ -453,6 +454,14 @@ enum {
 @interface CCAction(Deprecated)
 
 @property (nonatomic, readwrite, assign) NSInteger tag;
+
+@end
+
+
+@interface CCSprite(Deprecated)
+
+// Use CCSprite.spriteFrame2 instead.
+@property (nonatomic, strong) CCSpriteFrame* normalMapSpriteFrame;
 
 @end
 

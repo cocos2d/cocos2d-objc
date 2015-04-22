@@ -146,11 +146,21 @@ extern NSString * const CCBlendEquationAlpha;
 /// Creates a **cached** blending mode for a given blending mode, shader and main texture.
 /// @param blendMode A blend mode.
 /// @param shader The shader to use.
-/// @param mainTexture The mainTexture to use.
+/// @param mainTexture The main texture to use.
 /// @see CCBlendMode
 /// @see CCShader
 /// @see CCTexture
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
+
+/// Creates a **cached** blending mode for a given blending mode, shader and main texture.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param mainTexture The main texture to use.
+/// @param secondaryTexture The secondary texture to use.
+/// @see CCBlendMode
+/// @see CCShader
+/// @see CCTexture
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture secondaryTexture:(CCTexture *)secondaryTexture;
 
 /// Creates an **uncached** blending mode for a given blending mode, shader and set of uniform values.
 /// Allowing the uniform dictionary to be copied allows the render state to be immutable, which is more efficient.

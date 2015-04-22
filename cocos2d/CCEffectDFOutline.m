@@ -88,7 +88,7 @@
                                    if(u_fillColor.a == 0.0)
                                        outputColor = texture2D(cc_MainTexture, cc_FragTexCoord1);
                                    
-                                   float distAlphaMask = texture2D(cc_NormalMapTexture, cc_FragTexCoord1).r;
+                                   float distAlphaMask = texture2D(cc_SecondaryTexture, cc_FragTexCoord1).r;
                                    
                                    float center = 0.5;
                                    float transition = fwidth(distAlphaMask) * 1.0;
@@ -109,7 +109,7 @@
                                        return outputColor;
                                    }
                                    
-                                   vec4 glowTexel = texture2D(cc_NormalMapTexture, cc_FragTexCoord1);
+                                   vec4 glowTexel = texture2D(cc_SecondaryTexture, cc_FragTexCoord1);
                                    
                                    vec4 glowc = u_outlineColor * smoothstep(min, max, glowTexel.r);
                                    

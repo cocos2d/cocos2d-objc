@@ -42,6 +42,7 @@
 	
 	CCBlendMode *_blendMode;
 	CCTexture *_texture;
+    CCTexture *_secondaryTexture;
 }
 
 @end

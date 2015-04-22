@@ -162,7 +162,7 @@ static float conditionShininess(float shininess);
     {
         [effectBody appendString:CC_GLSL(
                                          // Index the normal map and expand the color value from [0..1] to [-1..1]
-                                         vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
+                                         vec4 normalMap = texture2D(cc_SecondaryTexture, cc_FragTexCoord2);
                                          vec3 tangentSpaceNormal = normalize(normalMap.xyz * 2.0 - 1.0);
                                          
                                          // Convert the normal vector from tangent space to world space
@@ -407,7 +407,7 @@ static float conditionShininess(float shininess);
 {
     CCEffectPrepareResult result = CCEffectPrepareNoop;
 
-    _needsNormalMap = (sprite.normalMapSpriteFrame != nil);
+    _needsNormalMap = (sprite.spriteFrame2 != nil);
     
     GLKMatrix4 spriteTransform = sprite.nodeToWorldMatrix;
     CGPoint spritePosition = CGPointApplyGLKMatrix4(sprite.anchorPointInPoints, sprite.nodeToWorldMatrix);

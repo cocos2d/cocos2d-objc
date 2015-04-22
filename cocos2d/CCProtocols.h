@@ -98,6 +98,9 @@
 /// The main texture that will be passed to this node's shader.
 @property(nonatomic, strong) CCTexture *texture;
 
+/// The secondary texture that will be passed to this node's shader.
+@property(nonatomic, strong) CCTexture *secondaryTexture;
+
 /// The rendering state this node will use when rendering.
 @property(nonatomic, readonly, strong) CCRenderState *renderState;
 

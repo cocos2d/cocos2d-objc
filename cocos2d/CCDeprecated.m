@@ -262,6 +262,21 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 @end
 
 
+@implementation CCSprite(Deprecated)
+
+-(CCSpriteFrame *)normalMapSpriteFrame
+{
+    return self.spriteFrame2;
+}
+
+-(void)setNormalMapSpriteFrame:(CCSpriteFrame *)normalMapSpriteFrame
+{
+    self.spriteFrame2 = normalMapSpriteFrame;
+}
+
+@end
+
+
 BOOL
 CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
 {

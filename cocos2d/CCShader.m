@@ -49,7 +49,7 @@ NSString * const CCShaderUniformSinTime = @"cc_SinTime";
 NSString * const CCShaderUniformCosTime = @"cc_CosTime";
 NSString * const CCShaderUniformRandom01 = @"cc_Random01";
 NSString * const CCShaderUniformMainTexture = @"cc_MainTexture";
-NSString * const CCShaderUniformNormalMapTexture = @"cc_NormalMapTexture";
+NSString * const CCShaderUniformSecondaryTexture = @"cc_SecondaryTexture";
 NSString * const CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 
 
@@ -75,7 +75,7 @@ static NSString *CCShaderHeader =
 	@"uniform highp vec4 cc_CosTime;\n"
 	@"uniform highp vec4 cc_Random01;\n\n"
 	@"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
-	@"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_NormalMapTexture;\n\n"
+	@"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_SecondaryTexture;\n\n"
 	@"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
 	@"varying highp vec2 cc_FragTexCoord1;\n"
 	@"varying highp vec2 cc_FragTexCoord2;\n\n"

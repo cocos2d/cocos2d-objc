@@ -87,7 +87,7 @@
                                    const float EPSILON = 0.000001;
 
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
-                                   vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
+                                   vec4 normalMap = texture2D(cc_SecondaryTexture, cc_FragTexCoord2);
                                    vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
                                    
                                    // Convert the normal vector from tangent space to environment space
@@ -183,7 +183,7 @@
 
         if (weakInterface.normalMap)
         {
-            passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakInterface.normalMap.texture;
+            passInputs.shaderUniforms[CCShaderUniformSecondaryTexture] = weakInterface.normalMap.texture;
             
             CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakInterface.normalMap.texture withRect:weakInterface.normalMap.rect rotated:weakInterface.normalMap.rotated xFlipped:NO yFlipped:NO];
             CCSpriteVertexes verts = passInputs.verts;

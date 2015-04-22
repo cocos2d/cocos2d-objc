@@ -60,7 +60,7 @@ extern NSString * const CCShaderUniformSinTime;
 extern NSString * const CCShaderUniformCosTime;
 extern NSString * const CCShaderUniformRandom01;
 extern NSString * const CCShaderUniformMainTexture;
-extern NSString * const CCShaderUniformNormalMapTexture;
+extern NSString * const CCShaderUniformSecondaryTexture;
 extern NSString * const CCShaderUniformAlphaTestValue;
 
 

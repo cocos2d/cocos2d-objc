@@ -218,14 +218,16 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 	__unsafe_unretained CCBlendMode *_blendMode;
 	__unsafe_unretained CCShader *_shader;
 	__unsafe_unretained CCTexture *_mainTexture;
+	__unsafe_unretained CCTexture *_secondaryTexture;
 }
 
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture secondaryTexture:(CCTexture *)secondaryTexture
 {
 	if((self = [super init])){
 		_blendMode = blendMode;
 		_shader = shader;
 		_mainTexture = mainTexture;
+		_secondaryTexture = secondaryTexture;
 	}
 	
 	return self;
@@ -245,7 +247,8 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 		[other isKindOfClass:[CCRenderStateCacheKey class]] &&
 		_blendMode == other->_blendMode &&
 		_shader == other->_shader &&
-		_mainTexture == other->_mainTexture
+		_mainTexture == other->_mainTexture &&
+		_secondaryTexture == other->_secondaryTexture
 	);
 }
 
@@ -271,8 +274,13 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 -(id)createPublicObjectForSharedData:(CCRenderStateCacheKey *)key
 {
+    NSDictionary *uniforms = @{
+        CCShaderUniformMainTexture: key->_mainTexture,
+        CCShaderUniformSecondaryTexture: key->_secondaryTexture,
+    };
+    
 	// Although the key ivars are unretained, this method is only ever called when a key has been freshly constructed using strong references to the necessary objects.
-	return [CCRenderStateClass renderStateWithBlendMode:key->_blendMode shader:key->_shader shaderUniforms:@{CCShaderUniformMainTexture:key->_mainTexture} copyUniforms:YES];
+	return [CCRenderStateClass renderStateWithBlendMode:key->_blendMode shader:key->_shader shaderUniforms:uniforms copyUniforms:YES];
 }
 
 // Nothing special
@@ -337,12 +345,22 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 {
+    return [self renderStateWithBlendMode:blendMode shader:shader mainTexture:mainTexture secondaryTexture:[CCTexture none]];
+}
+
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture secondaryTexture:(CCTexture *)secondaryTexture;
+{
 	if(mainTexture == nil){
 		CCLOGWARN(@"nil Texture passed to CCRenderState");
 		mainTexture = [CCTexture none];
 	}
 	
-    CCRenderStateCacheKey *key = [[CCRenderStateCacheKey alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture];
+	if(secondaryTexture == nil){
+		CCLOGWARN(@"nil Texture passed to CCRenderState");
+		secondaryTexture = [CCTexture none];
+	}
+	
+    CCRenderStateCacheKey *key = [[CCRenderStateCacheKey alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture secondaryTexture:secondaryTexture];
     CCRenderState *renderState = [CCRENDERSTATE_CACHE objectForKey:key];
     [key release];
     
