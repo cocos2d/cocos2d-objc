@@ -10,10 +10,9 @@
 #import <OCMock/OCMock.h>
 #import "CCFile.h"
 #import "CCFile_Private.h"
-#import "CCFileLocator.h"
+#import "CCFileLocator_Private.h"
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
-#import "CCFileLocatorDatabase.h"
 #import "CCSetup.h"
 
 @interface CCFileLocatorTests : FileSystemTestCase
@@ -56,25 +55,23 @@
 
 - (void)testFileNamedWithLocalizedTextFileInDatabase
 {
-    NSString *jsonResources = MULTILINESTRING(
-        {
-            "data" : {
-                "dialogs/merchants.txt" : {
-                    "localizations" : {
-                        "es" : "dialogs/merchants-es.txt"
-                    },
-                    "filename" : "dialogs/merchants.txt"
-                }
+    id metadata = @{
+        @"data": @{
+            @"dialogs/merchants.txt": @{
+                @"localizations": @{
+                    @"es": @"dialogs/merchants-es.txt"
+                },
+                @"filename": @"dialogs/merchants.txt"
             }
         }
-    );
+    };
 
     [self createEmptyFilesRelativeToDirectory:@"Resources/dialogs" files:@[
             @"merchants.txt",
             @"merchants-es.txt"
     ]];
 
-    [self addDatabaseWithJSON:jsonResources forSearchPath:[self fullPathForFile:@"Resources"]];
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
 
     [self mockPreferredLanguages:@[@"es"]];
 
@@ -91,40 +88,36 @@
 
 - (void)testImageNamedLocalizationAddedInDLCPackage
 {
-    NSString *jsonResources = MULTILINESTRING(
-        {
-            "data" : {
-                "images/horse.png" : {
-                    "filename" : "images/mule.png"
-                }
+    id metadataResources = @{
+        @"data": @{
+            @"images/horse.png": @{
+                @"filename": @"images/mule.png"
             }
         }
-    );
+    };
 
-    NSString *jsonPackage = MULTILINESTRING(
-        {
-            "data" : {
-                "images/horse.png" : {
-                    "localizations" : {
-                        "es" : "images/mule-es.png"
-                    },
-                    "filename" : "images/mule.png"
-                }
+    id metadataPackage = @{
+        @"data": @{
+            @"images/horse.png": @{
+                @"localizations": @{
+                    @"es": @"images/mule-es.png"
+                },
+                @"filename": @"images/mule.png"
             }
         }
-    );
+    };
 
     [self createEmptyFiles:@[
             @"Resources/images/mule.png",
             @"Packages/localizations.sbpack/images/mule-es.png",
     ]];
 
+    [self addDatabaseWithPlist:metadataResources forSearchPath:[self fullPathForFile:@"Resources"]];
+    [self addDatabaseWithPlist:metadataPackage forSearchPath:[self fullPathForFile:@"Packages/localizations.sbpack"]];
+
     // This order is significant, otherwise filename of the json db is returned as a fallback since no localization
     // exists in the Resources json
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Packages/localizations.sbpack"], [self fullPathForFile:@"Resources"]];
-
-    [self addDatabaseWithJSON:jsonResources forSearchPath:[self fullPathForFile:@"Resources"]];
-    [self addDatabaseWithJSON:jsonPackage forSearchPath:[self fullPathForFile:@"Packages/localizations.sbpack"]];
 
     [self mockPreferredLanguages:@[@"es"]];
 
@@ -139,35 +132,33 @@
 
 - (void)testImageNamedMultipleDatabasesAndSearchPaths
 {
-    NSString *jsonA = MULTILINESTRING(
-        {
-            "data" : {
-                "images/horse.png" : {
-                    "filename" : "images/mule.png"
-                }
+    id metadataResources = @{
+        @"data": @{
+            @"images/horse.png": @{
+                @"filename": @"images/mule.png"
             }
         }
-    );
+    };
 
-    NSString *jsonB = MULTILINESTRING(
-        {
-            "data" : {
-                "images/bicycle.png" : {
-                    "filename" : "images/unicycle.png"
-                }
+    id metadataPackage = @{
+        @"data": @{
+            @"images/bicycle.png": @{
+                @"filename": @"images/unicycle.png"
             }
         }
-    );
+    };
 
     [self createEmptyFiles:@[
             @"Resources/images/mule.png",
             @"Packages/Superpackage.sbpack/images/unicycle.png",
     ]];
 
+    // Reset the search paths.
+    _fileLocator.searchPaths = @[];
+    
+    [self addDatabaseWithPlist:metadataResources forSearchPath:[self fullPathForFile:@"Resources"]];
+    [self addDatabaseWithPlist:metadataPackage forSearchPath:[self fullPathForFile:@"Packages/Superpackage.sbpack"]];
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"], [self fullPathForFile:@"Packages/Superpackage.sbpack"]];
-
-    [self addDatabaseWithJSON:jsonA forSearchPath:[self fullPathForFile:@"Resources"]];
-    [self addDatabaseWithJSON:jsonB forSearchPath:[self fullPathForFile:@"Packages/Superpackage.sbpack"]];
 
     [CCSetup sharedSetup].assetScale = 4;
     _fileLocator.untaggedContentScale = 4;
@@ -184,17 +175,20 @@
 
 - (void)testImageNamedMetaDataWithDatabase
 {
-    NSString *json = MULTILINESTRING(
-        {
-            "data" : {
-                "images/foo.png" : {
-                    "UIScale" : true,
-                    "filename" : "images/foo.png",
-                }
+    id metadata = @{
+        @"data": @{
+            @"images/foo.png": @{
+                @"UIScale": @(YES),
+                @"filename": @"images/foo.png",
             }
         }
-    );
-    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+    };
+    
+    // Reset the search paths.
+    _fileLocator.searchPaths = @[];
+    
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
+    _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
 
     [self createPNGsInDir:@"Resources/images" name:@"foo" scales:@[@"default"]];
 
@@ -206,20 +200,24 @@
 
 - (void)testImageNamedLocalizationSearchOrderForResolutionsWithDatabase
 {
-    NSString *json = MULTILINESTRING(
-        {
-            "data" : {
-                "images/foo.png" : {
-                    "localizations" : {
-                        "en" : "images/foo-en.png",
-                        "de" : "images/foo-de.png"
-                    },
-                    "filename" : "images/foo-en.png"
-                }
+    id metadata = @{
+        @"data": @{
+            @"images/foo.png": @{
+                @"localizations" : @{
+                    @"en": @"images/foo-en.png",
+                    @"de": @"images/foo-de.png"
+                },
+                @"filename": @"images/foo-en.png"
             }
         }
-    );
-    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+    };
+    
+    // Reset the search paths.
+    _fileLocator.searchPaths = @[];
+    
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
+    _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
+    
     [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
             @"foo-en.png",
             @"foo-en-1x.png",
@@ -243,19 +241,23 @@
 
 - (void)testImageNamedNoLocalizedImageAvailableWithDatabase
 {
-    NSString *json = MULTILINESTRING(
-        {
-            "data" : {
-                "images/foo.png" : {
-                    "localizations" : {
-                        "en" : "images/shouldnotbereturned.png"
-                    },
-                    "filename" : "images/fallback.png"
-                }
+    id metadata = @{
+        @"data": @{
+            @"images/foo.png": @{
+                @"localizations": @{
+                    @"en": @"images/shouldnotbereturned.png"
+                },
+                @"filename": @"images/fallback.png"
             }
         }
-    );
-    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+    };
+    
+    // Reset the search paths.
+    _fileLocator.searchPaths = @[];
+    
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
+    _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
+    
     [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
         @"shouldnotbereturned.png",
         @"fallback.png",
@@ -271,20 +273,24 @@
 
 - (void)testImageNamedLocalizationWithDatabase
 {
-    NSString *json = MULTILINESTRING(
-        {
-            "data" : {
-                "images/foo.png" : {
-                    "localizations" : {
-                        "en" : "images/foo-en.png",
-                        "de" : "images/foo-de.png"
-                    },
-                    "filename" : "images/foo-en.png"
-                }
+    id metadata = @{
+        @"data": @{
+            @"images/foo.png": @{
+                @"localizations": @{
+                    @"en": @"images/foo-en.png",
+                    @"de": @"images/foo-de.png"
+                },
+                @"filename": @"images/foo-en.png"
             }
         }
-    );
-    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+    };
+    
+    // Reset the search paths.
+    _fileLocator.searchPaths = @[];
+    
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
+    _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
+    
     [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
             @"foo-en.png",
             @"foo-de.png",
@@ -303,19 +309,18 @@
 
 - (void)testImageNamedLocalizationAvailableButImageIsMissing
 {
-    NSString *json = MULTILINESTRING(
-        {
-            "data" : {
-                "images/foo.png" : {
-                    "localizations" : {
-                        "en" : "images/missing.png",
-                    },
-                    "filename" : "images/shouldnotbereturned.png"
-                }
+    id metadata = @{
+        @"data": @{
+            @"images/foo.png": @{
+                @"localizations": @{
+                    @"en": @"images/missing.png",
+                },
+                @"filename": @"images/shouldnotbereturned.png"
             }
         }
-    );
-    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+    };
+
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
 
     [self mockPreferredLanguages:@[@"en"]];
 
@@ -327,16 +332,20 @@
 
 - (void)testImageNamedAliasingWithDatabase
 {
-    NSString *json = MULTILINESTRING(
-        {
-            "data" : {
-                "images/foo.png" : {
-                    "filename" : "images/baa.jpg"
-                }
+    id metadata = @{
+        @"data": @{
+            @"images/foo.png": @{
+                @"filename": @"images/baa.jpg"
             }
         }
-    );
-    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+    };
+    
+    // Reset the search paths.
+    _fileLocator.searchPaths = @[];
+    
+    [self addDatabaseWithPlist:metadata forSearchPath:[self fullPathForFile:@"Resources"]];
+    _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
+    
     [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
             @"baa-4x.jpg",
             @"baa.jpg",
@@ -363,8 +372,9 @@
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"Hero.png" error:&error];
-
-    [self assertSuccessForFile:file filePath:@"Resources/Hero.png" contentScale:4.0 error:error];
+    
+    // Files have no content scale (1.0), when skipping the resolution search.
+    [self assertSuccessForFile:file filePath:@"Resources/Hero.png" contentScale:1.0 error:error];
 };
 
 
@@ -644,16 +654,12 @@
     XCTAssertNil(file);
 }
 
-- (void)addDatabaseWithJSON:(NSString *)json forSearchPath:(NSString *)searchPath
+- (void)addDatabaseWithPlist:(id)plist forSearchPath:(NSString *)searchPath
 {
-    [self createFilesWithContents:@{[searchPath stringByAppendingPathComponent:@"filedb.json"] : [json dataUsingEncoding:NSUTF8StringEncoding]}];
-
-    if (!_fileLocator.database)
-    {
-        _fileLocator.database = [[CCFileLocatorDatabase alloc] init];
-    }
-
-    [(CCFileLocatorDatabase *) _fileLocator.database addJSONWithFilePath:@"filedb.json" forSearchPath:searchPath error:NULL];
+    NSData *data = [NSPropertyListSerialization dataFromPropertyList:plist format:NSPropertyListXMLFormat_v1_0 errorDescription:nil];
+    NSString *filename = [searchPath stringByAppendingPathComponent:@"metadata.plist"];
+    
+    [self createFilesWithContents:@{filename: data}];
 }
 
 - (void)mockPreferredLanguages:(NSArray *)preferredLanguages

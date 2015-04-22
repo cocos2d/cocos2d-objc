@@ -7,14 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "CCFileLocatorDatabase.h"
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
-#import "CCFileMetaData.h"
+#import "CCFileLocator.h"
 
 @interface CCFileLocatorDatabaseTests : FileSystemTestCase
 
-@property (nonatomic, strong) CCFileLocatorDatabase *fileLocatorDB;
 @property (nonatomic, copy) NSString *searchPath;
 @property (nonatomic, copy) NSString *dbPath;
 
@@ -26,73 +24,46 @@
 {
     [super setUp];
 
-    NSString *json = MULTILINESTRING(
-        {
-            "version" : 1,
-            "data" : {
-                "images/foo.png" : {
-                    "UIScale" : true,
-                    "filename" : "images/foo.jpg",
-                    "localizations" : {
-                        "en" : "images/foo-en.jpg"
-                    }
+    id metadata = @{
+        @"version": @(1),
+        @"data": @{
+            @"images/foo.png": @{
+                @"UIScale": @(YES),
+                @"filename": @"images/foo.jpg",
+                @"localizations": @{
+                    @"en": @"images/foo-en.jpg"
                 }
             }
         }
-    );
+    };
 
     self.searchPath = [self fullPathForFile:@"Resources"];
-    self.dbPath = @"config/filedb.json";
+    self.dbPath = @"metadata.plist";
 
-    [self createFilesWithContents:@{@"Resources/config/filedb.json" : [json dataUsingEncoding:NSUTF8StringEncoding]}];
-
-    self.fileLocatorDB = [[CCFileLocatorDatabase alloc] init];
+    [self createFilesWithContents:@{@"Resources/metadata.plist": [NSPropertyListSerialization dataFromPropertyList:metadata format:NSPropertyListXMLFormat_v1_0 errorDescription:nil]}];
 }
 
 - (void)testAddDatabaseWithFilePathInSearchPath
 {
-    NSError *error;
-    XCTAssertTrue([_fileLocatorDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
-
-    CCFileMetaData *metaData = [_fileLocatorDB metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
+    CCFileLocator *locator = [[CCFileLocator alloc] init];
+    locator.searchPaths = @[_searchPath];
+    
+    CCFileMetaData *metaData = [locator metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
 
     XCTAssertNotNil(metaData);
-    XCTAssertNil(error);
     XCTAssertEqualObjects(metaData.filename, @"images/foo.jpg");
     XCTAssertEqualObjects(metaData.localizations, @{@"en" : @"images/foo-en.jpg"});
 };
 
 - (void)testRemoveDatabaseWithFilePathInSearchPath
 {
-    XCTAssertTrue([_fileLocatorDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:NULL]);
-
-    [_fileLocatorDB removeEntriesForSearchPath:[self fullPathForFile:@"Resources"]];
-
-    CCFileMetaData *metaData = [_fileLocatorDB metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
+    CCFileLocator *locator = [[CCFileLocator alloc] init];
+    locator.searchPaths = @[[self fullPathForFile:@"Resources"]];
+    locator.searchPaths = @[];
+    
+    CCFileMetaData *metaData = [locator metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
 
     XCTAssertNil(metaData);
-}
-
-- (void)testAddDataBaseWithCorruptJSON
-{
-    NSString *json = MULTILINESTRING(
-        {
-            []  asdasdasd {}
-        };
-    );
-
-    [self createFilesWithContents:@{@"Resources/config/filedb.json" : [json dataUsingEncoding:NSUTF8StringEncoding]}];
-
-    NSError *error;
-    XCTAssertFalse([_fileLocatorDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
-    XCTAssertNotNil(error);
-}
-
-- (void)testAddDataBaseWithNonExistingDatabaseFile
-{
-    NSError *error;
-    XCTAssertFalse([_fileLocatorDB addJSONWithFilePath:@"/adasdasd/ddddd.json" forSearchPath:_searchPath error:&error]);
-    XCTAssertNotNil(error);
 }
 
 @end
