@@ -22,11 +22,11 @@
 @end
 
 
-#pragma mark CCEffectRenderPassBeginBlockContext
+#pragma mark CCEffectBeginBlockContext
 
-@implementation CCEffectRenderPassBeginBlockContext
+@implementation CCEffectBeginBlockContext
 
--(id)initWithBlock:(CCEffectRenderPassBeginBlock)block uniformTranslationTable:(NSDictionary *)utt
+-(id)initWithBlock:(CCEffectBeginBlock)block uniformTranslationTable:(NSDictionary *)utt
 {
     if (self = [super init])
     {
@@ -36,14 +36,14 @@
     return self;
 }
 
--(id)initWithBlock:(CCEffectRenderPassBeginBlock)block
+-(id)initWithBlock:(CCEffectBeginBlock)block
 {
     return [self initWithBlock:block uniformTranslationTable:nil];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    // CCEffectRenderPassBeginBlockContext is immutable so no need to really copy.
+    // CCEffectBeginBlockContext is immutable so no need to really copy.
     return self;
 }
 
@@ -116,7 +116,7 @@
         }
         else
         {
-            CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+            CCEffectUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
                 if (passInputs.needsClear)
                 {
                     [passInputs.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
@@ -142,7 +142,7 @@
 
 -(void)begin:(CCEffectRenderPassInputs *)passInputs
 {
-    for (CCEffectRenderPassBeginBlockContext *blockContext in _beginBlocks)
+    for (CCEffectBeginBlockContext *blockContext in _beginBlocks)
     {
         passInputs.uniformTranslationTable = blockContext.uniformTranslationTable;
         blockContext.block(self, passInputs);
@@ -151,7 +151,7 @@
 
 -(void)update:(CCEffectRenderPassInputs *)passInputs
 {
-    for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
+    for (CCEffectUpdateBlock block in _updateBlocks)
     {
         block(self, passInputs);
     }

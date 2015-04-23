@@ -53,17 +53,17 @@ static const CCEffectTexCoordsMapping CCEffectTexCoordsMappingDefault = { CCEffe
 
 @class CCEffectRenderPass;
 
-typedef void (^CCEffectRenderPassBeginBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
-typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
+typedef void (^CCEffectBeginBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
+typedef void (^CCEffectUpdateBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
 
 
-@interface CCEffectRenderPassBeginBlockContext : NSObject <NSCopying>
+@interface CCEffectBeginBlockContext : NSObject <NSCopying>
 
-@property (nonatomic, readonly) CCEffectRenderPassBeginBlock block;
+@property (nonatomic, readonly) CCEffectBeginBlock block;
 @property (nonatomic, readonly) NSDictionary *uniformTranslationTable;
 
--(id)initWithBlock:(CCEffectRenderPassBeginBlock)block uniformTranslationTable:(NSDictionary *)utt;
--(id)initWithBlock:(CCEffectRenderPassBeginBlock)block;
+-(id)initWithBlock:(CCEffectBeginBlock)block uniformTranslationTable:(NSDictionary *)utt;
+-(id)initWithBlock:(CCEffectBeginBlock)block;
 
 @end
 

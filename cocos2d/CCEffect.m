@@ -62,11 +62,11 @@ const CCEffectPrepareResult CCEffectPrepareNoop     = { CCEffectPrepareSuccess, 
             
             // If a uniform translation table is not set already, set it to the default.
             NSMutableArray *beginBlocks = [NSMutableArray array];
-            for (CCEffectRenderPassBeginBlockContext *blockContext in passDescriptor.beginBlocks)
+            for (CCEffectBeginBlockContext *blockContext in passDescriptor.beginBlocks)
             {
                 if (!blockContext.uniformTranslationTable)
                 {
-                    [beginBlocks addObject:[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[passDescriptor.shaderIndex]]];
+                    [beginBlocks addObject:[[CCEffectBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[passDescriptor.shaderIndex]]];
                 }
                 else
                 {

@@ -179,9 +179,9 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
 
             // Update the uniform translation table in the new pass's begin blocks
             NSMutableArray *beginBlocks = [[NSMutableArray alloc] init];
-            for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+            for (CCEffectBeginBlockContext *blockContext in pass.beginBlocks)
             {
-                [beginBlocks addObject:[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[pass.effectShader]]];
+                [beginBlocks addObject:[[CCEffectBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[pass.effectShader]]];
             }
             newDescriptor.beginBlocks = beginBlocks;
             newDescriptor.updateBlocks = pass.updateBlocks;
@@ -207,9 +207,9 @@ static NSString * const CCEffectStitcherVaryings = @"CCEffectStitcherVaryings";
         {
             for (CCEffectRenderPass *pass in effect.renderPasses)
             {
-                for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+                for (CCEffectBeginBlockContext *blockContext in pass.beginBlocks)
                 {
-                    [beginBlocks addObject:[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[pass.effectShader]]];
+                    [beginBlocks addObject:[[CCEffectBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[pass.effectShader]]];
                 }
                 
                 // Copy the update blocks. They don't need any adjustment so they can just
