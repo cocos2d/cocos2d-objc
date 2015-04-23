@@ -157,7 +157,32 @@
 
 - (CGPoint)redOffsetWithPoint
 {
-    return CGPointMake(_redOffset.x, _redOffset.y);
+    return _redOffset;
+}
+
+- (void)setRedOffsetWithPoint:(CGPoint)offset
+{
+    _redOffset = offset;
+}
+
+- (CGPoint)greenOffsetWithPoint
+{
+    return _greenOffset;;
+}
+
+- (void)setGreenOffsetWithPoint:(CGPoint)offset
+{
+    _greenOffset = offset;
+}
+
+- (CGPoint)blueOffsetWithPoint
+{
+    return _blueOffset;
+}
+
+- (void)setBlueOffsetWithPoint:(CGPoint)offset
+{
+    _blueOffset = offset;
 }
 
 @end
