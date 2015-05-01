@@ -196,8 +196,8 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
             verts.bl.texCoord2 = texCoords.bl;
             verts.br.texCoord2 = texCoords.br;
             verts.tr.texCoord2 = texCoords.tr;
-            verts.tl.texCoord2 = texCoords.tl;
-            passInputs.verts = verts;
+            verts.tl.texCoord2 = texCoords.tl;            
+            [passInputs setVertsWorkAround:&verts];
         }
         
         passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakInterface.conditionedRefraction];

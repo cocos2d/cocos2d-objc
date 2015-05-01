@@ -223,6 +223,15 @@ static NSString* vertBase =
     return [super init];
 }
 
+// Workaround for Issue 1301 (https://github.com/cocos2d/cocos2d-objc/issues/1301)
+// where direct assignment to the verts property causes stack corruption on 32 bit
+// devices when compiled with Xcode 6.3.
+-(void)setVertsWorkAround:(CCSpriteVertexes*)verts
+{
+    NSAssert(verts, @"");
+    _verts = *verts;
+}
+
 @end
 
 
