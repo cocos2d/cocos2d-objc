@@ -1,11 +1,15 @@
-Cocos2D-SpriteBuilder
-=====================
+Cocos2D-ObjC
+============
 
-[Cocos2D-SpriteBuilder][1] is a framework for building 2D games, demos, and other
+Please note, that the official site has moved. Please update your bookmarks
+[The Official Site][1]
+[The Official Forum][3]
+
+[Cocos2D-ObjC][1] is a framework for building 2D games, demos, and other
 graphical/interactive applications for iOS, Mac and Android.
-It is based on the [Cocos2D][2] design, but instead of using Python it uses Swift or Objective-C.
+It is based on the [Cocos2D][2] design, but instead of using Python it uses Swift and / or Objective-C.
 
-Cocos2D-SpriteBuilder is:
+Cocos2D-ObjC is:
 
   * Fast
   * Free
@@ -15,6 +19,7 @@ Cocos2D-SpriteBuilder is:
 
 Creating New Projects
 ---------------------
+We are in the process of adding a stand alone installer to Cocos2D-Objc. Until then, please use the following approach: 
 
 New Cocos2D projects are created with SpriteBuilder. SpriteBuilder is, just like Cocos2D, free and open source. You can get SpriteBuilder from [spritebuilder.com](http://spritebuilder.com) or from the Mac App Store. Projects created using SpriteBuilder contains the complete Cocos2D source code, and after the project has been created using SpriteBuilder is optional.
 
@@ -76,16 +81,16 @@ Running Tests
 
 Forum
 -----
-  * [Cocos2D-SpriteBuilder Forum][3]
+  * [Cocos2D-ObjC Forum][3]
 
 
 Download from Github
 --------------------
 
-    $ git clone --recursive https://github.com/cocos2d/cocos2d-spritebuilder.git
-    $ cd cocos2d-spritebuilder
+    $ git clone --recursive https://github.com/cocos2d/cocos2d-objc.git
+    $ cd cocos2d-objc
 
-[1]: http://cocos2d.spritebuilder.com "Cocos2D-SpriteBuilder"
+[1]: http://cocos2d-objc.org "Cocos2D-ObjC Official Site"
 [2]: http://www.cocos2d.org "cocos2d"
-[3]: http://forum.cocos2d-swift.org "Cocos2D-SpriteBuilder forum"
+[3]: http://forum.cocos2d-objc.org "Cocos2D-ObjC Official Forum"
 [4]: http://www.chipmunk-physics.net
