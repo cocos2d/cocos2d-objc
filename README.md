@@ -1,9 +1,9 @@
 Cocos2D-ObjC
 ============
 
-Please note, that the official site has moved. Please update your bookmarks
-[The Official Site][1]
-[The Official Forum][3]
+Please note, that the official site has moved. Please update your bookmarks  
+[The Official Site][1]  
+[The Official Forum][3]  
 
 [Cocos2D-ObjC][1] is a framework for building 2D games, demos, and other
 graphical/interactive applications for iOS, Mac and Android.
