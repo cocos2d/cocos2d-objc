@@ -153,7 +153,7 @@
         verts.br.texCoord2 = texCoords.br;
         verts.tr.texCoord2 = texCoords.tr;
         verts.tl.texCoord2 = texCoords.tl;
-        passInputs.verts = verts;
+        [passInputs setVertsWorkAround:&verts];
 
     }]];
 #endif
