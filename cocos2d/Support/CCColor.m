@@ -153,13 +153,13 @@
     self = [super init];
     if (!self) return self;
     
-    CGColorRef colorRef = self.CGColor;
+    CGColorRef colorRef = color.CGColor;
     CGColorSpaceModel csModel = CGColorSpaceGetModel(CGColorGetColorSpace(colorRef));
     if (csModel == kCGColorSpaceModelRGB)
     {
-		    CGFloat r, g, b, a;
+	CGFloat r, g, b, a;
         [color getRed:&r green:&g blue:&b alpha:&a];
-				_r = r, _g = g, _b = b, _a = a;
+	_r = r, _g = g, _b = b, _a = a;
     }
     else if (csModel == kCGColorSpaceModelMonochrome)
     {
