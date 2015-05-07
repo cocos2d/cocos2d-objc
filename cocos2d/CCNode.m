@@ -203,8 +203,6 @@ static NSUInteger globalOrderOfArrival = 1;
     
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
     [_animationManager performSelector:@selector(cleanup)];
-    
-    _userObject = nil;
 }
 
 - (NSString*) description
