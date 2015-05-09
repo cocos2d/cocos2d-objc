@@ -4,7 +4,9 @@ Cocos2D-ObjC
 If in doubt, please post questions and comments in the forum  
 [The Official Forum][3]  
 
-This way, more users can learn from your experince.
+This way, more users can learn from your experince.  
+  
+  
 =====
 Please note, that the official site has moved. Please update your bookmarks  
 [The Official Site][1]  
