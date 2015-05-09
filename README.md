@@ -1,6 +1,6 @@
 Cocos2D-ObjC
 ============
-*PLEASE READ BEFORE POSTING AN ISSUE!*  
+**PLEASE READ BEFORE POSTING AN ISSUE!**  
 If in doubt, please post questions and comments in the forum  
 [The Official Forum][3]  
 
