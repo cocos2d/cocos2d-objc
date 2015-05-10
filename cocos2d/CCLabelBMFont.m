@@ -47,6 +47,7 @@
 #import "Support/uthash.h"
 #import "CCLabelBMFont_Private.h"
 #import "CCSprite_Private.h"
+#import "CCDirector.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -462,6 +463,8 @@ void FNTConfigRemoveCache( void )
 	// Replacement for the old CCNode.tag property which was
 	// used heavily in the original code.
 	NSMutableArray *_childForTag;
+	
+	BOOL _isRetina;
 }
 
 @synthesize alignment = _alignment;
@@ -532,6 +535,12 @@ void FNTConfigRemoveCache( void )
 			_configuration = newConf;
 			_fntFile = [fntFile copy];
 		}
+		
+		if([[CCDirector sharedDirector] contentScaleFactor] > 1.0) {
+			_isRetina = YES;
+		}
+		
+		_autoFixSizeForNonRetina = YES;
 		
 		self.texture = texture;
 		_width = width;
@@ -724,6 +733,21 @@ void FNTConfigRemoveCache( void )
             lineNumber++;
         }
     }
+	
+	if(!_isRetina && _autoFixSizeForNonRetina) {
+		CGSize size = self.contentSize;
+		size.width = floor(size.width);
+		size.height = floor(size.height);
+		
+		if((int)size.width % 2 != 0) {
+			size.width += 1.0;
+		}
+		if((int)size.height % 2 != 0) {
+			size.height += 1.0;
+		}
+		
+		self.contentSize = size;
+	}
 }
 
 #pragma mark LabelBMFont - Atlas generation

@@ -170,6 +170,12 @@
  */
 -(void) setAlignment:(CCTextAlignment)alignment;
 
+/**
+ *  Make sure the size will always be even numbered and whole pixels on non-Retina devices. Helps ensure the label isn't blurry on non-Retina devices.
+ *  The default is YES.
+ */
+@property (nonatomic, readwrite, assign) BOOL autoFixSizeForNonRetina;
+
 
 /// -----------------------------------------------------------------------
 /// @name Memory Management
