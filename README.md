@@ -26,9 +26,11 @@ Cocos2D-ObjC is:
 
 Creating New Projects
 ---------------------
-We are in the process of adding a stand alone installer to Cocos2D-Objc. Until then, please use the following approach: 
+We are in the process of adding a stand alone installer to Cocos2D-Objc. A temporary template can be found [here][5]
 
-New Cocos2D projects are created with SpriteBuilder. SpriteBuilder is, just like Cocos2D, free and open source. You can get SpriteBuilder from [spritebuilder.com](http://spritebuilder.com) or from the Mac App Store. Projects created using SpriteBuilder contains the complete Cocos2D source code, and after the project has been created using SpriteBuilder is optional.
+An alternative approach, is to use SpriteBuilder: 
+
+New Cocos2D projects can be created with SpriteBuilder. SpriteBuilder is, just like Cocos2D, free and open source. You can get SpriteBuilder from [spritebuilder.com](http://spritebuilder.com) or from the Mac App Store. Projects created using SpriteBuilder contains the complete Cocos2D source code, and after the project has been created using SpriteBuilder is optional.
 
 SpriteBuilder also allows you to update the Cocos2D version in your project, to newest version, making it trivial to always keep you project updated to latest Cocos2D version.
 
@@ -101,3 +103,4 @@ Download from Github
 [2]: http://www.cocos2d.org "cocos2d"
 [3]: http://forum.cocos2d-objc.org "Cocos2D-ObjC Official Forum"
 [4]: http://www.chipmunk-physics.net
+[5]: https://github.com/slembcke/UnofficialCocos2DTemplate
