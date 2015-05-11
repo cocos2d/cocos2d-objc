@@ -34,7 +34,7 @@ New Cocos2D projects can be created with SpriteBuilder. SpriteBuilder is, just l
 
 SpriteBuilder also allows you to update the Cocos2D version in your project, to newest version, making it trivial to always keep you project updated to latest Cocos2D version.
 
-You can find the full Cocos2D documentation and user guide at our [documentation page](http://cocos2d.spritebuilder.com/docs).
+You can find the full Cocos2D documentation and user guide at our [documentation page](http://cocos2d-objc.org/docs/).
 
 Features
 -------------
