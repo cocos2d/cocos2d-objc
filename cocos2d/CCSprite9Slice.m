@@ -180,7 +180,14 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 
 - (void) setMargins:(CCSprite9SliceMargins)margins
 {
-    _margins = margins;
+    _margins.left = clampf(margins.left, 0.f, 1.f);
+    _margins.right = clampf(margins.right, 0.f, 1.f);
+    _margins.top = clampf(margins.top, 0.f, 1.f);
+    _margins.bottom = clampf(margins.bottom, 0.f, 1.f);
+    
+    
+    NSAssert((_margins.left + _margins.right) <= 1, @"Sum of left and right margin, can not exceed 1");
+    NSAssert((_margins.top + _margins.bottom) <= 1, @"Sum of top and bottom margin, can not exceed 1");
 }
 
 - (float)margin
