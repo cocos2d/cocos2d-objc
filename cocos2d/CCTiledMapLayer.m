@@ -41,7 +41,7 @@
 #import "CCSprite_Private.h"
 #import "CCTiledMapLayer_Private.h"
 #import "CCTexture_Private.h"
-#import "CCMathTypesAndroid.h"
+// #import "CCMathTypesAndroid.h"
 
 #pragma mark -
 #pragma mark CCTMXLayer
