@@ -58,7 +58,7 @@
     // Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
     if(_director.runningScene){
         CGSize sizeInPixels = [self convertSizeFromBacking:self.bounds.size];
-        _director.runningScene.contentSizeInPoints = CC_SIZE_SCALE(sizeInPixels, 1.0/[CCSetup sharedSetup].contentScale);
+        _director.runningScene.contentSizeInPoints = CC_SIZE_SCALE(sizeInPixels, [CCSetup sharedSetup].contentScale);
         
         [_director mainLoopBody];
     }
