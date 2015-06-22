@@ -285,7 +285,10 @@
 /// @name Converting Colors
 /// -----------------------------------------------------------------------
 
-/** The Quartz color reference that corresponds to the CCColor color. */
+/** The Quartz color reference that corresponds to the CCColor color.
+ @note Calling this method causes the creation of a CGColor that will not be released until the
+ parent CCColor object is released.
+ */
 @property(nonatomic, readonly) CGColorRef CGColor;
 
 #if __CC_PLATFORM_IOS
