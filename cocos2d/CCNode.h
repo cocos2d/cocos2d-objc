@@ -974,6 +974,13 @@
 */
 @property (nonatomic,strong) CCColor* colorRGBA;
 
+/** Returns a GLKVector4 structure built using the nodes colorRGBA property.  This can be used to circumvent the creation of throwaway CCColor objects.
+ 
+ @see colorRGBA
+ @see CCColor
+*/
+@property (nonatomic,readonly) GLKVector4 colorRGBAAsGLkVector4;
+
 /** Returns the actual color used by the node. This may be different from the color and colorRGBA properties if the parent
  node has cascadeColorEnabled.
 
