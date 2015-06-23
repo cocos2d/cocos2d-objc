@@ -33,7 +33,12 @@
 
 // ---------------------------------------------------------------------
 
-const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
+const CCSprite9SliceMargins CCSprite9SliceMarginsDefault = {
+    .left = 1.0f/3.0f,
+    .right = 1.0f/3.0f,
+    .top = 1.0f/3.0f,
+    .bottom = 1.0f/3.0f
+};
 
 // ---------------------------------------------------------------------
 
@@ -48,16 +53,14 @@ const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 
 - (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated
 {
-    self = [super initWithTexture:texture rect:rect rotated:rotated];
-    NSAssert(self != nil, @"Unable to create class");
-		
-    _originalContentSize = self.contentSizeInPoints;
+    if (self = [super initWithTexture:texture rect:rect rotated:rotated]) {
+        _originalContentSize = self.contentSizeInPoints;
+        
+        // initialize new parts in 9slice
+        self.margins = CCSprite9SliceMarginsDefault;
+    }
     
-    // initialize new parts in 9slice
-		self.margin = CCSprite9SliceMarginDefault;
-    
-    // done
-    return(self);
+    return self;
 }
 
 // ---------------------------------------------------------------------
@@ -135,14 +138,14 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 	
 	float alphaX2[4];
 	alphaX2[0] = 0;
-	alphaX2[1] = _marginLeft / (physicalSize.width / rectSize.width);
-	alphaX2[2] = 1 - _marginRight / (physicalSize.width / rectSize.width);
+	alphaX2[1] = _margins.left / (physicalSize.width / rectSize.width);
+	alphaX2[2] = 1 - _margins.right / (physicalSize.width / rectSize.width);
 	alphaX2[3] = 1;
-	const float alphaX[4] = {0.0f, _marginLeft, scaleX - _marginRight, scaleX};
-	const float alphaY[4] = {0.0f, _marginBottom, scaleY - _marginTop, scaleY};
+	const float alphaX[4] = {0.0f, _margins.left, scaleX - _margins.right, scaleX};
+	const float alphaY[4] = {0.0f, _margins.bottom, scaleY - _margins.top, scaleY};
 	
-	const float alphaTexX[4] = {0.0f, _marginLeft, 1.0f - _marginRight, 1.0f};
-	const float alphaTexY[4] = {0.0f, _marginBottom, 1.0f - _marginTop, 1.0f};
+	const float alphaTexX[4] = {0.0f, _margins.left, 1.0f - _margins.right, 1.0f};
+	const float alphaTexY[4] = {0.0f, _margins.bottom, 1.0f - _margins.top, 1.0f};
 	
 	// Interpolation matrices for the vertexes and texture coordinates
 	const CCSpriteVertexes *_verts = self.vertexes;
@@ -174,54 +177,64 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 #pragma mark - properties
 // ---------------------------------------------------------------------
 
+
+- (void) setMargins:(CCSprite9SliceMargins)margins
+{
+    _margins.left = clampf(margins.left, 0.f, 1.f);
+    _margins.right = clampf(margins.right, 0.f, 1.f);
+    _margins.top = clampf(margins.top, 0.f, 1.f);
+    _margins.bottom = clampf(margins.bottom, 0.f, 1.f);
+    
+    
+    NSAssert((_margins.left + _margins.right) <= 1, @"Sum of left and right margin, can not exceed 1");
+    NSAssert((_margins.top + _margins.bottom) <= 1, @"Sum of top and bottom margin, can not exceed 1");
+}
+
 - (float)margin
 {
     // if margins are not the same, a unified margin can nort be read
-    NSAssert(_marginLeft == _marginRight &&
-             _marginLeft == _marginTop &&
-             _marginLeft == _marginBottom, @"Margin can not be read. Do not know which margin to return");
+    NSAssert(_margins.left == _margins.right &&
+             _margins.left == _margins.top &&
+             _margins.left == _margins.bottom, @"Margin can not be read. Do not know which margin to return");
 
     // just return any of them
-    return(_marginLeft);
+    return _margins.left;
 }
 
 - (void)setMargin:(float)margin
 {
     margin = clampf(margin, 0, 0.5);
-    _marginLeft = margin;
-    _marginRight = margin;
-    _marginTop = margin;
-    _marginBottom = margin;
+    _margins = CCSprite9SliceMarginsMakeWithMargin((CGFloat)margin);
 }
 
 // ---------------------------------------------------------------------
 
 - (void)setMarginLeft:(float)marginLeft
 {
-    _marginLeft = clampf(marginLeft, 0, 1);
+    _margins.left = clampf(marginLeft, 0, 1);
     // sum of left and right margin, can not exceed 1
-    NSAssert((_marginLeft + _marginRight) <= 1, @"Sum of left and right margine, can not exceed 1");
+    NSAssert((_margins.left + _margins.right) <= 1, @"Sum of left and right margin, can not exceed 1");
 }
 
 - (void)setMarginRight:(float)marginRight
 {
-    _marginRight = clampf(marginRight, 0, 1);
+    _margins.right = clampf(marginRight, 0, 1);
     // sum of left and right margin, can not exceed 1
-    NSAssert((_marginLeft + _marginRight) <= 1, @"Sum of left and right margine, can not exceed 1");
+    NSAssert((_margins.left + _margins.right) <= 1, @"Sum of left and right margin, can not exceed 1");
 }
 
 - (void)setMarginTop:(float)marginTop
 {
-    _marginTop = clampf(marginTop, 0, 1);
+    _margins.top = clampf(marginTop, 0, 1);
     // sum of top and bottom margin, can not exceed 1
-    NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
+    NSAssert((_margins.top + _margins.bottom) <= 1, @"Sum of top and bottom margin, can not exceed 1");
 }
 
 - (void)setMarginBottom:(float)marginBottom
 {
-    _marginBottom = clampf(marginBottom, 0, 1);
+    _margins.bottom = clampf(marginBottom, 0, 1);
     // sum of top and bottom margin, can not exceed 1
-    NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
+    NSAssert((_margins.top + _margins.bottom) <= 1, @"Sum of top and bottom margin, can not exceed 1");
 }
 
 // ---------------------------------------------------------------------
