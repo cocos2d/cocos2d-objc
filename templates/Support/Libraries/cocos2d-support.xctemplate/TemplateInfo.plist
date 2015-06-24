@@ -373,6 +373,7 @@
 	<key>Nodes</key>
 	<array>
 		<string>Libraries/cocos2d/Support/CCRendererGLSupport.m</string>
+		<string>Libraries/cocos2d/Support/base64.h</string>
 		<string>Libraries/cocos2d/Support/base64.c</string>
 		<string>Libraries/cocos2d/Support/CCFileUtils.h</string>
 		<string>Libraries/cocos2d/Support/CCFileUtils.m</string>

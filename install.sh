@@ -192,8 +192,8 @@ install_objectal()
 {
     echo -n "Installing ObjectAL Libraries"
 
-    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/objectal.xctemplate/Libraries/"
-    copy_files "external/ObjectAL" "$LIBS_DIR"
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/objectal.xctemplate/Libraries/ObjectAL"
+    copy_files "external/ObjectAL/ObjectAL/ObjectAL (iOS)/" "$LIBS_DIR"
 
     check_status
     status_ok
