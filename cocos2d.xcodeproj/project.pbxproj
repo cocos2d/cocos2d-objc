@@ -117,7 +117,6 @@
 		5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BF32698195F947800D9A51A /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
 		5BF32699195F947800D9A51A /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -O0"; }; };
-		7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */; };
 		7A4037C219E37117007B6E8F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C119E37117007B6E8F /* GLKit.framework */; };
 		7A4037C419E3711D007B6E8F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C319E3711D007B6E8F /* ApplicationServices.framework */; };
 		7A4037C619E37126007B6E8F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C519E37126007B6E8F /* QuartzCore.framework */; };
@@ -1001,11 +1000,17 @@
 		E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
 		E525FCC2CF72D3667DE4D71B /* CCPackageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FF8C7C018BF691F36044 /* CCPackageHelper.h */; };
 		E525FF1A60724C91275720C5 /* CCPackageManager_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F94C08B1D716E9173061 /* CCPackageManager_private.h */; };
-		FC39962219C3BBCF00C93E5E /* libObjectAL (Android).a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */; };
 		FC64014019C79716003E595A /* libObjectAL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961B19C3B92F00C93E5E /* libObjectAL.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0E0094921B3ACBEA006EA7FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CBBAB33D171D0BC4009B955F;
+			remoteInfo = "ObjectAL (OSX)";
+		};
 		7A40377A19E36EFF007B6E8F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
@@ -1033,13 +1038,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 7A5948D819E3795700F65F90;
 			remoteInfo = "ObjectiveChipmunk-Mac";
-		};
-		7A59492D19E37A2300F65F90 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D369B4CF19C8E73C00BA46EA;
-			remoteInfo = "ObjectAL (Mac)";
 		};
 		7A59497E19E38C8300F65F90 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1111,33 +1109,12 @@
 			remoteGlobalIDString = 7A4037A719E37038007B6E8F;
 			remoteInfo = "cocos2d-mac";
 		};
-		D28B2E7D19CBA89A00DC6E08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
-			remoteInfo = "ObjectAL (Mac)";
-		};
 		FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CBBAB312171D0B84009B955F;
 			remoteInfo = "ObjectAL (iOS)";
-		};
-		FC39961E19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FC39961219C3B80E00C93E5E;
-			remoteInfo = "ObjectAL (Android)";
-		};
-		FC39962019C3BB3A00C93E5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FC3995B019C3B80E00C93E5E;
-			remoteInfo = "ObjectAL (Android)";
 		};
 		FCFDA23D19C78E2D00B90910 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1151,6 +1128,8 @@
 /* Begin PBXFileReference section */
 		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
+		0E0094961B3ACC3E006EA7FC /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = "<group>"; };
+		0E0094971B3ACC4B006EA7FC /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
 		1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		143F32D71A3A2E8A0019FD3C /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
 		14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AndroidKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/AndroidKit.framework"; sourceTree = "<group>"; };
@@ -1573,7 +1552,6 @@
 				7A4037C619E37126007B6E8F /* QuartzCore.framework in Frameworks */,
 				7A4037C419E3711D007B6E8F /* ApplicationServices.framework in Frameworks */,
 				7A4037C219E37117007B6E8F /* GLKit.framework in Frameworks */,
-				7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1600,7 +1578,6 @@
 				1435EB831A37BA7000BD04D4 /* GLActivityKit.framework in Frameworks */,
 				7A97912B19E646F9001FFC4D /* libSSZipArchiveAndroid.a in Frameworks */,
 				7A97912A19E646D8001FFC4D /* libObjectiveChipmunk-Android.a in Frameworks */,
-				FC39962219C3BBCF00C93E5E /* libObjectAL (Android).a in Frameworks */,
 				D2FEB745194F6C9E00FC0574 /* CoreText.framework in Frameworks */,
 				D2FEB747194F6C9E00FC0574 /* Foundation.framework in Frameworks */,
 				D2FEB749194F6C9E00FC0574 /* CoreGraphics.framework in Frameworks */,
@@ -1610,6 +1587,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E0094951B3ACC24006EA7FC /* Installer */ = {
+			isa = PBXGroup;
+			children = (
+				0E0094961B3ACC3E006EA7FC /* install.sh */,
+				0E0094971B3ACC4B006EA7FC /* templates */,
+			);
+			name = Installer;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1624,6 +1610,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0E0094951B3ACC24006EA7FC /* Installer */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
 				DCF7B34D1A1D426000E0EEAF /* API-Index.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
@@ -2396,8 +2383,7 @@
 			isa = PBXGroup;
 			children = (
 				FC39961B19C3B92F00C93E5E /* libObjectAL.a */,
-				FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */,
-				D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */,
+				0E0094931B3ACBEA006EA7FC /* ObjectAL.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2996,7 +2982,6 @@
 			);
 			dependencies = (
 				7A59497F19E38C8300F65F90 /* PBXTargetDependency */,
-				7A59492E19E37A2300F65F90 /* PBXTargetDependency */,
 				7A59492919E379B600F65F90 /* PBXTargetDependency */,
 			);
 			name = "cocos2d-mac";
@@ -3036,7 +3021,6 @@
 			dependencies = (
 				7A9790D319E61DFE001FFC4D /* PBXTargetDependency */,
 				7A9790D119E61DDB001FFC4D /* PBXTargetDependency */,
-				FC39962119C3BB3A00C93E5E /* PBXTargetDependency */,
 			);
 			name = cocos2dAndroid;
 			productName = cocos2d;
@@ -3099,6 +3083,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		0E0094931B3ACBEA006EA7FC /* ObjectAL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ObjectAL.framework;
+			remoteRef = 0E0094921B3ACBEA006EA7FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7A40377B19E36EFF007B6E8F /* libObjectiveChipmunk-Android.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3148,25 +3139,11 @@
 			remoteRef = B759E52C1880C66900E8166C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libObjectAL (Mac).a";
-			remoteRef = D28B2E7D19CBA89A00DC6E08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		FC39961B19C3B92F00C93E5E /* libObjectAL.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libObjectAL.a;
 			remoteRef = FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libObjectAL (Android).a";
-			remoteRef = FC39961E19C3B92F00C93E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -3650,11 +3627,6 @@
 			name = "ObjectiveChipmunk-Mac";
 			targetProxy = 7A59492819E379B600F65F90 /* PBXContainerItemProxy */;
 		};
-		7A59492E19E37A2300F65F90 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ObjectAL (Mac)";
-			targetProxy = 7A59492D19E37A2300F65F90 /* PBXContainerItemProxy */;
-		};
 		7A59497F19E38C8300F65F90 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SSZipArchiveMac;
@@ -3684,11 +3656,6 @@
 			isa = PBXTargetDependency;
 			target = 7A4037A719E37038007B6E8F /* cocos2d-mac */;
 			targetProxy = B7E7DE4D1A76DB8B004234B7 /* PBXContainerItemProxy */;
-		};
-		FC39962119C3BB3A00C93E5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ObjectAL (Android)";
-			targetProxy = FC39962019C3BB3A00C93E5E /* PBXContainerItemProxy */;
 		};
 		FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4184,6 +4151,7 @@
 				B7E7DE491A76DB7E004234B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d" */ = {
 			isa = XCConfigurationList;
