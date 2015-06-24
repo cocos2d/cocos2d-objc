@@ -75,19 +75,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>Libraries/cocos2d/CCRenderDispatch_Private.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Renderer</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCRenderDispatch_Private.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>Libraries/cocos2d/CCRenderDispatch.h</key>
 		<dict>
 			<key>Group</key>
@@ -1964,7 +1951,6 @@
 	<key>Nodes</key>
 	<array>
 		<string>Libraries/cocos2d/CCNoARC.m</string>
-		<string>Libraries/cocos2d/CCRenderDispatch_Private.h</string>
 		<string>Libraries/cocos2d/CCRenderDispatch.h</string>
 		<string>Libraries/cocos2d/CCRenderDispatch.m</string>
 		<string>Libraries/cocos2d/CCRendererBasicTypes_Private.h</string>
