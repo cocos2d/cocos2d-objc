@@ -10,6 +10,84 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
+		<key>Libraries/cocos2d/CCLightCollection.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCLightCollection.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCLightCollection.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCLightCollection.m</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCLightGroups.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCLightGroups.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCLightNode_Private.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCLightNode_Private.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCLightNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCLightNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCLightNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCLightNode.m</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>Libraries/cocos2d/CCEffectBloom.h</key>
 		<dict>
 			<key>Group</key>
@@ -746,6 +824,12 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>Libraries/cocos2d/CCLightCollection.h</string>
+		<string>Libraries/cocos2d/CCLightCollection.m</string>
+		<string>Libraries/cocos2d/CCLightGroups.h</string>
+		<string>Libraries/cocos2d/CCLightNode_Private.h</string>
+		<string>Libraries/cocos2d/CCLightNode.h</string>
+		<string>Libraries/cocos2d/CCLightNode.m</string>
 		<string>Libraries/cocos2d/CCEffectBloom.h</string>
 		<string>Libraries/cocos2d/CCEffectBloom.m</string>
 		<string>Libraries/cocos2d/CCEffectBlur.h</string>
