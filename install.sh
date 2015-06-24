@@ -176,7 +176,7 @@ install_chipmunk()
 {
     echo -n "Installing Chipmunk Libraries"
 
-    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/chipmunk.xctemplate/Libraries/"
     copy_files "external/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
     copy_files "external/Chipmunk/objectivec/src" "$LIBS_DIR/Chipmunk/objectivec"
     copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
@@ -192,7 +192,7 @@ install_objectal()
 {
     echo -n "Installing ObjectAL Libraries"
 
-    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/lib_objectal.xctemplate/Libraries/"
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/objectal.xctemplate/Libraries/"
     copy_files "external/ObjectAL" "$LIBS_DIR"
 
     check_status

@@ -140,6 +140,32 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectSaturation.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectSaturation.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectSaturation.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectSaturation.m</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>Libraries/cocos2d/CCEffectColorChannelOffset.h</key>
 		<dict>
 			<key>Group</key>
@@ -821,9 +847,41 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectRenderer.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectRenderer.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectRenderer.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectRenderer.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>Libraries/cocos2d/CCEffectRenderer.h</string>
+		<string>Libraries/cocos2d/CCEffectRenderer.m</string>
 		<string>Libraries/cocos2d/CCLightCollection.h</string>
 		<string>Libraries/cocos2d/CCLightCollection.m</string>
 		<string>Libraries/cocos2d/CCLightGroups.h</string>
@@ -834,6 +892,8 @@
 		<string>Libraries/cocos2d/CCEffectBloom.m</string>
 		<string>Libraries/cocos2d/CCEffectBlur.h</string>
 		<string>Libraries/cocos2d/CCEffectBlur.m</string>
+		<string>Libraries/cocos2d/CCEffectSaturation.h</string>
+		<string>Libraries/cocos2d/CCEffectSaturation.m</string>
 		<string>Libraries/cocos2d/CCEffectColorChannelOffset.h</string>
 		<string>Libraries/cocos2d/CCEffectColorChannelOffset.m</string>
 		<string>Libraries/cocos2d/CCEffectDFInnerGlow.h</string>
