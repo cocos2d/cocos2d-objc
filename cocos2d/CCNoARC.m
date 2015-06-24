@@ -8,6 +8,13 @@
 #import "CCMetalSupport_Private.h"
 #endif
 
+// -----------------------------------------------------------------
+// NOTE !
+// If you get performance problems, due to high CPU loads, setting this flag might unload the CPU a little bit
+// If you set the flag, you have to go into Build Settings in your target,
+// - and add the compiler flag -fno-objc-arc, to this file
+#define NO_ARC 0
+// -----------------------------------------------------------------
 
 @implementation CCNode(NoARC)
 
@@ -171,8 +178,9 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 		// Start a new command.
 		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState firstIndex:firstIndex vertexPage:vertexPage count:indexCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
+#if NO_ARC == 0
 		[command release];
-		
+#endif
 		_lastDrawCommand = command;
 	}
 	
@@ -199,8 +207,9 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 	
 	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState firstIndex:firstIndex vertexPage:vertexPage count:indexCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
+#if NO_ARC == 0
 	[command release];
-	
+#endif
 	// Line drawing commands are currently intended for debugging and cannot be batched.
 	_lastDrawCommand = nil;
 	
