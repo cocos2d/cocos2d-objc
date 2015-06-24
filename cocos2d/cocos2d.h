@@ -40,8 +40,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   03 01 01
-#define COCOS2D_VERSION 0x00030403
+// 00   03 xx xx
+#define COCOS2D_VERSION 0x00030409
 #define COCOS2D_BUILD @"develop"
 //
 // all cocos2d include files
