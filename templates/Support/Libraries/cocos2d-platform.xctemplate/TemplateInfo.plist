@@ -158,7 +158,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/Platforms/iOS/CCDirectorIOS.h</key>
 		<dict>

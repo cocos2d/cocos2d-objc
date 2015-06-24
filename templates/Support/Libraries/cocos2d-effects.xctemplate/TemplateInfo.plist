@@ -34,7 +34,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCLightCollection.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCLightGroups.h</key>
 		<dict>
@@ -86,7 +88,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCLightNode.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCEffectBloom.h</key>
 		<dict>

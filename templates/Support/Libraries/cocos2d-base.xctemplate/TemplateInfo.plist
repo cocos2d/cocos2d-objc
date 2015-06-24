@@ -23,7 +23,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>Libraries/cocos2d/CCTouch..m</key>
+		<key>Libraries/cocos2d/CCTouch.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -34,7 +34,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCTouch.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCTouchEvent.h</key>
 		<dict>
@@ -60,7 +62,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCTouchEvent.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCNoARC.m</key>
 		<dict>
@@ -73,7 +77,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCNoARC.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCRenderDispatch.h</key>
 		<dict>
@@ -99,7 +105,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCRenderDispatch.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCRendererBasicTypes_Private.h</key>
 		<dict>
@@ -138,7 +146,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCRendererBasicTypes.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCRendererSharedTypes.h</key>
 		<dict>
@@ -177,7 +187,9 @@
 			<key>Path</key>
 			<string>Libraries/cocos2d/NSValue+CCRenderer.m</string>
 			<key>TargetIndices</key>
-			<array/>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCRenderer.h</key>
 		<dict>
