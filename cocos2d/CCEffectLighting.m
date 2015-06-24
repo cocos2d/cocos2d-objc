@@ -381,7 +381,6 @@ static float conditionShininess(float shininess);
 
     _needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
-    CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
     CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
     
     CCLightCollection *lightCollection = CCEffectUtilsGetNodeScene(sprite).lights;

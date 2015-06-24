@@ -811,7 +811,6 @@ void FNTConfigRemoveCache( void )
 		rect.origin.x += _imageOffset.x;
 		rect.origin.y += _imageOffset.y;
         
-		BOOL hasSprite = YES;
 		CCSprite *fontChar = [self childForTag:i];
 		if( fontChar )
 		{

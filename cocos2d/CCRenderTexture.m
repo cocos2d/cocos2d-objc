@@ -458,8 +458,6 @@ FlipY(GLKMatrix4 projection)
 
 -(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
-	BOOL success = YES;
-	
 	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
 
     return [self saveToFilePath:fullPath format:format];

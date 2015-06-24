@@ -245,8 +245,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
 
-		CAEAGLLayer* eaglLayer = (CAEAGLLayer*)[self layer];
-
 		_pixelFormat = kEAGLColorFormatRGB565;
 		_depthFormat = 0; // GL_DEPTH_COMPONENT24;
 		_multiSampling= NO;

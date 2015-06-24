@@ -41,10 +41,7 @@ typedef struct _CCEffectTexCoordFunc
 } CCEffectTexCoordFunc;
 
 static const CCEffectTexCoordFunc CCEffectTexCoordOverwrite      = { CCEffectTexCoordConstant, CCEffectTexCoordTransformNone };
-static const CCEffectTexCoordFunc CCEffectTexCoord1Untransformed = { CCEffectTexCoordSource1,  CCEffectTexCoordTransformNone };
 static const CCEffectTexCoordFunc CCEffectTexCoord1Padded        = { CCEffectTexCoordSource1,  CCEffectTexCoordTransformPad };
-static const CCEffectTexCoordFunc CCEffectTexCoord2Untransformed = { CCEffectTexCoordSource2,  CCEffectTexCoordTransformNone };
-static const CCEffectTexCoordFunc CCEffectTexCoord2Padded        = { CCEffectTexCoordSource2,  CCEffectTexCoordTransformPad };
 
 
 static CCEffectTexCoordFunc selectTexCoordFunc(CCEffectTexCoordMapping mapping, CCEffectTexCoordSource source, BOOL fromIntermediate, BOOL padMainTexCoords);
