@@ -7,24 +7,12 @@
 //
 // -----------------------------------------------------------------------
 
-// Import the interfaces
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
 
 // -----------------------------------------------------------------------
-#pragma mark - IntroScene
-// -----------------------------------------------------------------------
 
 @implementation IntroScene
-
-// -----------------------------------------------------------------------
-#pragma mark - Create & Destroy
-// -----------------------------------------------------------------------
-
-+ (IntroScene *)scene
-{
-	return [[self alloc] init];
-}
 
 // -----------------------------------------------------------------------
 
@@ -32,13 +20,15 @@
 {
     // Apple recommend assigning self with supers return value
     self = [super init];
-    if (!self) return(nil);
     
-    // Create a colored background (Dark Grey)
-    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
-    [self addChild:background];
+    // The thing is, that if this fails, your app will 99.99% crash anyways, so why bother
+    // Just make an assert, so that you can catch it in debug
+    NSAssert(self, @"Whoops");
     
-    // Hello world
+    // Set the background to a sick pink color
+    self.colorRGBA = [CCColor colorWithRed:1.0 green:0.6 blue:0.6];
+    
+    // We need some Hello World stuff
     CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Chalkduster" fontSize:36.0f];
     label.positionType = CCPositionTypeNormalized;
     label.color = [CCColor redColor];
@@ -46,7 +36,7 @@
     [self addChild:label];
     
     // Helloworld scene button
-    CCButton *helloWorldButton = [CCButton buttonWithTitle:@"[ Start ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    CCButton *helloWorldButton = [CCButton buttonWithTitle:@"[ Enough Pink ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     helloWorldButton.positionType = CCPositionTypeNormalized;
     helloWorldButton.position = ccp(0.5f, 0.35f);
     [helloWorldButton setTarget:self selector:@selector(onSpinningClicked:)];
@@ -57,15 +47,25 @@
 }
 
 // -----------------------------------------------------------------------
-#pragma mark - Button Callbacks
-// -----------------------------------------------------------------------
 
 - (void)onSpinningClicked:(id)sender
 {
     // start spinning scene with transition
-    [[CCDirector sharedDirector] replaceScene:[HelloWorldScene scene]
+    [[CCDirector sharedDirector] replaceScene:[HelloWorldScene new]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
 }
 
 // -----------------------------------------------------------------------
+
 @end
+
+
+
+
+
+
+
+
+
+
+// why not add a few extra lines, so we dont have to sit and edit at the bottom of the screen ...

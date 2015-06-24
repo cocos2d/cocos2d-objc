@@ -11,45 +11,74 @@
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
 
+// -----------------------------------------------------------------------
+
 @implementation AppDelegate
 
-// 
--(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+// -----------------------------------------------------------------------
+// This is where your app starts. It takes two steps
+// 1) Setting up Cocos2D, which is done with setupCocos2dWithOptions
+// 2) Call your first scene, which is done by overriding startScene
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// This is the only app delegate method you need to implement when inheriting from CCAppDelegate.
-	// This method is a good place to add one time setup code that only runs when your app is first launched.
+    // Cocos2D takes a dictionary to start ... yeah I know ... but it does, and it is kind of neat
+    NSMutableDictionary *startUpOptions = [NSMutableDictionary dictionary];
+    
+    // Let's add some setup stuff
+    
+    // Show FPS
+    // We really want this in most cases
+    [startUpOptions setObject:@(YES) forKey:CCSetupShowDebugStats];
+    
+    // A acouple of other examples
+    
+    // Use a 16 bit color buffer
+    // This will lower the color depth from 32 bits to 16 bits for that extra performance
+    // Most will want 32, so we disbaled it
+    // ---
+    // [startUpOptions setObject:kEAGLColorFormatRGB565 forKey:CCSetupPixelFormat];
+    
+    // Use a simplified coordinate system that is shared across devices
+    // Normally you work in the coordinate of the device (an iPad is 1024x768, an iPhone 4 480x320 and so on)
+    // This feature makes it easier to use the same setup for all devices (easier is a relative term)
+    // Most will want to handle iPad and iPhone exclusively, so it is disabled by default
+    // ---
+    // [startUpOptions setObject:CCScreenModeFixed forKey:CCSetupScreenMode];
+    
+    // All the supported keys can be found in CCConfiguration.h
+
+    // We are done ...
+    // Lets get this thing on the road!
+    [self setupCocos2dWithOptions:startUpOptions];
 	
-	// Setup Cocos2D with reasonable defaults for everything.
-	// There are a number of simple options you can change.
-	// If you want more flexibility, you can configure Cocos2D yourself instead of calling setupCocos2dWithOptions:.
-	[self setupCocos2dWithOptions:@{
-		// Show the FPS and draw call label.
-		CCSetupShowDebugStats: @(YES),
-		
-		// More examples of options you might want to fiddle with:
-		// (See CCAppDelegate.h for more information)
-		
-		// Use a 16 bit color buffer: 
-//		CCSetupPixelFormat: kEAGLColorFormatRGB565,
-		// Use a simplified coordinate system that is shared across devices.
-//		CCSetupScreenMode: CCScreenModeFixed,
-		// Run in portrait mode.
-//		CCSetupScreenOrientation: CCScreenOrientationPortrait,
-		// Run at a reduced framerate.
-//		CCSetupAnimationInterval: @(1.0/30.0),
-		// Run the fixed timestep extra fast.
-//		CCSetupFixedUpdateInterval: @(1.0/180.0),
-		// Make iPad's act like they run at a 2x content scale. (iPad retina 4x)
-//		CCSetupTabletScale2X: @(YES),
-	}];
-	
+    // Stay positive. Always return a YES :)
 	return YES;
 }
 
--(CCScene *)startScene
+// -----------------------------------------------------------------------
+// This method should return the very first scene to be run when your app starts.
+
+- (CCScene *)startScene
 {
-	// This method should return the very first scene to be run when your app starts.
-	return [IntroScene scene];
+	return [IntroScene new];
 }
 
+// -----------------------------------------------------------------------
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
