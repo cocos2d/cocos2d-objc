@@ -147,14 +147,23 @@ install_cocos2d()
 {
     echo -n "Installing Cocos2D Libraries"
 
-    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/lib_cocos2d.xctemplate/Libraries/"
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/cocos2d-base.xctemplate/Libraries/"
     copy_files "cocos2d" "$LIBS_DIR"
     copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
 
-    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/lib_cocos2d-ui.xctemplate/Libraries/"
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/cocos2d-effects.xctemplate/Libraries/"
+    copy_files "cocos2d" "$LIBS_DIR"
+
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/cocos2d-platform.xctemplate/Libraries/"
+    copy_files "cocos2d" "$LIBS_DIR"
+
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/cocos2d-support.xctemplate/Libraries/"
+    copy_files "cocos2d" "$LIBS_DIR"
+
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/cocos2d-ui.xctemplate/Libraries/"
     copy_files "cocos2d-ui" "$LIBS_DIR"
 
-    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/lib_ccbreader.xctemplate/Libraries/"
+    LIBS_DIR="$TEMPLATE_FOLDER/Support/Libraries/cocos2d-ccb.xctemplate/Libraries/"
     copy_files "cocos2d-ui/CCBReader" "$LIBS_DIR"
 
     check_status

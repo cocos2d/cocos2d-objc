@@ -15,8 +15,8 @@
 		<string>com.cocos2d-v3.cocos2d-ui</string>
 		<string>com.cocos2d-v3.cocos2d-platform</string>
 		<string>com.cocos2d-v3.cocos2d-support</string>
+		<string>com.cocos2d-v3.cocos2d-ccb</string>
 		<string>com.cocos2d-v3.objectallib</string>
-		<string>com.cocos2d-v3.ccbreaderlib</string>
 		<string>com.cocos2d-v3.chipmunklib</string>
 	</array>
 	<key>Concrete</key>

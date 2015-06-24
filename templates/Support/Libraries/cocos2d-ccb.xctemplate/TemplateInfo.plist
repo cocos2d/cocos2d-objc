@@ -5,7 +5,7 @@
 	<key>Description</key>
 	<string>This is a template description.</string>
 	<key>Identifier</key>
-	<string>com.cocos2d-v3.ccbreaderlib</string>
+	<string>com.cocos2d-v3.cocos2d-ccb</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>

@@ -32,7 +32,7 @@
 				<string>Touch &amp; Mouse Handling</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/CCTouch..m</string>
+			<string>Libraries/cocos2d/CCTouch.m</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
