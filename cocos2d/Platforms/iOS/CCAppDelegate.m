@@ -34,7 +34,6 @@
 #import "CCGLView.h"
 
 #import "OALSimpleAudio.h"
-#import "CCPackageManager.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalView.h"
@@ -228,8 +227,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
     
-    [[CCPackageManager sharedManager] loadPackages];
-	
 	// make main window visible
 	[window_ makeKeyAndVisible];
     
@@ -317,7 +314,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	if([CCDirector sharedDirector].animating) {
 		[[CCDirector sharedDirector] stopAnimation];
 	}
-	[[CCPackageManager sharedManager] savePackages];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
@@ -331,16 +327,12 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] end];
-
-    [[CCPackageManager sharedManager] savePackages];
 }
 
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] purgeCachedData];
-
-    [[CCPackageManager sharedManager] savePackages];
 }
 
 // next delta time will be zero
