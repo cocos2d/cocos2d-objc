@@ -1950,6 +1950,20 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Libraries/cocos2d/CCRendererGLSupport.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCRendererGLSupport.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 		<key>Libraries/LICENSE_cocos2d.txt</key>
 		<dict>
 			<key>Group</key>
@@ -1962,6 +1976,7 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>Libraries/cocos2d/CCRendererGLSupport.m</string>
 		<string>Libraries/cocos2d/CCNoARC.m</string>
 		<string>Libraries/cocos2d/CCRenderDispatch.h</string>
 		<string>Libraries/cocos2d/CCRenderDispatch.m</string>
