@@ -283,7 +283,7 @@
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
 		float right  = left+(rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
 		float top    = 1.0f - (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
-		float bottom = 1.0f - top+(rect.size.width*2.0f - 2.0f)/(2.0f*atlasHeight);
+        float bottom = 1.0f - ((top+rect.size.width)*2.0f - 2.0f)/(2.0f*atlasHeight);
 #else
 		float left   = rect.origin.x/atlasWidth;
 		float right  = (rect.origin.x + rect.size.height)/atlasWidth;
@@ -303,7 +303,7 @@
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
 		float right  = left + (rect.size.width*2.0f - 2.0f)/(2.0f*atlasWidth);
 		float top    = 1.0f - (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
-		float bottom = 1.0f - top + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasHeight);
+		float bottom = 1.0f - ((top + rect.size.height)*2.0f - 2.0f)/(2.0f*atlasHeight);
 #else
 		float left   = rect.origin.x/atlasWidth;
 		float right  = (rect.origin.x + rect.size.width)/atlasWidth;
