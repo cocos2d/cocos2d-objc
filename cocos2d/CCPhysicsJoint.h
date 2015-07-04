@@ -97,6 +97,95 @@ Joints cannot be reactivated once they are invalidated.
 	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 
 /// -----------------------------------------------------------------------
+/// @name Creating Rotary Spring Joints
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a rotary spring joint between the two bodies.
+ *  No anchor points are specified as this joint can be used in conjunction with a pivot joint to make a springing pivot joint.
+ *
+ *  @param bodyA   One of the two bodies to link together.
+ *  @param bodyB   One of the two bodies to link together.
+ *  @param restAngle Rest angle.
+ *  @param stiffness  Spring stiffness.
+ *  @param damping    Sprin damping.
+ *
+ *  @return The CCPhysicsJoint Object.
+ *  @see CCPhysicsBody
+ */
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA
+                                                 bodyB:(CCPhysicsBody *)bodyB
+                                             restAngle:(CGFloat)restAngle
+                                             stiffness:(CGFloat)stiffness
+                                               damping:(CGFloat)damping;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating Motor Joints
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a Motor joint between the two bodies.
+ *  No anchor points are specified as this joint can be used in conjunction with a pivot joint to make a motor around a pivot point.
+ *
+ *  @param bodyA   One of the two bodies to link together.
+ *  @param bodyB   One of the two bodies to link together.
+ *  @param rate    Rate at which the rotate relative to each other. Negative values to reverse direction.
+ *
+ *  @return The CCPhysicsJoint Object.
+ *  @see CCPhysicsBody
+ */
++(CCPhysicsJoint *)connectedMotorJointWithBodyA:(CCPhysicsBody *)bodyA
+                                          bodyB:(CCPhysicsBody *)bodyB
+                                           rate:(CGFloat)rate;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating Rotary Limit Joints
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns joint whereby the angle of rotation between too bodies is limited.
+ *  No anchor points are specified as this joint can be used in conjunction with a pivot joint to make the pivots range of motion limited.
+ *
+ *  @param bodyA   One of the two bodies to link together.
+ *  @param bodyB   One of the two bodies to link together.
+ *  @param min     Minimum angle in radians.
+ *  @param max     Maximum angle in radians.
+ *
+ *  @return The CCPhysicsJoint Object.
+ *  @see CCPhysicsBody
+ */
++(CCPhysicsJoint *)connectedRotaryLimitJointWithBodyA:(CCPhysicsBody *)bodyA
+                                                bodyB:(CCPhysicsBody *)bodyB
+                                                  min:(CGFloat)min
+                                                  max:(CGFloat)max;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating Ratchet Joints
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns [ratchet](http://en.wikipedia.org/wiki/Ratchet_%28device%29) joint whereby the angle of rotation between too bodies can go forward smoothly,
+ *  but the backwards motion is clipped at 'ratchet' intervals (crrnk-crrnk-crrnk).
+ *  No anchor points are specified as this joint can be used in conjunction with a pivot joint to ratchet its range of motion.
+ *
+ *  @param bodyA   One of the two bodies to link together.
+ *  @param bodyB   One of the two bodies to link together.
+ *  @param phase   Phase angle in Radians [0, 2 PI] describing where within the rathet interval the joint is located.
+ *  @param ratchet Ratchet interval angle in radians.
+ *
+ *  @return The CCPhysicsJoint Object.
+ *  @see CCPhysicsBody
+ */
++(CCPhysicsJoint *)connectedRatchetJointWithBodyA:(CCPhysicsBody *)bodyA
+                                            bodyB:(CCPhysicsBody *)bodyB
+                                            phase:(CGFloat)phase
+                                          ratchet:(CGFloat)ratchet;
+
+
+/// -----------------------------------------------------------------------
 /// @name Accessing Physics Joint Attributes
 /// -----------------------------------------------------------------------
 
