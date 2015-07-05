@@ -135,7 +135,7 @@
 
 @implementation OALSequentialActions
 
-@synthesize actions = actions_;
+@synthesize actions = _actions;
 @synthesize pDurations = pDurations_;
 @synthesize currentAction = currentAction_;
 
@@ -183,7 +183,7 @@
 
 - (void) dealloc
 {
-	as_release(actions_);
+	as_release(_actions);
 	as_release(pDurations_);
     as_superdealloc();
 }
@@ -195,7 +195,7 @@
 {
 	// Calculate the total duration in seconds of all children.
 	duration_ = 0;
-	for(OALAction* action in actions_)
+	for(OALAction* action in _actions)
 	{
 		[action prepareWithTarget:target];
 		duration_ += action.duration;
@@ -206,7 +206,8 @@
 	if(0 == duration_)
 	{
 		// Easy case: 0 duration.
-		for(OALAction* action in actions_)
+        NSUInteger count = _actions.count;
+        for(NSUInteger i=0; i<count; i++)
 		{
 			[pDurations_ addObject:[NSNumber numberWithFloat:0]];
 		}
@@ -214,16 +215,16 @@
 	else
 	{
 		// Complex case: > 0 duration.
-		for(OALAction* action in actions_)
+		for(OALAction* action in _actions)
 		{
 			[pDurations_ addObject:[NSNumber numberWithFloat:action.duration/duration_]];
 		}
 	}
 
 	// Start at the first action.
-	if([actions_ count] > 0)
+	if([_actions count] > 0)
 	{
-		self.currentAction = [actions_ objectAtIndex:0];
+		self.currentAction = [_actions objectAtIndex:0];
 		pCurrentActionDuration_ = [[pDurations_ objectAtIndex:0] floatValue];
 	}
 	else
@@ -272,14 +273,14 @@
 
 		// Move on to the next action.
 		actionIndex_++;
-		if(actionIndex_ >= [actions_ count])
+		if(actionIndex_ >= [_actions count])
 		{
 			// If there are no more actions, we are done.
 			return;
 		}
 
 		// Store some info about the new current action and start it running.
-		self.currentAction = [actions_ objectAtIndex:actionIndex_];
+		self.currentAction = [_actions objectAtIndex:actionIndex_];
 		pCurrentActionDuration_ = [[pDurations_ objectAtIndex:actionIndex_] floatValue];
 		pCurrentActionComplete_ = 0;
 		[currentAction_ startAction];

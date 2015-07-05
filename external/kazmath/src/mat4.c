@@ -106,8 +106,8 @@ int gaussj(kmMat4 *a, kmMat4 *b)
             if (ipiv[j] != 1) {
                 for (k = 0; k < n; k++) {
                     if (ipiv[k] == 0) {
-                        if (abs(get(a,j, k)) >= big) {
-                            big = abs(get(a,j, k));
+                        if (fabsf(get(a,j, k)) >= big) {
+                            big = fabsf(get(a,j, k));
                             irow = j;
                             icol = k;
                         }

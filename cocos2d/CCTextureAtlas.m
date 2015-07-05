@@ -300,7 +300,7 @@
 	if( oldIndex == newIndex )
 		return;
 
-	NSUInteger howMany = labs( oldIndex - newIndex);
+	NSUInteger howMany = MAX(oldIndex, newIndex) - MIN(oldIndex, newIndex);
 	NSUInteger dst = oldIndex;
 	NSUInteger src = oldIndex + 1;
 	if( oldIndex > newIndex) {
