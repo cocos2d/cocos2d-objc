@@ -29,6 +29,18 @@
  cocos2d (cc) configuration file
 */
 
+// Used to just plain deprecate stuff
+#define CC_DEPRECATED(msg) __attribute((deprecated((msg))))
+
+// Used to deprecate stuff, if compiled for -x compatibility
+#ifdef COCOS2D_X_COMPATIBLE
+#define CC_DEPRECATED_X(msg) __attribute((deprecated((msg))))
+#else
+#define CC_DEPRECATED_X(msg)
+#endif
+
+
+
 /** @def CC_ENABLE_STACKABLE_ACTIONS
  If enabled, actions that alter the position property (eg: CCMoveBy, CCJumpBy, CCBezierBy, etc..) will be stacked.
  If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions. 

@@ -16,4 +16,8 @@ Objective-C/CCNode_objc
 
 
 
+Changes to the API
+------------------
+Help comments will be moved to CCClass_doc.h
+Base classes will be matched with -x functionality. Remaining functionality will be moved to CCClass_objc
 
