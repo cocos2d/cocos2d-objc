@@ -42,6 +42,19 @@
     [helloWorldButton setTarget:self selector:@selector(onSpinningClicked:)];
     [self addChild:helloWorldButton];
 
+    // Add a sprite
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini_test.png"];
+    sprite.position  = ccp(self.contentSize.width * 0.75,self.contentSize.height * 0.25);
+    sprite.scale = 2;
+    [self addChild:sprite];
+    
+    /*
+    sprite.effect = [CCEffectDropShadow effectWithShadowOffset:(GLKVector2){10, -10}
+                                                   shadowColor:[CCColor colorWithRed:0.5 green:0.3 blue:0.3 alpha:1.0]
+                                                    blurRadius:10];
+    */
+    
+    
     // done
 	return self;
 }

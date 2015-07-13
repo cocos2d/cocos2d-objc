@@ -38,6 +38,8 @@
     _sprite.position  = ccp(self.contentSize.width/2,self.contentSize.height/2);
     [self addChild:_sprite];
     
+    _sprite.effect = [CCEffectDropShadow effectWithShadowOffset:(GLKVector2){20, 20} shadowColor:[CCColor whiteColor] blurRadius:10];
+    
     // Animate sprite with action
     CCActionRotateBy* actionSpin = [CCActionRotateBy actionWithDuration:1.5f angle:360];
     [_sprite runAction:[CCActionRepeatForever actionWithAction:actionSpin]];
