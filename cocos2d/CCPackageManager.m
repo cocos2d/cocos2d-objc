@@ -537,7 +537,7 @@
     return NO;
 }
 
-- (void)setPackageFolderNameUndefinedError:(NSError **)error package:(CCPackage *)package
+- (BOOL)setPackageFolderNameUndefinedError:(NSError **)error package:(CCPackage *)package
 {
     if (error)
     {
@@ -548,9 +548,10 @@
                                                                                                   "Check delegate method customFolderName:packageContents:."],
                                          @"package" : package}];
     }
+    return (error == nil);
 }
 
-- (void)setPackageEmptyError:(NSError **)error package:(CCPackage *)package
+- (BOOL)setPackageEmptyError:(NSError **)error package:(CCPackage *)package
 {
     NSAssert(package.unzipURL, @"package.unzipURL must not be nil");
 
@@ -562,6 +563,7 @@
                                          @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"The zip file is empty: \"%@\"", package.unzipURL],
                                          @"package" : package}];
     }
+    return (error == nil);
 }
 
 - (BOOL)askDelegateForCustomFolderName:(CCPackage *)package files:(NSArray *)files

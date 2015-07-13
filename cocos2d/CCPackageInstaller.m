@@ -117,7 +117,7 @@
     return YES;
 }
 
-- (void)setNewError:(NSError **)errorPtr code:(NSInteger)code message:(NSString *)message underlyingError:(NSError *)underlyingError
+- (BOOL)setNewError:(NSError **)errorPtr code:(NSInteger)code message:(NSString *)message underlyingError:(NSError *)underlyingError
 {
     NSMutableDictionary *userInfo = [@{NSLocalizedDescriptionKey : message, @"package" : _package} mutableCopy];
     if (underlyingError)
@@ -137,11 +137,12 @@
     {
         CCLOG(@"[PACKAGE/INSTALL][ERROR] Error pointer not set.");
     }
+    return (error == nil);
 }
 
-- (void)setNewError:(NSError **)errorPtr code:(NSInteger)code message:(NSString *)message
+- (BOOL)setNewError:(NSError **)errorPtr code:(NSInteger)code message:(NSString *)message
 {
-    [self setNewError:errorPtr code:code message:message underlyingError:nil];
+    return [self setNewError:errorPtr code:code message:message underlyingError:nil];
 }
 
 @end
