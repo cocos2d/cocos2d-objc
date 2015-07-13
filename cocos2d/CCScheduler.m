@@ -397,7 +397,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		
 		if(timer.paused){
 			// Release the timer now in case it never becomes rescheduled.
-			CFRelease((__bridge CFTypeRef)timer);
+			// CFRelease((__bridge CFTypeRef)timer);
 		} else if(timer.requiresDelay){
 			[timer applyPauseDelay:_currentTime];
 			[self scheduleTimer:timer retain:NO];

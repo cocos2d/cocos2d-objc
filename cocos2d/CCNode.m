@@ -1410,10 +1410,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     BOOL gotParentSize = NO;
     CGSize parentsContentSizeInPoints;
     
-    CGPoint position;
     
     float x = positionInPoints.x;
     float y = positionInPoints.y;
+    CGPoint position = (CGPoint){x, y};
     
     // Account for reference corner
     CCPositionReferenceCorner corner = type.corner;
