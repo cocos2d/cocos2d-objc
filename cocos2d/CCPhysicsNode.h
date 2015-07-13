@@ -36,7 +36,7 @@ typedef struct CCContactSet {
 	CGPoint normal;
 	
 	/// The array of contact points.
-	struct {
+	struct CCContactPoint {
 		/// The absolute position of the contact on the surface of each shape.
 		CGPoint pointA, pointB;
 		
