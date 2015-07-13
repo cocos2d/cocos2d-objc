@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------
 // NOTE !
 // If you get performance problems, due to high CPU loads, setting this flag might unload the CPU a little bit
-// If you set the flag, you have to go into Build Settings in your target,
+// If you set the flag, you have to go into "Build Phases" + "Compile Sources" in your target,
 // - and add the compiler flag -fno-objc-arc, to this file
 #define NO_ARC 0
 // -----------------------------------------------------------------

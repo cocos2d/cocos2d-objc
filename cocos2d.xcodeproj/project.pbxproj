@@ -959,7 +959,7 @@
 		D38058211889CE7700822437 /* CCCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D380581F1889CE7700822437 /* CCCache.m */; };
 		D3903B0A1995285B003AA81A /* CCEffectBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = D3903B081995285B003AA81A /* CCEffectBlur.h */; };
 		D3903B0B1995285B003AA81A /* CCEffectBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B091995285B003AA81A /* CCEffectBlur.m */; };
-		D3903B0D1995288D003AA81A /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B0C1995288D003AA81A /* CCNoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D3903B0D1995288D003AA81A /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B0C1995288D003AA81A /* CCNoARC.m */; };
 		D3903B10199528A0003AA81A /* CCRenderDispatch.h in Headers */ = {isa = PBXBuildFile; fileRef = D3903B0E199528A0003AA81A /* CCRenderDispatch.h */; };
 		D3903B11199528A0003AA81A /* CCRenderDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B0F199528A0003AA81A /* CCRenderDispatch.m */; };
 		D3903B14199528B6003AA81A /* CCMetalView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3903B12199528B6003AA81A /* CCMetalView.h */; };
@@ -1003,13 +1003,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0E0094921B3ACBEA006EA7FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CBBAB33D171D0BC4009B955F;
-			remoteInfo = "ObjectAL (OSX)";
-		};
 		7A40377A19E36EFF007B6E8F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
@@ -1086,6 +1079,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 83409DCD19D5B65B004B7EB9;
 			remoteInfo = SSZipArchive;
+		};
+		A6D0B5D31B53C775000249FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC39961219C3B80E00C93E5E;
+			remoteInfo = "ObjectAL (Android)";
+		};
+		A6D0B5D51B53C775000249FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
+			remoteInfo = "ObjectAL (Mac)";
 		};
 		B759E52C1880C66900E8166C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2382,7 +2389,8 @@
 			isa = PBXGroup;
 			children = (
 				FC39961B19C3B92F00C93E5E /* libObjectAL.a */,
-				0E0094931B3ACBEA006EA7FC /* ObjectAL.framework */,
+				A6D0B5D41B53C775000249FC /* libObjectAL (Android).a */,
+				A6D0B5D61B53C775000249FC /* libObjectAL (Mac).a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3082,13 +3090,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0E0094931B3ACBEA006EA7FC /* ObjectAL.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ObjectAL.framework;
-			remoteRef = 0E0094921B3ACBEA006EA7FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		7A40377B19E36EFF007B6E8F /* libObjectiveChipmunk-Android.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3129,6 +3130,20 @@
 			fileType = archive.ar;
 			path = libSSZipArchive.a;
 			remoteRef = 83409E3519D5B791004B7EB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A6D0B5D41B53C775000249FC /* libObjectAL (Android).a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libObjectAL (Android).a";
+			remoteRef = A6D0B5D31B53C775000249FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A6D0B5D61B53C775000249FC /* libObjectAL (Mac).a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libObjectAL (Mac).a";
+			remoteRef = A6D0B5D51B53C775000249FC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B759E52D1880C66900E8166C /* libObjectiveChipmunk-iPhone.a */ = {
