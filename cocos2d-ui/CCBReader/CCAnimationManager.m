@@ -820,7 +820,7 @@ static NSInteger ccbAnimationManagerID = 0;
     NSMutableArray* result = [[NSMutableArray alloc] init];
     
     CCBKeyframe* startKeyFrame = [seqProp.keyframes objectAtIndex:0];
-    CCBKeyframe* endKeyFrame   = [seqProp.keyframes objectAtIndex:0];
+    CCBKeyframe* endKeyFrame; //   = [seqProp.keyframes objectAtIndex:0];
   
     NSUInteger frameCount = [seqProp.keyframes count];
     

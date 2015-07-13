@@ -262,7 +262,7 @@ static float conditionShininess(float shininess);
             GLKMatrix4 lightNodeToWorld = CCEffectUtilsMat4FromAffineTransform(light.nodeToWorldTransform);
             
             // Compute the light's position in the effect node's coordinate system.
-            GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
+            GLKVector4 lightVector; // = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
             if (light.type == CCLightDirectional)
             {
                 lightVector = GLKVector4Normalize(GLKMatrix4MultiplyVector4(lightNodeToWorld, GLKVector4Make(0.0f, 1.0f, light.depth, 0.0f)));

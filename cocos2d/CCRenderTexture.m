@@ -257,10 +257,10 @@ FlipY(GLKMatrix4 projection)
 
 -(CCRenderer *)begin
 {
-	CCTexture *texture = self.texture;
-	if(texture == nil){
+	// CCTexture *texture = self.texture;
+	if(self.texture == nil){
 		[self create];
-		texture = self.texture;
+		// texture = self.texture;
 	}
 	
 	CCRenderer *renderer = [[CCDirector sharedDirector] rendererFromPool];
