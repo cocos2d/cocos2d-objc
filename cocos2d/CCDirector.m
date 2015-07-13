@@ -100,6 +100,8 @@ extern NSString * cocos2dVersion(void);
 	CCFrameBufferObject *_framebuffer;
 }
 
+@dynamic view;
+
 @synthesize animationInterval = _animationInterval;
 @synthesize runningScene = _runningScene;
 @synthesize displayStats = _displayStats;
