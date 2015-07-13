@@ -221,13 +221,16 @@ static NSUInteger globalOrderOfArrival = 1;
 -(void) setRotation: (float)newRotation
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
+	if (body)
+    {
 		CGPoint position = self.position;
 		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation - NodeToPhysicsRotation(self.parent));
 		body.relativeRotation = newRotation;
 		// Rotating the body will cause the node to move unless the CoG is the same as the anchor point.
 		self.position = position;
-	} else {
+	}
+    else
+    {
 		_rotationalSkewX = newRotation;
 		_rotationalSkewY = newRotation;
 		_isTransformDirty = _isInverseDirty = YES;
@@ -1328,18 +1331,36 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     
     // Convert position to points
     CCPositionUnit xUnit = type.xUnit;
-    if (xUnit == CCPositionUnitPoints) x = position.x;
-    else if (xUnit == CCPositionUnitUIPoints) x = position.x * director.UIScaleFactor;
-    else if(xUnit == CCPositionUnitNormalized){
+    if (xUnit == CCPositionUnitPoints)
+    {
+        x = position.x;
+    }
+    else if (xUnit == CCPositionUnitUIPoints)
+    {
+        x = position.x * director.UIScaleFactor;
+    }
+    else if (xUnit == CCPositionUnitNormalized)
+    {
         parentsContentSizeInPoints = _parent.contentSizeInPoints;
         gotParentSize = YES;
         x = position.x * parentsContentSizeInPoints.width;
     }
+    else
+    {
+        x = position.x;
+    }
     
     CCPositionUnit yUnit = type.yUnit;
-    if (yUnit == CCPositionUnitPoints) y = position.y;
-    else if (yUnit == CCPositionUnitUIPoints) y = position.y * director.UIScaleFactor;
-    else if (yUnit == CCPositionUnitNormalized){
+    if (yUnit == CCPositionUnitPoints)
+    {
+        y = position.y;
+    }
+    else if (yUnit == CCPositionUnitUIPoints)
+    {
+        y = position.y * director.UIScaleFactor;
+    }
+    else if (yUnit == CCPositionUnitNormalized)
+    {
         if(gotParentSize){
             y = position.y * parentsContentSizeInPoints.height;
         }else{
@@ -1347,6 +1368,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
             gotParentSize = YES;
             y = position.y * parentsContentSizeInPoints.height;
         }
+    }
+    else
+    {
+        y = position.y;
     }
     
     // Account for reference corner
