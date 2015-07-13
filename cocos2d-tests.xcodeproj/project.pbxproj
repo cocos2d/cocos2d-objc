@@ -189,7 +189,6 @@
 		D3DACC7B19E74BC000629E97 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9719E7356C006C050D /* MainMenu.xib */; };
 		D3DACC7C19E74BD100629E97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9519E7356C006C050D /* InfoPlist.strings */; };
 		D3DACC7D19E74BD500629E97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9819E7356C006C050D /* icon.icns */; };
-		D3DACC7E19E74BD800629E97 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9919E7356C006C050D /* Info.plist */; };
 		D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */ = {isa = PBXBuildFile; fileRef = D3E1842A19E861FC00A08B01 /* MetalShaders */; };
 		D3F52DE31A51FE2C00A18F54 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F52DE21A51FE2C00A18F54 /* Metal.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
@@ -265,6 +264,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0E1D2C9B1B53AA6A00EB2D29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B7E7DE341A76DB7D004234B7;
+			remoteInfo = cocos2dMacFramework;
+		};
 		75556A10185636F100ED1B0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7E2604017E7D278007067F0 /* Project object */;
@@ -735,6 +741,7 @@
 				D3763BB919E72F85006C050D /* libcocos2d.a */,
 				D3763BBB19E72F85006C050D /* libcocos2dAndroid.a */,
 				D3763BBF19E72F85006C050D /* libcocos2d-mac.a */,
+				0E1D2C9C1B53AA6A00EB2D29 /* cocos2dMacFramework.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -933,7 +940,7 @@
 		B7E2604017E7D278007067F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Cocos2d;
 				TargetAttributes = {
 					75556A01185636F100ED1B0F = {
@@ -975,6 +982,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		0E1D2C9C1B53AA6A00EB2D29 /* cocos2dMacFramework.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = cocos2dMacFramework.framework;
+			remoteRef = 0E1D2C9B1B53AA6A00EB2D29 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D3763BB919E72F85006C050D /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1144,7 +1158,6 @@
 				D344725419E73AD1000093A3 /* larabie-16-hd.plist in Resources */,
 				D344725519E73AD1000093A3 /* larabie-16-hd.png in Resources */,
 				D344725619E73AD1000093A3 /* larabie-16.plist in Resources */,
-				D3DACC7E19E74BD800629E97 /* Info.plist in Resources */,
 				D344725719E73AD1000093A3 /* larabie-16.png in Resources */,
 				D344725819E73AD1000093A3 /* markerFelt-hd.fnt in Resources */,
 				D344725919E73AD1000093A3 /* markerFelt-hd.png in Resources */,
@@ -1457,6 +1470,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
@@ -1499,6 +1513,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					"NS_BLOCK_ASSERTIONS=1",
@@ -1597,6 +1612,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1632,6 +1648,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
