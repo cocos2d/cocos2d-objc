@@ -1,4 +1,5 @@
 # git ignore template from: http://cocoaheads.tumblr.com/post/1350304132/gitignore-template-for-xcode3-4
+
 # cocos2d specific
 PLBlocks.framework/*
 *.pyc 
@@ -13,8 +14,10 @@ profile
 
 # Mac OS X Finder
 .DS_Store
+
 # Sparkle distribution Private Key (Don’t check me in!)
 dsa_priv.pem
+
 # XCode (and ancestors) per-user config (very noisy, and not relevant)
 *.mode1
 *.mode1v3
@@ -23,19 +26,24 @@ dsa_priv.pem
 *.perspectivev3
 *.pbxuser
 *.xccheckout
+
 # Xcode 4
-xcuserdata/
-project.xcworkspace/
+#xcuserdata/
+#project.xcworkspace/
+
 # Generated files
 VersionX-revision.h
+
 # build products
 build/
 DerivedData/
 *.[oa]
+
 # Other source repository archive directories (protects when importing)
 .hg
 .svn
 CVS
+
 # automatic backup files
 *~.nib
 *.swp
