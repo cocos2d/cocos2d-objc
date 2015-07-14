@@ -12,30 +12,18 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "cocos2d-ui.h"
 
 // -----------------------------------------------------------------------
 
-@interface IntroScene : CCScene
+@interface Credits : CCNodeColor
 
 // -----------------------------------------------------------------------
 
-- (instancetype)init;
++ (instancetype)creditsWithScene:(CCScene *)scene;
 
 // -----------------------------------------------------------------------
 
 @end
-
-
-
-
-
-
-
-
-
-
-
 
 
 

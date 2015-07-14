@@ -1,14 +1,18 @@
 //
-//  IntroScene.m
-//  ___PROJECTNAME___
+//  ___FILENAME___
 //
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
+//  Created by : ___FULLUSERNAME___
+//  Project    : ___PROJECTNAME___
+//  Date       : ___DATE___
 //
-// -----------------------------------------------------------------------
+//  Copyright (c) ___YEAR___ ___ORGANIZATIONNAME___.
+//  All rights reserved.
+//
+// -----------------------------------------------------------------
 
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
+#import "Credits.h"
 
 // -----------------------------------------------------------------------
 
@@ -25,8 +29,18 @@
     // Just make an assert, so that you can catch it in debug
     NSAssert(self, @"Whoops");
     
-    // Set the background to a sick pink color
-    self.colorRGBA = [CCColor colorWithRed:1.0 green:0.6 blue:0.6];
+    // get the size of the world
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    
+    // Set the background to medium grey
+    self.colorRGBA = [CCColor colorWithRed:0.5 green:0.5 blue:0.5];
+    
+    // add a solid colored node
+    CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
+    background.anchorPoint = CGPointZero;
+    background.contentSize = size;
+    background.color = [CCColor orangeColor];
+    [self addChild:background];
     
     // We need some Hello World stuff
     CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Chalkduster" fontSize:36.0f];
@@ -61,6 +75,16 @@
 
 // -----------------------------------------------------------------------
 
+- (void)onEnter
+{
+    [super onEnter];
+
+    Credits *credits = [Credits creditsWithScene:self];
+    [self addChild:credits];
+}
+
+// -----------------------------------------------------------------------
+
 - (void)onSpinningClicked:(id)sender
 {
     // start spinning scene with transition
@@ -71,6 +95,19 @@
 // -----------------------------------------------------------------------
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

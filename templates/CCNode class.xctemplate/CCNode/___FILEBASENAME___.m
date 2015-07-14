@@ -1,9 +1,12 @@
 //
 //  ___FILENAME___
-//  ___PROJECTNAME___
 //
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright ___YEAR___ ___ORGANIZATIONNAME___. All rights reserved.
+//  Created by : ___FULLUSERNAME___
+//  Project    : ___PROJECTNAME___
+//  Date       : ___DATE___
+//
+//  Copyright (c) ___YEAR___ ___ORGANIZATIONNAME___.
+//  All rights reserved.
 //
 // -----------------------------------------------------------------
 
@@ -12,6 +15,25 @@
 // -----------------------------------------------------------------
 
 @implementation ___FILEBASENAMEASIDENTIFIER___
+
+// -----------------------------------------------------------------
+
++ (instancetype)node
+{
+    return [[self alloc] init];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    NSAssert(self, @"Unable to create class %@", [self class]);
+    // class initalization goes here
+    
+    
+    
+    
+    return self;
+}
 
 // -----------------------------------------------------------------
 
