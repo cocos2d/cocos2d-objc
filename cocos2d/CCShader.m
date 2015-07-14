@@ -38,6 +38,8 @@
 #import "CCRenderDispatch.h"
 #import "CCMetalSupport_Private.h"
 
+// ***********************************************************************
+// These are the buildt in uniforms
 
 NSString * const CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";
 NSString * const CCShaderUniformProjection = @"cc_Projection";
@@ -52,14 +54,13 @@ NSString * const CCShaderUniformMainTexture = @"cc_MainTexture";
 NSString * const CCShaderUniformNormalMapTexture = @"cc_NormalMapTexture";
 NSString * const CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 
-
 // Stringify macros
 #define STR(s) #s
 #define XSTR(s) STR(s)
 
-/*
-	main texture size points/pixels?
-*/
+// ***********************************************************************
+// These are the lines loaded for both vertex and fragment shaders
+
 static NSString *CCShaderHeader =
 	@"#ifndef GL_ES\n"
 	@"#define lowp\n"
@@ -81,6 +82,9 @@ static NSString *CCShaderHeader =
 	@"varying highp vec2 cc_FragTexCoord2;\n\n"
 	@"// End Cocos2D shader header.\n\n";
 
+// ***********************************************************************
+// These are the additional lines loaded for both vertex shaders
+
 static NSString *CCVertexShaderHeader =
 	@"#ifdef GL_ES\n"
 	@"precision highp float;\n"
@@ -92,11 +96,16 @@ static NSString *CCVertexShaderHeader =
 	@"attribute highp vec4 cc_Color;\n\n"
 	@"// End Cocos2D vertex shader header.\n\n";
 
+// ***********************************************************************
+// These are the additional lines loaded for both fragment shaders
+
 static NSString *CCFragmentShaderHeader =
 	@"#ifdef GL_ES\n"
 	@"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
 	@"#endif\n\n"
 	@"// End Cocos2D fragment shader header.\n\n";
+
+// ***********************************************************************
 
 static NSString *CCDefaultVShader =
 	@"void main(){\n"
