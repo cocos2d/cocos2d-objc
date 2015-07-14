@@ -475,14 +475,21 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 {
 	NSAssert(attributedString, @"Invalid attributedString");
     
-    CGSize originalDimensions = _dimensions;
-  
     CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+
+    // these lines
+    CGSize dimensions = [self convertContentSizeToPoints:_dimensions type:_dimensionsType];
+    dimensions.width *= scale;
+    dimensions.height *= scale;
+  
+    //replaces these lines
+    /*
+    CGSize originalDimensions = _dimensions;
     originalDimensions.width *= scale;
     originalDimensions.height *= scale;
-    
     CGSize dimensions = [self convertContentSizeToPoints:originalDimensions type:_dimensionsType];
-    
+    */
+     
     CGFloat shadowBlurRadius = _shadowBlurRadius * scale;
     CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);
     CGFloat outlineWidth = _outlineWidth * scale;
