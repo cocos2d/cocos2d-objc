@@ -12,7 +12,7 @@
 
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
-#import "Credits.h"
+#import "CCCredits.h"
 
 // -----------------------------------------------------------------------
 
@@ -56,11 +56,6 @@
     [helloWorldButton setTarget:self selector:@selector(onSpinningClicked:)];
     [self addChild:helloWorldButton];
 
-    // Add a sprite
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini_test.png"];
-    sprite.position  = ccp(self.contentSize.width * 0.75,self.contentSize.height * 0.25);
-    sprite.scale = 2;
-    [self addChild:sprite];
     
     /*
     sprite.effect = [CCEffectDropShadow effectWithShadowOffset:(GLKVector2){10, -10}
@@ -94,7 +89,12 @@
 
 - (void)infoPressed:(id)sender
 {
-    Credits *credits = [Credits creditsWithScene:self];
+    // open dictionary
+    NSString *filename = [[NSBundle mainBundle] pathForResource:@"credits.plist" ofType:nil];
+    NSDictionary *creditsDict = [NSDictionary dictionaryWithContentsOfFile:filename];
+    
+    // create list of CCCredits
+    CCCredits *credits = [CCCredits creditsWithScene:self andDictionary:creditsDict];
     [self addChild:credits];
 }
 

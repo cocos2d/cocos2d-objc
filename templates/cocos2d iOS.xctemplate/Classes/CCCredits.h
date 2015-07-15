@@ -15,11 +15,11 @@
 
 // -----------------------------------------------------------------------
 
-@interface Credits : CCNodeColor
+@interface CCCredits : CCNodeColor
 
 // -----------------------------------------------------------------------
 
-+ (instancetype)creditsWithScene:(CCScene *)scene;
++ (instancetype)creditsWithScene:(CCScene *)scene andDictionary:(NSDictionary *)dict;
 
 // -----------------------------------------------------------------------
 

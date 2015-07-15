@@ -10,37 +10,51 @@
 //
 // -----------------------------------------------------------------
 
-#import "Credits.h"
+#import "CCCredits.h"
 #import "CCNode_Private.h"
 #import "cocos2d-ui.h"
 
 // -----------------------------------------------------------------------
+// The CCCredits is a small helper class, creating a nice credits scroll
+//
+// It demonstrates a couple of techniques
+// 1) Reading data from a plist (Yay, data-driven design)
+// 2) Replacing shaders of a node with ablurry greyscale shader (in this case the entire scene)
+// 3) Some basic touch setup and handling
+// 4) Buttons with callbacks
+// 5) The power of CCActions
+// 6) How a node can kill itself by removing from parent
+// -----------------------------------------------------------------------
 
-@implementation Credits
+@implementation CCCredits
 {
     NSMutableArray *_shaderStack;
     NSUInteger _shaderStackPointer;
     __weak CCScene *_scene;
     CCNode *_scrollNode;
+    float _spacing;
+    BOOL _useGreyScale;
     float _yPos;
+    float _scrollSpeed;
     CGPoint _lastPosition;
     BOOL _isScrolling;
     BOOL _endGame;
     CCButton *_back;
+    NSMutableArray *_endgame;
 }
 
 // -----------------------------------------------------------------------
 
-+ (instancetype)creditsWithScene:(CCScene *)scene
++ (instancetype)creditsWithScene:(CCScene *)scene andDictionary:(NSDictionary *)dict
 {
-    return [[self alloc] initWithScene:scene];
+    return [[self alloc] initWithScene:scene andDictionary:dict];
 }
 
-- (instancetype)initWithScene:(CCScene *)scene;
+- (instancetype)initWithScene:(CCScene *)scene andDictionary:(NSDictionary *)dict
 {
     CGSize size = [CCDirector sharedDirector].viewSize;
-    self = [super initWithColor:[CCColor whiteColor] width:size.width height:size.height];
-    self.opacity = 0.0;
+    self = [super initWithColor:[CCColor grayColor] width:size.width height:size.height];
+    self.opacity = [[dict objectForKey:@"background.opacity"] floatValue];
     
     self.anchorPoint = CGPointZero;
     self.userInteractionEnabled = YES;
@@ -50,49 +64,49 @@
     _yPos = 0.5;
     _isScrolling = YES;
     _endGame = NO;
+    _spacing = [[dict objectForKey:@"spacing"] floatValue];
+    _useGreyScale = [[dict objectForKey:@"use.greyscale"] boolValue];
+    _scrollSpeed = [[dict objectForKey:@"scroll.speed"] floatValue];
     
-    // create list of credits
-    NSString *filename = [[NSBundle mainBundle] pathForResource:@"team.plist" ofType:nil];
-    NSDictionary *team = [NSDictionary dictionaryWithContentsOfFile:filename];
-    
+    // create a scroll node occupying the entire screen
     _scrollNode = [CCNode new];
     _scrollNode.contentSize = [CCDirector sharedDirector].viewSize;
     // allow us to fade the scrollnode and all its children
     _scrollNode.cascadeOpacityEnabled = YES;
     [self addChild:_scrollNode];
     
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"angry.png"];
+    // create the sprite
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:[dict objectForKey:@"image"]];
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = (CGPoint){0.5, _yPos};
-    _yPos -= 0.25;
     [_scrollNode addChild:sprite];
-    
-    CCLabelTTF *label;
-    
-    label = [CCLabelTTF labelWithString:@"Cocos2D was made by" fontName:@"ArialMT" fontSize:32];
-    label.positionType = CCPositionTypeNormalized;
-    label.position = (CGPoint){0.5, _yPos};
-    _yPos -= 0.1;
-    [_scrollNode addChild:label];
-    
-    NSString *key = @"New item - ";
-    for (int index = 1; index < 999; index ++)
-    {
-        NSString *entry = [team objectForKey:[NSString stringWithFormat:@"%@%d", key, index]];
-        if (entry != nil)
-        {
-            CCLabelTTF *label = [CCLabelTTF labelWithString:entry fontName:@"ArialMT" fontSize:24];
-            label.positionType = CCPositionTypeNormalized;
-            label.position = (CGPoint){0.5, _yPos};
-            _yPos -= 0.1;
-            [_scrollNode addChild:label];
-        }
-        else
-        {
-            break;
-        }
-    }
 
+    // adjust yPos for first section
+    _yPos -= (sprite.contentSize.height * 0.5) / [CCDirector sharedDirector].viewSize.height;
+    _yPos -= _spacing;
+    
+    // load the sections
+    for (int sectionIndex = 1; sectionIndex < 999; sectionIndex ++)
+    {
+        NSDictionary *section = [dict objectForKey:[NSString stringWithFormat:@"section - %d", sectionIndex]];
+        if (section != nil)
+            [self loadSectionWithDictionary:section];
+        else
+            break;
+    }
+    
+    // load endgame
+    _endgame = [NSMutableArray array];
+    NSDictionary *endGameDict = [dict objectForKey:@"endgame"];
+    for (int creditIndex = 1; creditIndex < 999; creditIndex ++)
+    {
+        NSString *endgame = [endGameDict objectForKey:[NSString stringWithFormat:@"credit - %d", creditIndex]];
+        if (endgame != nil)
+            [_endgame addObject:endgame];
+        else
+            break;
+    }
+    
     // back button
     _back = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"back.png"]];
     _back.positionType = CCPositionTypeNormalized;
@@ -101,9 +115,41 @@
     [self addChild:_back];
     
     // traverse all nodes, and swap their shaders
-    [self replaceShaderWithGreyScaleShader:_scene];
+    if (_useGreyScale) [self replaceShaderWithGreyScaleShader:_scene];
     
     return self;
+}
+
+// -----------------------------------------------------------------------
+
+- (void)loadSectionWithDictionary:(NSDictionary *)dict
+{
+    CCLabelTTF *label;
+    
+    label = [CCLabelTTF labelWithString:[dict objectForKey:@"header"] fontName:@"ArialMT" fontSize:40];
+    label.positionType = CCPositionTypeNormalized;
+    label.position = (CGPoint){0.5, _yPos};
+    _yPos -= _spacing;
+    [_scrollNode addChild:label];
+    
+    NSString *key = @"credit - ";
+    for (int index = 1; index < 999; index ++)
+    {
+        NSString *entry = [dict objectForKey:[NSString stringWithFormat:@"%@%d", key, index]];
+        if (entry != nil)
+        {
+            CCLabelTTF *label = [CCLabelTTF labelWithString:entry fontName:@"ArialMT" fontSize:24];
+            label.positionType = CCPositionTypeNormalized;
+            label.position = (CGPoint){0.5, _yPos};
+            _yPos -= _spacing;
+            [_scrollNode addChild:label];
+        }
+        else
+        {
+            break;
+        }
+    }
+    _yPos -= _spacing;
 }
 
 // -----------------------------------------------------------------------
@@ -143,7 +189,7 @@
 - (void)dealloc
 {
     _shaderStackPointer = 0;
-    [self restoreShader:_scene];
+    if (_useGreyScale) [self restoreShader:_scene];
 }
 
 // -----------------------------------------------------------------------
@@ -189,14 +235,14 @@
 {
     if (!_isScrolling) return;
     
-    float scrollAmountPrSecond = [CCDirector sharedDirector].viewSize.height * 0.125;
+    float scrollAmountPrSecond = [CCDirector sharedDirector].viewSize.height * _scrollSpeed;
     _scrollNode.position = (CGPoint){_scrollNode.position.x, _scrollNode.position.y + (scrollAmountPrSecond * delta)};
     // if all text scrolled out, start again
     
     if (_endGame) return;
     
-    // 0.25 is a hardcoded cut'n'try (dont do this at home guys)
-    if (_scrollNode.position.y > ((fabs(_yPos) + 0.25) * [CCDirector sharedDirector].viewSize.height))
+    // start fading a little before last line hits centre of screen
+    if (_scrollNode.position.y > ((fabs(_yPos) + 0.2) * [CCDirector sharedDirector].viewSize.height))
     {
         // endgame is on
         _endGame = YES;
@@ -214,18 +260,16 @@
                                      _scrollNode.position = CGPointZero;
                                      _isScrolling = NO;
                                      
-                                     // show final text
-                                     CCLabelTTF *label;
-                                     
-                                     label = [CCLabelTTF labelWithString:@"Cocos2D-ObjC" fontName:@"ArialMT" fontSize:36];
-                                     label.positionType = CCPositionTypeNormalized;
-                                     label.position = (CGPoint){0.5, 0.55};
-                                     [_scrollNode addChild:label];
-                                     
-                                     label = [CCLabelTTF labelWithString:@"2015" fontName:@"ArialMT" fontSize:36];
-                                     label.positionType = CCPositionTypeNormalized;
-                                     label.position = (CGPoint){0.5, 0.45};
-                                     [_scrollNode addChild:label];
+                                     // show endgame
+                                     _yPos = 0.5 + ((_endgame.count - 1) * _spacing * 0.5);
+                                     for (NSString *labelText in _endgame)
+                                     {
+                                         CCLabelTTF *label = [CCLabelTTF labelWithString:labelText fontName:@"ArialMT" fontSize:36];
+                                         label.positionType = CCPositionTypeNormalized;
+                                         label.position = (CGPoint){0.5, _yPos};
+                                         [_scrollNode addChild:label];
+                                         _yPos -= _spacing;
+                                     }
                                  }],
                                 [CCActionFadeIn actionWithDuration:0.5],
                                 [CCActionDelay actionWithDuration:2.0],
