@@ -80,7 +80,14 @@
     // Determine which language to use
     NSString* userLanguage = NULL;
     
-    NSArray* preferredLangs = [NSLocale preferredLanguages];
+    NSMutableArray* preferredLangs = [[NSLocale preferredLanguages] mutableCopy];
+    
+    // Add the default language as last choice for preferred languages
+    NSString* defaultLanguage = [ser objectForKey:@"defaultLanguage"];
+    if (defaultLanguage) {
+        [preferredLangs addObject:defaultLanguage];
+    }
+    
     for (NSString* preferredLang in preferredLangs)
     {
         // now loop thru languages from our spritebuilder
