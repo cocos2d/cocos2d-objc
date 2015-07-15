@@ -126,7 +126,7 @@ static float conditionShininess(float shininess);
     NSArray *shaders = @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
     NSArray *renderPasses = [CCEffectLightingImplGL buildRenderPassesWithInterface:interface];
     
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectLightingImplGL";
@@ -258,9 +258,9 @@ static float conditionShininess(float shininess);
 {
     __weak CCEffectLighting *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectLighting pass 0";
-    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;

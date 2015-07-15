@@ -110,7 +110,7 @@
     NSArray *renderPasses = [CCEffectBloomImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
 
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectBloomImplGL";
@@ -318,9 +318,9 @@
     // self is not necesssarily valid.
     __weak CCEffectBloom *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectBloom pass 0";
-    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
@@ -337,9 +337,9 @@
     }]];
     
     
-    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] initWithIndex:1];
+    CCEffectRenderPassDescriptor *pass1 = [CCEffectRenderPassDescriptor descriptor];
     pass1.debugLabel = @"CCEffectBloom pass 1";
-    pass1.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass1.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
@@ -355,11 +355,11 @@
     }]];
 
     
-    CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] initWithIndex:2];
+    CCEffectRenderPassDescriptor *pass2 = [CCEffectRenderPassDescriptor descriptor];
     pass2.debugLabel = @"CCEffectBloom pass 2";
-    pass2.texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
-    pass2.texCoord2Mapping = CCEffectTexCoordMapMainTex;
-    pass2.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    CCEffectTexCoordsMapping texCoordsMapping = { CCEffectTexCoordMapPreviousPassTex, CCEffectTexCoordMapMainTex };
+    pass2.texCoordsMapping = texCoordsMapping;
+    pass2.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];

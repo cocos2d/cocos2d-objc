@@ -22,24 +22,67 @@
 @end
 
 
-#pragma mark CCEffectRenderPassBeginBlockContext
+#pragma mark CCEffectBeginBlockContext
 
-@implementation CCEffectRenderPassBeginBlockContext
+@implementation CCEffectBeginBlockContext
 
--(id)initWithBlock:(CCEffectRenderPassBeginBlock)block;
+-(id)initWithBlock:(CCEffectBeginBlock)block uniformTranslationTable:(NSDictionary *)utt
 {
     if (self = [super init])
     {
         _block = [block copy];
+        _uniformTranslationTable = [utt copy];
     }
     return self;
 }
 
+-(id)initWithBlock:(CCEffectBeginBlock)block
+{
+    return [self initWithBlock:block uniformTranslationTable:nil];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    // CCEffectBeginBlockContext is immutable so no need to really copy.
+    return self;
+}
+
+@end
+
+
+#pragma mark CCEffectRenderPassDescriptor
+
+@implementation CCEffectRenderPassDescriptor
+
+-(id)init
+{
+    if((self = [super init]))
+    {
+        _shaderIndex = 0;
+        _texCoordsMapping = CCEffectTexCoordsMappingDefault;
+        _blendMode = [CCBlendMode premultipliedAlphaMode];
+        _beginBlocks = nil;
+        _updateBlocks = nil;
+        _debugLabel = nil;
+    }
+    return self;
+}
+
++(instancetype)descriptor
+{
+    return [[self alloc] init];
+}
+
 -(instancetype)copyWithZone:(NSZone *)zone
 {
-    CCEffectRenderPassBeginBlockContext *newContext = [[CCEffectRenderPassBeginBlockContext allocWithZone:zone] initWithBlock:_block];
-    newContext.uniformTranslationTable = _uniformTranslationTable;
-    return newContext;
+    CCEffectRenderPassDescriptor *newDescriptor = [[CCEffectRenderPassDescriptor alloc] init];
+    newDescriptor.shaderIndex = _shaderIndex;
+    newDescriptor.texCoordsMapping = _texCoordsMapping;
+    newDescriptor.blendMode = _blendMode;
+    newDescriptor.beginBlocks = _beginBlocks;
+    newDescriptor.updateBlocks = _updateBlocks;
+    newDescriptor.debugLabel = _debugLabel;
+    return newDescriptor;
 }
 
 @end
@@ -49,32 +92,41 @@
 
 @implementation CCEffectRenderPass
 
--(id)init
-{
-    return [self initWithIndex:0];
-}
-
 -(id)initWithIndex:(NSUInteger)indexInEffect
+  texCoordsMapping:(CCEffectTexCoordsMapping)texCoordsMapping
+         blendMode:(CCBlendMode *)blendMode
+       shaderIndex:(NSUInteger)shaderIndex
+      effectShader:(CCEffectShader *)effectShader
+       beginBlocks:(NSArray *)beginBlocks
+      updateBlocks:(NSArray *)updateBlocks
+        debugLabel:(NSString *)debugLabel
 {
     if((self = [super init]))
     {
         _indexInEffect = indexInEffect;
-        _shaderIndex = 0;
+        _texCoordsMapping = texCoordsMapping;
+        _blendMode = blendMode;
+        _shaderIndex = shaderIndex;
+        _effectShader = effectShader;
+        _beginBlocks = [beginBlocks copy];
         
-        _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
-        _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
+        if (updateBlocks)
+        {
+            _updateBlocks = [updateBlocks copy];
+        }
+        else
+        {
+            CCEffectUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+                if (passInputs.needsClear)
+                {
+                    [passInputs.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                }
+                [pass enqueueTriangles:passInputs];
+            };
+            _updateBlocks = @[[updateBlock copy]];
+        }
         
-        _beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){}]];
-        
-        CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
-            if (passInputs.needsClear)
-            {
-                [passInputs.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-            }
-            [pass enqueueTriangles:passInputs];
-        };
-        _updateBlocks = @[[updateBlock copy]];
-        _blendMode = [CCBlendMode premultipliedAlphaMode];
+        _debugLabel = [debugLabel copy];
         
         return self;
     }
@@ -82,23 +134,15 @@
     return self;
 }
 
--(instancetype)copyWithZone:(NSZone *)zone
+- (instancetype)copyWithZone:(NSZone *)zone
 {
-    CCEffectRenderPass *newPass = [[CCEffectRenderPass allocWithZone:zone] initWithIndex:_indexInEffect];
-    newPass.shaderIndex = _shaderIndex;
-    newPass.texCoord1Mapping = _texCoord1Mapping;
-    newPass.texCoord2Mapping = _texCoord2Mapping;
-    newPass.blendMode = _blendMode;
-    newPass.effectShader = _effectShader;
-    newPass.beginBlocks = [_beginBlocks copy];
-    newPass.updateBlocks = [_updateBlocks copy];
-    newPass.debugLabel = _debugLabel;
-    return newPass;
+    // CCEffectRenderPass is immutable so no need to really copy.
+    return self;
 }
 
 -(void)begin:(CCEffectRenderPassInputs *)passInputs
 {
-    for (CCEffectRenderPassBeginBlockContext *blockContext in _beginBlocks)
+    for (CCEffectBeginBlockContext *blockContext in _beginBlocks)
     {
         passInputs.uniformTranslationTable = blockContext.uniformTranslationTable;
         blockContext.block(self, passInputs);
@@ -107,7 +151,7 @@
 
 -(void)update:(CCEffectRenderPassInputs *)passInputs
 {
-    for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
+    for (CCEffectUpdateBlock block in _updateBlocks)
     {
         block(self, passInputs);
     }

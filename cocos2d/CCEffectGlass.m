@@ -43,7 +43,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     NSArray *renderPasses = [CCEffectGlassImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders = [CCEffectGlassImplGL buildShaders];
 
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectGlass";
@@ -217,9 +217,9 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 {
     __weak CCEffectGlass *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectGlass pass 0";
-    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;

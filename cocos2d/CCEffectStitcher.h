@@ -10,7 +10,7 @@
 
 @interface CCEffectStitcher : NSObject
 
-@property (nonatomic, readonly) NSArray *renderPasses;
+@property (nonatomic, readonly) NSArray *renderPassDescriptors;
 @property (nonatomic, readonly) NSArray *shaders;
 
 - (id)init;

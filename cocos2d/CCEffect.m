@@ -27,17 +27,16 @@ const CCEffectPrepareResult CCEffectPrepareNoop     = { CCEffectPrepareSuccess, 
 
 @implementation CCEffectImpl
 
--(id)initWithRenderPasses:(NSArray *)renderPasses shaders:(NSArray *)shaders
+-(id)initWithRenderPassDescriptors:(NSArray *)renderPassDescriptors shaders:(NSArray *)shaders
 {
     if((self = [super init]))
     {
         _stitchFlags = CCEffectFunctionStitchBoth;
         _firstInStack = YES;
         
-        // Copy these arrays so the caller can't mutate them
-        // behind our backs later (they could be NSMutableArray
+        // Copy the shader array so the caller can't mutate it
+        // behind our backs later (it could be NSMutableArray
         // after all).
-        _renderPasses = [renderPasses copy];
         _shaders = [shaders copy];
         
         _shaderUniforms = [[NSMutableDictionary alloc] init];
@@ -54,22 +53,41 @@ const CCEffectPrepareResult CCEffectPrepareNoop     = { CCEffectPrepareSuccess, 
         
         // Setup the pass shaders based on the pass shader indices and
         // supplied shaders.
-        for (CCEffectRenderPass *pass in _renderPasses)
+        NSUInteger passIndex = 0;
+        NSMutableArray *renderPasses = [NSMutableArray array];
+        for (CCEffectRenderPassDescriptor *passDescriptor in renderPassDescriptors)
         {
-            NSAssert([pass isKindOfClass:[CCEffectRenderPass class]], @"Expected a CCEffectRenderPass but received something else.");
-            NSAssert(pass.shaderIndex < _shaders.count, @"Supplied shader index out of range.");
-            
-            pass.effectShader = _shaders[pass.shaderIndex];
+            NSAssert([passDescriptor isKindOfClass:[CCEffectRenderPassDescriptor class]], @"Expected a CCEffectRenderPassDescriptor but received something else.");
+            NSAssert(passDescriptor.shaderIndex < _shaders.count, @"Supplied shader index out of range.");
             
             // If a uniform translation table is not set already, set it to the default.
-            for (CCEffectRenderPassBeginBlockContext *blockContext in pass.beginBlocks)
+            NSMutableArray *beginBlocks = [NSMutableArray array];
+            for (CCEffectBeginBlockContext *blockContext in passDescriptor.beginBlocks)
             {
                 if (!blockContext.uniformTranslationTable)
                 {
-                    blockContext.uniformTranslationTable = allUTTs[pass.shaderIndex];
+                    [beginBlocks addObject:[[CCEffectBeginBlockContext alloc] initWithBlock:blockContext.block uniformTranslationTable:allUTTs[passDescriptor.shaderIndex]]];
+                }
+                else
+                {
+                    [beginBlocks addObject:blockContext];
                 }
             }
+
+            CCEffectRenderPass *pass = [[CCEffectRenderPass alloc] initWithIndex:passIndex
+                                                                texCoordsMapping:passDescriptor.texCoordsMapping
+                                                                       blendMode:passDescriptor.blendMode
+                                                                     shaderIndex:passDescriptor.shaderIndex
+                                                                    effectShader:_shaders[passDescriptor.shaderIndex]
+                                                                     beginBlocks:beginBlocks
+                                                                    updateBlocks:passDescriptor.updateBlocks
+                                                                      debugLabel:passDescriptor.debugLabel];
+            
+            [renderPasses addObject:pass];
+            
+            passIndex++;
         }
+        _renderPasses = [renderPasses copy];
     }
     return self;
 }

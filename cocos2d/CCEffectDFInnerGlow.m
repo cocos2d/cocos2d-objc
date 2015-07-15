@@ -39,7 +39,7 @@
     NSArray *renderPasses = [CCEffectDFInnerGlowImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders = [CCEffectDFInnerGlowImplGL buildShaders];
     
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFInnerGlowImplGL";
@@ -157,10 +157,10 @@
 {
     __weak CCEffectDFInnerGlow *weakInterface = interface;
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectDFInnerGlow pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakInterface.distanceField;
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;

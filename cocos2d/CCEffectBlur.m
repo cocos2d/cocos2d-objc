@@ -98,7 +98,7 @@
     NSArray *renderPasses = [CCEffectBlurImplGL buildRenderPasses];
     NSArray *shaders =  @[[[CCEffectShader alloc] initWithVertexShaderBuilder:vertShaderBuilder fragmentShaderBuilder:fragShaderBuilder]];
 
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectBlurImplGL";
@@ -271,10 +271,10 @@
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
 
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectBlur pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
@@ -288,10 +288,10 @@
     }]];
 
     
-    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] initWithIndex:1];
+    CCEffectRenderPassDescriptor *pass1 = [CCEffectRenderPassDescriptor descriptor];
     pass1.debugLabel = @"CCEffectBlur pass 1";
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass1.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass1.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         

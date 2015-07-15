@@ -32,7 +32,7 @@
     NSArray *renderPasses = [CCEffectOutlineImplGL buildRenderPassesWithInterface:interface];
     NSArray *shaders = [CCEffectOutlineImplGL buildShaders];
 
-    if((self = [super initWithRenderPasses:renderPasses shaders:shaders]))
+    if((self = [super initWithRenderPassDescriptors:renderPasses shaders:shaders]))
     {
         _interface = interface;
         self.debugName = @"CCEffectOutline";
@@ -116,10 +116,10 @@
 {
     __weak CCEffectOutline *weakInterface = interface;
     
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass0 = [CCEffectRenderPassDescriptor descriptor];
     pass0.debugLabel = @"CCEffectOutline pass 0";
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass0.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
@@ -141,10 +141,10 @@
     
     // Pass 1 is a WIP (trying to scale the outline before applying it. (a bad idea so far..)
 #if 1
-    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPassDescriptor *pass1 = [CCEffectRenderPassDescriptor descriptor];
     pass1.debugLabel = @"CCEffectOutline pass 1";
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass1.beginBlocks = @[[[CCEffectRenderPassBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+    pass1.beginBlocks = @[[[CCEffectBeginBlockContext alloc] initWithBlock:^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];

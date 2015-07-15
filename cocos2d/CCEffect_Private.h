@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 @property (nonatomic, readonly) BOOL firstInStack;
 
 
--(id)initWithRenderPasses:(NSArray *)renderPasses shaders:(NSArray *)shaders;
+-(id)initWithRenderPassDescriptors:(NSArray *)renderPasses shaders:(NSArray *)shaders;
 
 -(CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
