@@ -68,19 +68,16 @@
                                                     blurRadius:10];
     */
     
+    // info button
+    CCButton *info = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"info.png"]];
+    info.positionType = CCPositionTypeNormalized;
+    info.position = (CGPoint){0.92, 0.90};
+    [info setTarget:self selector:@selector(infoPressed:)];
+    [self addChild:info];
+
     
     // done
 	return self;
-}
-
-// -----------------------------------------------------------------------
-
-- (void)onEnter
-{
-    [super onEnter];
-
-    Credits *credits = [Credits creditsWithScene:self];
-    [self addChild:credits];
 }
 
 // -----------------------------------------------------------------------
@@ -90,6 +87,15 @@
     // start spinning scene with transition
     [[CCDirector sharedDirector] replaceScene:[HelloWorldScene new]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
+}
+
+// -----------------------------------------------------------------------
+
+
+- (void)infoPressed:(id)sender
+{
+    Credits *credits = [Credits creditsWithScene:self];
+    [self addChild:credits];
 }
 
 // -----------------------------------------------------------------------

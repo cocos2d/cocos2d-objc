@@ -22,7 +22,7 @@ void main()
     // Normally this should be 1.0 / textureSize, but we do not know that one
     // For that we would have to set up a uniform, and pass it to the shader
     // For now we just use a value which will give "most sprites" a slight blurr
-    vec2 pixelSize = vec2(0.005, 0.005);
+    vec2 pixelSize = vec2(0.010, 0.010);
     
     vec4 color = texture2D(cc_MainTexture, cc_FragTexCoord1);
 

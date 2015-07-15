@@ -212,22 +212,22 @@
                                      // clear scrollNode (not visible anyways)
                                      [_scrollNode removeAllChildrenWithCleanup:YES];
                                      _scrollNode.position = CGPointZero;
-                                     _scrollNode.opacity = 1.0;
                                      _isScrolling = NO;
                                      
                                      // show final text
                                      CCLabelTTF *label;
                                      
-                                     label = [CCLabelTTF labelWithString:@"Cocos2D-ObjC" fontName:@"ArialMT" fontSize:24];
+                                     label = [CCLabelTTF labelWithString:@"Cocos2D-ObjC" fontName:@"ArialMT" fontSize:36];
                                      label.positionType = CCPositionTypeNormalized;
-                                     label.position = (CGPoint){0.5, 0.5};
+                                     label.position = (CGPoint){0.5, 0.55};
                                      [_scrollNode addChild:label];
                                      
-                                     label = [CCLabelTTF labelWithString:@"2015" fontName:@"ArialMT" fontSize:24];
+                                     label = [CCLabelTTF labelWithString:@"2015" fontName:@"ArialMT" fontSize:36];
                                      label.positionType = CCPositionTypeNormalized;
                                      label.position = (CGPoint){0.5, 0.45};
                                      [_scrollNode addChild:label];
                                  }],
+                                [CCActionFadeIn actionWithDuration:0.5],
                                 [CCActionDelay actionWithDuration:2.0],
                                 [CCActionFadeOut actionWithDuration:1.0],
                                 [CCActionCallBlock actionWithBlock:^(void)
