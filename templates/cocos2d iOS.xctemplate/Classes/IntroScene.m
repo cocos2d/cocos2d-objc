@@ -42,6 +42,12 @@
     background.color = [CCColor orangeColor];
     [self addChild:background];
     
+    // add grossini (we have missed him)
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini_hi.png"];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = (CGPoint){0.1, 0.1};
+    [self addChild:sprite];
+    
     // We need some Hello World stuff
     CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Chalkduster" fontSize:36.0f];
     label.positionType = CCPositionTypeNormalized;
@@ -70,6 +76,8 @@
     [info setTarget:self selector:@selector(infoPressed:)];
     [self addChild:info];
 
+    // enable touch handing
+    self.userInteractionEnabled = YES;
     
     // done
 	return self;

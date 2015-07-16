@@ -4,14 +4,14 @@
 <dict>
 	<key>image</key>
 	<string>angry.png</string>
-	<key>background.opacity</key>
-	<string>0.5</string>
 	<key>use.greyscale</key>
 	<string>1</string>
 	<key>spacing</key>
 	<string>0.1</string>
 	<key>scroll.speed</key>
 	<string>0.125</string>
+	<key>music</key>
+	<string>cocos2d_blues.wav</string>
 	<key>section - 1</key>
 	<dict>
 		<key>header</key>

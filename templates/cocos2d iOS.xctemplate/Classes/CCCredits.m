@@ -19,19 +19,28 @@
 //
 // It demonstrates a couple of techniques
 // 1) Reading data from a plist (Yay, data-driven design)
-// 2) Replacing shaders of a node with ablurry greyscale shader (in this case the entire scene)
+// 2) Replacing shaders of a node with a blurry greyscale shader (in this case the entire scene)
 // 3) Some basic touch setup and handling
 // 4) Buttons with callbacks
 // 5) The power of CCActions
-// 6) How a node can kill itself by removing from parent
+// 6) How a node can kill itself by removing itself from parent
 // -----------------------------------------------------------------------
 
 @implementation CCCredits
 {
+    // ivars are great. You can never have too many (ahh, okay, maybe you can)
+    
+    // some internal stuff we are responsible for
     NSMutableArray *_shaderStack;
-    NSUInteger _shaderStackPointer;
-    __weak CCScene *_scene;
     CCNode *_scrollNode;
+    CCButton *_back;
+    NSMutableArray *_endgame;
+    
+    // some external stuff we are not responsible for (always makes those weak)
+    __weak CCScene *_scene;
+    
+    // and just some plain ivars which makes life easier
+    NSUInteger _shaderStackPointer;
     float _spacing;
     BOOL _useGreyScale;
     float _yPos;
@@ -39,8 +48,6 @@
     CGPoint _lastPosition;
     BOOL _isScrolling;
     BOOL _endGame;
-    CCButton *_back;
-    NSMutableArray *_endgame;
 }
 
 // -----------------------------------------------------------------------
@@ -52,13 +59,13 @@
 
 - (instancetype)initWithScene:(CCScene *)scene andDictionary:(NSDictionary *)dict
 {
-    CGSize size = [CCDirector sharedDirector].viewSize;
-    self = [super initWithColor:[CCColor grayColor] width:size.width height:size.height];
-    self.opacity = [[dict objectForKey:@"background.opacity"] floatValue];
+    self = [super init];
+    self.contentSize = [CCDirector sharedDirector].viewSize;
     
     self.anchorPoint = CGPointZero;
     self.userInteractionEnabled = YES;
     
+    // load stuff
     _shaderStack = [NSMutableArray array];
     _scene = scene;
     _yPos = 0.5;
@@ -149,6 +156,7 @@
             break;
         }
     }
+    // Take back one kadam to honor the Hebrew God
     _yPos -= _spacing;
 }
 
@@ -158,13 +166,13 @@
 {
     if ([node isKindOfClass:[CCSprite class]])
     {
-        CCLOG(@"Replacing shader for %@", [node class]);
+        // CCLOG(@"Replacing shader for %@", [node class]);
         // save shader and replace with greyscale
         CCShader *shader = node.shader;
         [_shaderStack addObject:shader];
         
         node.shader = [CCShader shaderNamed:@"shader.greyscale"];
-        node.opacity *= 0.5;
+        node.opacity *= 0.25;
     }
     // call recursively
     for (CCNode *child in node.children) [self replaceShaderWithGreyScaleShader:child];
@@ -174,10 +182,10 @@
 {
     if ([node isKindOfClass:[CCSprite class]])
     {
-        CCLOG(@"Restoring shader for %@", [node class]);
+        // CCLOG(@"Restoring shader for %@", [node class]);
         // restore shader for node
         node.shader = (CCShader *)[_shaderStack objectAtIndex:_shaderStackPointer];
-        node.opacity /= 0.5;
+        node.opacity /= 0.25;
         _shaderStackPointer ++;
     }
     // call recursively
@@ -280,6 +288,19 @@
                                  }],
                                 nil]];
     }
+}
+
+// -----------------------------------------------------------------------
+
+- (void)startEndGame
+{
+
+
+
+
+
+
+
 }
 
 // -----------------------------------------------------------------------
