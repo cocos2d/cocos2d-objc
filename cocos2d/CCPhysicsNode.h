@@ -262,7 +262,7 @@ A CCNode that enables physics simulation in it's children. Sometimes referred to
  The physics node has no designated initializer. You can create it with the standard `node` class method:
  
     CCPhysicsNode* physicsNode = [CCPhysicsNode node];
- 
+
  ### Using Physics
  
 To use physics in Cocos2D, you have to create a CCPhysicsNode instance and add it to the node hierarchy.
@@ -304,6 +304,9 @@ For simplicity, CCPhysicsNode does not use [SI units](http://en.wikipedia.org/wi
  @see [Redefining Gravity](https://www.youtube.com/watch?v=5xdbPhnfFEI)
  */
 @property(nonatomic, assign) CGPoint gravity;
+
+/** Damping in the space */
+@property(nonatomic, assign) double damping;
 
 /** @name Simulation Properties */
 
