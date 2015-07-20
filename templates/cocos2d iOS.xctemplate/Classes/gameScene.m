@@ -15,7 +15,7 @@
 // -----------------------------------------------------------------
 // some game constants
 
-const float kGamePaddleInset = 
+// const float kGamePaddleInset =
 
 
 
