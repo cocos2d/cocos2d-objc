@@ -12,30 +12,18 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "cocos2d-ui.h"
 
 // -----------------------------------------------------------------------
 
-@interface IntroScene : CCScene
+@interface CCCredits : CCNode
 
 // -----------------------------------------------------------------------
 
-- (instancetype)init;
++ (instancetype)creditsWithScene:(CCScene *)scene andDictionary:(NSDictionary *)dict;
 
 // -----------------------------------------------------------------------
 
 @end
-
-
-
-
-
-
-
-
-
-
-
 
 
 

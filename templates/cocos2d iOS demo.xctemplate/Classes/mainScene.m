@@ -10,8 +10,8 @@
 //
 // -----------------------------------------------------------------
 
-#import "HelloWorldScene.h"
-#import "IntroScene.h"
+#import "mainScene.h"
+#import "loadScene.h"
 #import "CCCredits.h"
 
 // -----------------------------------------------------------------------
@@ -21,7 +21,7 @@
 
 // -----------------------------------------------------------------------
 
-@implementation HelloWorldScene
+@implementation mainScene
 {
     CCSprite *_grossini;
     float _grossiniStart;

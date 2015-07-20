@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>image</key>
+	<string>angry.png</string>
+	<key>use.greyscale</key>
+	<string>1</string>
+	<key>spacing</key>
+	<string>0.1</string>
+	<key>scroll.speed</key>
+	<string>0.125</string>
+	<key>music</key>
+	<string>cocos2d_blues.wav</string>
+	<key>section - 1</key>
+	<dict>
+		<key>header</key>
+		<string>Cocod2D was made by</string>
+		<key>credit - 1</key>
+		<string>Ricardo Quesada</string>
+		<key>credit - 2</key>
+		<string>Scott Lembcke</string>
+		<key>credit - 3</key>
+		<string>Lars Birkemose</string>
+		<key>credit - 4</key>
+		<string>Thayer Andrews</string>
+		<key>credit - 5</key>
+		<string>Martin Walsh</string>
+		<key>credit - 6</key>
+		<string>Viktor Lidholt</string>
+		<key>credit - 7</key>
+		<string>John Twigg</string>
+		<key>credit - 8</key>
+		<string>Nicky Weber</string>
+		<key>credit - 9</key>
+		<string>Oleg Osin</string>
+		<key>credit - 10</key>
+		<string>araker</string>
+		<key>credit - 11</key>
+		<string>Steffen Itterheim</string>
+		<key>credit - 12</key>
+		<string>Andy Korth</string>
+		<key>credit - 13</key>
+		<string>manucorporat</string>
+		<key>credit - 14</key>
+		<string>Dominic Hadl</string>
+		<key>credit - 15</key>
+		<string>Marc Salem</string>
+		<key>credit - 16</key>
+		<string>Pierre David Belanger</string>
+		<key>credit - 17</key>
+		<string>rkachowski</string>
+		<key>credit - 18</key>
+		<string>slipster216</string>
+		<key>credit - 19</key>
+		<string>Richard Groves</string>
+		<key>credit - 20</key>
+		<string>darvin</string>
+		<key>credit - 21</key>
+		<string>Panajev</string>
+		<key>credit - 22</key>
+		<string>carlomorgantinizynga</string>
+		<key>credit - 23</key>
+		<string>danhd123</string>
+		<key>credit - 24</key>
+		<string>stuartcarnie</string>
+		<key>credit - 25</key>
+		<string>kalo</string>
+		<key>credit - 26</key>
+		<string>haqu</string>
+		<key>credit - 27</key>
+		<string>cjhanson</string>
+		<key>credit - 28</key>
+		<string>phausler</string>
+		<key>credit - 29</key>
+		<string>RobBoluga</string>
+		<key>credit - 30</key>
+		<string>LamPham</string>
+		<key>credit - 31</key>
+		<string>kstenerud</string>
+		<key>credit - 32</key>
+		<string>- and countless other passionate people - </string>
+	</dict>
+	<key>section - 2</key>
+	<dict>
+		<key>header</key>
+		<string>Music</string>
+		<key>credit - 1</key>
+		<string>The Cocos2D Blues</string>
+		<key>credit - 2</key>
+		<string>Written and performed by Lars Birkemose</string>
+	</dict>
+	<key>endgame</key>
+	<dict>
+		<key>credit - 1</key>
+		<string>Cocos2D-ObjC</string>
+		<key>credit - 2</key>
+		<string>2015</string>
+	</dict>
+</dict>
+</plist>
