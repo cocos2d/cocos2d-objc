@@ -12,12 +12,23 @@
 
 #import "HelloWorldScene.h"
 #import "IntroScene.h"
+#import "CCCredits.h"
+
+// -----------------------------------------------------------------------
+
+#define kGrossiniJumpTime 1.0
+#define kGrossiniJumps 5
 
 // -----------------------------------------------------------------------
 
 @implementation HelloWorldScene
 {
-    CCSprite *_sprite;
+    CCSprite *_grossini;
+    float _grossiniStart;
+    float _grossiniEnd;
+    float _grossiniJumpHeight;
+    float _grossiniJumpTime;
+    float _grossiniBase;
 }
 
 // -----------------------------------------------------------------------
@@ -33,26 +44,50 @@
     // Just make an assert, so that you can catch it in debug
     NSAssert(self, @"Whoops");
     
-    // Enable touch handling on scene node
+    // get the size of the world
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    
+    // Set the background to medium grey
+    self.colorRGBA = [CCColor colorWithRed:0.5 green:0.5 blue:0.5];
+    
+    // add a solid colored node
+    CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
+    background.anchorPoint = CGPointZero;
+    background.contentSize = size;
+    background.color = [CCColor orangeColor];
+    [self addChild:background];
+    
+    // add grossini (we have missed him)
+    _grossini = [CCSprite spriteWithImageNamed:@"grossini_hi.png"];
+    _grossini.positionType = CCPositionTypeNormalized;
+    _grossiniBase = 0.1;
+    _grossini.position = (CGPoint){0.1, _grossiniBase};
+    [self addChild:_grossini];
+    
+    // start button
+    CCButton *button;
+    button = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"start.png"]];
+    button.positionType = CCPositionTypeNormalized;
+    button.position = ccp(0.5, 0.6);
+    [button setTarget:self selector:@selector(startPressed:)];
+    [self addChild:button];
+
+    // setup button
+    button = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"setup.png"]];
+    button.positionType = CCPositionTypeNormalized;
+    button.position = ccp(0.5, 0.4);
+    [button setTarget:self selector:@selector(setupPressed:)];
+    [self addChild:button];
+    
+    // info button
+    button = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"info.png"]];
+    button.positionType = CCPositionTypeNormalized;
+    button.position = (CGPoint){0.92, 0.10};
+    [button setTarget:self selector:@selector(infoPressed:)];
+    [self addChild:button];
+
+    // enable touch handing
     self.userInteractionEnabled = YES;
-    
-    // Add a sprite
-    _sprite = [CCSprite spriteWithImageNamed:@"Icon-72.png"];
-    _sprite.position  = ccp(self.contentSize.width/2,self.contentSize.height/2);
-    [self addChild:_sprite];
-    
-    _sprite.effect = [CCEffectDropShadow effectWithShadowOffset:(GLKVector2){20, 20} shadowColor:[CCColor whiteColor] blurRadius:10];
-    
-    // Animate sprite with action
-    CCActionRotateBy* actionSpin = [CCActionRotateBy actionWithDuration:1.5f angle:360];
-    [_sprite runAction:[CCActionRepeatForever actionWithAction:actionSpin]];
-    
-    // Create a back button
-    CCButton *backButton = [CCButton buttonWithTitle:@"[ I Want Pink ]" fontName:@"Verdana-Bold" fontSize:18.0f];
-    backButton.positionType = CCPositionTypeNormalized;
-    backButton.position = ccp(0.85f, 0.95f); // Top Right of screen
-    [backButton setTarget:self selector:@selector(onBackClicked:)];
-    [self addChild:backButton];
 
     // we are out of here
 	return self;
@@ -67,7 +102,6 @@
 
 // -----------------------------------------------------------------------
 #pragma mark - Enter & Exit
-// -----------------------------------------------------------------------
 
 - (void)onEnter
 {
@@ -90,28 +124,83 @@
 
 // -----------------------------------------------------------------------
 #pragma mark - Touch Handler
-// -----------------------------------------------------------------------
 
--(void) touchBegan:(CCTouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLoc = [touch locationInNode:self];
+-(void) touchBegan:(CCTouch *)touch withEvent:(UIEvent *)event
+{
+    // check if we are touching grossini
+    if (![_grossini hitTestWithWorldPos:touch.locationInWorld]) return;
     
-    // Log touch location
-    CCLOG(@"Move sprite to @ %@",NSStringFromCGPoint(touchLoc));
+    // make grossini jump
+    _grossiniJumpTime = 0.0;
+    _grossiniStart = _grossini.position.x;
+    _grossiniEnd = CCRANDOM_0_1();
+    CCLOG(@"moving to %.2f", _grossiniEnd);
+    _grossiniJumpHeight = 0.2 + (0.5 * CCRANDOM_0_1());
+    [self schedule:@selector(updateGrossini:) interval:0.033];
     
-    // Move our sprite to touch location
-    CCActionMoveTo *actionMove = [CCActionMoveTo actionWithDuration:1.0f position:touchLoc];
-    [_sprite runAction:actionMove];
+}
+
+// -----------------------------------------------------------------------
+#pragma mark - Scheduled events
+
+- (void)updateGrossini:(NSTimeInterval)dt
+{
+    // total jump time is 1.0 seconds
+    _grossiniJumpTime += dt;
+    
+    float normalizedTime = _grossiniJumpTime / kGrossiniJumpTime;
+
+    // calculate linear x position
+    // this will make him move faster in the beginning
+    float progress = sqrtf(normalizedTime);
+    float xPos = (_grossiniStart * (1.0 - progress)) + (_grossiniEnd * progress);
+    
+    // calculate a decaying sin jump
+    float cycleTime = kGrossiniJumpTime / kGrossiniJumps;
+    int cycle = (int)(_grossiniJumpTime / cycleTime);
+    float height = sinf(M_PI * (_grossiniJumpTime - (cycle * cycleTime)) / cycleTime);
+    height *= _grossiniJumpHeight;
+    while (cycle > 0)
+    {
+        // each cycle decays height to 33% of previous
+        height *= 0.33;
+        cycle --;
+    }
+    
+    _grossini.position = (CGPoint){xPos, _grossiniBase + height};
+    
+    // stop grossini after kGrossiniJumpTime
+    if (_grossiniJumpTime >= kGrossiniJumpTime) [self unschedule:@selector(updateGrossini:)];
 }
 
 // -----------------------------------------------------------------------
 #pragma mark - Button Callbacks
+
 // -----------------------------------------------------------------------
 
-- (void)onBackClicked:(id)sender
+- (void)startPressed:(id)sender
 {
-    // back to intro scene with transition
-    [[CCDirector sharedDirector] replaceScene:[IntroScene new]
-                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
+    
+}
+
+// -----------------------------------------------------------------------
+
+- (void)setupPressed:(id)sender
+{
+    
+}
+
+// -----------------------------------------------------------------------
+
+- (void)infoPressed:(id)sender
+{
+    // open dictionary
+    NSString *filename = [[NSBundle mainBundle] pathForResource:@"credits.plist" ofType:nil];
+    NSDictionary *creditsDict = [NSDictionary dictionaryWithContentsOfFile:filename];
+    
+    // create list of CCCredits
+    CCCredits *credits = [CCCredits creditsWithScene:self andDictionary:creditsDict];
+    [self addChild:credits];
 }
 
 // -----------------------------------------------------------------------

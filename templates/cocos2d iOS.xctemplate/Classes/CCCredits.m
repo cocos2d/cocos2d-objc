@@ -117,7 +117,7 @@
     // back button
     _back = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"back.png"]];
     _back.positionType = CCPositionTypeNormalized;
-    _back.position = (CGPoint){0.92, 0.10};
+    _back.position = (CGPoint){0.08, 0.90};
     [_back setTarget:self selector:@selector(backPressed:)];
     [self addChild:_back];
     
@@ -125,6 +125,23 @@
     if (_useGreyScale) [self replaceShaderWithGreyScaleShader:_scene];
     
     return self;
+}
+
+// -----------------------------------------------------------------------
+
+- (void)onEnter
+{
+    [super onEnter];
+    // quick fade in
+    [_scrollNode runAction:[CCActionFadeIn actionWithDuration:0.25]];
+}
+
+- (void)onExit
+{
+    // add any exit code here
+    
+    
+    [super onExit];
 }
 
 // -----------------------------------------------------------------------

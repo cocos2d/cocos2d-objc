@@ -12,7 +12,6 @@
 
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
-#import "CCCredits.h"
 
 // -----------------------------------------------------------------------
 
@@ -29,81 +28,50 @@
     // Just make an assert, so that you can catch it in debug
     NSAssert(self, @"Whoops");
     
-    // get the size of the world
-    CGSize size = [CCDirector sharedDirector].viewSize;
-    
-    // Set the background to medium grey
-    self.colorRGBA = [CCColor colorWithRed:0.5 green:0.5 blue:0.5];
-    
-    // add a solid colored node
+    // background
     CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
     background.anchorPoint = CGPointZero;
-    background.contentSize = size;
-    background.color = [CCColor orangeColor];
+    background.contentSize = [CCDirector sharedDirector].viewSize;
+    background.color = [CCColor grayColor];
     [self addChild:background];
     
-    // add grossini (we have missed him)
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini_hi.png"];
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = (CGPoint){0.1, 0.1};
-    [self addChild:sprite];
+    // loading text
+    CCSprite *loading = [CCSprite spriteWithImageNamed:@"loading.png"];
+    loading.positionType = CCPositionTypeNormalized;
+    loading.position = (CGPoint){0.5, 0.5};
+    [self addChild:loading];
     
-    // We need some Hello World stuff
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Chalkduster" fontSize:36.0f];
-    label.positionType = CCPositionTypeNormalized;
-    label.color = [CCColor redColor];
-    label.position = ccp(0.5f, 0.5f); // Middle of screen
-    [self addChild:label];
+    // progress indicator
+    CCProgressNode *progress = [CCProgressNode progressWithSprite:[CCSprite spriteWithImageNamed:@"progress.png"]];
+    progress.positionType = CCPositionTypeNormalized;
+    progress.position = (CGPoint){0.5, 0.5};
+    progress.type = CCProgressNodeTypeRadial;
+    progress.rotation = 180;
+    progress.percentage = 0;
+    [self addChild:progress];
     
-    // Helloworld scene button
-    CCButton *helloWorldButton = [CCButton buttonWithTitle:@"[ Enough Pink ]" fontName:@"Verdana-Bold" fontSize:18.0f];
-    helloWorldButton.positionType = CCPositionTypeNormalized;
-    helloWorldButton.position = ccp(0.5f, 0.35f);
-    [helloWorldButton setTarget:self selector:@selector(onSpinningClicked:)];
-    [self addChild:helloWorldButton];
-
+    // run percentage
+    [progress runAction:[CCActionSequence actions:
+                         [CCActionTween actionWithDuration:2 key:@"percentage" from:0 to:100],
+                         [CCActionCallBlock actionWithBlock:^(void)
+                          {
+                              [progress runAction:[CCActionEaseOut actionWithAction:[CCActionFadeOut actionWithDuration:1.0] rate:2.0]];
+                              [progress runAction:[CCActionEaseOut actionWithAction:[CCActionScaleTo actionWithDuration:1.0 scale:5.0] rate:2.0]];
+                              [loading runAction:[CCActionFadeOut actionWithDuration:1.0]];
+                          }],
+                         [CCActionDelay actionWithDuration:1.5], // here we wait for scale and fade to complete
+                         [CCActionCallBlock actionWithBlock:^(void)
+                          {
+                              [[CCDirector sharedDirector] replaceScene:[HelloWorldScene new]
+                                                         withTransition:[CCTransition transitionRevealWithDirection:CCTransitionDirectionLeft duration:0.5]];
+                          }],
+                         nil]];
     
-    /*
-    sprite.effect = [CCEffectDropShadow effectWithShadowOffset:(GLKVector2){10, -10}
-                                                   shadowColor:[CCColor colorWithRed:0.5 green:0.3 blue:0.3 alpha:1.0]
-                                                    blurRadius:10];
-    */
-    
-    // info button
-    CCButton *info = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"info.png"]];
-    info.positionType = CCPositionTypeNormalized;
-    info.position = (CGPoint){0.92, 0.90};
-    [info setTarget:self selector:@selector(infoPressed:)];
-    [self addChild:info];
-
     // enable touch handing
     self.userInteractionEnabled = YES;
     
     // done
 	return self;
-}
-
-// -----------------------------------------------------------------------
-
-- (void)onSpinningClicked:(id)sender
-{
-    // start spinning scene with transition
-    [[CCDirector sharedDirector] replaceScene:[HelloWorldScene new]
-                               withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
-}
-
-// -----------------------------------------------------------------------
-
-
-- (void)infoPressed:(id)sender
-{
-    // open dictionary
-    NSString *filename = [[NSBundle mainBundle] pathForResource:@"credits.plist" ofType:nil];
-    NSDictionary *creditsDict = [NSDictionary dictionaryWithContentsOfFile:filename];
-    
-    // create list of CCCredits
-    CCCredits *credits = [CCCredits creditsWithScene:self andDictionary:creditsDict];
-    [self addChild:credits];
 }
 
 // -----------------------------------------------------------------------
