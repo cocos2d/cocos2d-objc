@@ -306,6 +306,9 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 -(CGPoint)gravity {return CPV_TO_CCP(_space.gravity);}
 -(void)setGravity:(CGPoint)gravity {_space.gravity = CCP_TO_CPV(gravity);}
 
+-(double)damping { return _space.damping; }
+-(void)setDamping:(double)damping { _space.damping = damping; }
+
 -(int)iterations {return _space.iterations;}
 -(void)setIterations:(int)iterations {_space.iterations = iterations;}
 
@@ -515,7 +518,6 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
     {
         return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_STATIC;
     }
-    
     return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;
 }
 
