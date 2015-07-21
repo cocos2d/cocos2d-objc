@@ -10,17 +10,14 @@
 //
 // -----------------------------------------------------------------
 
+#import "GameTypes.h"
+
 #import "LoadScene.h"
 #import "MainScene.h"
 #import "GameScene.h"
 #import "SetupScene.h"
 
 #import "CCCredits.h"
-
-// -----------------------------------------------------------------------
-
-const float kGrossiniJumpTime = 1.0;
-const int kGrossiniJumps = 5;
 
 // -----------------------------------------------------------------------
 

@@ -16,6 +16,11 @@
 // -----------------------------------------------------------------------
 
 @implementation LoadScene
+{
+    CCProgressNode *_progress;
+    CCSprite *_loading;
+    int _loadStep;
+}
 
 // -----------------------------------------------------------------------
 
@@ -36,42 +41,94 @@
     [self addChild:background];
     
     // loading text
-    CCSprite *loading = [CCSprite spriteWithImageNamed:@"loading.png"];
-    loading.positionType = CCPositionTypeNormalized;
-    loading.position = (CGPoint){0.5, 0.5};
-    [self addChild:loading];
+    _loading = [CCSprite spriteWithImageNamed:@"loading.png"];
+    _loading.positionType = CCPositionTypeNormalized;
+    _loading.position = (CGPoint){0.5, 0.5};
+    [self addChild:_loading];
     
     // progress indicator
-    CCProgressNode *progress = [CCProgressNode progressWithSprite:[CCSprite spriteWithImageNamed:@"progress.png"]];
-    progress.positionType = CCPositionTypeNormalized;
-    progress.position = (CGPoint){0.5, 0.5};
-    progress.type = CCProgressNodeTypeRadial;
-    progress.rotation = 180;
-    progress.percentage = 0;
-    [self addChild:progress];
+    _progress = [CCProgressNode progressWithSprite:[CCSprite spriteWithImageNamed:@"progress.png"]];
+    _progress.positionType = CCPositionTypeNormalized;
+    _progress.position = (CGPoint){0.5, 0.5};
+    _progress.type = CCProgressNodeTypeRadial;
+    _progress.rotation = 180;
+    _progress.percentage = 0;
+    [self addChild:_progress];
     
-    // run percentage
-    [progress runAction:[CCActionSequence actions:
-                         [CCActionTween actionWithDuration:2 key:@"percentage" from:0 to:100],
-                         [CCActionCallBlock actionWithBlock:^(void)
-                          {
-                              [progress runAction:[CCActionEaseOut actionWithAction:[CCActionFadeOut actionWithDuration:1.0] rate:2.0]];
-                              [progress runAction:[CCActionEaseOut actionWithAction:[CCActionScaleTo actionWithDuration:1.0 scale:5.0] rate:2.0]];
-                              [loading runAction:[CCActionFadeOut actionWithDuration:1.0]];
-                          }],
-                         [CCActionDelay actionWithDuration:1.5], // here we wait for scale and fade to complete
-                         [CCActionCallBlock actionWithBlock:^(void)
-                          {
-                              [[CCDirector sharedDirector] replaceScene:[MainScene new]
-                                                         withTransition:[CCTransition transitionRevealWithDirection:CCTransitionDirectionLeft duration:0.5]];
-                          }],
-                         nil]];
+    // load progress
+    _loadStep = 0;
+    [self schedule:@selector(loadNext:) interval:0.033];
     
     // enable touch handing
     self.userInteractionEnabled = YES;
     
     // done
 	return self;
+}
+
+// -----------------------------------------------------------------------
+
+- (void)loadNext:(CCTime)delta
+{
+    switch (_loadStep)
+    {
+        case 0:
+        {
+            // load ex textures here
+            // our loading doesnt take time, so we add a small delay to simulate "real" loading
+            usleep(500000);
+            _progress.percentage = 40;
+            break;
+        }
+        case 1:
+        {
+            // load ex audio here
+            usleep(500000);
+            _progress.percentage = 50;
+            break;
+        }
+        case 2:
+        {
+            // load animations, shaders etc
+            usleep(500000);
+            _progress.percentage = 60;
+            break;
+        }
+        case 3:
+        {
+            // pre render stuff
+            usleep(500000);
+            _progress.percentage = 90;
+            break;
+        }
+        default:
+        {
+            // done
+            _progress.percentage = 100;
+            [self unschedule:@selector(loadNext:)];
+            
+            // Show some fancy animation.
+            // Why, do you ask? Well, because we can.
+            [_progress runAction:[CCActionSequence actions:
+                                  [CCActionCallBlock actionWithBlock:^(void)
+                                   {
+                                       [_progress runAction:[CCActionEaseOut actionWithAction:[CCActionFadeOut actionWithDuration:1.0] rate:2.0]];
+                                       [_progress runAction:[CCActionEaseOut actionWithAction:[CCActionScaleTo actionWithDuration:1.0 scale:5.0] rate:2.0]];
+                                       [_loading runAction:[CCActionFadeOut actionWithDuration:1.0]];
+                                   }],
+                                  [CCActionDelay actionWithDuration:1.5], // here we wait for scale and fade to complete
+                                  [CCActionCallBlock actionWithBlock:^(void)
+                                   {
+                                       [[CCDirector sharedDirector] replaceScene:[MainScene new]
+                                                                  withTransition:[CCTransition transitionRevealWithDirection:CCTransitionDirectionLeft duration:0.5]];
+                                   }],
+                                  nil]];
+            break;
+        }
+    }
+    
+    // next step
+    _loadStep ++;
 }
 
 // -----------------------------------------------------------------------
