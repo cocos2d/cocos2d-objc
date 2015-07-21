@@ -10,18 +10,21 @@
 //
 // -----------------------------------------------------------------
 
-#import "mainScene.h"
-#import "loadScene.h"
+#import "LoadScene.h"
+#import "MainScene.h"
+#import "GameScene.h"
+#import "SetupScene.h"
+
 #import "CCCredits.h"
 
 // -----------------------------------------------------------------------
 
-#define kGrossiniJumpTime 1.0
-#define kGrossiniJumps 5
+const float kGrossiniJumpTime = 1.0;
+const int kGrossiniJumps = 5;
 
 // -----------------------------------------------------------------------
 
-@implementation mainScene
+@implementation MainScene
 {
     CCSprite *_grossini;
     float _grossiniStart;
@@ -64,19 +67,33 @@
     _grossini.position = (CGPoint){0.1, _grossiniBase};
     [self addChild:_grossini];
     
+    // Normally I do not like blocks very much
+    // They tend to scatter the code all around.
+    // This is an init section, so why clutter it with code executed when I press a button?
+    // In sligtly larger projects, blocks will have you loosing overview of where your code is, in no-time
+    // But at times, blocks are of course useful, so why not demonstrate them
+
     // start button
     CCButton *button;
     button = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"start.png"]];
     button.positionType = CCPositionTypeNormalized;
     button.position = ccp(0.5, 0.6);
-    [button setTarget:self selector:@selector(startPressed:)];
+    [button setBlock:^(id sender)
+     {
+         [[CCDirector sharedDirector] pushScene:[GameScene new]
+                                 withTransition:[CCTransition transitionRevealWithDirection:CCTransitionDirectionDown
+                                                                                   duration:0.5]];
+     }];
     [self addChild:button];
 
     // setup button
     button = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"setup.png"]];
     button.positionType = CCPositionTypeNormalized;
     button.position = ccp(0.5, 0.4);
-    [button setTarget:self selector:@selector(setupPressed:)];
+    [button setBlock:^(id sender)
+     {
+
+     }];
     [self addChild:button];
     
     // info button
@@ -110,7 +127,7 @@
     
     // In pre-v3, touch enable and scheduleUpdate was called here
     // In v3, touch is enabled by setting userInteractionEnabled for the individual nodes
-    // Per frame update is automatically enabled, if update is overridden
+    // Per frame update is automatically enabled, if update is implemented
     
 }
 
@@ -175,20 +192,6 @@
 
 // -----------------------------------------------------------------------
 #pragma mark - Button Callbacks
-
-// -----------------------------------------------------------------------
-
-- (void)startPressed:(id)sender
-{
-    
-}
-
-// -----------------------------------------------------------------------
-
-- (void)setupPressed:(id)sender
-{
-    
-}
 
 // -----------------------------------------------------------------------
 

@@ -10,12 +10,12 @@
 //
 // -----------------------------------------------------------------
 
-#import "loadScene.h"
-#import "mainScene.h"
+#import "LoadScene.h"
+#import "MainScene.h"
 
 // -----------------------------------------------------------------------
 
-@implementation loadScene
+@implementation LoadScene
 
 // -----------------------------------------------------------------------
 
@@ -62,7 +62,7 @@
                          [CCActionDelay actionWithDuration:1.5], // here we wait for scale and fade to complete
                          [CCActionCallBlock actionWithBlock:^(void)
                           {
-                              [[CCDirector sharedDirector] replaceScene:[mainScene new]
+                              [[CCDirector sharedDirector] replaceScene:[MainScene new]
                                                          withTransition:[CCTransition transitionRevealWithDirection:CCTransitionDirectionLeft duration:0.5]];
                           }],
                          nil]];
