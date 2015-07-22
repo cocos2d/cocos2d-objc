@@ -89,7 +89,9 @@
     button.position = ccp(0.5, 0.4);
     [button setBlock:^(id sender)
      {
-
+         [[CCDirector sharedDirector] pushScene:[SetupScene new]
+                                 withTransition:[CCTransition transitionRevealWithDirection:CCTransitionDirectionUp
+                                                                                   duration:0.5]];
      }];
     [self addChild:button];
     

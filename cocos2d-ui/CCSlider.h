@@ -68,6 +68,8 @@
  */
 @property (nonatomic,assign) float sliderValue;
 
+@property (nonatomic, assign) float endStop;
+
 #pragma mark Customizing the Appearance of the Slider
 
 /// -----------------------------------------------------------------------

@@ -32,6 +32,8 @@
     _backgroundSpriteFrames = [[NSMutableDictionary alloc] init];
     _handleSpriteFrames = [[NSMutableDictionary alloc] init];
     
+    _endStop = 0.0;
+    
     if (background)
     {
         _background = [CCSprite9Slice spriteWithSpriteFrame:background];
@@ -68,7 +70,7 @@
 {
     CGSize size = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
     
-    _handle.position = ccp(size.width * _sliderValue, size.height/2.0f);
+    _handle.position = ccp(_endStop + ((size.width - (2 * _endStop)) * _sliderValue), size.height * 0.5);
 }
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
@@ -185,10 +187,10 @@
         delta.y = 0;
         
         CGPoint newPos = ccpAdd(_handleStartPos, delta);
-        if (newPos.x < 0) newPos.x = 0;
-        if (newPos.x >= sizeInPoints.width) newPos.x = sizeInPoints.width;
+        if (newPos.x < _endStop) newPos.x = _endStop;
+        if (newPos.x >= (sizeInPoints.width - _endStop)) newPos.x = sizeInPoints.width - _endStop;
         
-        _sliderValue = newPos.x / sizeInPoints.width;
+        _sliderValue = (newPos.x - _endStop) / (sizeInPoints.width - (2 * _endStop));
         if (self.continuous && _sliderValue != _dragStartValue)
         {
             _dragStartValue = _sliderValue;

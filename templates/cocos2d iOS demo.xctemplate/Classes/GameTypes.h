@@ -19,12 +19,13 @@
 #define kGamePaddleSpeed                800
 #define kGameBallSpeed                  1200
 
-#define kGameSpinFactor                 0.2
-#define kGameSpinRandomFactor           0.1
+#define kGameSpinFactor                 0.25
+#define kGameSpinRandomFactor           0.15
 
+#define kGameSliderEndStop              15
 
-
-
+#define kGameKeySoundVolume             @"sound.volume"
+#define kGameKeyMusicVolume             @"music.volume"
 
 
 
