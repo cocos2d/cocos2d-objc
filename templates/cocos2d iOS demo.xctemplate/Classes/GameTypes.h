@@ -19,6 +19,8 @@
 #define kGamePaddleSpeed                800
 #define kGameBallSpeed                  1200
 
+#define kGameSpinFactor                 0.2
+#define kGameSpinRandomFactor           0.1
 
 
 

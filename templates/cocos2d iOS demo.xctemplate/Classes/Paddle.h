@@ -13,6 +13,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "GameTypes.h"
+#import "GameObject.h"
 
 // -----------------------------------------------------------------
 
@@ -25,7 +26,7 @@ typedef NS_ENUM(NSUInteger, PaddleSide)
 
 // -----------------------------------------------------------------
 
-@interface Paddle : CCSprite
+@interface Paddle : GameObject
 
 // -----------------------------------------------------------------
 

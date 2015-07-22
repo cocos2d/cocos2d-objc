@@ -14,6 +14,7 @@
 #import "cocos2d-ui.h"
 
 #import "Paddle.h"
+#import "GameObject.h"
 
 // -----------------------------------------------------------------
 
@@ -21,7 +22,7 @@
 {
     Paddle *_paddleA;
     Paddle *_paddleB;
-    CCSprite *_ball;
+    GameObject *_ball;
     CGSize _gameSize;
     CGPoint _ballVector;
 }
@@ -41,7 +42,7 @@
     _paddleB = [Paddle paddleWithSide:PaddleSideRight];
     [self addChild:_paddleB];
     
-    _ball = [CCSprite spriteWithImageNamed:@"ball.png"];
+    _ball = [GameObject gameObjectWithImageNamed:@"ball.png"];
     [self addChild:_ball];
     
     // create a way out of this ...
@@ -167,15 +168,75 @@
 // -----------------------------------------------------------------
 #pragma mark - Game Update Loop
 
+- (void)update:(CCTime)delta
+{
+    // move ball
+    _ball.position = ccpAdd(_ball.position, ccpMult(_ballVector, delta));
 
-
-
-
-
-
-
-
-
+    // check for paddle-ball collisions
+    if (CGRectIntersectsRect(_paddleA.rect, _ball.rect))
+    {
+        // adjust ball position
+        _ball.position = (CGPoint){_paddleA.position.x + ((_paddleA.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
+        // change direction
+        _ballVector.x = -_ballVector.x;
+        
+        // add some angle
+        // if ball is hit in upper half, spin the ball upwards, and downwards if hit in lower half
+        float spin = (_ball.position.y - _paddleA.position.y) * kGameSpinFactor;
+        // add some randomness
+        spin += (CCRANDOM_MINUS1_1() * 100 * kGameSpinRandomFactor);
+        // adjust vector
+        _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
+    }
+    else if (CGRectIntersectsRect(_paddleB.rect, _ball.rect))
+    {
+        // adjust ball position
+        _ball.position = (CGPoint){_paddleB.position.x -((_paddleB.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
+        // change direction
+        _ballVector.x = -_ballVector.x;
+        // add some angle (see above)
+        float spin = (_paddleB.position.y- _ball.position.y) * kGameSpinFactor;
+        spin += (CCRANDOM_MINUS1_1() * 100 * kGameSpinRandomFactor);
+        _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
+    }
+    
+    // check for paddle top and bottom collision
+    if (_ball.position.y < (_ball.contentSize.height * 0.5))
+    {
+        // adjust ball position
+        _ball.position = (CGPoint){_ball.position.x, _ball.contentSize.height * 0.5};
+        // change direction
+        _ballVector.y = -_ballVector.y;
+    }
+    else if (_ball.position.y > (_gameSize.height - (_ball.contentSize.height * 0.5)))
+    {
+        // adjust ball position
+        _ball.position = (CGPoint){_ball.position.x, _gameSize.height - (_ball.contentSize.height * 0.5)};
+        // change direction
+        _ballVector.y = -_ballVector.y;
+    }
+    
+    // check for score
+    if (_ball.position.x < -(_ball.contentSize.width * 0.5))
+    {
+        // paddle B scored
+        
+        
+        
+        
+        [self serveFromSide:PaddleSideRight];
+    }
+    else if (_ball.position.x > (_gameSize.width + (_ball.contentSize.width * 0.5)))
+    {
+        // paddle A scored
+        
+        
+        
+    
+        [self serveFromSide:PaddleSideLeft];
+    }
+}
 
 // -----------------------------------------------------------------
 #pragma mark - Game Mechanics
