@@ -76,6 +76,10 @@
 
     [self serveFromSide:PaddleSideInvalid];
     
+    // set effects volume
+    NSUserDefaults *setup = [NSUserDefaults standardUserDefaults];
+    [OALSimpleAudio sharedInstance].effectsVolume = [setup floatForKey:kGameKeySoundVolume];
+    
     return self;
 }
 
@@ -176,6 +180,8 @@
     // check for paddle-ball collisions
     if (CGRectIntersectsRect(_paddleA.rect, _ball.rect))
     {
+        // da beep
+        [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
         // adjust ball position
         _ball.position = (CGPoint){_paddleA.position.x + ((_paddleA.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
         // change direction
@@ -191,6 +197,8 @@
     }
     else if (CGRectIntersectsRect(_paddleB.rect, _ball.rect))
     {
+        // da beep
+        [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
         // adjust ball position
         _ball.position = (CGPoint){_paddleB.position.x -((_paddleB.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
         // change direction
@@ -204,6 +212,8 @@
     // check for paddle top and bottom collision
     if (_ball.position.y < (_ball.contentSize.height * 0.5))
     {
+        // da beep
+        [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
         // adjust ball position
         _ball.position = (CGPoint){_ball.position.x, _ball.contentSize.height * 0.5};
         // change direction
@@ -211,6 +221,8 @@
     }
     else if (_ball.position.y > (_gameSize.height - (_ball.contentSize.height * 0.5)))
     {
+        // da beep
+        [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
         // adjust ball position
         _ball.position = (CGPoint){_ball.position.x, _gameSize.height - (_ball.contentSize.height * 0.5)};
         // change direction
@@ -220,6 +232,8 @@
     // check for score
     if (_ball.position.x < -(_ball.contentSize.width * 0.5))
     {
+        // da beep
+        [[OALSimpleAudio sharedInstance] playEffect:@"game.wav"];
         // paddle B scored
         
         
@@ -229,6 +243,8 @@
     }
     else if (_ball.position.x > (_gameSize.width + (_ball.contentSize.width * 0.5)))
     {
+        // da beep
+        [[OALSimpleAudio sharedInstance] playEffect:@"game.wav"];
         // paddle A scored
         
         
