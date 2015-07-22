@@ -23,6 +23,7 @@
     Paddle *_paddleB;
     CCSprite *_ball;
     CGSize _gameSize;
+    CGPoint _ballVector;
 }
 
 // -----------------------------------------------------------------
@@ -39,6 +40,9 @@
     
     _paddleB = [Paddle paddleWithSide:PaddleSideRight];
     [self addChild:_paddleB];
+    
+    _ball = [CCSprite spriteWithImageNamed:@"ball.png"];
+    [self addChild:_ball];
     
     // create a way out of this ...
     CCButton *back = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"back.png"]];
@@ -68,7 +72,9 @@
     
     // enable multi touch
     self.multipleTouchEnabled = YES;
-        
+
+    [self serveFromSide:PaddleSideInvalid];
+    
     return self;
 }
 
@@ -157,6 +163,49 @@
         _paddleB.touch = nil;
     }
 }
+
+// -----------------------------------------------------------------
+#pragma mark - Game Update Loop
+
+
+
+
+
+
+
+
+
+
+
+// -----------------------------------------------------------------
+#pragma mark - Game Mechanics
+
+- (void)serveFromSide:(PaddleSide)side
+{
+    // if invalid side, serve random
+    if (side == PaddleSideInvalid) side = (CCRANDOM_0_1() > 0.5) ? PaddleSideLeft : PaddleSideRight;
+    
+    if (side == PaddleSideLeft)
+    {
+        _ball.position = (CGPoint){_paddleA.position.x + ((_paddleA.contentSize.width + _ball.contentSize.width) * 0.5), _paddleA.position.y};
+        _ballVector = (CGPoint){kGameBallSpeed, 0};
+    }
+    else
+    {
+        _ball.position = (CGPoint){_paddleB.position.x - ((_paddleB.contentSize.width + _ball.contentSize.width) * 0.5), _paddleB.position.y};
+        _ballVector = (CGPoint){-kGameBallSpeed, 0};
+    }
+}
+
+// -----------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 // -----------------------------------------------------------------
 

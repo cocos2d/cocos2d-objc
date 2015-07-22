@@ -17,6 +17,7 @@
 #define kGamePaddleTouchArea            250
 
 #define kGamePaddleSpeed                800
+#define kGameBallSpeed                  1200
 
 
 
