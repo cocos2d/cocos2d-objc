@@ -14,7 +14,6 @@
 #import "cocos2d-ui.h"
 
 #import "Paddle.h"
-#import "GameObject.h"
 
 // -----------------------------------------------------------------
 
@@ -22,7 +21,7 @@
 {
     Paddle *_paddleA;
     Paddle *_paddleB;
-    GameObject *_ball;
+    CCSprite *_ball;
     CGSize _gameSize;
     CGPoint _ballVector;
 }
@@ -42,7 +41,7 @@
     _paddleB = [Paddle paddleWithSide:PaddleSideRight];
     [self addChild:_paddleB];
     
-    _ball = [GameObject gameObjectWithImageNamed:@"ball.png"];
+    _ball = [CCSprite spriteWithImageNamed:@"ball.png"];
     [self addChild:_ball];
     
     // create a way out of this ...
@@ -178,7 +177,7 @@
     _ball.position = ccpAdd(_ball.position, ccpMult(_ballVector, delta));
 
     // check for paddle-ball collisions
-    if (CGRectIntersectsRect(_paddleA.rect, _ball.rect))
+    if (CGRectIntersectsRect(_paddleA.boundingBox, _ball.boundingBox))
     {
         // da beep
         [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
@@ -195,7 +194,7 @@
         // adjust vector
         _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
     }
-    else if (CGRectIntersectsRect(_paddleB.rect, _ball.rect))
+    else if (CGRectIntersectsRect(_paddleB.boundingBox, _ball.boundingBox))
     {
         // da beep
         [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];

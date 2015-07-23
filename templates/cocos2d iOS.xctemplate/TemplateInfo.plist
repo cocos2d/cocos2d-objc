@@ -96,7 +96,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a basic starting point for any application.</string>
+	<string>This template provides the minimum setup for any application.</string>
 	<key>Nodes</key>
 	<array>
 		<string>Supporting Files/Prefix.pch</string>
