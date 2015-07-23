@@ -63,26 +63,6 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Classes/IntroScene.h</key>
-		<dict>
-			<key>Group</key>
-			<string>Classes</string>
-			<key>Path</key>
-			<string>Classes/IntroScene.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>Classes/IntroScene.m</key>
-		<dict>
-			<key>Group</key>
-			<string>Classes</string>
-			<key>Path</key>
-			<string>Classes/IntroScene.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
 		<key>Classes/AppDelegate.h</key>
 		<dict>
 			<key>Group</key>
@@ -103,6 +83,17 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Resources/white_square.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/white_square.png</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 	</dict>
 	<key>Description</key>
 	<string>This template provides a basic starting point for any application.</string>
@@ -114,8 +105,7 @@
 		<string>Classes/AppDelegate.m</string>
 		<string>Classes/HelloWorldScene.h</string>
 		<string>Classes/HelloWorldScene.m</string>
-		<string>Classes/IntroScene.h</string>
-		<string>Classes/IntroScene.m</string>
+		<string>Resources/white_square.png</string>
 	</array>
 </dict>
 </plist>
