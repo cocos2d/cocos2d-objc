@@ -68,7 +68,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/GameTypes.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -79,7 +79,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/LoadScene.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -90,7 +90,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/LoadScene.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -101,7 +101,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/MainScene.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -112,7 +112,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/MainScene.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -123,7 +123,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/GameScene.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -134,7 +134,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/GameScene.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -145,7 +145,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/SetupScene.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -156,7 +156,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/SetupScene.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -167,7 +167,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/CCCredits.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -178,7 +178,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/CCCredits.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -189,7 +189,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/Paddle.h</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -200,7 +200,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Classes/Paddle.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -211,7 +211,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/beep.wav</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -222,7 +222,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/game.wav</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -233,7 +233,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/demo-1x.plist</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -244,7 +244,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/demo-1x.png</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -255,7 +255,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/demo-2x.plist</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -266,7 +266,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/demo-2x.png</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -277,7 +277,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/demo-4x.plist</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -288,7 +288,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/demo-4x.png</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -299,7 +299,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/grossini_hi.png</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -310,7 +310,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/white_square.png</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -321,7 +321,7 @@
 			<key>Group</key>
 			<string>Classes</string>
 			<key>Path</key>
-			<string>Classes/AppDelegate.m</string>
+			<string>Resources/credits.plist</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
