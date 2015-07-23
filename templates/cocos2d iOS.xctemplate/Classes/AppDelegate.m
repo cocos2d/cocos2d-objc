@@ -11,8 +11,7 @@
 // -----------------------------------------------------------------
 
 #import "AppDelegate.h"
-#import "loadScene.h"
-#import "mainScene.h"
+#import "HelloWorldScene.h"
 
 // -----------------------------------------------------------------------
 
@@ -78,7 +77,7 @@
 
 - (CCScene *)startScene
 {
-	return [loadScene new];
+	return [HelloWorldScene new];
 }
 
 // -----------------------------------------------------------------------
