@@ -32,7 +32,12 @@
     // The thing is, that if this fails, your app will 99.99% crash anyways, so why bother
     // Just make an assert, so that you can catch it in debug
     NSAssert(self, @"Whoops");
-    
+
+    // preload artwork needed for load scene
+    // NOTE!
+    // In this case, this is also the artwork for the entire app, but in real life this would probably not be the case
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"demo.plist"];
+
     // background
     CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
     background.anchorPoint = CGPointZero;
