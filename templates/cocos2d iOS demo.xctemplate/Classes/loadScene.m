@@ -37,11 +37,15 @@
     // NOTE!
     // In this case, this is also the artwork for the entire app, but in real life this would probably not be the case
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"demo.plist"];
+    
+    // get screen dimensions
+    CGSize size = [CCDirector sharedDirector].viewSize;
 
     // background
     CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
     background.anchorPoint = CGPointZero;
-    background.contentSize = [CCDirector sharedDirector].viewSize;
+    background.position = CGPointZero;
+    background.contentSize = size;
     background.color = [CCColor grayColor];
     [self addChild:background];
     
@@ -63,9 +67,6 @@
     // load progress
     _loadStep = 0;
     [self schedule:@selector(loadNext:) interval:0.033];
-    
-    // enable touch handing
-    self.userInteractionEnabled = YES;
     
     // done
 	return self;
