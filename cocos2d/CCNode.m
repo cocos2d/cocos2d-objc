@@ -1697,10 +1697,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	[self cascadeOpacityIfNeeded];
 }
 
--(GLKVector4) colorRGBAAsGLkVector4
-{
-    return GLKVector4Make(_color.r, _color.g, _color.b, _color.a);
-}
 
 - (void) cascadeColorIfNeeded
 {
