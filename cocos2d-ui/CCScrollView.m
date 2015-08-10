@@ -758,7 +758,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return (otherGestureRecognizer == _panRecognizer || otherGestureRecognizer == _tapRecognizer);
+    return (otherGestureRecognizer == _panRecognizer || otherGestureRecognizer == _tapRecognizer) || (self.multipleTouchEnabled == YES);
 }
 
 - (void) onEnterTransitionDidFinish
