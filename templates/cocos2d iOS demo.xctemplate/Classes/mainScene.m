@@ -17,7 +17,7 @@
 #import "GameScene.h"
 #import "SetupScene.h"
 
-#import "CCCredits.h"
+#import "Credits.h"
 
 // -----------------------------------------------------------------------
 
@@ -200,8 +200,8 @@
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"credits.plist" ofType:nil];
     NSDictionary *creditsDict = [NSDictionary dictionaryWithContentsOfFile:filename];
     
-    // create list of CCCredits
-    CCCredits *credits = [CCCredits creditsWithScene:self andDictionary:creditsDict];
+    // create list of Credits
+    Credits *credits = [Credits creditsWithScene:self andDictionary:creditsDict];
     [self addChild:credits];
 }
 

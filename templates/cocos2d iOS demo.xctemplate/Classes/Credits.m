@@ -10,12 +10,12 @@
 //
 // -----------------------------------------------------------------
 
-#import "CCCredits.h"
+#import "Credits.h"
 #import "CCNode_Private.h"
 #import "cocos2d-ui.h"
 
 // -----------------------------------------------------------------------
-// The CCCredits is a small helper class, creating a nice credits scroll
+// The Credits is a small helper class, creating a nice credits scroll
 //
 // It demonstrates a couple of techniques
 // 1) Reading data from a plist (Yay, data-driven design)
@@ -26,7 +26,7 @@
 // 6) How a node can kill itself by removing itself from parent
 // -----------------------------------------------------------------------
 
-@implementation CCCredits
+@implementation Credits
 {
     // ivars are great. You can never have too many (ahh, okay, maybe you can)
     

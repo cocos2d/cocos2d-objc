@@ -218,7 +218,7 @@
 		0EE55EEC1B5D0F9000D2F764 /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EC91B5D0F9000D2F764 /* cpSpatialIndex.c */; };
 		0EE55EED1B5D0F9000D2F764 /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55ECA1B5D0F9000D2F764 /* cpSweep1D.c */; };
 		0EE55EFC1B5D0FCC00D2F764 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EEF1B5D0FCC00D2F764 /* AppDelegate.m */; };
-		0EE55EFD1B5D0FCC00D2F764 /* CCCredits.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EF11B5D0FCC00D2F764 /* CCCredits.m */; };
+		0EE55EFD1B5D0FCC00D2F764 /* Credits.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EF11B5D0FCC00D2F764 /* Credits.m */; };
 		0EE55EFE1B5D0FCC00D2F764 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EF31B5D0FCC00D2F764 /* GameScene.m */; };
 		0EE55EFF1B5D0FCC00D2F764 /* LoadScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EF51B5D0FCC00D2F764 /* LoadScene.m */; };
 		0EE55F001B5D0FCC00D2F764 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55EF71B5D0FCC00D2F764 /* MainScene.m */; };
@@ -680,8 +680,8 @@
 		0EE55ECB1B5D0F9000D2F764 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		0EE55EEE1B5D0FCC00D2F764 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		0EE55EEF1B5D0FCC00D2F764 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "templates/cocos2d iOS demo.xctemplate/Classes/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
-		0EE55EF01B5D0FCC00D2F764 /* CCCredits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCCredits.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/CCCredits.h"; sourceTree = SOURCE_ROOT; };
-		0EE55EF11B5D0FCC00D2F764 /* CCCredits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCredits.m; path = "templates/cocos2d iOS demo.xctemplate/Classes/CCCredits.m"; sourceTree = SOURCE_ROOT; };
+		0EE55EF01B5D0FCC00D2F764 /* Credits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Credits.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/Credits.h"; sourceTree = SOURCE_ROOT; };
+		0EE55EF11B5D0FCC00D2F764 /* Credits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Credits.m; path = "templates/cocos2d iOS demo.xctemplate/Classes/Credits.m"; sourceTree = SOURCE_ROOT; };
 		0EE55EF21B5D0FCC00D2F764 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/GameScene.h"; sourceTree = SOURCE_ROOT; };
 		0EE55EF31B5D0FCC00D2F764 /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameScene.m; path = "templates/cocos2d iOS demo.xctemplate/Classes/GameScene.m"; sourceTree = SOURCE_ROOT; };
 		0EE55EF41B5D0FCC00D2F764 /* LoadScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadScene.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/LoadScene.h"; sourceTree = SOURCE_ROOT; };
@@ -1469,8 +1469,8 @@
 				0EE55EEE1B5D0FCC00D2F764 /* AppDelegate.h */,
 				0EE55EEF1B5D0FCC00D2F764 /* AppDelegate.m */,
 				0EC6462F1B5E6F5C00C656A6 /* GameTypes.h */,
-				0EE55EF01B5D0FCC00D2F764 /* CCCredits.h */,
-				0EE55EF11B5D0FCC00D2F764 /* CCCredits.m */,
+				0EE55EF01B5D0FCC00D2F764 /* Credits.h */,
+				0EE55EF11B5D0FCC00D2F764 /* Credits.m */,
 				0EC6462C1B5E6D7100C656A6 /* Paddle.h */,
 				0EC6462D1B5E6D7100C656A6 /* Paddle.m */,
 				0EE55EF21B5D0FCC00D2F764 /* GameScene.h */,
@@ -1696,7 +1696,7 @@
 				0EE55DC51B5D0F4200D2F764 /* CCDirectorIOS.m in Sources */,
 				0EE55DB21B5D0F4200D2F764 /* CCTiledMapObjectGroup.m in Sources */,
 				0EE55DA31B5D0F4200D2F764 /* CCResponder.m in Sources */,
-				0EE55EFD1B5D0FCC00D2F764 /* CCCredits.m in Sources */,
+				0EE55EFD1B5D0FCC00D2F764 /* Credits.m in Sources */,
 				0EE55D621B5D0F4200D2F764 /* CCClippingNode.m in Sources */,
 				0EE55E381B5D0F5200D2F764 /* OALTools.m in Sources */,
 				0EE55D841B5D0F4200D2F764 /* CCLightCollection.m in Sources */,
