@@ -54,7 +54,7 @@
     CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
     background.anchorPoint = CGPointZero;
     background.contentSize = size;
-    background.color = [CCColor orangeColor];
+    background.color = kGameContrastColor;
     [self addChild:background];
     
     // add grossini (we have missed him)

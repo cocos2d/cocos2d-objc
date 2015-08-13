@@ -12,6 +12,7 @@
 
 #import "LoadScene.h"
 #import "MainScene.h"
+#import "GameTypes.h"
 
 // -----------------------------------------------------------------------
 
@@ -46,7 +47,7 @@
     background.anchorPoint = CGPointZero;
     background.position = CGPointZero;
     background.contentSize = size;
-    background.color = [CCColor grayColor];
+    background.color = kGameLoadColor;
     [self addChild:background];
     
     // loading text

@@ -10,6 +10,9 @@
 //
 // -----------------------------------------------------------------
 
+#define kGameLoadColor                  [CCColor colorWithRed:0.25 green:0.125 blue:0.0]
+#define kGameContrastColor              [CCColor colorWithRed:0.5 green:0.25 blue:0.0]
+
 #define kGrossiniJumpTime               1.0
 #define kGrossiniJumps                  5
 

@@ -38,7 +38,7 @@ typedef NS_ENUM(NSUInteger, PaddleSide)
 
 + (instancetype)paddleWithSide:(PaddleSide)side;
 
-- (BOOL)validPosition:(CGPoint)position;
+- (BOOL)validTouchPosition:(CGPoint)position;
 
 // -----------------------------------------------------------------
 

@@ -47,7 +47,7 @@
 
 // -----------------------------------------------------------------
 
-- (BOOL)validPosition:(CGPoint)position
+- (BOOL)validTouchPosition:(CGPoint)position
 {
     if (_side == PaddleSideLeft) return (position.x < kGamePaddleTouchArea);
     return (position.x > (_gameSize.width - kGamePaddleTouchArea));

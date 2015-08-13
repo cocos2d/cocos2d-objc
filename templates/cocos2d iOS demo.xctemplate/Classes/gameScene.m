@@ -106,8 +106,8 @@
 {
     // find out what paddle is being touched
     Paddle *paddle = nil;
-    if ([_paddleA validPosition:touch.locationInWorld]) paddle = _paddleA;
-    else if ([_paddleB validPosition:touch.locationInWorld]) paddle = _paddleB;
+    if ([_paddleA validTouchPosition:touch.locationInWorld]) paddle = _paddleA;
+    else if ([_paddleB validTouchPosition:touch.locationInWorld]) paddle = _paddleB;
     
     // if the touch is not for a paddle, just pass the touch on, and exit
     if (paddle == nil)
@@ -144,7 +144,7 @@
     }
     
     // check for valid position
-    if ([paddle validPosition:touch.locationInWorld])
+    if ([paddle validTouchPosition:touch.locationInWorld])
     {
         paddle.destination = touch.locationInWorld.y;
     }
