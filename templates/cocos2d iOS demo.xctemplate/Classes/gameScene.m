@@ -150,7 +150,7 @@
     }
     else
     {
-        // cancel paddle touch (user will have to lift inside touch area)
+        // cancel paddle touch (user will have to lift and touch again inside touch area)
         paddle.touch = nil;
     }
 

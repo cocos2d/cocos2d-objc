@@ -17,7 +17,7 @@
 #define kGrossiniJumpTime               1.0
 #define kGrossiniJumps                  5
 
-#define kGamePaddleInset                0.09
+#define kGamePaddleInset                0.14
 #define kGamePaddleTouchArea            0.25
 
 #define kGamePaddleSpeed                1.00
