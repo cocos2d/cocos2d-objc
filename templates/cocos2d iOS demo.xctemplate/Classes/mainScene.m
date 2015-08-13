@@ -47,14 +47,11 @@
     // get the size of the world
     CGSize size = [CCDirector sharedDirector].viewSize;
     
-    // Set the background to medium grey
-    self.colorRGBA = [CCColor colorWithRed:0.5 green:0.5 blue:0.5];
-    
     // add a solid colored node
     CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
     background.anchorPoint = CGPointZero;
     background.contentSize = size;
-    background.color = kGameContrastColor;
+    background.color = kGameMainSceneColor;
     [self addChild:background];
     
     // add grossini (we have missed him)

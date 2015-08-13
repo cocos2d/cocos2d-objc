@@ -57,14 +57,14 @@
     
     // draw touch area markers
     CCDrawNode *drawNode = [CCDrawNode node];
-    [drawNode drawSegmentFrom:(CGPoint){kGamePaddleTouchArea, 0}
-                           to:(CGPoint){kGamePaddleTouchArea, _gameSize.height}
+    [drawNode drawSegmentFrom:(CGPoint){kGamePaddleTouchArea * _gameSize.width, 0}
+                           to:(CGPoint){kGamePaddleTouchArea * _gameSize.width, _gameSize.height}
                        radius:1.0
-                        color:[CCColor orangeColor]];
-    [drawNode drawSegmentFrom:(CGPoint){_gameSize.width - kGamePaddleTouchArea, 0}
-                           to:(CGPoint){_gameSize.width - kGamePaddleTouchArea, _gameSize.height}
+                        color:kGameColor];
+    [drawNode drawSegmentFrom:(CGPoint){(1 - kGamePaddleTouchArea) * _gameSize.width, 0}
+                           to:(CGPoint){(1 - kGamePaddleTouchArea) * _gameSize.width, _gameSize.height}
                        radius:1.0
-                        color:[CCColor orangeColor]];
+                        color:kGameColor];
     [self addChild:drawNode];
     
     // enable touch
@@ -88,7 +88,7 @@
 {
     // for now just show a game tilt label
     CCLabelTTF *gameTiltLabel = [CCLabelTTF labelWithString:@"Game Tilt" fontName:@"ArialMT" fontSize:48];
-    gameTiltLabel.fontColor = [CCColor orangeColor];
+    gameTiltLabel.fontColor = kGameColor;
     gameTiltLabel.positionType = CCPositionTypeNormalized;
     gameTiltLabel.position = (CGPoint){0.5, 0.5};
     [self addChild:gameTiltLabel];
@@ -188,9 +188,9 @@
         
         // add some angle
         // if ball is hit in upper half, spin the ball upwards, and downwards if hit in lower half
-        float spin = (_ball.position.y - _paddleA.position.y) * kGameSpinFactor;
+        float spin = (_ball.position.y - _paddleA.position.y) / _gameSize.height * kGameSpinFactor;
         // add some randomness
-        spin += (CCRANDOM_MINUS1_1() * 100 * kGameSpinRandomFactor);
+        spin += (CCRANDOM_MINUS1_1() * kGameSpinRandomFactor);
         // adjust vector
         _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
     }
@@ -203,8 +203,8 @@
         // change direction
         _ballVector.x = -_ballVector.x;
         // add some angle (see above)
-        float spin = (_paddleB.position.y- _ball.position.y) * kGameSpinFactor;
-        spin += (CCRANDOM_MINUS1_1() * 100 * kGameSpinRandomFactor);
+        float spin = (_paddleB.position.y - _ball.position.y) / _gameSize.height * kGameSpinFactor;
+        spin += (CCRANDOM_MINUS1_1() * kGameSpinRandomFactor);
         _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
     }
     
@@ -264,12 +264,12 @@
     if (side == PaddleSideLeft)
     {
         _ball.position = (CGPoint){_paddleA.position.x + ((_paddleA.contentSize.width + _ball.contentSize.width) * 0.5), _paddleA.position.y};
-        _ballVector = (CGPoint){kGameBallSpeed, 0};
+        _ballVector = (CGPoint){kGameBallSpeed * _gameSize.width, 0};
     }
     else
     {
         _ball.position = (CGPoint){_paddleB.position.x - ((_paddleB.contentSize.width + _ball.contentSize.width) * 0.5), _paddleB.position.y};
-        _ballVector = (CGPoint){-kGameBallSpeed, 0};
+        _ballVector = (CGPoint){-kGameBallSpeed * _gameSize.width, 0};
     }
 }
 

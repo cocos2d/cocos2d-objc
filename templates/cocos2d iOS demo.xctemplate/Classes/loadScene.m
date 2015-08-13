@@ -47,7 +47,7 @@
     background.anchorPoint = CGPointZero;
     background.position = CGPointZero;
     background.contentSize = size;
-    background.color = kGameLoadColor;
+    background.color = kGameLoadSceneColor;
     [self addChild:background];
     
     // loading text
