@@ -19,8 +19,8 @@
 
 @implementation GameScene
 {
-    Paddle *_paddleA;
-    Paddle *_paddleB;
+    Paddle *_paddleLeft;
+    Paddle *_paddleRight;
     CCSprite *_ball;
     CGSize _gameSize;
     CGPoint _ballVector;
@@ -35,11 +35,11 @@
     _gameSize = [CCDirector sharedDirector].viewSize;
     
     // create paddles
-    _paddleA = [Paddle paddleWithSide:PaddleSideLeft];
-    [self addChild:_paddleA];
+    _paddleLeft = [Paddle paddleWithSide:PaddleSideLeft];
+    [self addChild:_paddleLeft];
     
-    _paddleB = [Paddle paddleWithSide:PaddleSideRight];
-    [self addChild:_paddleB];
+    _paddleRight = [Paddle paddleWithSide:PaddleSideRight];
+    [self addChild:_paddleRight];
     
     _ball = [CCSprite spriteWithImageNamed:@"ball.png"];
     [self addChild:_ball];
@@ -106,8 +106,8 @@
 {
     // find out what paddle is being touched
     Paddle *paddle = nil;
-    if ([_paddleA validTouchPosition:touch.locationInWorld]) paddle = _paddleA;
-    else if ([_paddleB validTouchPosition:touch.locationInWorld]) paddle = _paddleB;
+    if ([_paddleLeft validTouchPosition:touch.locationInWorld]) paddle = _paddleLeft;
+    else if ([_paddleRight validTouchPosition:touch.locationInWorld]) paddle = _paddleRight;
     
     // if the touch is not for a paddle, just pass the touch on, and exit
     if (paddle == nil)
@@ -134,13 +134,13 @@
     Paddle *paddle;
     
     // find out where the touch belogs
-    if (touch.uiTouch == _paddleA.touch)
+    if (touch.uiTouch == _paddleLeft.touch)
     {
-        paddle = _paddleA;
+        paddle = _paddleLeft;
     }
-    else if (touch.uiTouch == _paddleB.touch)
+    else if (touch.uiTouch == _paddleRight.touch)
     {
-        paddle = _paddleB;
+        paddle = _paddleRight;
     }
     
     // check for valid position
@@ -158,13 +158,13 @@
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    if (touch.uiTouch == _paddleA.touch)
+    if (touch.uiTouch == _paddleLeft.touch)
     {
-        _paddleA.touch = nil;
+        _paddleLeft.touch = nil;
     }
-    else if (touch.uiTouch == _paddleB.touch)
+    else if (touch.uiTouch == _paddleRight.touch)
     {
-        _paddleB.touch = nil;
+        _paddleRight.touch = nil;
     }
 }
 
@@ -176,34 +176,38 @@
     // move ball
     _ball.position = ccpAdd(_ball.position, ccpMult(_ballVector, delta));
 
+    // *************************
+    // Game Logic
+    // *************************
+    
     // check for paddle-ball collisions
-    if (CGRectIntersectsRect(_paddleA.boundingBox, _ball.boundingBox))
+    if (CGRectIntersectsRect(_paddleLeft.boundingBox, _ball.boundingBox))
     {
         // da beep
         [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
         // adjust ball position
-        _ball.position = (CGPoint){_paddleA.position.x + ((_paddleA.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
+        _ball.position = (CGPoint){_paddleLeft.position.x + ((_paddleLeft.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
         // change direction
         _ballVector.x = -_ballVector.x;
         
         // add some angle
         // if ball is hit in upper half, spin the ball upwards, and downwards if hit in lower half
-        float spin = (_ball.position.y - _paddleA.position.y) / _gameSize.height * kGameSpinFactor;
+        float spin = (_ball.position.y - _paddleLeft.position.y) / _gameSize.height * kGameSpinFactor;
         // add some randomness
         spin += (CCRANDOM_MINUS1_1() * kGameSpinRandomFactor);
         // adjust vector
         _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
     }
-    else if (CGRectIntersectsRect(_paddleB.boundingBox, _ball.boundingBox))
+    else if (CGRectIntersectsRect(_paddleRight.boundingBox, _ball.boundingBox))
     {
         // da beep
         [[OALSimpleAudio sharedInstance] playEffect:@"beep.wav"];
         // adjust ball position
-        _ball.position = (CGPoint){_paddleB.position.x -((_paddleB.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
+        _ball.position = (CGPoint){_paddleRight.position.x -((_paddleRight.contentSize.width + _ball.contentSize.width) * 0.5), _ball.position.y};
         // change direction
         _ballVector.x = -_ballVector.x;
         // add some angle (see above)
-        float spin = (_paddleB.position.y - _ball.position.y) / _gameSize.height * kGameSpinFactor;
+        float spin = (_paddleRight.position.y - _ball.position.y) / _gameSize.height * kGameSpinFactor;
         spin += (CCRANDOM_MINUS1_1() * kGameSpinRandomFactor);
         _ballVector = ccpRotateByAngle(_ballVector, CGPointZero, spin * M_PI / 180);
     }
@@ -233,7 +237,7 @@
     {
         // da beep
         [[OALSimpleAudio sharedInstance] playEffect:@"game.wav"];
-        // paddle B scored
+        // paddle right scored
         
         
         
@@ -244,7 +248,7 @@
     {
         // da beep
         [[OALSimpleAudio sharedInstance] playEffect:@"game.wav"];
-        // paddle A scored
+        // paddle left scored
         
         
         
@@ -261,14 +265,16 @@
     // if invalid side, serve random
     if (side == PaddleSideInvalid) side = (CCRANDOM_0_1() > 0.5) ? PaddleSideLeft : PaddleSideRight;
     
+    CGPoint offset = (CGPoint){(_paddleLeft.contentSize.width + _ball.contentSize.width) * 0.5, 0};
+    
     if (side == PaddleSideLeft)
     {
-        _ball.position = (CGPoint){_paddleA.position.x + ((_paddleA.contentSize.width + _ball.contentSize.width) * 0.5), _paddleA.position.y};
+        _ball.position = ccpAdd(_paddleLeft.position, offset);
         _ballVector = (CGPoint){kGameBallSpeed * _gameSize.width, 0};
     }
     else
     {
-        _ball.position = (CGPoint){_paddleB.position.x - ((_paddleB.contentSize.width + _ball.contentSize.width) * 0.5), _paddleB.position.y};
+        _ball.position = ccpSub(_paddleRight.position, offset);
         _ballVector = (CGPoint){-kGameBallSpeed * _gameSize.width, 0};
     }
 }
