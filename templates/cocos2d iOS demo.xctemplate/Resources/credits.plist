@@ -10,7 +10,7 @@
 	<string>0.1</string>
 	<key>scroll.speed</key>
 	<string>0.078</string>
-	<key>_music</key>
+	<key>music</key>
 	<string>cocos2d_blues.wav</string>
 	<key>section - 1</key>
 	<dict>
