@@ -13,6 +13,7 @@
 #import "Credits.h"
 #import "CCNode_Private.h"
 #import "cocos2d-ui.h"
+#import "GameTypes.h"
 
 // -----------------------------------------------------------------------
 // The Credits is a small helper class, creating a nice credits scroll
@@ -48,6 +49,7 @@
     CGPoint _lastPosition;
     BOOL _isScrolling;
     BOOL _endGame;
+    float _volume;
 }
 
 // -----------------------------------------------------------------------
@@ -123,6 +125,16 @@
     
     // traverse all nodes, and swap their shaders
     if (_useGreyScale) [self replaceShaderWithGreyScaleShader:_scene];
+
+    // play credits music
+    // set music volume
+    NSUserDefaults *setup = [NSUserDefaults standardUserDefaults];
+    _volume = [setup floatForKey:kGameKeyMusicVolume];
+    if ([dict objectForKey:@"music"])
+    {
+        [[OALSimpleAudio sharedInstance] setBgVolume:_volume];
+        [[OALSimpleAudio sharedInstance] playBg:[dict objectForKey:@"music"]];
+    }
     
     return self;
 }
@@ -138,9 +150,7 @@
 
 - (void)onExit
 {
-    // add any exit code here
-    
-    
+    [[OALSimpleAudio sharedInstance] stopEverything];
     [super onExit];
 }
 
@@ -222,12 +232,12 @@
 - (void)backPressed:(id)sender
 {
     [_scrollNode runAction:[CCActionSequence actions:
-                     [CCActionFadeOut actionWithDuration:1.0],
-                     [CCActionCallBlock actionWithBlock:^(void)
-                      {
-                          [self removeFromParentAndCleanup:YES];
-                      }],
-                     nil]];
+                            [CCActionFadeOut actionWithDuration:1.0],
+                            [CCActionCallBlock actionWithBlock:^(void)
+                             {
+                                 [self removeFromParentAndCleanup:YES];
+                             }],
+                            nil]];
 }
 
 // -----------------------------------------------------------------------
