@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E11257F1B7CF853005412C8 /* cocos2d_blues.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E11257E1B7CF853005412C8 /* cocos2d_blues.wav */; };
+		0E46C32A1B7EB7C100B416EF /* cocos2d_blues.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0E46C3291B7EB7C100B416EF /* cocos2d_blues.aiff */; };
 		0E98A8291B70B90800FA7E95 /* demo-1x.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8231B70B90800FA7E95 /* demo-1x.plist */; };
 		0E98A82A1B70B90800FA7E95 /* demo-1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8241B70B90800FA7E95 /* demo-1x.png */; };
 		0E98A82B1B70B90800FA7E95 /* demo-2x.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8251B70B90800FA7E95 /* demo-2x.plist */; };
@@ -232,7 +232,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E11257E1B7CF853005412C8 /* cocos2d_blues.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cocos2d_blues.wav; path = "templates/cocos2d iOS demo.xctemplate/Resources/cocos2d_blues.wav"; sourceTree = SOURCE_ROOT; };
+		0E46C3291B7EB7C100B416EF /* cocos2d_blues.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = cocos2d_blues.aiff; path = "templates/cocos2d iOS demo.xctemplate/Resources/cocos2d_blues.aiff"; sourceTree = SOURCE_ROOT; };
 		0E98A8231B70B90800FA7E95 /* demo-1x.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "demo-1x.plist"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-1x.plist"; sourceTree = SOURCE_ROOT; };
 		0E98A8241B70B90800FA7E95 /* demo-1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "demo-1x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-1x.png"; sourceTree = SOURCE_ROOT; };
 		0E98A8251B70B90800FA7E95 /* demo-2x.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "demo-2x.plist"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-2x.plist"; sourceTree = SOURCE_ROOT; };
@@ -1406,10 +1406,10 @@
 		0EE55F441B5D137C00D2F764 /* Credits */ = {
 			isa = PBXGroup;
 			children = (
+				0E46C3291B7EB7C100B416EF /* cocos2d_blues.aiff */,
 				0EE55F0E1B5D132100D2F764 /* credits.plist */,
 				0EE55EFA1B5D0FCC00D2F764 /* shader.greyscale.fsh */,
 				0EE55EFB1B5D0FCC00D2F764 /* shader.greyscale.vsh */,
-				0E11257E1B7CF853005412C8 /* cocos2d_blues.wav */,
 			);
 			name = Credits;
 			sourceTree = "<group>";
@@ -1584,7 +1584,7 @@
 				0E98A82B1B70B90800FA7E95 /* demo-2x.plist in Resources */,
 				0EE55C111B5D0DDF00D2F764 /* Default-Landscape.png in Resources */,
 				0E98A8291B70B90800FA7E95 /* demo-1x.plist in Resources */,
-				0E11257F1B7CF853005412C8 /* cocos2d_blues.wav in Resources */,
+				0E46C32A1B7EB7C100B416EF /* cocos2d_blues.aiff in Resources */,
 				0EE55F2E1B5D132100D2F764 /* grossini_hi.png in Resources */,
 				0E98A82A1B70B90800FA7E95 /* demo-1x.png in Resources */,
 				0EE55C191B5D0DDF00D2F764 /* Icon@2x.png in Resources */,

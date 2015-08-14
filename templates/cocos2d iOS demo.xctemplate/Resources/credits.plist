@@ -11,7 +11,7 @@
 	<key>scroll.speed</key>
 	<string>0.078</string>
 	<key>music</key>
-	<string>cocos2d_blues.wav</string>
+	<string>cocos2d_blues.aiff</string>
 	<key>section - 1</key>
 	<dict>
 		<key>header</key>
