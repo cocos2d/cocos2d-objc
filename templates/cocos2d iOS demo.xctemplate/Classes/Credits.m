@@ -35,7 +35,7 @@
     NSMutableArray *_shaderStack;
     CCNode *_scrollNode;
     CCButton *_back;
-    NSMutableArray *_endgame;
+    NSMutableArray *_endGameList;
     
     // some external stuff we are not responsible for (always makes those weak)
     __weak CCScene *_scene;
@@ -80,7 +80,7 @@
     // create a scroll node occupying the entire screen
     _scrollNode = [CCNode new];
     _scrollNode.contentSize = [CCDirector sharedDirector].viewSize;
-    // allow us to fade the scrollnode and all its children
+    // allow us to fade the scrollnode and all its children without fading the back button
     _scrollNode.cascadeOpacityEnabled = YES;
     [self addChild:_scrollNode];
     
@@ -105,13 +105,13 @@
     }
     
     // load endgame
-    _endgame = [NSMutableArray array];
+    _endGameList = [NSMutableArray array];
     NSDictionary *endGameDict = [dict objectForKey:@"endgame"];
     for (int creditIndex = 1; creditIndex < 999; creditIndex ++)
     {
-        NSString *endgame = [endGameDict objectForKey:[NSString stringWithFormat:@"credit - %d", creditIndex]];
-        if (endgame != nil)
-            [_endgame addObject:endgame];
+        NSString *entry = [endGameDict objectForKey:[NSString stringWithFormat:@"credit - %d", creditIndex]];
+        if (entry != nil)
+            [_endGameList addObject:entry];
         else
             break;
     }
@@ -296,8 +296,8 @@
                                      _isScrolling = NO;
                                      
                                      // show endgame
-                                     _yPos = 0.5 + ((_endgame.count - 1) * _spacing * 0.5);
-                                     for (NSString *labelText in _endgame)
+                                     _yPos = 0.5 + ((_endGameList.count - 1) * _spacing * 0.5);
+                                     for (NSString *labelText in _endGameList)
                                      {
                                          CCLabelTTF *label = [CCLabelTTF labelWithString:labelText fontName:@"ArialMT" fontSize:36];
                                          label.positionType = CCPositionTypeNormalized;

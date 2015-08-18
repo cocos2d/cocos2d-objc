@@ -84,6 +84,11 @@
             // load ex textures here
             // our loading doesnt take time, so we add a small delay to simulate "real" loading
             usleep(500000);
+
+            // We already loaded this, because the load scene needs it, but just to demonstrate ...
+            // There is no memory penalty from loading it twice
+            [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"demo.plist"];
+
             _progress.percentage = 40;
             break;
         }
@@ -91,6 +96,10 @@
         {
             // load ex audio here
             usleep(500000);
+            
+            [[OALSimpleAudio sharedInstance] preloadEffect:@"beep.wav"];
+            [[OALSimpleAudio sharedInstance] preloadEffect:@"game.wav"];
+            
             _progress.percentage = 50;
             break;
         }

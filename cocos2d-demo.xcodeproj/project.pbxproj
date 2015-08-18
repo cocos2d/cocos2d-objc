@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E46C32A1B7EB7C100B416EF /* cocos2d_blues.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0E46C3291B7EB7C100B416EF /* cocos2d_blues.aiff */; };
 		0E98A8291B70B90800FA7E95 /* demo-1x.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8231B70B90800FA7E95 /* demo-1x.plist */; };
 		0E98A82A1B70B90800FA7E95 /* demo-1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8241B70B90800FA7E95 /* demo-1x.png */; };
 		0E98A82B1B70B90800FA7E95 /* demo-2x.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8251B70B90800FA7E95 /* demo-2x.plist */; };
@@ -16,6 +15,7 @@
 		0E98A82E1B70B90800FA7E95 /* demo-4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8281B70B90800FA7E95 /* demo-4x.png */; };
 		0E98E2B41B5FE1FC0010E989 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E98E2B21B5FE1FC0010E989 /* beep.wav */; };
 		0E98E2B51B5FE1FC0010E989 /* game.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E98E2B31B5FE1FC0010E989 /* game.wav */; };
+		0EA1B6631B81E9FB005D31E7 /* cocos2d_blues.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0EA1B6621B81E9FB005D31E7 /* cocos2d_blues.aiff */; };
 		0EC6462E1B5E6D7100C656A6 /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6462D1B5E6D7100C656A6 /* Paddle.m */; };
 		0EE55C041B5D0D4D00D2F764 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE55C031B5D0D4D00D2F764 /* OpenAL.framework */; };
 		0EE55C101B5D0DDF00D2F764 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C061B5D0DDF00D2F764 /* Default-568h@2x.png */; };
@@ -232,7 +232,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E46C3291B7EB7C100B416EF /* cocos2d_blues.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = cocos2d_blues.aiff; path = "templates/cocos2d iOS demo.xctemplate/Resources/cocos2d_blues.aiff"; sourceTree = SOURCE_ROOT; };
 		0E98A8231B70B90800FA7E95 /* demo-1x.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "demo-1x.plist"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-1x.plist"; sourceTree = SOURCE_ROOT; };
 		0E98A8241B70B90800FA7E95 /* demo-1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "demo-1x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-1x.png"; sourceTree = SOURCE_ROOT; };
 		0E98A8251B70B90800FA7E95 /* demo-2x.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "demo-2x.plist"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-2x.plist"; sourceTree = SOURCE_ROOT; };
@@ -241,6 +240,7 @@
 		0E98A8281B70B90800FA7E95 /* demo-4x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "demo-4x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-4x.png"; sourceTree = SOURCE_ROOT; };
 		0E98E2B21B5FE1FC0010E989 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = beep.wav; path = "templates/cocos2d iOS demo.xctemplate/Resources/beep.wav"; sourceTree = SOURCE_ROOT; };
 		0E98E2B31B5FE1FC0010E989 /* game.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = game.wav; path = "templates/cocos2d iOS demo.xctemplate/Resources/game.wav"; sourceTree = SOURCE_ROOT; };
+		0EA1B6621B81E9FB005D31E7 /* cocos2d_blues.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = cocos2d_blues.aiff; path = "templates/cocos2d iOS demo.xctemplate/Resources/cocos2d_blues.aiff"; sourceTree = SOURCE_ROOT; };
 		0EC6462C1B5E6D7100C656A6 /* Paddle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Paddle.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/Paddle.h"; sourceTree = SOURCE_ROOT; };
 		0EC6462D1B5E6D7100C656A6 /* Paddle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Paddle.m; path = "templates/cocos2d iOS demo.xctemplate/Classes/Paddle.m"; sourceTree = SOURCE_ROOT; };
 		0EC6462F1B5E6F5C00C656A6 /* GameTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameTypes.h; path = "templates/cocos2d iOS demo.xctemplate/Classes/GameTypes.h"; sourceTree = SOURCE_ROOT; };
@@ -1406,7 +1406,7 @@
 		0EE55F441B5D137C00D2F764 /* Credits */ = {
 			isa = PBXGroup;
 			children = (
-				0E46C3291B7EB7C100B416EF /* cocos2d_blues.aiff */,
+				0EA1B6621B81E9FB005D31E7 /* cocos2d_blues.aiff */,
 				0EE55F0E1B5D132100D2F764 /* credits.plist */,
 				0EE55EFA1B5D0FCC00D2F764 /* shader.greyscale.fsh */,
 				0EE55EFB1B5D0FCC00D2F764 /* shader.greyscale.vsh */,
@@ -1584,7 +1584,7 @@
 				0E98A82B1B70B90800FA7E95 /* demo-2x.plist in Resources */,
 				0EE55C111B5D0DDF00D2F764 /* Default-Landscape.png in Resources */,
 				0E98A8291B70B90800FA7E95 /* demo-1x.plist in Resources */,
-				0E46C32A1B7EB7C100B416EF /* cocos2d_blues.aiff in Resources */,
+				0EA1B6631B81E9FB005D31E7 /* cocos2d_blues.aiff in Resources */,
 				0EE55F2E1B5D132100D2F764 /* grossini_hi.png in Resources */,
 				0E98A82A1B70B90800FA7E95 /* demo-1x.png in Resources */,
 				0EE55C191B5D0DDF00D2F764 /* Icon@2x.png in Resources */,

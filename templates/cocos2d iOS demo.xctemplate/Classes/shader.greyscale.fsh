@@ -27,7 +27,7 @@ void main()
     // That would require setting up a uniform, and loading it.
     //
     // For now we just use a value which will give "most sprites" a slight blurr
-    vec2 pixelSize = vec2(0.01, 0.01);
+    vec2 pixelSize = vec2(0.005, 0.005);
     
     // read the four corner pixels
     vec4 color1 = texture2D(cc_MainTexture, cc_FragTexCoord1 + pixelSize);
