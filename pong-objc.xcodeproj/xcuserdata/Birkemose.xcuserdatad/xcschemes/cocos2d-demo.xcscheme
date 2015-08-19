@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0EF634FB1B5CFDF5002F7E97"
-               BuildableName = "libObjectiveChipmunk.a"
-               BlueprintName = "ObjectiveChipmunk"
-               ReferencedContainer = "container:cocos2d-demo.xcodeproj">
+               BlueprintIdentifier = "0EF634F71B5CFDF5002F7E97"
+               BuildableName = "pong-objc.app"
+               BlueprintName = "pong-objc"
+               ReferencedContainer = "container:pong-objc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0EF634F71B5CFDF5002F7E97"
+            BuildableName = "pong-objc.app"
+            BlueprintName = "pong-objc"
+            ReferencedContainer = "container:pong-objc.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,15 +48,16 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0EF634FB1B5CFDF5002F7E97"
-            BuildableName = "libObjectiveChipmunk.a"
-            BlueprintName = "ObjectiveChipmunk"
-            ReferencedContainer = "container:cocos2d-demo.xcodeproj">
+            BlueprintIdentifier = "0EF634F71B5CFDF5002F7E97"
+            BuildableName = "pong-objc.app"
+            BlueprintName = "pong-objc"
+            ReferencedContainer = "container:pong-objc.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -57,15 +67,16 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0EF634FB1B5CFDF5002F7E97"
-            BuildableName = "libObjectiveChipmunk.a"
-            BlueprintName = "ObjectiveChipmunk"
-            ReferencedContainer = "container:cocos2d-demo.xcodeproj">
+            BlueprintIdentifier = "0EF634F71B5CFDF5002F7E97"
+            BuildableName = "pong-objc.app"
+            BlueprintName = "pong-objc"
+            ReferencedContainer = "container:pong-objc.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

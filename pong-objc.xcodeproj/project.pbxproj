@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E6A17FC1B84C91200D6721C /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17EB1B84C91200D6721C /* Icon-29.png */; };
+		0E6A17FD1B84C91200D6721C /* Icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17EC1B84C91200D6721C /* Icon-29@2x.png */; };
+		0E6A17FE1B84C91200D6721C /* Icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17ED1B84C91200D6721C /* Icon-29@3x.png */; };
+		0E6A17FF1B84C91200D6721C /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17EE1B84C91200D6721C /* Icon-40.png */; };
+		0E6A18001B84C91200D6721C /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17EF1B84C91200D6721C /* Icon-40@2x.png */; };
+		0E6A18011B84C91200D6721C /* Icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F01B84C91200D6721C /* Icon-40@3x.png */; };
+		0E6A18021B84C91200D6721C /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F11B84C91200D6721C /* Icon-50.png */; };
+		0E6A18031B84C91200D6721C /* Icon-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F21B84C91200D6721C /* Icon-50@2x.png */; };
+		0E6A18041B84C91200D6721C /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F31B84C91200D6721C /* Icon-57.png */; };
+		0E6A18051B84C91200D6721C /* Icon-57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F41B84C91200D6721C /* Icon-57@2x.png */; };
+		0E6A18061B84C91200D6721C /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F51B84C91200D6721C /* Icon-60.png */; };
+		0E6A18071B84C91200D6721C /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F61B84C91200D6721C /* Icon-60@2x.png */; };
+		0E6A18081B84C91200D6721C /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F71B84C91200D6721C /* Icon-60@3x.png */; };
+		0E6A18091B84C91200D6721C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F81B84C91200D6721C /* Icon-72.png */; };
+		0E6A180A1B84C91200D6721C /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17F91B84C91200D6721C /* Icon-72@2x.png */; };
+		0E6A180B1B84C91200D6721C /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17FA1B84C91200D6721C /* Icon-76.png */; };
+		0E6A180C1B84C91200D6721C /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A17FB1B84C91200D6721C /* Icon-76@2x.png */; };
+		0E6A180E1B84C92900D6721C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6A180D1B84C92900D6721C /* Images.xcassets */; };
 		0E98A8291B70B90800FA7E95 /* demo-1x.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8231B70B90800FA7E95 /* demo-1x.plist */; };
 		0E98A82A1B70B90800FA7E95 /* demo-1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8241B70B90800FA7E95 /* demo-1x.png */; };
 		0E98A82B1B70B90800FA7E95 /* demo-2x.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E98A8251B70B90800FA7E95 /* demo-2x.plist */; };
@@ -22,12 +40,6 @@
 		0EE55C111B5D0DDF00D2F764 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C071B5D0DDF00D2F764 /* Default-Landscape.png */; };
 		0EE55C121B5D0DDF00D2F764 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C081B5D0DDF00D2F764 /* Default.png */; };
 		0EE55C131B5D0DDF00D2F764 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C091B5D0DDF00D2F764 /* Default@2x.png */; };
-		0EE55C141B5D0DDF00D2F764 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C0A1B5D0DDF00D2F764 /* Icon-72.png */; };
-		0EE55C151B5D0DDF00D2F764 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C0B1B5D0DDF00D2F764 /* Icon-Small-50.png */; };
-		0EE55C161B5D0DDF00D2F764 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C0C1B5D0DDF00D2F764 /* Icon-Small.png */; };
-		0EE55C171B5D0DDF00D2F764 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C0D1B5D0DDF00D2F764 /* Icon-Small@2x.png */; };
-		0EE55C181B5D0DDF00D2F764 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C0E1B5D0DDF00D2F764 /* Icon.png */; };
-		0EE55C191B5D0DDF00D2F764 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE55C0F1B5D0DDF00D2F764 /* Icon@2x.png */; };
 		0EE55C1E1B5D0EEA00D2F764 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55C1B1B5D0EEA00D2F764 /* main.m */; };
 		0EE55D571B5D0F4200D2F764 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55C211B5D0F4200D2F764 /* CCAction.m */; };
 		0EE55D581B5D0F4200D2F764 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE55C231B5D0F4200D2F764 /* CCActionCatmullRom.m */; };
@@ -232,6 +244,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E6A17EB1B84C91200D6721C /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-29.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-29.png"; sourceTree = "<group>"; };
+		0E6A17EC1B84C91200D6721C /* Icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-29@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-29@2x.png"; sourceTree = "<group>"; };
+		0E6A17ED1B84C91200D6721C /* Icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-29@3x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-29@3x.png"; sourceTree = "<group>"; };
+		0E6A17EE1B84C91200D6721C /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-40.png"; sourceTree = "<group>"; };
+		0E6A17EF1B84C91200D6721C /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-40@2x.png"; sourceTree = "<group>"; };
+		0E6A17F01B84C91200D6721C /* Icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@3x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-40@3x.png"; sourceTree = "<group>"; };
+		0E6A17F11B84C91200D6721C /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-50.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-50.png"; sourceTree = "<group>"; };
+		0E6A17F21B84C91200D6721C /* Icon-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-50@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-50@2x.png"; sourceTree = "<group>"; };
+		0E6A17F31B84C91200D6721C /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-57.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-57.png"; sourceTree = "<group>"; };
+		0E6A17F41B84C91200D6721C /* Icon-57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-57@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-57@2x.png"; sourceTree = "<group>"; };
+		0E6A17F51B84C91200D6721C /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-60.png"; sourceTree = "<group>"; };
+		0E6A17F61B84C91200D6721C /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-60@2x.png"; sourceTree = "<group>"; };
+		0E6A17F71B84C91200D6721C /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60@3x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-60@3x.png"; sourceTree = "<group>"; };
+		0E6A17F81B84C91200D6721C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-72.png"; sourceTree = "<group>"; };
+		0E6A17F91B84C91200D6721C /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-72@2x.png"; sourceTree = "<group>"; };
+		0E6A17FA1B84C91200D6721C /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-76.png"; sourceTree = "<group>"; };
+		0E6A17FB1B84C91200D6721C /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76@2x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/Icon-76@2x.png"; sourceTree = "<group>"; };
+		0E6A180D1B84C92900D6721C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "pong-objc/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		0E98A8231B70B90800FA7E95 /* demo-1x.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "demo-1x.plist"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-1x.plist"; sourceTree = SOURCE_ROOT; };
 		0E98A8241B70B90800FA7E95 /* demo-1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "demo-1x.png"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-1x.png"; sourceTree = SOURCE_ROOT; };
 		0E98A8251B70B90800FA7E95 /* demo-2x.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "demo-2x.plist"; path = "templates/cocos2d iOS demo.xctemplate/Resources/demo-2x.plist"; sourceTree = SOURCE_ROOT; };
@@ -249,12 +279,6 @@
 		0EE55C071B5D0DDF00D2F764 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Resources/Default-Landscape.png"; sourceTree = "<group>"; };
 		0EE55C081B5D0DDF00D2F764 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
 		0EE55C091B5D0DDF00D2F764 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
-		0EE55C0A1B5D0DDF00D2F764 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Resources/Icon-72.png"; sourceTree = "<group>"; };
-		0EE55C0B1B5D0DDF00D2F764 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/Icon-Small-50.png"; sourceTree = "<group>"; };
-		0EE55C0C1B5D0DDF00D2F764 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Resources/Icon-Small.png"; sourceTree = "<group>"; };
-		0EE55C0D1B5D0DDF00D2F764 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Resources/Icon-Small@2x.png"; sourceTree = "<group>"; };
-		0EE55C0E1B5D0DDF00D2F764 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Resources/Icon.png; sourceTree = "<group>"; };
-		0EE55C0F1B5D0DDF00D2F764 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Icon@2x.png"; sourceTree = "<group>"; };
 		0EE55C1A1B5D0EEA00D2F764 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "cocos2d-demo/Info.plist"; sourceTree = "<group>"; };
 		0EE55C1B1B5D0EEA00D2F764 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "cocos2d-demo/main.m"; sourceTree = "<group>"; };
 		0EE55C1C1B5D0EEA00D2F764 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = "cocos2d-demo/Prefix.pch"; sourceTree = "<group>"; };
@@ -697,7 +721,7 @@
 		0EE55F0E1B5D132100D2F764 /* credits.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = credits.plist; path = "templates/cocos2d iOS demo.xctemplate/Resources/credits.plist"; sourceTree = SOURCE_ROOT; };
 		0EE55F0F1B5D132100D2F764 /* grossini_hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossini_hi.png; path = "templates/cocos2d iOS demo.xctemplate/Resources/grossini_hi.png"; sourceTree = SOURCE_ROOT; };
 		0EE55F221B5D132100D2F764 /* white_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_square.png; path = "templates/cocos2d iOS demo.xctemplate/Resources/white_square.png"; sourceTree = SOURCE_ROOT; };
-		0EF634F81B5CFDF5002F7E97 /* cocos2d-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EF634F81B5CFDF5002F7E97 /* pong-objc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pong-objc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EF634FC1B5CFDF5002F7E97 /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -713,6 +737,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E6A17EA1B84C8F300D6721C /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				0E6A17EB1B84C91200D6721C /* Icon-29.png */,
+				0E6A17EC1B84C91200D6721C /* Icon-29@2x.png */,
+				0E6A17ED1B84C91200D6721C /* Icon-29@3x.png */,
+				0E6A17EE1B84C91200D6721C /* Icon-40.png */,
+				0E6A17EF1B84C91200D6721C /* Icon-40@2x.png */,
+				0E6A17F01B84C91200D6721C /* Icon-40@3x.png */,
+				0E6A17F11B84C91200D6721C /* Icon-50.png */,
+				0E6A17F21B84C91200D6721C /* Icon-50@2x.png */,
+				0E6A17F31B84C91200D6721C /* Icon-57.png */,
+				0E6A17F41B84C91200D6721C /* Icon-57@2x.png */,
+				0E6A17F51B84C91200D6721C /* Icon-60.png */,
+				0E6A17F61B84C91200D6721C /* Icon-60@2x.png */,
+				0E6A17F71B84C91200D6721C /* Icon-60@3x.png */,
+				0E6A17F81B84C91200D6721C /* Icon-72.png */,
+				0E6A17F91B84C91200D6721C /* Icon-72@2x.png */,
+				0E6A17FA1B84C91200D6721C /* Icon-76.png */,
+				0E6A17FB1B84C91200D6721C /* Icon-76@2x.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		0E7A62561B5FD57800EDE301 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,6 +780,7 @@
 		0EE55C021B5D0C7F00D2F764 /* Some System Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				0E6A17EA1B84C8F300D6721C /* Icons */,
 				0EE55C031B5D0D4D00D2F764 /* OpenAL.framework */,
 				0EF634F91B5CFDF5002F7E97 /* Products */,
 				0EE55C051B5D0D7600D2F764 /* Resources */,
@@ -749,12 +798,6 @@
 				0EE55C071B5D0DDF00D2F764 /* Default-Landscape.png */,
 				0EE55C081B5D0DDF00D2F764 /* Default.png */,
 				0EE55C091B5D0DDF00D2F764 /* Default@2x.png */,
-				0EE55C0A1B5D0DDF00D2F764 /* Icon-72.png */,
-				0EE55C0B1B5D0DDF00D2F764 /* Icon-Small-50.png */,
-				0EE55C0C1B5D0DDF00D2F764 /* Icon-Small.png */,
-				0EE55C0D1B5D0DDF00D2F764 /* Icon-Small@2x.png */,
-				0EE55C0E1B5D0DDF00D2F764 /* Icon.png */,
-				0EE55C0F1B5D0DDF00D2F764 /* Icon@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1434,7 +1477,7 @@
 		0EF634F91B5CFDF5002F7E97 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0EF634F81B5CFDF5002F7E97 /* cocos2d-demo.app */,
+				0EF634F81B5CFDF5002F7E97 /* pong-objc.app */,
 				0EF634FC1B5CFDF5002F7E97 /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
@@ -1443,6 +1486,7 @@
 		0EF634FE1B5CFDF5002F7E97 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0E6A180D1B84C92900D6721C /* Images.xcassets */,
 				0EE55F421B5D134400D2F764 /* Load */,
 				0EE55F431B5D135A00D2F764 /* Main */,
 				0EE55F441B5D137C00D2F764 /* Credits */,
@@ -1492,9 +1536,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0EF634F71B5CFDF5002F7E97 /* cocos2d-demo */ = {
+		0EF634F71B5CFDF5002F7E97 /* pong-objc */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0EF637BE1B5CFDF8002F7E97 /* Build configuration list for PBXNativeTarget "cocos2d-demo" */;
+			buildConfigurationList = 0EF637BE1B5CFDF8002F7E97 /* Build configuration list for PBXNativeTarget "pong-objc" */;
 			buildPhases = (
 				0EF634F41B5CFDF5002F7E97 /* Sources */,
 				0EF634F51B5CFDF5002F7E97 /* Frameworks */,
@@ -1504,9 +1548,9 @@
 			);
 			dependencies = (
 			);
-			name = "cocos2d-demo";
+			name = "pong-objc";
 			productName = "cocos2d-demo";
-			productReference = 0EF634F81B5CFDF5002F7E97 /* cocos2d-demo.app */;
+			productReference = 0EF634F81B5CFDF5002F7E97 /* pong-objc.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0EF634FB1B5CFDF5002F7E97 /* ObjectiveChipmunk */ = {
@@ -1541,7 +1585,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0EF634F31B5CFDF5002F7E97 /* Build configuration list for PBXProject "cocos2d-demo" */;
+			buildConfigurationList = 0EF634F31B5CFDF5002F7E97 /* Build configuration list for PBXProject "pong-objc" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1553,7 +1597,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0EF634F71B5CFDF5002F7E97 /* cocos2d-demo */,
+				0EF634F71B5CFDF5002F7E97 /* pong-objc */,
 				0EF634FB1B5CFDF5002F7E97 /* ObjectiveChipmunk */,
 			);
 		};
@@ -1565,30 +1609,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E98A82D1B70B90800FA7E95 /* demo-4x.plist in Resources */,
+				0E6A18021B84C91200D6721C /* Icon-50.png in Resources */,
 				0EE55ED21B5D0F9000D2F764 /* CMakeLists.txt in Resources */,
-				0EE55C171B5D0DDF00D2F764 /* Icon-Small@2x.png in Resources */,
 				0EE55F411B5D132100D2F764 /* white_square.png in Resources */,
+				0E6A18041B84C91200D6721C /* Icon-57.png in Resources */,
 				0E98A82E1B70B90800FA7E95 /* demo-4x.png in Resources */,
+				0E6A18031B84C91200D6721C /* Icon-50@2x.png in Resources */,
+				0E6A180E1B84C92900D6721C /* Images.xcassets in Resources */,
 				0EE55F021B5D0FCC00D2F764 /* shader.greyscale.fsh in Resources */,
-				0EE55C181B5D0DDF00D2F764 /* Icon.png in Resources */,
-				0EE55C151B5D0DDF00D2F764 /* Icon-Small-50.png in Resources */,
+				0E6A18081B84C91200D6721C /* Icon-60@3x.png in Resources */,
 				0EE55C131B5D0DDF00D2F764 /* Default@2x.png in Resources */,
-				0EE55C141B5D0DDF00D2F764 /* Icon-72.png in Resources */,
-				0EE55C161B5D0DDF00D2F764 /* Icon-Small.png in Resources */,
+				0E6A180C1B84C91200D6721C /* Icon-76@2x.png in Resources */,
 				0EE55C101B5D0DDF00D2F764 /* Default-568h@2x.png in Resources */,
+				0E6A18051B84C91200D6721C /* Icon-57@2x.png in Resources */,
+				0E6A17FE1B84C91200D6721C /* Icon-29@3x.png in Resources */,
+				0E6A17FD1B84C91200D6721C /* Icon-29@2x.png in Resources */,
+				0E6A18091B84C91200D6721C /* Icon-72.png in Resources */,
 				0E98E2B51B5FE1FC0010E989 /* game.wav in Resources */,
 				0EE55C121B5D0DDF00D2F764 /* Default.png in Resources */,
+				0E6A180B1B84C91200D6721C /* Icon-76.png in Resources */,
+				0E6A17FF1B84C91200D6721C /* Icon-40.png in Resources */,
 				0E98A82C1B70B90800FA7E95 /* demo-2x.png in Resources */,
 				0EE55F031B5D0FCC00D2F764 /* shader.greyscale.vsh in Resources */,
 				0E98E2B41B5FE1FC0010E989 /* beep.wav in Resources */,
 				0E98A82B1B70B90800FA7E95 /* demo-2x.plist in Resources */,
+				0E6A180A1B84C91200D6721C /* Icon-72@2x.png in Resources */,
+				0E6A18061B84C91200D6721C /* Icon-60.png in Resources */,
 				0EE55C111B5D0DDF00D2F764 /* Default-Landscape.png in Resources */,
 				0E98A8291B70B90800FA7E95 /* demo-1x.plist in Resources */,
 				0EA1B6631B81E9FB005D31E7 /* cocos2d_blues.aiff in Resources */,
+				0E6A18011B84C91200D6721C /* Icon-40@3x.png in Resources */,
 				0EE55F2E1B5D132100D2F764 /* grossini_hi.png in Resources */,
 				0E98A82A1B70B90800FA7E95 /* demo-1x.png in Resources */,
-				0EE55C191B5D0DDF00D2F764 /* Icon@2x.png in Resources */,
+				0E6A18001B84C91200D6721C /* Icon-40@2x.png in Resources */,
+				0E6A18071B84C91200D6721C /* Icon-60@2x.png in Resources */,
 				0EE55F2D1B5D132100D2F764 /* credits.plist in Resources */,
+				0E6A17FC1B84C91200D6721C /* Icon-29.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1855,6 +1911,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1882,6 +1940,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1941,7 +2001,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0EF634F31B5CFDF5002F7E97 /* Build configuration list for PBXProject "cocos2d-demo" */ = {
+		0EF634F31B5CFDF5002F7E97 /* Build configuration list for PBXProject "pong-objc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0EF637BC1B5CFDF8002F7E97 /* Debug */,
@@ -1950,7 +2010,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0EF637BE1B5CFDF8002F7E97 /* Build configuration list for PBXNativeTarget "cocos2d-demo" */ = {
+		0EF637BE1B5CFDF8002F7E97 /* Build configuration list for PBXNativeTarget "pong-objc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0EF637BF1B5CFDF8002F7E97 /* Debug */,
