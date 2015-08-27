@@ -674,8 +674,8 @@
 		B7E2605F17E7D278007067F0 /* cocos2d-tests */ = {
 			isa = PBXGroup;
 			children = (
-				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
+				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B71B087F17EA5B500082EBC0 /* Tests */,
 				D3E1842A19E861FC00A08B01 /* MetalShaders */,
 				B7E261EC17E7D27A007067F0 /* Platform/iOS */,

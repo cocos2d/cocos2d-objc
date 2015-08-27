@@ -1003,6 +1003,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0EAE948C1B8F76A0006F1105 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CBBAB33D171D0BC4009B955F;
+			remoteInfo = "ObjectAL (OSX)";
+		};
 		7A40377A19E36EFF007B6E8F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
@@ -1079,20 +1086,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 83409DCD19D5B65B004B7EB9;
 			remoteInfo = SSZipArchive;
-		};
-		A6D0B5D31B53C775000249FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FC39961219C3B80E00C93E5E;
-			remoteInfo = "ObjectAL (Android)";
-		};
-		A6D0B5D51B53C775000249FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
-			remoteInfo = "ObjectAL (Mac)";
 		};
 		B759E52C1880C66900E8166C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1617,17 +1610,17 @@
 			isa = PBXGroup;
 			children = (
 				0E0094951B3ACC24006EA7FC /* Installer */,
+				E0BC7D711342CC58001B4DCC /* LICENSE_cocos2d.txt */,
+				E0BC7D6E1342CC58001B4DCC /* LICENSE_artwork.txt */,
+				E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */,
+				E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */,
+				A0707F6215F946E9001C1263 /* LICENSE_CCBReader.txt */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
 				DCF7B34D1A1D426000E0EEAF /* API-Index.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
 				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
-				E0BC7D711342CC58001B4DCC /* LICENSE_cocos2d.txt */,
-				E0BC7D6E1342CC58001B4DCC /* LICENSE_artwork.txt */,
-				E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */,
-				E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */,
-				A0707F6215F946E9001C1263 /* LICENSE_CCBReader.txt */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				B78AE45917E7AF010028BE0B /* cocos2d-ui */,
 				501756090F335CE900624901 /* external */,
@@ -2389,8 +2382,7 @@
 			isa = PBXGroup;
 			children = (
 				FC39961B19C3B92F00C93E5E /* libObjectAL.a */,
-				A6D0B5D41B53C775000249FC /* libObjectAL (Android).a */,
-				A6D0B5D61B53C775000249FC /* libObjectAL (Mac).a */,
+				0EAE948D1B8F76A0006F1105 /* ObjectAL.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3090,6 +3082,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		0EAE948D1B8F76A0006F1105 /* ObjectAL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ObjectAL.framework;
+			remoteRef = 0EAE948C1B8F76A0006F1105 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7A40377B19E36EFF007B6E8F /* libObjectiveChipmunk-Android.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3130,20 +3129,6 @@
 			fileType = archive.ar;
 			path = libSSZipArchive.a;
 			remoteRef = 83409E3519D5B791004B7EB9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A6D0B5D41B53C775000249FC /* libObjectAL (Android).a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libObjectAL (Android).a";
-			remoteRef = A6D0B5D31B53C775000249FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A6D0B5D61B53C775000249FC /* libObjectAL (Mac).a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libObjectAL (Mac).a";
-			remoteRef = A6D0B5D51B53C775000249FC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B759E52D1880C66900E8166C /* libObjectiveChipmunk-iPhone.a */ = {
