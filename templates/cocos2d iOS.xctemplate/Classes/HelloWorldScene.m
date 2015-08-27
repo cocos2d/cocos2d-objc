@@ -27,16 +27,21 @@
     // Just make an assert, so that you can catch it in debug
     NSAssert(self, @"Whoops");
     
-    // background
+    // Background
     CCSprite9Slice *background = [CCSprite9Slice spriteWithImageNamed:@"white_square.png"];
     background.anchorPoint = CGPointZero;
     background.contentSize = [CCDirector sharedDirector].viewSize;
     background.color = [CCColor grayColor];
     [self addChild:background];
     
+    // The standard Hello World text
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"ArialMT" fontSize:64];
+    label.positionType = CCPositionTypeNormalized;
+    label.position = (CGPoint){0.5, 0.5};
+    [self addChild:label];
     
     // done
-	return self;
+    return self;
 }
 
 // -----------------------------------------------------------------------
