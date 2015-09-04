@@ -92,9 +92,9 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 /* Event that is called when the running node is no longer running (eg: its CCScene is being removed from the "stage" ).
  On cleanup you should break any possible circular references.
  CCNode's cleanup removes any possible scheduled timer and/or any possible action.
- If you override cleanup, you shall call [super cleanup]
+ If you override cleanup, you must call [super cleanup] <em>after</em> any cleanup of your own.
  */
--(void) cleanup;
+-(void) cleanup __attribute__((objc_requires_super));
 
 ///* performs OpenGL view-matrix transformation of its ancestors.
 // Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
