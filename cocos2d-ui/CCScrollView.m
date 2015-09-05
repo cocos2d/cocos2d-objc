@@ -761,6 +761,13 @@
     return (otherGestureRecognizer == _panRecognizer || otherGestureRecognizer == _tapRecognizer);
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return true;
+}
+
+
 - (void) onEnterTransitionDidFinish
 {
     // Add recognizers to view
