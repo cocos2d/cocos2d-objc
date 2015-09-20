@@ -62,6 +62,11 @@ NSString * const CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 // These are the lines loaded for both vertex and fragment shaders
 
 static NSString *CCShaderHeader =
+    @"#ifdef GL_ES\n"
+    @"#ifdef GL_OES_standard_derivatives\n"
+    @"#extension GL_OES_standard_derivatives : enable\n"
+    @"#endif\n"
+    @"#endif\n"
 	@"#ifndef GL_ES\n"
 	@"#define lowp\n"
 	@"#define mediump\n"
