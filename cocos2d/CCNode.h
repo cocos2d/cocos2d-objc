@@ -43,8 +43,8 @@
 @class CCBAnimationManager;
 @class CCAnimationManager;
 
-/** CCNode is the base class for all objects displayed by Cocos2D. CCNode handles transformations, can have a content size and provides a coordinate system 
- for its child nodes.
+/**
+ CCNode is the base class for all objects displayed by Cocos2D. CCNode handles transformations, can have a content size and provides a coordinate system for its child nodes.
  
  ### Node Hierarchy
  
@@ -57,21 +57,18 @@
  
  ### Draw Order
  
- Draw order of nodes is controlled primarily by their order in the node hierarchy. The parent node is drawn first, followed by its child nodes in the order they
- were added.
+ Draw order of nodes is controlled primarily by their order in the node hierarchy. The parent node is drawn first, followed by its child nodes in the order they were added.
  
  You can fine-tune draw order via the zOrder property. By default all nodes have a zOrder of 0. Nodes with lower zOrder are drawn before nodes with higher zOrder.
  This applies only to nodes in the same level (sibling nodes) and their parent node, as the zOrder is relative to the zOrder of the parent.
  
- Assuming you have two parent nodes A and B with zOrder 0 and they are drawn in the order A first, then B. Then all of the children of parent B will be drawn
- in front of any child node of parent A. If B's zOrder is changed to -1, then parent B and all of its children will be drawn behind parent A and its children.
+ Assuming you have two parent nodes A and B with zOrder 0 and they are drawn in the order A first, then B. Then all of the children of parent B will be drawn in front of any child node of parent A. If B's zOrder is changed to -1, then parent B and all of its children will be drawn behind parent A and its children.
  
  ### Scheduling Events / Timers
  
  Implementing a method with a signature of `-(void) update:(CCTime)delta` in a CCNode subclass will have that method run once every frame. `CCTime` is declared as `double`.
  
- If this doesn't suffice you can use the various schedule methods of a node, such as schedule:interval: or scheduleBlock:delay:. For example the following selector runs
- once every second:
+ If this doesn't suffice you can use the various schedule methods of a node, such as schedule:interval: or scheduleBlock:delay:. For example the following selector runs once every second:
  
     [self schedule:@selector(everySecond:) interval:1.0];
  
@@ -81,15 +78,11 @@
         NSLog(@"tic-toc ..");
     }
  
- **Warning:** Any non-Cocos2D scheduling methods will be unaffected by the node's paused state and may run in indeterminate order, possibly causing rendering
- glitches and timing bugs. It is therfore strongly discouraged to use NSTimer, `performSelector:afterDelay:` or Grand Central Disptach (GCD) `dispatch_xxx` methods
- to time/schedule tasks in Cocos2D.
+ <em>Warning:</em> Any non-Cocos2D scheduling methods will be unaffected by the node's paused state and may run in indeterminate order, possibly causing rendering glitches and timing bugs. It is therfore strongly discouraged to use NSTimer, `performSelector:afterDelay:` or Grand Central Disptach (GCD) `dispatch_xxx` methods to time/schedule tasks in Cocos2D.
  
  #### Pausing
  
- It is common practice to pause the topmost node of a layer whose contents you want to pause. For instance you should have a gameLayer node that you can use
- to pause the entire game, while the hudLayer and pauseMenuLayer nodes may not need to or shouldn't be paused in order to continue animations and allowing the
- user to interact with a pause menu.
+ It is common practice to pause the topmost node of a layer whose contents you want to pause. For instance you should have a gameLayer node that you can use to pause the entire game, while the hudLayer and pauseMenuLayer nodes may not need to or shouldn't be paused in order to continue animations and allowing the user to interact with a pause menu.
  
  ### Input Handling
  
@@ -97,11 +90,9 @@
  
  ### Position and Size Types
  
- Coordinates in the CCNode coordinate system are by default set in points by the position property. The point measurement provides a way to handle different 
- screen pixel densities. For instance, on a Retina device one point corresponds to two pixels, but on non-Retina devices point and pixel resolution are identical.
+ Coordinates in the CCNode coordinate system are by default set in points by the position property. The point measurement provides a way to handle different screen pixel densities. For instance, on a Retina device one point corresponds to two pixels, but on non-Retina devices point and pixel resolution are identical.
  
- By using the positionType property you can specify how a node's position is interpreted. For instance, if you set the type to CCPositionTypeNormalized a 
- position value of (0.5, 0.5) will place the node in the center of its parent's container. The container is specified by the parent's contentSize. 
+ By using the positionType property you can specify how a node's position is interpreted. For instance, if you set the type to CCPositionTypeNormalized a  position value of (0.5, 0.5) will place the node in the center of its parent's container. The container is specified by the parent's contentSize.
  
  It's also possible to set positions relative to the different corners of the parent's container. The CCPositionType has three components, xUnit, yUnit and corner. 
  The corner can be any reference corner of the parent's container and the xUnit and yUnit can be any of the following:
@@ -109,13 +100,9 @@
  - CCPositionUnitPoints - This is the default, the position value will be in points.
  - CCPositionUnitScaled - The position is scaled by the UIScaleFactor as defined by CCDirector. This is very useful for scaling up game play without changing the game logic.
     E.g. if you want to support both phones and tablets in native resolutions.
- - CCPositionUnitNormalized - Using the normalized type allows you to position object in relative to the parents container. E.g. it can be used to center nodes
-    on the screen regardless of the device type your game is running on.
+ - CCPositionUnitNormalized - Using the normalized type allows you to position object in relative to the parents container. E.g. it can be used to center nodes on the screen regardless of the device type your game is running on.
  
- Similarily to how you set a node's position and positionType you can also set it's contentSize and contentSizeType. However, some classes doesn't allow you 
- to set these directly. For instance, the CCSprite sets its contentSize depending on the size of its texture and for descendants of CCControl you should 
- set the preferredSize and preferredSizeType rather than changing their contentSize directly. The CCSizeType has two components widthUnit and heightUnit 
- which can be any of the following:
+ Similarily to how you set a node's position and positionType you can also set it's contentSize and contentSizeType. However, some classes doesn't allow you  to set these directly. For instance, the CCSprite sets its contentSize depending on the size of its texture and for descendants of CCControl you should  set the preferredSize and preferredSizeType rather than changing their contentSize directly. The CCSizeType has two components widthUnit and heightUnit  which can be any of the following:
  
  - CCSizeUnitPoints - This is the default, the size will be in points
  - CCSizeUnitScaled - The size is scaled by the UIScaleFactor.
@@ -123,15 +110,11 @@
  - CCSizeUnitInset - The content size will be the size of it's parent container, but inset by a number of points.
  - CCSizeUnitInsetScaled - The content size will be the size of it's parent container, but inset by a number of points multiplied by the UIScaleFactor.
  
- Even if the positions and content sizes are not set in points you can use actions to animate the nodes. See the examples and tests for more information on
- how to set positions and content sizes, or use SpriteBuilder to easily play around with the settings. There are also more positioning options available
- by using CCLayout and CCLayoutBox.
+ Even if the positions and content sizes are not set in points you can use actions to animate the nodes. See the examples and tests for more information on how to set positions and content sizes, or use SpriteBuilder to easily play around with the settings. There are also more positioning options available by using CCLayout and CCLayoutBox.
  
 #### Prefer to use ..InPoints
  
- There are typically two properties of each property supporting a "type". For instance the position property returns the raw values whose meaning
- depends on positionType, while positionInPoints will return the position in points regardless of positionType. It is recommended to use the "inPoints"
- variants of properties if you expect the values to be in points. 
+ There are typically two properties of each property supporting a "type". For instance the position property returns the raw values whose meaning depends on positionType, while positionInPoints will return the position in points regardless of positionType. It is recommended to use the "inPoints" variants of properties if you expect the values to be in points.
  
  Otherwise your code will break if you subsequently change the positionType to something other than points (ie UIPoints or Normalized).
 
@@ -143,14 +126,30 @@
  
  A separate model could simply be any NSObject class initialized by the node subclass and assigned to an ivar/property.
  
- An advanced subclassing style aims to minimize subclassing node classes except for CCNode itself. A CCNode subclass acts as the controller for its node tree,
- with one or more child nodes representing the controller node's views. This is particularly useful for composite nodes, such as a player
- with multiple body parts (head, torso, limbs), attachments (armor, weapons) and effects (health bar, name label, selection rectangle, particle effects).
+ An advanced subclassing style aims to minimize subclassing node classes except for CCNode itself. A CCNode subclass acts as the controller for its node tree, with one or more child nodes representing the controller node's views. This is particularly useful for composite nodes, such as a player with multiple body parts (head, torso, limbs), attachments (armor, weapons) and effects (health bar, name label, selection rectangle, particle effects).
  
- The userObject property can be used to add custom data and methods (model, components) to any node, in particular to avoid subclassing where the subclass
- would only add minimal functionality or just data.
- */
+ The userObject property can be used to add custom data and methods (model, components) to any node, in particular to avoid subclassing where the subclass would only add minimal functionality or just data.
+ 
+### Cleanup of nodes
+ 
+  When a node is no longer needed, and is removed (directly or indirectly) from it's parent by one of:
+ 
+ -(void) removeFromParentAndCleanup:(BOOL)cleanup;
+ -(void) removeChild: (CCNode*)node cleanup:(BOOL)cleanup;
+ -(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup;
+ -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
+  and the cleanup parameter is YES, the private method:
+ 
+ - (void) cleanup;
+ 
+ is called.  This offers an opportunity for the node to carry out any cleanup such as removing possible circular references that might cause a memory leak.
+ 
+ CCNode implements a base level of functionality for cleanup and if your subclass needs to implement it, you will need to import CCNode_Private.h.
+ 
+ @note that if you override cleanup, you must call [super cleanup] <em>after</em> any cleanup of your own.
+ 
+ */
 @interface CCNode : CCResponder < CCSchedulerTarget > {
     
 	// Rotation angle.
