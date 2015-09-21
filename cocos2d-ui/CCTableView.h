@@ -27,13 +27,26 @@
 @class CCButton;
 @class CCTableView;
 
+
+#pragma mark CCTableViewCellProtocol
+
+/** Requirements for implementing a custom Table View Cell.
+    Note that the custom cell MUST inherit CCNode.*/
+
+@protocol CCTableViewCellProtocol <NSObject>
+
+@property (nonatomic, assign) NSUInteger index;
+- (void) pressedCell:(id)sender;
+
+@end
+
 #pragma mark CCTableViewCell
 
 /** Represents a cell in a CCTableView. It is essentially a thin wrapper around CCButton that allows the user to interact with the cell.
  You can add any node(s) as content to the cell. */
-@interface CCTableViewCell : CCNode
+@interface CCTableViewCell : CCNode <CCTableViewCellProtocol>
 {
-    NSUInteger _index;
+
 }
 
 /** The CCButton instance used to allow interaction with the cell. */
@@ -56,7 +69,7 @@
  @param tableView The CCTableView that is requesting a cell for the index.
  @param index The index of the cell that is requested.
  @returns The CCTableViewCell for the given index. */
-- (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index;
+- (id<CCTableViewCellProtocol>) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index;
 /** Requests the number of rows in the given table view.
  @param tableView The CCTableView for which the number of rows should be returned.
  @returns The number of rows in the table view. */
@@ -211,5 +224,6 @@
  @param target The object that should receive the selector.
  @param selector The selector to run, ie `@selector(onRowSelected:)`. */
 -(void) setTarget:(id)target selector:(SEL)selector;
+-(void) selectedRow:(NSUInteger)row;
 
 @end
