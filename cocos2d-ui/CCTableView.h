@@ -156,7 +156,7 @@
  
  @note Assigning a new or different data source immediately calls reloadData.
  */
-@property (nonatomic,strong) id <CCTableViewDataSource> dataSource;
+@property (nonatomic,weak) id <CCTableViewDataSource> dataSource;
 
 /** Removes all cells from memory and requests a new set of cells from the dataSource.
  Assigning a different dataSource and changing the rowHeight will cause reloadData to run.
