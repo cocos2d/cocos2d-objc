@@ -558,12 +558,10 @@ static CCFileUtils *fileUtils = nil;
 	if(!contentScale) contentScale = &_contentScale;
 	
 	// fullpath? return it
-//	if ([filename isAbsolutePath]) {
-//		CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
-//		*contentScale = 1.0;
-//		NSLog(@"filename:%@, fullPath:%@, contentScale:%f", filename, filename, *contentScale);
-//		return filename;
-//	}
+    if ([filename isAbsolutePath]) {
+        CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
+        return filename;
+    }
 
 	// Already Cached ?
 	CCCacheValue *value = [_fullPathCache objectForKey:filename];
