@@ -549,7 +549,7 @@ static CCFileUtils *fileUtils = nil;
 
 -(NSString*) fullPathForFilename:(NSString*)filename
 {
-	return [self fullPathForFilename:filename contentScale:NULL];
+	return [self fullPathForFilenameIgnoringResolutions:filename];
 }
 
 -(NSString*) fullPathForFilename:(NSString*)filename contentScale:(CGFloat *)contentScale
