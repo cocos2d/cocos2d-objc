@@ -128,6 +128,11 @@ static CCBlendMode *CCBLEND_PREMULTIPLIED_ALPHA = nil;
 static CCBlendMode *CCBLEND_ADD = nil;
 static CCBlendMode *CCBLEND_MULTIPLY = nil;
 
+static CCBlendMode *CCBLEND_ADD_WITH_ALPHA = nil;
+static CCBlendMode *CCBLEND_SCREEN = nil;
+static CCBlendMode *CCBLEND_MULTIPLICATIVE = nil;
+static CCBlendMode *CCBLEND_DODGE = nil;
+
 NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(void)initialize
@@ -160,6 +165,26 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 		CCBlendFuncSrcColor: @(GL_DST_COLOR),
 		CCBlendFuncDstColor: @(GL_ZERO),
 	}];
+    
+    CCBLEND_ADD_WITH_ALPHA = [self blendModeWithOptions:@{
+        CCBlendFuncSrcColor: @(GL_SRC_ALPHA),
+        CCBlendFuncDstColor: @(GL_ZERO),
+    }];
+    
+    CCBLEND_SCREEN = [self blendModeWithOptions:@{
+        CCBlendFuncSrcColor: @(GL_ONE_MINUS_DST_COLOR),
+        CCBlendFuncDstColor: @(GL_ONE),
+    }];
+    
+    CCBLEND_MULTIPLICATIVE = [self blendModeWithOptions:@{
+        CCBlendFuncSrcColor: @(GL_DST_COLOR),
+        CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
+    }];
+    
+    CCBLEND_DODGE = [self blendModeWithOptions:@{
+        CCBlendFuncSrcColor: @(GL_ONE_MINUS_SRC_ALPHA),
+        CCBlendFuncDstColor: @(GL_ONE),
+    }];
 }
 
 +(void)flushCache
@@ -195,6 +220,26 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 +(CCBlendMode *)multiplyMode
 {
 	return CCBLEND_MULTIPLY;
+}
+
++(CCBlendMode *)multiplicativeMode
+{
+    return CCBLEND_MULTIPLICATIVE;
+}
+
++(CCBlendMode *)addWithAlphaMode
+{
+    return CCBLEND_ADD_WITH_ALPHA;
+}
+
++(CCBlendMode *)screenMode
+{
+    return CCBLEND_SCREEN;
+}
+
++(CCBlendMode *)dodgeMode
+{
+    return CCBLEND_DODGE;
 }
 
 @end

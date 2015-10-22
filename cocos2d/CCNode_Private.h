@@ -108,5 +108,6 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
 
 - (void) contentSizeChanged;
+- (void) parentsContentSizeChanged;
 
 @end

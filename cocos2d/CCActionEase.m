@@ -176,7 +176,7 @@
 @implementation CCActionEaseOut
 -(void) update: (CCTime) t
 {
-	[_inner update: powf(t,1/_rate)];
+    [_inner update: 1.0f - powf(1.0f - t, _rate)];
 }
 @end
 
