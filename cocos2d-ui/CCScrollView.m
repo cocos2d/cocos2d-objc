@@ -763,6 +763,8 @@
 
 - (void) onEnterTransitionDidFinish
 {
+    NSAssert(_panRecognizer.view == nil && _tapRecognizer.view == nil, @"CCScrollView: Probable double call into onEnterTransitionDidFinish - gesture recognizers are already added");
+
     // Add recognizers to view
     UIView* view = [CCDirector sharedDirector].view;
     
