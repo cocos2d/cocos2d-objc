@@ -81,8 +81,35 @@
 
 @implementation CCActionRemove
 
++(id)action {
+    return [[self alloc] init];
+}
+
++(id)actionWithCleanUp:(BOOL)cleanup {
+    return [[self alloc] initWithCleanUp:cleanup];
+}
+
+-(id)init {
+    self = [super init];
+    if (!self) return nil;
+    
+    _cleanUp = true;
+    
+    return self;
+}
+
+-(id)initWithCleanUp:(BOOL)cleanUp {
+    self = [super init];
+    if (!self) return nil;
+    
+    _cleanUp = cleanUp;
+    
+    return self;
+}
+
+
 -(void) update:(CCTime)time {
-	[(CCNode *)_target removeFromParent];
+	[(CCNode *)_target removeFromParentAndCleanup:_cleanUp];
 }
 @end
 
