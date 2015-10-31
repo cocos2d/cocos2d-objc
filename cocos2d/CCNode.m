@@ -397,11 +397,20 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     // Update the children (if needed)
     for (CCNode* child in _children)
     {
-        if (!CCPositionTypeIsBasicPoints(child->_positionType))
+        [child parentsContentSizeChanged];
+    }
+    
+}
+
+- (void) parentsContentSizeChanged
         {
-            // This is a position type affected by content size
-            child->_isTransformDirty = _isInverseDirty = YES;
+    if (!CCSizeTypeIsBasicPoints(_contentSizeType))
+    {
+        [self contentSizeChanged];
         }
+    else if (!CCPositionTypeIsBasicPoints(_positionType))
+    {
+        _isTransformDirty = _isInverseDirty = YES;
     }
 }
 

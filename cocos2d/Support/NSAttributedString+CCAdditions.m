@@ -261,12 +261,12 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
         [string addAttribute:(id)kCTForegroundColorFromContextAttributeName value:(__bridge id)color range:fullRange];
         CGColorRelease(color);
     }
-    if (NSAttributedStringHasAttribute(string, NSFontAttributeName)) {
-        id font = [string attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
-        CTFontRef ctFont = CTFontCreateWithPlatformSpecificFont(font);
-        [string addAttribute:(id)kCTFontAttributeName value:(__bridge id)ctFont range:fullRange];
-        CFRelease(ctFont);
-    }
+//    if (NSAttributedStringHasAttribute(string, NSFontAttributeName)) {
+//        id font = [string attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+//        CTFontRef ctFont = CTFontCreateWithPlatformSpecificFont(font);
+//        [string addAttribute:(id)kCTFontAttributeName value:(__bridge id)ctFont range:fullRange];
+//        CFRelease(ctFont);
+//    }
     
     // Shadow
     if (NSAttributedStringHasAttribute(string, NSShadowAttributeName))
@@ -330,7 +330,7 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
     // Font
     CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)defaultFontName, defaultFontSize, NULL);
     if (font == NULL) font = CTFontCreateWithName(CFSTR("Helvetica"), defaultFontSize, NULL);
-    [string addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fullRange];
+//    [string addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fullRange];
     NSMutableAttributedStringSetDefaultAttribute(string, (NSString *)kCTFontAttributeName, (__bridge id)font);
     CFRelease(font);
     return useFullColor;

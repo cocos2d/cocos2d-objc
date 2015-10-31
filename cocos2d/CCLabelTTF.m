@@ -156,7 +156,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 {
     NSAssert(attributedString, @"Invalid attributedString");
     
-    if ( _attributedString.hash != attributedString.hash)
+    if ( ![_attributedString isEqualToAttributedString: attributedString])
+//    if ( _attributedString.hash != attributedString.hash)
     {
         _attributedString = [attributedString copy];
         

@@ -129,6 +129,14 @@ extern NSString * const CCBlendEquationAlpha;
 +(CCBlendMode *)addMode;
 /// Multiply blending mode. (Similar to PhotoShop's burn mode)
 +(CCBlendMode *)multiplyMode;
+/// A (better) multiply blending mode.
++(CCBlendMode *)multiplicativeMode;
+/// A (better) add mode.
++(CCBlendMode *)addWithAlphaMode;
+/// Similar to PhotoShop's screen mode.
++(CCBlendMode *)screenMode;
+/// Similar to PhotoShop's dodge mode.
++(CCBlendMode *)dodgeMode;
 
 @end
 

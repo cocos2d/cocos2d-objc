@@ -336,7 +336,8 @@
 	{
 		while (dt > _nextDt && _total < _times)
 		{
-			[_innerAction update:1.0];
+
+			[_innerAction update:1.0f];
 			_total++;
 
 			[_innerAction stop];
@@ -345,7 +346,7 @@
 		}
 		
 		// fix for issue #1288, incorrect end value of repeat
-		if(dt >= 1.0 && _total < _times) 
+		if(dt >= 1.0f && _total < _times) 
 		{
 			_total++;
 		}
@@ -367,7 +368,7 @@
 	}
 	else
 	{
-		[_innerAction update:fmod(dt * _times, 1.0)];
+		[_innerAction update:fmodf(dt * _times,1.0f)];
 	}
 }
 
