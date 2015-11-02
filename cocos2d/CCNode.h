@@ -212,6 +212,9 @@
 
 	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
 	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
+    
+    // contentSize changes don't propogate to children unless cascadeContentSize is enabled.
+    BOOL        _cascadeContentSizeEnabled;
 	
 @private
 	// Physics Body.
@@ -386,9 +389,12 @@
 /// -----------------------------------------------------------------------
 
 /** The untransformed size of the node in the unit specified by contentSizeType property.
- The contentSize remains the same regardless of whether the node is scaled or rotated.
+ The contentSize remains the same regardless of whether the node is scaled or rotated.  Changes to contentSize will not affect
+ children unless the property cascadeContentSize is enabled.
  @see contentSizeInPoints
- @see contentSizeType */
+ @see contentSizeType
+ @see cascadeContentSizeEnabled
+ */
 @property (nonatomic,readwrite,assign) CGSize contentSize;
 
 /** The untransformed size of the node in Points. The contentSize remains the same regardless of whether the node is scaled or rotated.
@@ -403,6 +409,12 @@
  @see contentSize
  @see contentSizeInPoints */
 @property (nonatomic,readwrite,assign) CCSizeType contentSizeType;
+
+/**
+ cascadeContentSizeEnabled causes changes to this node's contentSize to cascade down to it's children.
+ @see contentSize
+ */
+@property (nonatomic, getter = isCascadeContentSizeEnabled) BOOL cascadeContentSizeEnabled;
 
 /**
  * Invoked automatically when the OS view has been resized.
