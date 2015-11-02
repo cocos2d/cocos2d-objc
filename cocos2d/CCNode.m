@@ -187,7 +187,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_displayColor = _color = [CCColor whiteColor].ccColor4f;
 		_cascadeOpacityEnabled = NO;
 		_cascadeColorEnabled = NO;
-        _cascadeContentSizeEnabled = NO;
 	}
 
 	return self;
@@ -400,11 +399,12 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     {
         [child parentsContentSizeChanged];
     }
+    
 }
 
 - (void) parentsContentSizeChanged
         {
-    if (!CCSizeTypeIsBasicPoints(_contentSizeType) && (_cascadeContentSizeEnabled == YES))
+    if (!CCSizeTypeIsBasicPoints(_contentSizeType))
     {
         [self contentSizeChanged];
         }
@@ -1679,7 +1679,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 @synthesize cascadeColorEnabled=_cascadeColorEnabled;
 @synthesize cascadeOpacityEnabled=_cascadeOpacityEnabled;
-@synthesize cascadeContentSizeEnabled=_cascadeContentSizeEnabled;
 
 -(CGFloat) opacity
 {
