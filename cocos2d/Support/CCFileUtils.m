@@ -423,6 +423,10 @@ static CCFileUtils *fileUtils = nil;
 				return 1.0*_iPhoneContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixiPhone5HD] )
 				return 2.0*_iPhoneContentScaleFactor;
+            if( [key isEqualToString:CCFileUtilsSuffixiPhone6PlusHD] )
+                return 2.0*_iPadContentScaleFactor;
+            if( [key isEqualToString:CCFileUtilsSuffixiPhone6Plus] )
+                return 1.0*_iPadContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixDefault] )
 				return 1.0;
 #elif __CC_PLATFORM_MAC
