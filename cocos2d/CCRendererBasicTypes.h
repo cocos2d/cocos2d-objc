@@ -178,7 +178,7 @@ extern NSString * const CCBlendEquationAlpha;
 // @param shaderUniforms The shader uniforms.
 // @see CCBlendMode
 // @see CCShader
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms;
 
 /// @name Obtaining the Debug Render State
 
