@@ -178,16 +178,16 @@
 {
     _keyboardIsShown = NO;
 	
-	BOOL focusOnTextField = _textField.isEditing;
+    BOOL focusOnTextField = _textField.isEditing;
 	
 #if __CC_PLATFORM_ANDROID
-	focusOnTextField = _textFieldIsEditing;
+    focusOnTextField = _textFieldIsEditing;
 #endif
 	
-	if (focusOnTextField)
-	{
-		[self endFocusingOnTextField];
-	}
+    if (focusOnTextField)
+    {
+        [self endFocusingOnTextField];
+    }
 }
 
 
