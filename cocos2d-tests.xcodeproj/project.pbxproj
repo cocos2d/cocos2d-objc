@@ -25,7 +25,6 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
-		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FE241018F5F06F00647961 /* CCAnimationTest.m */; };
@@ -336,7 +335,6 @@
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
-		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
 		9D96557219D6113500428E79 /* CCEffectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectTests.m; sourceTree = "<group>"; };
@@ -611,7 +609,6 @@
 				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
 				A6167B92189A7D4D0044D391 /* VertexZTest.m */,
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
-				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
 			);
 			name = Tests;
 			path = "cocos2d-ui-tests/tests";
@@ -940,7 +937,7 @@
 		B7E2604017E7D278007067F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Cocos2d;
 				TargetAttributes = {
 					75556A01185636F100ED1B0F = {
@@ -1259,7 +1256,6 @@
 				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
 				7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */,
-				839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */,
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
@@ -1402,6 +1398,7 @@
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cocos2d-iphone.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1450,6 +1447,7 @@
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cocos2d-iphone.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
@@ -1469,6 +1467,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1568,6 +1567,7 @@
 					"-weak_framework",
 					Metal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org2.cocos2d.Tests;
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1600,6 +1600,7 @@
 					"-weak_framework",
 					Metal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org2.cocos2d.Tests;
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
@@ -1637,6 +1638,7 @@
 					"-weak_framework",
 					Metal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "cocos2d-tests-mac";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -1671,6 +1673,7 @@
 					"-weak_framework",
 					Metal,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "cocos2d-tests-mac";
 				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;

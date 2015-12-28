@@ -1,5 +1,10 @@
 Cocos2D-ObjC
 ============
+Cocos2D is currently trying to raise funds for a Swift version.  
+If you think this would be interesting, please consider supporting it.  
+[KickStarter Cocos2D-PureSwift][6]
+
+
 **PLEASE READ BEFORE POSTING AN ISSUE!**  
 If in doubt, please post questions and comments in the forum  
 [The Official Forum][3]  
@@ -104,3 +109,4 @@ Download from Github
 [3]: http://forum.cocos2d-objc.org "Cocos2D-ObjC Official Forum"
 [4]: http://www.chipmunk-physics.net
 [5]: https://github.com/slembcke/UnofficialCocos2DTemplate
+[6]: https://www.kickstarter.com/projects/1455832115/cocos2d-pureswift
