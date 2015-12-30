@@ -378,7 +378,7 @@ static CCDirector *_sharedDirector = nil;
 #if __CC_PLATFORM_IOS
 		[super setView:view];
 #else 
-		_view = view;
+		self.view = view;
 #endif
 
 		// set size
