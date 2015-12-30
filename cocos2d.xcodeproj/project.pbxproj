@@ -533,7 +533,6 @@
 		B75C2E7C17C5908B002B0E0D /* NSAttributedString+CCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */; };
 		B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C2E7B17C5908B002B0E0D /* NSAttributedString+CCAdditions.m */; };
 		B77060CF18341AD50043CC67 /* CCBReader_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B77060CE18341AD50043CC67 /* CCBReader_Private.h */; };
-		B77582CE1A76CDB200C8589F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B77582CD1A76CDB200C8589F /* libz.dylib */; };
 		B78AE46217E7AF1C0028BE0B /* CCButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B78AE45A17E7AF1C0028BE0B /* CCButton.h */; };
 		B78AE46317E7AF1C0028BE0B /* CCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE45B17E7AF1C0028BE0B /* CCButton.m */; };
 		B78AE46417E7AF1C0028BE0B /* CCControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B78AE45C17E7AF1C0028BE0B /* CCControl.h */; };
@@ -1560,7 +1559,6 @@
 			files = (
 				F87456541C34152D00A7AFF0 /* libObjectAL (Mac).a in Frameworks */,
 				F874564F1C34150A00A7AFF0 /* libObjectiveChipmunk-Mac.a in Frameworks */,
-				B77582CE1A76CDB200C8589F /* libz.dylib in Frameworks */,
 				7A59498319E38C9800F65F90 /* libSSZipArchiveMac.a in Frameworks */,
 				7A4037C819E3712A007B6E8F /* OpenGL.framework in Frameworks */,
 				7A4037C619E37126007B6E8F /* QuartzCore.framework in Frameworks */,
