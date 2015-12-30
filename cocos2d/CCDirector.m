@@ -100,7 +100,7 @@ extern NSString * cocos2dVersion(void);
 	CCFrameBufferObject *_framebuffer;
 }
 
-@dynamic view;
+@synthesize view;
 
 @synthesize animationInterval = _animationInterval;
 @synthesize runningScene = _runningScene;
@@ -373,12 +373,12 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCDirectorView> *)_view_
 {
 #if __CC_PLATFORM_IOS
-		[super setView:view];
+		[super setView:_view_];
 #else 
-		self.view = view;
+		view = _view_;
 #endif
 
 		// set size

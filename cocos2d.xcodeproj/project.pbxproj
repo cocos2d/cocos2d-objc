@@ -997,6 +997,8 @@
 		E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
 		E525FCC2CF72D3667DE4D71B /* CCPackageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FF8C7C018BF691F36044 /* CCPackageHelper.h */; };
 		E525FF1A60724C91275720C5 /* CCPackageManager_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F94C08B1D716E9173061 /* CCPackageManager_private.h */; };
+		F874564F1C34150A00A7AFF0 /* libObjectiveChipmunk-Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B153484C1BE1E7A20022C4BB /* libObjectiveChipmunk-Mac.a */; };
+		F87456541C34152D00A7AFF0 /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = B15348371BE1E78C0022C4BB /* libObjectAL (Mac).a */; };
 		FC64014019C79716003E595A /* libObjectAL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961B19C3B92F00C93E5E /* libObjectAL.a */; };
 /* End PBXBuildFile section */
 
@@ -1556,6 +1558,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F87456541C34152D00A7AFF0 /* libObjectAL (Mac).a in Frameworks */,
+				F874564F1C34150A00A7AFF0 /* libObjectiveChipmunk-Mac.a in Frameworks */,
 				B77582CE1A76CDB200C8589F /* libz.dylib in Frameworks */,
 				7A59498319E38C9800F65F90 /* libSSZipArchiveMac.a in Frameworks */,
 				7A4037C819E3712A007B6E8F /* OpenGL.framework in Frameworks */,
