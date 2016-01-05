@@ -376,10 +376,9 @@ static CCDirector *_sharedDirector = nil;
 -(void) setView:(CC_VIEW<CCDirectorView> *)_view_
 {
 #if __CC_PLATFORM_IOS
-		[super setView:_view_];
-#else 
-		view = _view_;
+    [super setView:_view_];
 #endif
+    view = _view_;
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(self.view.bounds.size);
