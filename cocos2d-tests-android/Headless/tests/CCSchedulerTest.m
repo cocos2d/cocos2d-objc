@@ -1,1 +1,0 @@
-../../../cocos2d-ui-tests/tests/CCSchedulerTest.m
