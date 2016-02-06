@@ -550,6 +550,9 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 	MTLRenderPipelineDescriptor *descriptor = [MTLRenderPipelineDescriptor new];
 	descriptor.vertexFunction = vertexFunction;
 	descriptor.fragmentFunction = fragmentFunction;
+    MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];
+    colorDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
+    descriptor.colorAttachments[0] = colorDescriptor;
 	
 	NSError *error = nil;
 	MTLRenderPipelineReflection *reflection = nil;
