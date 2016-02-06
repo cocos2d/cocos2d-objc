@@ -389,7 +389,7 @@ CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
 		
 		NSError *err = nil;
-		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&err] retain];
+		self->_renderPipelineState = [context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&err];
 		
 		if(err) CCLOG(@"Error creating metal render pipeline state. %@", err);
 		NSCAssert(self->_renderPipelineState, @"Could not create render pipeline state.");
