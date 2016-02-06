@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084782091C66669300C3817B /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782011C66669300C3817B /* CCTiledMap.m */; };
+		0847820A1C66669300C3817B /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782011C66669300C3817B /* CCTiledMap.m */; };
+		0847820B1C66669300C3817B /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782011C66669300C3817B /* CCTiledMap.m */; };
+		0847820C1C66669300C3817B /* CCTiledMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782041C66669300C3817B /* CCTiledMapLayer.m */; };
+		0847820D1C66669300C3817B /* CCTiledMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782041C66669300C3817B /* CCTiledMapLayer.m */; };
+		0847820E1C66669300C3817B /* CCTiledMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782041C66669300C3817B /* CCTiledMapLayer.m */; };
+		0847820F1C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782061C66669300C3817B /* CCTiledMapObjectGroup.m */; };
+		084782101C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782061C66669300C3817B /* CCTiledMapObjectGroup.m */; };
+		084782111C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782061C66669300C3817B /* CCTiledMapObjectGroup.m */; };
+		084782121C66669300C3817B /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782081C66669300C3817B /* CCTMXXMLParser.m */; };
+		084782131C66669300C3817B /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782081C66669300C3817B /* CCTMXXMLParser.m */; };
+		084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782081C66669300C3817B /* CCTMXXMLParser.m */; };
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
@@ -284,13 +296,6 @@
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = "cocos2d-ios";
 		};
-		D3763BBA19E72F85006C050D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
-			remoteInfo = cocos2dAndroid;
-		};
 		D3763BBE19E72F85006C050D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
@@ -315,6 +320,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		084782001C66669300C3817B /* CCTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTiledMap.h; path = "cocos2d-ext/TileMaps/CCTiledMap.h"; sourceTree = SOURCE_ROOT; };
+		084782011C66669300C3817B /* CCTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTiledMap.m; path = "cocos2d-ext/TileMaps/CCTiledMap.m"; sourceTree = SOURCE_ROOT; };
+		084782021C66669300C3817B /* CCTiledMapLayer_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTiledMapLayer_Private.h; path = "cocos2d-ext/TileMaps/CCTiledMapLayer_Private.h"; sourceTree = SOURCE_ROOT; };
+		084782031C66669300C3817B /* CCTiledMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTiledMapLayer.h; path = "cocos2d-ext/TileMaps/CCTiledMapLayer.h"; sourceTree = SOURCE_ROOT; };
+		084782041C66669300C3817B /* CCTiledMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTiledMapLayer.m; path = "cocos2d-ext/TileMaps/CCTiledMapLayer.m"; sourceTree = SOURCE_ROOT; };
+		084782051C66669300C3817B /* CCTiledMapObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTiledMapObjectGroup.h; path = "cocos2d-ext/TileMaps/CCTiledMapObjectGroup.h"; sourceTree = SOURCE_ROOT; };
+		084782061C66669300C3817B /* CCTiledMapObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTiledMapObjectGroup.m; path = "cocos2d-ext/TileMaps/CCTiledMapObjectGroup.m"; sourceTree = SOURCE_ROOT; };
+		084782071C66669300C3817B /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTMXXMLParser.h; path = "cocos2d-ext/TileMaps/CCTMXXMLParser.h"; sourceTree = SOURCE_ROOT; };
+		084782081C66669300C3817B /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTMXXMLParser.m; path = "cocos2d-ext/TileMaps/CCTMXXMLParser.m"; sourceTree = SOURCE_ROOT; };
+		084782171C6667B000C3817B /* CCTileMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTileMaps.h; path = "cocos2d-ext/TileMaps/CCTileMaps.h"; sourceTree = SOURCE_ROOT; };
 		0E28FE19197FCE4500F78989 /* CCCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCacheTest.m; path = "cocos2d-ui-tests/tests/CCCacheTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
@@ -535,6 +550,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		084781FF1C66666B00C3817B /* cocos2d-ext */ = {
+			isa = PBXGroup;
+			children = (
+				084782151C66669A00C3817B /* TileMaps */,
+			);
+			name = "cocos2d-ext";
+			sourceTree = "<group>";
+		};
+		084782151C66669A00C3817B /* TileMaps */ = {
+			isa = PBXGroup;
+			children = (
+				084782171C6667B000C3817B /* CCTileMaps.h */,
+				084782001C66669300C3817B /* CCTiledMap.h */,
+				084782011C66669300C3817B /* CCTiledMap.m */,
+				084782021C66669300C3817B /* CCTiledMapLayer_Private.h */,
+				084782031C66669300C3817B /* CCTiledMapLayer.h */,
+				084782041C66669300C3817B /* CCTiledMapLayer.m */,
+				084782051C66669300C3817B /* CCTiledMapObjectGroup.h */,
+				084782061C66669300C3817B /* CCTiledMapObjectGroup.m */,
+				084782071C66669300C3817B /* CCTMXXMLParser.h */,
+				084782081C66669300C3817B /* CCTMXXMLParser.m */,
+			);
+			name = TileMaps;
+			sourceTree = "<group>";
+		};
 		755569EC1856361100ED1B0F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -671,6 +711,7 @@
 		B7E2605F17E7D278007067F0 /* cocos2d-tests */ = {
 			isa = PBXGroup;
 			children = (
+				084781FF1C66666B00C3817B /* cocos2d-ext */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
 				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B71B087F17EA5B500082EBC0 /* Tests */,
@@ -736,7 +777,6 @@
 			isa = PBXGroup;
 			children = (
 				D3763BB919E72F85006C050D /* libcocos2d.a */,
-				D3763BBB19E72F85006C050D /* libcocos2dAndroid.a */,
 				D3763BBF19E72F85006C050D /* libcocos2d-mac.a */,
 				0E1D2C9C1B53AA6A00EB2D29 /* cocos2dMacFramework.framework */,
 			);
@@ -944,7 +984,6 @@
 						TestTargetID = B7E2604717E7D278007067F0;
 					};
 					B7E2604717E7D278007067F0 = {
-						DevelopmentTeam = 96LKF67VJA;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -991,13 +1030,6 @@
 			fileType = archive.ar;
 			path = libcocos2d.a;
 			remoteRef = D3763BB819E72F85006C050D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D3763BBB19E72F85006C050D /* libcocos2dAndroid.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcocos2dAndroid.a;
-			remoteRef = D3763BBA19E72F85006C050D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D3763BBF19E72F85006C050D /* libcocos2d-mac.a */ = {
@@ -1209,6 +1241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */,
+				0847820D1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
 				D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */,
 				9D96557319D6113500428E79 /* CCEffectTests.m in Sources */,
 				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
@@ -1222,6 +1255,9 @@
 				E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */,
 				E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */,
 				E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */,
+				084782101C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				084782131C66669300C3817B /* CCTMXXMLParser.m in Sources */,
+				0847820A1C66669300C3817B /* CCTiledMap.m in Sources */,
 				E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */,
 				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
@@ -1237,6 +1273,7 @@
 			files = (
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */,
+				0847820C1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
@@ -1246,6 +1283,9 @@
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
+				0847820F1C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				084782121C66669300C3817B /* CCTMXXMLParser.m in Sources */,
+				084782091C66669300C3817B /* CCTiledMap.m in Sources */,
 				A6167B93189A7D4D0044D391 /* VertexZTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
 				D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */,
@@ -1273,6 +1313,7 @@
 			files = (
 				D3763D3819E734C5006C050D /* MainMenu.m in Sources */,
 				D3763D3919E734C5006C050D /* TestBase.m in Sources */,
+				0847820E1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
 				D3763D3A19E734C5006C050D /* CCCacheTest.m in Sources */,
 				D3763D3B19E734C5006C050D /* CCEffectsTest.m in Sources */,
 				D3763D3C19E734C5006C050D /* CCRendererTest.m in Sources */,
@@ -1282,6 +1323,9 @@
 				D3763D3F19E734C5006C050D /* CCSchedulerTest.m in Sources */,
 				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
 				D3763D4119E734C5006C050D /* CCTransitionTest.m in Sources */,
+				084782111C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */,
+				0847820B1C66669300C3817B /* CCTiledMap.m in Sources */,
 				D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */,
 				D3763D4319E734C5006C050D /* CCSprite9SliceTest.m in Sources */,
 				D3763D4419E734C5006C050D /* CCTextFieldTest.m in Sources */,
@@ -1567,7 +1611,7 @@
 					"-weak_framework",
 					Metal,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org2.cocos2d.Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocos2d.Tests;
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1600,7 +1644,7 @@
 					"-weak_framework",
 					Metal,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org2.cocos2d.Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cocos2d.Tests;
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
