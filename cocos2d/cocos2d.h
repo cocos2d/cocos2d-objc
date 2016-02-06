@@ -96,13 +96,9 @@
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteFrameCache.h"
-#import "CCTMXXMLParser.h"
+#import "CCTransition.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
-#import "CCTiledMap.h"
-#import "CCTiledMapLayer.h"
-#import "CCTiledMapObjectGroup.h"
-#import "CCTransition.h"
 
 #if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectOutline.h"

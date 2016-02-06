@@ -7,6 +7,7 @@
 //
 
 #import "cocos2d.h"
+#import "CCTileMaps.h"
 
 // local import
 #import "TestBase.h"
