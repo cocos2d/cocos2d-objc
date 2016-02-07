@@ -103,7 +103,7 @@
 
 @interface CCTransition (Private)
 
-- (void)startTransition:(CCScene *)scene;
+- (void)prepareTransition:(CCScene *)scene;
 
 @end
 

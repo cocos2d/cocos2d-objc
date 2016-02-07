@@ -34,17 +34,7 @@
 // -----------------------------------------------------------------
 
 const float CCTransitionDownScaleMin = 1.0f;                        // range for transition downscales
-const float CCTransitionDownScaleRetina = 2.0f;
 const float CCTransitionDownScaleMax = 128.0f;
-
-typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
-{
-    CCTransitionFixedFunctionCrossFade,
-    CCTransitionFixedFunctionFadeWithColor,
-    CCTransitionFixedFunctionMoveIn,
-    CCTransitionFixedFunctionPush,
-    CCTransitionFixedFunctionReveal,
-};
 
 // -----------------------------------------------------------------
 
@@ -56,91 +46,12 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     CCRenderTexture *_incomingTexture;
     CCRenderTexture *_outgoingTexture;
     BOOL _incomingPauseState;
-    //
-    CCTransitionFixedFunction _fixedFunction;
-    CCTransitionDirection _direction;
-    ccColor4F _color;
-    SEL _drawSelector;
     BOOL _outgoingOverIncoming;
-    CGPoint _outgoingDestination;
 }
+
+@synthesize outgoingOverIncoming = _outgoingOverIncoming; 
 
 // -----------------------------------------------------------------
-
-+ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration
-{
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
-}
-
-+ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
-{
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color.ccColor3b]);
-}
-
-+ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
-{
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:ccBLACK]);
-}
-
-+ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
-{
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:ccBLACK]);
-}
-
-+ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
-{
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:ccBLACK]);
-}
-
-+ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
-{
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:ccBLACK]);
-}
-
-// -----------------------------------------------------------------
-
-- (id)initWithDuration:(NSTimeInterval)duration
-         fixedFunction:(CCTransitionFixedFunction)function
-             direction:(CCTransitionDirection)direction
-                 color:(ccColor3B)color
-{
-    self = [self initWithDuration:duration];
-
-    // set up fixed function transition
-    _fixedFunction = function;
-    _direction = direction;
-    self.colorRGBA = [CCColor colorWithCcColor4f:(ccColor4F){(float)color.r / 255, (float)color.g / 255, (float)color.b / 255, 1}];
-    _drawSelector = @selector(drawFixedFunction);
-    _outgoingOverIncoming = NO;
-    
-    // find out where the outgoing scene will end (if it is a transition with movement)
-    CGSize size = [CCDirector sharedDirector].viewportRect.size;
-    switch (direction) {
-        case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
-        case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
-        case CCTransitionDirectionRight: _outgoingDestination = CGPointMake(size.width, 0); break;
-        case CCTransitionDirectionUp: _outgoingDestination = CGPointMake(0, size.height); break;
-        case CCTransitionDirectionInvalid: _outgoingDestination = CGPointZero; break;
-        default: NSAssert(NO, @"Unknown fixed transition");
-    }
-    
-    // start actions to move sprites into position (will not start until scene is started by director)
-    switch (_fixedFunction) {
-        case CCTransitionFixedFunctionCrossFade:
-        case CCTransitionFixedFunctionFadeWithColor:
-            break;
-        case CCTransitionFixedFunctionReveal:
-            _outgoingOverIncoming = YES;
-            break;
-        case CCTransitionFixedFunctionMoveIn:
-        case CCTransitionFixedFunctionPush:
-            break;
-        default: NSAssert(NO, @"Unknown fixed transition");
-    }
-    
-    // done
-    return(self);
-}
 
 - (id)initWithDuration:(NSTimeInterval)duration
 {
@@ -178,7 +89,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)startTransition:(CCScene *)scene
+- (void)prepareTransition:(CCScene *)scene
 {
     CCDirector *director = [CCDirector sharedDirector];
 		
@@ -194,32 +105,29 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     // create render textures
     // get viewport size
     CGRect rect = director.viewportRect;
-		CGSize size = rect.size;
-		
-		// Make sure we aren't rounding down.
-		size.width = ceil(rect.size.width);
-		size.height = ceil(rect.size.height);
+    CGSize size = rect.size;
+    
+    // Make sure we aren't rounding down.
+    size.width = ceil(rect.size.width);
+    size.height = ceil(rect.size.height);
 
     // create texture for outgoing scene
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
     _outgoingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _outgoingTexture.contentScale /= _outgoingDownScale;
-		_outgoingTexture.projection = director.projectionMatrix;
+    _outgoingTexture.projection = director.projectionMatrix;
     [self addChild:_outgoingTexture z:_outgoingOverIncoming];
     
-    // create texture for incoming scene
+    // create texture for incoming scene 
     _incomingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
     _incomingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _incomingTexture.contentScale /= _incomingDownScale;
-		_incomingTexture.projection = director.projectionMatrix;
+    _incomingTexture.projection = director.projectionMatrix;
     [self addChild:_incomingTexture];
     
     // make sure scene is rendered at least once at progress 0.0
     [self renderOutgoing:0];
     [self renderIncoming:0];
-    
-    // switch to transition scene
-    [director startTransition:self];
 }
 
 // -----------------------------------------------------------------
@@ -246,8 +154,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
         _outgoingScene = nil;
 				
-				
-				// Start incoming scene
+        // Start incoming scene
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
@@ -258,15 +165,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     
     // render the scenes
     if (_incomingSceneAnimated)
-    {
-        
         [self renderIncoming:_progress];
-    }
+    
     if (_outgoingSceneAnimated)
-    {
-     
         [self renderOutgoing:_progress];
-    }
+    
 }
 
 // -----------------------------------------------------------------
@@ -283,23 +186,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 {
     GLKVector4 c = _outgoingScene.colorRGBA.glkVector4;
     [_incomingTexture beginWithClear:c.r g:c.g b:c.b a:c.a depth:1.0 stencil:0];
-	    [_incomingScene visit];
+    [_incomingScene visit];
     [_incomingTexture end];
 }
 
 // -----------------------------------------------------------------
-
-- (void)setRetinaTransition:(BOOL)retinaTransition
-{
-    _retinaTransition = retinaTransition;
-    _incomingDownScale = CCTransitionDownScaleMin;
-    _outgoingDownScale = CCTransitionDownScaleMin;
-    if (!_retinaTransition && (__ccContentScaleFactor > 1.0))
-    {
-        _incomingDownScale = CCTransitionDownScaleRetina;
-        _outgoingDownScale = CCTransitionDownScaleRetina;
-    }
-}
 
 - (void)setIncomingDownScale:(float)incomingDownScale
 {
@@ -313,7 +204,101 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingDownScale = outgoingDownScale;
 }
 
+@end
+
+
+typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
+{
+    CCTransitionFixedFunctionCrossFade,
+    CCTransitionFixedFunctionFadeWithColor,
+    CCTransitionFixedFunctionMoveIn,
+    CCTransitionFixedFunctionPush,
+    CCTransitionFixedFunctionReveal,
+};
+
+@implementation CCDefaultTransition {
+    //
+    CCTransitionFixedFunction _fixedFunction;
+    CCTransitionDirection _direction;
+    ccColor4F _color;
+    SEL _drawSelector;
+    CGPoint _outgoingDestination;
+}
+
 // -----------------------------------------------------------------
+
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration
+{
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
+}
+
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
+{
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color.ccColor3b]);
+}
+
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
+{
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:ccBLACK]);
+}
+
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
+{
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:ccBLACK]);
+}
+
++ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
+{
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:ccBLACK]);
+}
+
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
+{
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:ccBLACK]);
+}
+
+- (id)initWithDuration:(NSTimeInterval)duration
+         fixedFunction:(CCTransitionFixedFunction)function
+             direction:(CCTransitionDirection)direction
+                 color:(ccColor3B)color
+{
+    self = [self initWithDuration:duration];
+    
+    // set up fixed function transition
+    _fixedFunction = function;
+    _direction = direction;
+    self.colorRGBA = [CCColor colorWithCcColor4f:(ccColor4F){(float)color.r / 255, (float)color.g / 255, (float)color.b / 255, 1}];
+    _drawSelector = @selector(drawFixedFunction);
+    self.outgoingOverIncoming = NO;
+    
+    // find out where the outgoing scene will end (if it is a transition with movement)
+    CGSize size = [CCDirector sharedDirector].viewportRect.size;
+    switch (direction) {
+        case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
+        case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
+        case CCTransitionDirectionRight: _outgoingDestination = CGPointMake(size.width, 0); break;
+        case CCTransitionDirectionUp: _outgoingDestination = CGPointMake(0, size.height); break;
+        case CCTransitionDirectionInvalid: _outgoingDestination = CGPointZero; break;
+        default: NSAssert(NO, @"Unknown fixed transition");
+    }
+    
+    // start actions to move sprites into position (will not start until scene is started by director)
+    switch (_fixedFunction) {
+        case CCTransitionFixedFunctionCrossFade:
+        case CCTransitionFixedFunctionFadeWithColor:
+            break;
+        case CCTransitionFixedFunctionReveal:
+            self.outgoingOverIncoming = YES;
+            break;
+        case CCTransitionFixedFunctionMoveIn:
+        case CCTransitionFixedFunctionPush:
+            break;
+        default: NSAssert(NO, @"Unknown fixed transition");
+    }
+    
+    // done
+    return(self);
+}
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
@@ -326,28 +311,26 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     switch (_fixedFunction)
     {
         case CCTransitionFixedFunctionCrossFade:
-            _incomingTexture.sprite.opacity = _progress;
-            _outgoingTexture.sprite.opacity = 1;
+            self.incomingTexture.sprite.opacity = self.progress;
+            self.outgoingTexture.sprite.opacity = 1;
             break;
         case CCTransitionFixedFunctionFadeWithColor:
-            _incomingTexture.sprite.opacity = clampf(2.0 * (_progress - 0.5), 0, 1);
-            _outgoingTexture.sprite.opacity = clampf(1.0 * (1 - (2 * _progress)), 0, 1);
+            self.incomingTexture.sprite.opacity = clampf(2.0 * (self.progress - 0.5), 0, 1);
+            self.outgoingTexture.sprite.opacity = clampf(1.0 * (1 - (2 * self.progress)), 0, 1);
             break;
         case CCTransitionFixedFunctionReveal:
-            _outgoingTexture.sprite.position = ccpMult(_outgoingDestination, _progress);
+            self.outgoingTexture.sprite.position = ccpMult(_outgoingDestination, self.progress);
             break;
         case CCTransitionFixedFunctionMoveIn:
-            _incomingTexture.sprite.position = ccpMult(_outgoingDestination, -1 + _progress);
+            self.incomingTexture.sprite.position = ccpMult(_outgoingDestination, -1 + self.progress);
             break;
         case CCTransitionFixedFunctionPush:
-            _outgoingTexture.sprite.position = ccpMult(_outgoingDestination, _progress);
-            _incomingTexture.sprite.position = ccpMult(_outgoingDestination, -1 + _progress);
+            self.outgoingTexture.sprite.position = ccpMult(_outgoingDestination, self.progress);
+            self.incomingTexture.sprite.position = ccpMult(_outgoingDestination, -1 + self.progress);
             break;
         default:
             break;
     }
 }
-
-// -----------------------------------------------------------------
 
 @end
