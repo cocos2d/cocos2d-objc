@@ -5,6 +5,8 @@
 #import "CCEffectBlur.h"
 #import "CCEffectInvert.h"
 
+#import "CCClippingNode.h"
+
 #import "CCEffect_Private.h"
 #import "CCEffectStack_Private.h"
 #import "CCLightCollection.h"

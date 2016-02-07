@@ -22,6 +22,9 @@
 		089949641C67F10A00ECC92C /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949631C67F10A00ECC92C /* CCMotionStreak.m */; };
 		089949651C67F10A00ECC92C /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949631C67F10A00ECC92C /* CCMotionStreak.m */; };
 		089949661C67F10A00ECC92C /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949631C67F10A00ECC92C /* CCMotionStreak.m */; };
+		0899496C1C67F1BE00ECC92C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899496B1C67F1BE00ECC92C /* CCClippingNode.m */; };
+		0899496D1C67F1BE00ECC92C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899496B1C67F1BE00ECC92C /* CCClippingNode.m */; };
+		0899496E1C67F1BE00ECC92C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899496B1C67F1BE00ECC92C /* CCClippingNode.m */; };
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
@@ -335,6 +338,8 @@
 		084782171C6667B000C3817B /* CCTileMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTileMaps.h; path = "cocos2d-ext/TileMaps/CCTileMaps.h"; sourceTree = SOURCE_ROOT; };
 		089949621C67F10A00ECC92C /* CCMotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak.h; sourceTree = "<group>"; };
 		089949631C67F10A00ECC92C /* CCMotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMotionStreak.m; sourceTree = "<group>"; };
+		0899496A1C67F1BE00ECC92C /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
+		0899496B1C67F1BE00ECC92C /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
 		0E28FE19197FCE4500F78989 /* CCCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCacheTest.m; path = "cocos2d-ui-tests/tests/CCCacheTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
@@ -558,6 +563,7 @@
 		084781FF1C66666B00C3817B /* cocos2d-ext */ = {
 			isa = PBXGroup;
 			children = (
+				089949691C67F1BE00ECC92C /* CCClippingNode */,
 				089949611C67F10A00ECC92C /* CCMotionStreak */,
 				084782151C66669A00C3817B /* TileMaps */,
 			);
@@ -589,6 +595,16 @@
 			);
 			name = CCMotionStreak;
 			path = "cocos2d-ext/CCMotionStreak";
+			sourceTree = SOURCE_ROOT;
+		};
+		089949691C67F1BE00ECC92C /* CCClippingNode */ = {
+			isa = PBXGroup;
+			children = (
+				0899496A1C67F1BE00ECC92C /* CCClippingNode.h */,
+				0899496B1C67F1BE00ECC92C /* CCClippingNode.m */,
+			);
+			name = CCClippingNode;
+			path = "cocos2d-ext/CCClippingNode";
 			sourceTree = SOURCE_ROOT;
 		};
 		755569EC1856361100ED1B0F /* Supporting Files */ = {
@@ -1275,6 +1291,7 @@
 				084782101C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
 				084782131C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				0847820A1C66669300C3817B /* CCTiledMap.m in Sources */,
+				0899496D1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
 				E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */,
 				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
@@ -1317,6 +1334,7 @@
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
+				0899496C1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
 				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
@@ -1358,6 +1376,7 @@
 				D3763D5619E73513006C050D /* AppDelegate.m in Sources */,
 				D3763D4C19E734C5006C050D /* CCPhysicsTest.m in Sources */,
 				D3763D4D19E734C5006C050D /* TilemapTest.m in Sources */,
+				0899496E1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
 				D3763D4E19E734C5006C050D /* TextureTest.m in Sources */,
 				D3763D4F19E734C5006C050D /* ColorTest.m in Sources */,
 				D3763D5019E734C5006C050D /* CCBMFontTest.m in Sources */,

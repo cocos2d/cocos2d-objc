@@ -27,8 +27,6 @@
 		0899494B1C66001900ECC92C /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = B15348371BE1E78C0022C4BB /* libObjectAL (Mac).a */; };
 		0EFC792D1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */; };
 		0EFC792E1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */; };
-		2B192835163361B10049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
-		2B192836163361B10049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
 		5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
 		5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50150436113300F900A9CA65 /* CCActionProgressTimer.m */; };
 		5018F2690DFDEAFF00C013A5 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
@@ -167,7 +165,6 @@
 		7A5946B619E372F300F65F90 /* CCPhysics+ObjectiveChipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */; };
 		7A5946B719E372F300F65F90 /* CCEffectNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D272031E18FC89A000B100FF /* CCEffectNode.h */; };
 		7A5946B919E372F300F65F90 /* CCNodeColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */; };
-		7A5946BB19E372F400F65F90 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
 		7A5946BF19E372F400F65F90 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85B182074C500DAE1D7 /* CCProgressNode.h */; };
 		7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AA410291280003ACFE7 /* CCRenderTexture.h */; };
 		7A5946C319E372F400F65F90 /* CCProgressNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */; };
@@ -315,7 +312,6 @@
 		7A59480019E375A300F65F90 /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		7A59480319E375A300F65F90 /* CCEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031F18FC89A000B100FF /* CCEffectNode.m */; };
 		7A59480519E375A300F65F90 /* CCNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */; };
-		7A59480719E375A400F65F90 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
 		7A59480B19E375A400F65F90 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B791E85C182074C500DAE1D7 /* CCProgressNode.m */; };
 		7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AA510291280003ACFE7 /* CCRenderTexture.m */; };
 		7A59481119E375A500F65F90 /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A85B19C8ACA0000A3BCA /* CCPackage.m */; };
@@ -771,8 +767,6 @@
 		1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		2B192833163361B10049A044 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
-		2B192834163361B10049A044 /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
 		50150435113300F900A9CA65 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProgressTimer.h; sourceTree = "<group>"; };
 		50150436113300F900A9CA65 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1471,8 +1465,6 @@
 				D272031F18FC89A000B100FF /* CCEffectNode.m */,
 				5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */,
 				5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */,
-				2B192833163361B10049A044 /* CCClippingNode.h */,
-				2B192834163361B10049A044 /* CCClippingNode.m */,
 				B791E85B182074C500DAE1D7 /* CCProgressNode.h */,
 				B791E85C182074C500DAE1D7 /* CCProgressNode.m */,
 				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
@@ -2039,7 +2031,6 @@
 				D268FE1D1980791400ECBCD0 /* CCEffectUtils.h in Headers */,
 				A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */,
 				A0DA0BC315BCDCA200E80A92 /* CCDrawNode.h in Headers */,
-				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
 				83E1A88A19C8ACDC000A3BCA /* CCPackageInstaller.h in Headers */,
 				B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */,
 				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
@@ -2133,7 +2124,6 @@
 				7A5946B619E372F300F65F90 /* CCPhysics+ObjectiveChipmunk.h in Headers */,
 				7A5946B719E372F300F65F90 /* CCEffectNode.h in Headers */,
 				7A5946B919E372F300F65F90 /* CCNodeColor.h in Headers */,
-				7A5946BB19E372F400F65F90 /* CCClippingNode.h in Headers */,
 				7A5946BF19E372F400F65F90 /* CCProgressNode.h in Headers */,
 				7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */,
 				7A5946C319E372F400F65F90 /* CCProgressNode_Private.h in Headers */,
@@ -2597,7 +2587,6 @@
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
 				D27451AC19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */,
 				B7EE69E11819E75700B983FE /* CCLayout.m in Sources */,
-				2B192836163361B10049A044 /* CCClippingNode.m in Sources */,
 				9D69E6D719DF604800C2749C /* CCLightNode.m in Sources */,
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
 				B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */,
@@ -2683,7 +2672,6 @@
 				7A59480319E375A300F65F90 /* CCEffectNode.m in Sources */,
 				7A59480519E375A300F65F90 /* CCNodeColor.m in Sources */,
 				9D9205D71A0173D600FF2D6D /* CCLightCollection.m in Sources */,
-				7A59480719E375A400F65F90 /* CCClippingNode.m in Sources */,
 				7A59480B19E375A400F65F90 /* CCProgressNode.m in Sources */,
 				7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */,
 				7A59481119E375A500F65F90 /* CCPackage.m in Sources */,
