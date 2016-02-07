@@ -37,6 +37,49 @@
 		089949831C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949781C67F2D600ECC92C /* CCParticleSystemBase.m */; };
 		089949841C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949781C67F2D600ECC92C /* CCParticleSystemBase.m */; };
 		089949851C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949781C67F2D600ECC92C /* CCParticleSystemBase.m */; };
+		089949A11C67F40000ECC92C /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949891C67F40000ECC92C /* CCPackage.m */; };
+		089949A21C67F40000ECC92C /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949891C67F40000ECC92C /* CCPackage.m */; };
+		089949A31C67F40000ECC92C /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949891C67F40000ECC92C /* CCPackage.m */; };
+		089949A41C67F40000ECC92C /* CCPackageCocos2dEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899498C1C67F40000ECC92C /* CCPackageCocos2dEnabler.m */; };
+		089949A51C67F40000ECC92C /* CCPackageCocos2dEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899498C1C67F40000ECC92C /* CCPackageCocos2dEnabler.m */; };
+		089949A61C67F40000ECC92C /* CCPackageCocos2dEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899498C1C67F40000ECC92C /* CCPackageCocos2dEnabler.m */; };
+		089949A71C67F40000ECC92C /* CCPackageConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899498E1C67F40000ECC92C /* CCPackageConstants.m */; };
+		089949A81C67F40000ECC92C /* CCPackageConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899498E1C67F40000ECC92C /* CCPackageConstants.m */; };
+		089949A91C67F40000ECC92C /* CCPackageConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899498E1C67F40000ECC92C /* CCPackageConstants.m */; };
+		089949AA1C67F40000ECC92C /* CCPackageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949901C67F40000ECC92C /* CCPackageDownload.m */; };
+		089949AB1C67F40000ECC92C /* CCPackageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949901C67F40000ECC92C /* CCPackageDownload.m */; };
+		089949AC1C67F40000ECC92C /* CCPackageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949901C67F40000ECC92C /* CCPackageDownload.m */; };
+		089949AD1C67F40000ECC92C /* CCPackageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949931C67F40000ECC92C /* CCPackageDownloadManager.m */; };
+		089949AE1C67F40000ECC92C /* CCPackageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949931C67F40000ECC92C /* CCPackageDownloadManager.m */; };
+		089949AF1C67F40000ECC92C /* CCPackageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949931C67F40000ECC92C /* CCPackageDownloadManager.m */; };
+		089949B01C67F40000ECC92C /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949961C67F40000ECC92C /* CCPackageHelper.m */; };
+		089949B11C67F40000ECC92C /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949961C67F40000ECC92C /* CCPackageHelper.m */; };
+		089949B21C67F40000ECC92C /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949961C67F40000ECC92C /* CCPackageHelper.m */; };
+		089949B31C67F40000ECC92C /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949981C67F40000ECC92C /* CCPackageInstaller.m */; };
+		089949B41C67F40000ECC92C /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949981C67F40000ECC92C /* CCPackageInstaller.m */; };
+		089949B51C67F40000ECC92C /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949981C67F40000ECC92C /* CCPackageInstaller.m */; };
+		089949B61C67F40000ECC92C /* CCPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499A1C67F40000ECC92C /* CCPackageManager.m */; };
+		089949B71C67F40000ECC92C /* CCPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499A1C67F40000ECC92C /* CCPackageManager.m */; };
+		089949B81C67F40000ECC92C /* CCPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499A1C67F40000ECC92C /* CCPackageManager.m */; };
+		089949B91C67F40000ECC92C /* CCPackageUnzipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */; };
+		089949BA1C67F40000ECC92C /* CCPackageUnzipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */; };
+		089949BB1C67F40000ECC92C /* CCPackageUnzipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */; };
+		089949BF1C67F59F00ECC92C /* libSSZipArchiveMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 089949BE1C67F59F00ECC92C /* libSSZipArchiveMac.a */; };
+		089949EC1C67F97D00ECC92C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E21C67F97D00ECC92C /* ioapi.c */; };
+		089949ED1C67F97D00ECC92C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E21C67F97D00ECC92C /* ioapi.c */; };
+		089949EE1C67F97D00ECC92C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E21C67F97D00ECC92C /* ioapi.c */; };
+		089949EF1C67F97D00ECC92C /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E41C67F97D00ECC92C /* mztools.c */; };
+		089949F01C67F97D00ECC92C /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E41C67F97D00ECC92C /* mztools.c */; };
+		089949F11C67F97D00ECC92C /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E41C67F97D00ECC92C /* mztools.c */; };
+		089949F21C67F97D00ECC92C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E61C67F97D00ECC92C /* unzip.c */; };
+		089949F31C67F97D00ECC92C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E61C67F97D00ECC92C /* unzip.c */; };
+		089949F41C67F97D00ECC92C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E61C67F97D00ECC92C /* unzip.c */; };
+		089949F51C67F97D00ECC92C /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E81C67F97D00ECC92C /* zip.c */; };
+		089949F61C67F97D00ECC92C /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E81C67F97D00ECC92C /* zip.c */; };
+		089949F71C67F97D00ECC92C /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E81C67F97D00ECC92C /* zip.c */; };
+		089949F81C67F97D00ECC92C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949EB1C67F97D00ECC92C /* SSZipArchive.m */; };
+		089949F91C67F97D00ECC92C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949EB1C67F97D00ECC92C /* SSZipArchive.m */; };
+		089949FA1C67F97D00ECC92C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949EB1C67F97D00ECC92C /* SSZipArchive.m */; };
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
@@ -363,6 +406,44 @@
 		089949781C67F2D600ECC92C /* CCParticleSystemBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemBase.m; sourceTree = "<group>"; };
 		089949791C67F2D600ECC92C /* CCParticleSystemBase_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemBase_Private.h; sourceTree = "<group>"; };
 		089949861C67F2E400ECC92C /* CCParticles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCParticles.h; sourceTree = "<group>"; };
+		089949881C67F40000ECC92C /* CCPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage.h; sourceTree = "<group>"; };
+		089949891C67F40000ECC92C /* CCPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackage.m; sourceTree = "<group>"; };
+		0899498A1C67F40000ECC92C /* CCPackage_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage_private.h; sourceTree = "<group>"; };
+		0899498B1C67F40000ECC92C /* CCPackageCocos2dEnabler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageCocos2dEnabler.h; sourceTree = "<group>"; };
+		0899498C1C67F40000ECC92C /* CCPackageCocos2dEnabler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnabler.m; sourceTree = "<group>"; };
+		0899498D1C67F40000ECC92C /* CCPackageConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageConstants.h; sourceTree = "<group>"; };
+		0899498E1C67F40000ECC92C /* CCPackageConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageConstants.m; sourceTree = "<group>"; };
+		0899498F1C67F40000ECC92C /* CCPackageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageDownload.h; sourceTree = "<group>"; };
+		089949901C67F40000ECC92C /* CCPackageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownload.m; sourceTree = "<group>"; };
+		089949911C67F40000ECC92C /* CCPackageDownloadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageDownloadDelegate.h; sourceTree = "<group>"; };
+		089949921C67F40000ECC92C /* CCPackageDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageDownloadManager.h; sourceTree = "<group>"; };
+		089949931C67F40000ECC92C /* CCPackageDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadManager.m; sourceTree = "<group>"; };
+		089949941C67F40000ECC92C /* CCPackageDownloadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageDownloadManagerDelegate.h; sourceTree = "<group>"; };
+		089949951C67F40000ECC92C /* CCPackageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageHelper.h; sourceTree = "<group>"; };
+		089949961C67F40000ECC92C /* CCPackageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelper.m; sourceTree = "<group>"; };
+		089949971C67F40000ECC92C /* CCPackageInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageInstaller.h; sourceTree = "<group>"; };
+		089949981C67F40000ECC92C /* CCPackageInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstaller.m; sourceTree = "<group>"; };
+		089949991C67F40000ECC92C /* CCPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageManager.h; sourceTree = "<group>"; };
+		0899499A1C67F40000ECC92C /* CCPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageManager.m; sourceTree = "<group>"; };
+		0899499B1C67F40000ECC92C /* CCPackageManager_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageManager_private.h; sourceTree = "<group>"; };
+		0899499C1C67F40000ECC92C /* CCPackageManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageManagerDelegate.h; sourceTree = "<group>"; };
+		0899499D1C67F40000ECC92C /* CCPackageTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageTypes.h; sourceTree = "<group>"; };
+		0899499E1C67F40000ECC92C /* CCPackageUnzipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageUnzipper.h; sourceTree = "<group>"; };
+		0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageUnzipper.m; sourceTree = "<group>"; };
+		089949A01C67F40000ECC92C /* CCPackageUnzipperDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageUnzipperDelegate.h; sourceTree = "<group>"; };
+		089949BC1C67F4CF00ECC92C /* libSSZipArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSSZipArchive.a; path = "../../../../../Library/Developer/Xcode/DerivedData/cocos2d-tests-dtybanozgbajtqaufdnbcvyhspig/Build/Products/Debug-iphoneos/libSSZipArchive.a"; sourceTree = "<group>"; };
+		089949BE1C67F59F00ECC92C /* libSSZipArchiveMac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSSZipArchiveMac.a; path = external/SSZipArchive/build/Debug/libSSZipArchiveMac.a; sourceTree = "<group>"; };
+		089949E11C67F97D00ECC92C /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		089949E21C67F97D00ECC92C /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		089949E31C67F97D00ECC92C /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		089949E41C67F97D00ECC92C /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		089949E51C67F97D00ECC92C /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		089949E61C67F97D00ECC92C /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		089949E71C67F97D00ECC92C /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		089949E81C67F97D00ECC92C /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		089949E91C67F97D00ECC92C /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		089949EA1C67F97D00ECC92C /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = external/SSZipArchive/SSZipArchive/SSZipArchive.h; sourceTree = SOURCE_ROOT; };
+		089949EB1C67F97D00ECC92C /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = external/SSZipArchive/SSZipArchive/SSZipArchive.m; sourceTree = SOURCE_ROOT; };
 		0E28FE19197FCE4500F78989 /* CCCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCacheTest.m; path = "cocos2d-ui-tests/tests/CCCacheTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
@@ -566,6 +647,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				089949BF1C67F59F00ECC92C /* libSSZipArchiveMac.a in Frameworks */,
 				D3763DDD19E73667006C050D /* AppKit.framework in Frameworks */,
 				D3763DDB19E7364F006C050D /* OpenGL.framework in Frameworks */,
 				D3763DD919E735CB006C050D /* libcocos2d-mac.a in Frameworks */,
@@ -586,6 +668,7 @@
 		084781FF1C66666B00C3817B /* cocos2d-ext */ = {
 			isa = PBXGroup;
 			children = (
+				089949871C67F40000ECC92C /* CCPackages */,
 				0899496F1C67F2D600ECC92C /* CCParticles */,
 				089949691C67F1BE00ECC92C /* CCClippingNode */,
 				089949611C67F10A00ECC92C /* CCMotionStreak */,
@@ -648,6 +731,59 @@
 			);
 			name = CCParticles;
 			path = "cocos2d-ext/CCParticles";
+			sourceTree = SOURCE_ROOT;
+		};
+		089949871C67F40000ECC92C /* CCPackages */ = {
+			isa = PBXGroup;
+			children = (
+				089949E01C67F97D00ECC92C /* minizip */,
+				089949EA1C67F97D00ECC92C /* SSZipArchive.h */,
+				089949EB1C67F97D00ECC92C /* SSZipArchive.m */,
+				089949881C67F40000ECC92C /* CCPackage.h */,
+				089949891C67F40000ECC92C /* CCPackage.m */,
+				0899498A1C67F40000ECC92C /* CCPackage_private.h */,
+				0899498B1C67F40000ECC92C /* CCPackageCocos2dEnabler.h */,
+				0899498C1C67F40000ECC92C /* CCPackageCocos2dEnabler.m */,
+				0899498D1C67F40000ECC92C /* CCPackageConstants.h */,
+				0899498E1C67F40000ECC92C /* CCPackageConstants.m */,
+				0899498F1C67F40000ECC92C /* CCPackageDownload.h */,
+				089949901C67F40000ECC92C /* CCPackageDownload.m */,
+				089949911C67F40000ECC92C /* CCPackageDownloadDelegate.h */,
+				089949921C67F40000ECC92C /* CCPackageDownloadManager.h */,
+				089949931C67F40000ECC92C /* CCPackageDownloadManager.m */,
+				089949941C67F40000ECC92C /* CCPackageDownloadManagerDelegate.h */,
+				089949951C67F40000ECC92C /* CCPackageHelper.h */,
+				089949961C67F40000ECC92C /* CCPackageHelper.m */,
+				089949971C67F40000ECC92C /* CCPackageInstaller.h */,
+				089949981C67F40000ECC92C /* CCPackageInstaller.m */,
+				089949991C67F40000ECC92C /* CCPackageManager.h */,
+				0899499A1C67F40000ECC92C /* CCPackageManager.m */,
+				0899499B1C67F40000ECC92C /* CCPackageManager_private.h */,
+				0899499C1C67F40000ECC92C /* CCPackageManagerDelegate.h */,
+				0899499D1C67F40000ECC92C /* CCPackageTypes.h */,
+				0899499E1C67F40000ECC92C /* CCPackageUnzipper.h */,
+				0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */,
+				089949A01C67F40000ECC92C /* CCPackageUnzipperDelegate.h */,
+			);
+			name = CCPackages;
+			path = "cocos2d-ext/CCPackages";
+			sourceTree = SOURCE_ROOT;
+		};
+		089949E01C67F97D00ECC92C /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				089949E11C67F97D00ECC92C /* crypt.h */,
+				089949E21C67F97D00ECC92C /* ioapi.c */,
+				089949E31C67F97D00ECC92C /* ioapi.h */,
+				089949E41C67F97D00ECC92C /* mztools.c */,
+				089949E51C67F97D00ECC92C /* mztools.h */,
+				089949E61C67F97D00ECC92C /* unzip.c */,
+				089949E71C67F97D00ECC92C /* unzip.h */,
+				089949E81C67F97D00ECC92C /* zip.c */,
+				089949E91C67F97D00ECC92C /* zip.h */,
+			);
+			name = minizip;
+			path = external/SSZipArchive/SSZipArchive/minizip;
 			sourceTree = SOURCE_ROOT;
 		};
 		755569EC1856361100ED1B0F /* Supporting Files */ = {
@@ -761,6 +897,8 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				089949BE1C67F59F00ECC92C /* libSSZipArchiveMac.a */,
+				089949BC1C67F4CF00ECC92C /* libSSZipArchive.a */,
 				D3F52DE21A51FE2C00A18F54 /* Metal.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
 				D3763DDA19E7364F006C050D /* OpenGL.framework */,
@@ -1320,30 +1458,44 @@
 				D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */,
 				9D96557319D6113500428E79 /* CCEffectTests.m in Sources */,
 				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
+				089949A21C67F40000ECC92C /* CCPackage.m in Sources */,
 				92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */,
 				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
 				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
+				089949F61C67F97D00ECC92C /* zip.c in Sources */,
 				0899497B1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
+				089949A51C67F40000ECC92C /* CCPackageCocos2dEnabler.m in Sources */,
 				089949651C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
+				089949A81C67F40000ECC92C /* CCPackageConstants.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
 				E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */,
 				E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */,
+				089949B11C67F40000ECC92C /* CCPackageHelper.m in Sources */,
 				E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */,
 				E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */,
 				084782101C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
 				084782131C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				0847820A1C66669300C3817B /* CCTiledMap.m in Sources */,
+				089949BA1C67F40000ECC92C /* CCPackageUnzipper.m in Sources */,
 				0899496D1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
 				E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */,
 				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
+				089949AB1C67F40000ECC92C /* CCPackageDownload.m in Sources */,
+				089949B71C67F40000ECC92C /* CCPackageManager.m in Sources */,
+				089949B41C67F40000ECC92C /* CCPackageInstaller.m in Sources */,
+				089949F91C67F97D00ECC92C /* SSZipArchive.m in Sources */,
 				089949841C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */,
+				089949AE1C67F40000ECC92C /* CCPackageDownloadManager.m in Sources */,
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
+				089949ED1C67F97D00ECC92C /* ioapi.c in Sources */,
 				0899497E1C67F2D600ECC92C /* CCParticleExamples.m in Sources */,
+				089949F31C67F97D00ECC92C /* unzip.c in Sources */,
 				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
 				E525FCD390330D4F4EBD76CC /* CCPackagesTestFixturesAndHelpers.m in Sources */,
 				089949811C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
+				089949F01C67F97D00ECC92C /* mztools.c in Sources */,
 				E525FA366EFEEF054FB0C74A /* CCSpriteFrameCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1355,29 +1507,39 @@
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */,
 				0847820C1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
+				089949F81C67F97D00ECC92C /* SSZipArchive.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */,
 				B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */,
+				089949A11C67F40000ECC92C /* CCPackage.m in Sources */,
 				A664A4EF18A3D9B8006184B8 /* PositioningTest.m in Sources */,
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
 				0899497D1C67F2D600ECC92C /* CCParticleExamples.m in Sources */,
 				0847820F1C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				089949B31C67F40000ECC92C /* CCPackageInstaller.m in Sources */,
 				089949641C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				084782121C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				084782091C66669300C3817B /* CCTiledMap.m in Sources */,
+				089949B01C67F40000ECC92C /* CCPackageHelper.m in Sources */,
 				A6167B93189A7D4D0044D391 /* VertexZTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
 				0899497A1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
 				089949801C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
+				089949AD1C67F40000ECC92C /* CCPackageDownloadManager.m in Sources */,
 				D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */,
 				B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */,
+				089949EC1C67F97D00ECC92C /* ioapi.c in Sources */,
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
 				758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */,
+				089949A71C67F40000ECC92C /* CCPackageConstants.m in Sources */,
+				089949A41C67F40000ECC92C /* CCPackageCocos2dEnabler.m in Sources */,
+				089949AA1C67F40000ECC92C /* CCPackageDownload.m in Sources */,
 				758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */,
+				089949EF1C67F97D00ECC92C /* mztools.c in Sources */,
 				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
 				7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */,
@@ -1386,9 +1548,13 @@
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
 				0899496C1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
+				089949B61C67F40000ECC92C /* CCPackageManager.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
+				089949F21C67F97D00ECC92C /* unzip.c in Sources */,
 				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
+				089949B91C67F40000ECC92C /* CCPackageUnzipper.m in Sources */,
+				089949F51C67F97D00ECC92C /* zip.c in Sources */,
 				D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */,
 				D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */,
 			);
@@ -1401,29 +1567,39 @@
 				D3763D3819E734C5006C050D /* MainMenu.m in Sources */,
 				D3763D3919E734C5006C050D /* TestBase.m in Sources */,
 				0847820E1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
+				089949FA1C67F97D00ECC92C /* SSZipArchive.m in Sources */,
 				D3763D3A19E734C5006C050D /* CCCacheTest.m in Sources */,
 				D3763D3B19E734C5006C050D /* CCEffectsTest.m in Sources */,
 				D3763D3C19E734C5006C050D /* CCRendererTest.m in Sources */,
 				D3763D5819E7352F006C050D /* main.m in Sources */,
 				D3763D3D19E734C5006C050D /* SpritePerformanceTest.m in Sources */,
+				089949A31C67F40000ECC92C /* CCPackage.m in Sources */,
 				D3763D3E19E734C5006C050D /* CCScrollViewTest.m in Sources */,
 				D3763D3F19E734C5006C050D /* CCSchedulerTest.m in Sources */,
 				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
 				D3763D4119E734C5006C050D /* CCTransitionTest.m in Sources */,
 				0899497F1C67F2D600ECC92C /* CCParticleExamples.m in Sources */,
 				084782111C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				089949B51C67F40000ECC92C /* CCPackageInstaller.m in Sources */,
 				089949661C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				0847820B1C66669300C3817B /* CCTiledMap.m in Sources */,
+				089949B21C67F40000ECC92C /* CCPackageHelper.m in Sources */,
 				D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */,
 				D3763D4319E734C5006C050D /* CCSprite9SliceTest.m in Sources */,
 				0899497C1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
 				089949821C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
+				089949AF1C67F40000ECC92C /* CCPackageDownloadManager.m in Sources */,
 				D3763D4419E734C5006C050D /* CCTextFieldTest.m in Sources */,
 				D3763D4519E734C5006C050D /* CCLayoutTest.m in Sources */,
+				089949EE1C67F97D00ECC92C /* ioapi.c in Sources */,
 				D3763D4619E734C5006C050D /* CCSliderTest.m in Sources */,
 				D3763D4719E734C5006C050D /* ObjectALTest.m in Sources */,
+				089949A91C67F40000ECC92C /* CCPackageConstants.m in Sources */,
+				089949A61C67F40000ECC92C /* CCPackageCocos2dEnabler.m in Sources */,
+				089949AC1C67F40000ECC92C /* CCPackageDownload.m in Sources */,
 				D3763D4819E734C5006C050D /* CCTextureCacheTest.m in Sources */,
+				089949F11C67F97D00ECC92C /* mztools.c in Sources */,
 				D3763D4919E734C5006C050D /* CCLabelTTFTest.m in Sources */,
 				D3763D4A19E734C5006C050D /* ParallaxTest.m in Sources */,
 				D3763D4B19E734C5006C050D /* ParticleTest.m in Sources */,
@@ -1432,9 +1608,13 @@
 				D3763D4C19E734C5006C050D /* CCPhysicsTest.m in Sources */,
 				D3763D4D19E734C5006C050D /* TilemapTest.m in Sources */,
 				0899496E1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
+				089949B81C67F40000ECC92C /* CCPackageManager.m in Sources */,
 				D3763D4E19E734C5006C050D /* TextureTest.m in Sources */,
+				089949F41C67F97D00ECC92C /* unzip.c in Sources */,
 				D3763D4F19E734C5006C050D /* ColorTest.m in Sources */,
 				D3763D5019E734C5006C050D /* CCBMFontTest.m in Sources */,
+				089949BB1C67F40000ECC92C /* CCPackageUnzipper.m in Sources */,
+				089949F71C67F97D00ECC92C /* zip.c in Sources */,
 				D3763D5119E734C5006C050D /* VertexZTest.m in Sources */,
 				D3763D5219E734C5006C050D /* PositioningTest.m in Sources */,
 			);
@@ -1688,6 +1868,16 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+					"external/SSZipArchive/SSZipArchive/**",
+				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
@@ -1722,6 +1912,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+					"external/SSZipArchive/SSZipArchive/**",
+				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
@@ -1758,8 +1958,22 @@
 					DEBUG,
 					"COCOS2D_DEBUG=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+					"external/SSZipArchive/**",
+				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/external/SSZipArchive/build/Debug",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				ONLY_ACTIVE_ARCH = YES;
@@ -1794,8 +2008,22 @@
 					NDEBUG,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+					"external/SSZipArchive/**",
+				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/external/SSZipArchive/build/Debug",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				OTHER_LDFLAGS = (
