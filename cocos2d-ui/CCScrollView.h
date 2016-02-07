@@ -99,6 +99,13 @@
  it captures user input, so one major issue would be to allow user interaction on the game world's contents and converting coordinates of touch input to the actual scroll location. For "correct" game world scrolling, please
  find a solution better suited to the purpose. For one such solution and more details about CCScrollView in general please refer to the [Learn SpriteBuilder book](http://www.apress.com/learn-spritebuilder-for-ios-game-development).
  */
+
+// Enable this if you want your node to trigger delegate calls on start and end of progamming animations
+// Maybe useful in single-axis scroll views, mainly in UI.
+#ifndef CC_ENABLE_DELEGATE_CALLS_DURING_ANIMATIONS
+#define CC_ENABLE_DELEGATE_CALLS_DURING_ANIMATIONS 0
+#endif
+
 #if __CC_PLATFORM_IOS
 
 // Class definition for iOS
