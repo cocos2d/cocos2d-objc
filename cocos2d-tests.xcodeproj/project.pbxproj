@@ -25,6 +25,18 @@
 		0899496C1C67F1BE00ECC92C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899496B1C67F1BE00ECC92C /* CCClippingNode.m */; };
 		0899496D1C67F1BE00ECC92C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899496B1C67F1BE00ECC92C /* CCClippingNode.m */; };
 		0899496E1C67F1BE00ECC92C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899496B1C67F1BE00ECC92C /* CCClippingNode.m */; };
+		0899497A1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949711C67F2D600ECC92C /* CCParticleBatchNode.m */; };
+		0899497B1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949711C67F2D600ECC92C /* CCParticleBatchNode.m */; };
+		0899497C1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949711C67F2D600ECC92C /* CCParticleBatchNode.m */; };
+		0899497D1C67F2D600ECC92C /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949731C67F2D600ECC92C /* CCParticleExamples.m */; };
+		0899497E1C67F2D600ECC92C /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949731C67F2D600ECC92C /* CCParticleExamples.m */; };
+		0899497F1C67F2D600ECC92C /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949731C67F2D600ECC92C /* CCParticleExamples.m */; };
+		089949801C67F2D600ECC92C /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949751C67F2D600ECC92C /* CCParticleSystem.m */; };
+		089949811C67F2D600ECC92C /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949751C67F2D600ECC92C /* CCParticleSystem.m */; };
+		089949821C67F2D600ECC92C /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949751C67F2D600ECC92C /* CCParticleSystem.m */; };
+		089949831C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949781C67F2D600ECC92C /* CCParticleSystemBase.m */; };
+		089949841C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949781C67F2D600ECC92C /* CCParticleSystemBase.m */; };
+		089949851C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949781C67F2D600ECC92C /* CCParticleSystemBase.m */; };
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
@@ -340,6 +352,17 @@
 		089949631C67F10A00ECC92C /* CCMotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMotionStreak.m; sourceTree = "<group>"; };
 		0899496A1C67F1BE00ECC92C /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
 		0899496B1C67F1BE00ECC92C /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
+		089949701C67F2D600ECC92C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
+		089949711C67F2D600ECC92C /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
+		089949721C67F2D600ECC92C /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleExamples.h; sourceTree = "<group>"; };
+		089949731C67F2D600ECC92C /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleExamples.m; sourceTree = "<group>"; };
+		089949741C67F2D600ECC92C /* CCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem.h; sourceTree = "<group>"; };
+		089949751C67F2D600ECC92C /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
+		089949761C67F2D600ECC92C /* CCParticleSystem_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem_Private.h; sourceTree = "<group>"; };
+		089949771C67F2D600ECC92C /* CCParticleSystemBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemBase.h; sourceTree = "<group>"; };
+		089949781C67F2D600ECC92C /* CCParticleSystemBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemBase.m; sourceTree = "<group>"; };
+		089949791C67F2D600ECC92C /* CCParticleSystemBase_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemBase_Private.h; sourceTree = "<group>"; };
+		089949861C67F2E400ECC92C /* CCParticles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCParticles.h; sourceTree = "<group>"; };
 		0E28FE19197FCE4500F78989 /* CCCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCacheTest.m; path = "cocos2d-ui-tests/tests/CCCacheTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
@@ -563,6 +586,7 @@
 		084781FF1C66666B00C3817B /* cocos2d-ext */ = {
 			isa = PBXGroup;
 			children = (
+				0899496F1C67F2D600ECC92C /* CCParticles */,
 				089949691C67F1BE00ECC92C /* CCClippingNode */,
 				089949611C67F10A00ECC92C /* CCMotionStreak */,
 				084782151C66669A00C3817B /* TileMaps */,
@@ -605,6 +629,25 @@
 			);
 			name = CCClippingNode;
 			path = "cocos2d-ext/CCClippingNode";
+			sourceTree = SOURCE_ROOT;
+		};
+		0899496F1C67F2D600ECC92C /* CCParticles */ = {
+			isa = PBXGroup;
+			children = (
+				089949861C67F2E400ECC92C /* CCParticles.h */,
+				089949701C67F2D600ECC92C /* CCParticleBatchNode.h */,
+				089949711C67F2D600ECC92C /* CCParticleBatchNode.m */,
+				089949721C67F2D600ECC92C /* CCParticleExamples.h */,
+				089949731C67F2D600ECC92C /* CCParticleExamples.m */,
+				089949741C67F2D600ECC92C /* CCParticleSystem.h */,
+				089949751C67F2D600ECC92C /* CCParticleSystem.m */,
+				089949761C67F2D600ECC92C /* CCParticleSystem_Private.h */,
+				089949771C67F2D600ECC92C /* CCParticleSystemBase.h */,
+				089949781C67F2D600ECC92C /* CCParticleSystemBase.m */,
+				089949791C67F2D600ECC92C /* CCParticleSystemBase_Private.h */,
+			);
+			name = CCParticles;
+			path = "cocos2d-ext/CCParticles";
 			sourceTree = SOURCE_ROOT;
 		};
 		755569EC1856361100ED1B0F /* Supporting Files */ = {
@@ -1281,6 +1324,7 @@
 				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
 				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
+				0899497B1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
 				089949651C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
@@ -1294,9 +1338,12 @@
 				0899496D1C67F1BE00ECC92C /* CCClippingNode.m in Sources */,
 				E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */,
 				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
+				089949841C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */,
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
+				0899497E1C67F2D600ECC92C /* CCParticleExamples.m in Sources */,
 				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
 				E525FCD390330D4F4EBD76CC /* CCPackagesTestFixturesAndHelpers.m in Sources */,
+				089949811C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
 				E525FA366EFEEF054FB0C74A /* CCSpriteFrameCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1317,12 +1364,15 @@
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
+				0899497D1C67F2D600ECC92C /* CCParticleExamples.m in Sources */,
 				0847820F1C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
 				089949641C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				084782121C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				084782091C66669300C3817B /* CCTiledMap.m in Sources */,
 				A6167B93189A7D4D0044D391 /* VertexZTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
+				0899497A1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
+				089949801C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
 				D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */,
 				B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */,
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
@@ -1331,6 +1381,7 @@
 				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
 				7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */,
+				089949831C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */,
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
@@ -1359,12 +1410,15 @@
 				D3763D3F19E734C5006C050D /* CCSchedulerTest.m in Sources */,
 				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
 				D3763D4119E734C5006C050D /* CCTransitionTest.m in Sources */,
+				0899497F1C67F2D600ECC92C /* CCParticleExamples.m in Sources */,
 				084782111C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
 				089949661C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				0847820B1C66669300C3817B /* CCTiledMap.m in Sources */,
 				D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */,
 				D3763D4319E734C5006C050D /* CCSprite9SliceTest.m in Sources */,
+				0899497C1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
+				089949821C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
 				D3763D4419E734C5006C050D /* CCTextFieldTest.m in Sources */,
 				D3763D4519E734C5006C050D /* CCLayoutTest.m in Sources */,
 				D3763D4619E734C5006C050D /* CCSliderTest.m in Sources */,
@@ -1373,6 +1427,7 @@
 				D3763D4919E734C5006C050D /* CCLabelTTFTest.m in Sources */,
 				D3763D4A19E734C5006C050D /* ParallaxTest.m in Sources */,
 				D3763D4B19E734C5006C050D /* ParticleTest.m in Sources */,
+				089949851C67F2D600ECC92C /* CCParticleSystemBase.m in Sources */,
 				D3763D5619E73513006C050D /* AppDelegate.m in Sources */,
 				D3763D4C19E734C5006C050D /* CCPhysicsTest.m in Sources */,
 				D3763D4D19E734C5006C050D /* TilemapTest.m in Sources */,

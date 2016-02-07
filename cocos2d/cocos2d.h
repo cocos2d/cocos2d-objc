@@ -84,8 +84,6 @@
 #import "CCNode.h"
 #import "CCNodeColor.h"
 #import "CCParallaxNode.h"
-#import "CCParticleExamples.h"
-#import "CCParticleSystem.h"
 #import "CCProtocols.h"
 #import "CCRenderTexture.h"
 #import "CCScene.h"
