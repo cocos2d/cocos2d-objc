@@ -7,6 +7,7 @@
 
 #import "TestBase.h"
 #import "CCTextureCache.h"
+#import "CCParticles.h"
 
 @interface ParticleTest : TestBase
 @property (readwrite, retain) CCParticleSystemBase *emitter;
