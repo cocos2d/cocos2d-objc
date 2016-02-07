@@ -83,7 +83,6 @@
 #import "CCNode+Debug.h"
 #import "CCNode.h"
 #import "CCNodeColor.h"
-#import "CCParallaxNode.h"
 #import "CCProtocols.h"
 #import "CCRenderTexture.h"
 #import "CCScene.h"
