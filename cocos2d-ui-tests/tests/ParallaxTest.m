@@ -12,6 +12,8 @@
 // local import
 #import "TestBase.h"
 
+#import "CCParallaxNode.h"
+
 @interface ParallaxTest : TestBase @end
 
 @implementation ParallaxTest

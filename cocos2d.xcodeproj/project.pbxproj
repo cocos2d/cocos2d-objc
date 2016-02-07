@@ -51,8 +51,6 @@
 		5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCFAB0E99657C00B86F68 /* TGAlib.m */; };
 		501CCFB50E99657C00B86F68 /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 501CCFAC0E99657C00B86F68 /* TGAlib.h */; };
-		502C6C6C0FB87970002BF3C2 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */; };
-		502C6C6D0FB87970002BF3C2 /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */; };
 		502C8BE010A661E200D137BA /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */; };
 		502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */; };
 		50305AF40E40E33200F63373 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50305AF30E40E33200F63373 /* cocos2d.h */; };
@@ -140,8 +138,6 @@
 		7A59468D19E372F000F65F90 /* CCResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A0734817C78EF3004343C8 /* CCResponder.h */; };
 		7A59469119E372F000F65F90 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = D25B4F49194A499700DA9D60 /* CCTouch.h */; };
 		7A59469319E372F000F65F90 /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D26A0428194B815500503BEC /* CCTouchEvent.h */; };
-		7A59469F19E372F100F65F90 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */; };
-		7A5946A019E372F100F65F90 /* CCParallaxNode.m in Headers */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */; };
 		7A5946AA19E372F200F65F90 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2600DFDEAFF00C013A5 /* CCScene.h */; };
 		7A5946AC19E372F200F65F90 /* CCTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DC4E0718055DCC00C280A6 /* CCTransition.h */; };
 		7A5946AE19E372F200F65F90 /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = D33803E418032F250072D8FE /* CCPhysicsBody.h */; };
@@ -271,7 +267,6 @@
 		7A5947D619E3759F00F65F90 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */; };
 		7A5947D919E3759F00F65F90 /* CCResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A0734917C78EF3004343C8 /* CCResponder.m */; };
 		7A5947DB19E3759F00F65F90 /* CCResponderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A0734417C788EB004343C8 /* CCResponderManager.m */; };
-		7A5947EB19E375A100F65F90 /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */; };
 		7A5947F619E375A200F65F90 /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2610DFDEAFF00C013A5 /* CCScene.m */; };
 		7A5947F819E375A200F65F90 /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DC4E0818055DCC00C280A6 /* CCTransition.m */; };
 		7A5947FA19E375A200F65F90 /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
@@ -720,8 +715,6 @@
 		501A7CAC0EBC97BA005BC158 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		501CCFAB0E99657C00B86F68 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		501CCFAC0E99657C00B86F68 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
-		502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
-		502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
 		502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
 		502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
@@ -1332,8 +1325,6 @@
 		50EA8DA011354A6000746D2A /* Misc Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */,
-				502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */,
 				D272031E18FC89A000B100FF /* CCEffectNode.h */,
 				D272031F18FC89A000B100FF /* CCEffectNode.m */,
 				5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */,
@@ -1749,7 +1740,6 @@
 				D268FE231980791C00ECBCD0 /* CCEffectStack_Private.h in Headers */,
 				9D9205D21A0173D600FF2D6D /* CCLightCollection.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
-				502C6C6C0FB87970002BF3C2 /* CCParallaxNode.h in Headers */,
 				571CD02A19649E03003D460C /* CCPlatformTextFieldIOS.h in Headers */,
 				B706B19818209A8300B27A2C /* CCTexture_Private.h in Headers */,
 				D24161111958F72B003673BD /* CCEffectStackProtocol.h in Headers */,
@@ -1901,8 +1891,6 @@
 				7A59468D19E372F000F65F90 /* CCResponder.h in Headers */,
 				7A59469119E372F000F65F90 /* CCTouch.h in Headers */,
 				7A59469319E372F000F65F90 /* CCTouchEvent.h in Headers */,
-				7A59469F19E372F100F65F90 /* CCParallaxNode.h in Headers */,
-				7A5946A019E372F100F65F90 /* CCParallaxNode.m in Headers */,
 				7A5946AA19E372F200F65F90 /* CCScene.h in Headers */,
 				7A5946AC19E372F200F65F90 /* CCTransition.h in Headers */,
 				7A5946AE19E372F200F65F90 /* CCPhysicsBody.h in Headers */,
@@ -2295,7 +2283,6 @@
 				D272032C18FC89A000B100FF /* CCEffectNode.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				D268FE1B1980791400ECBCD0 /* CCEffectRefraction.m in Sources */,
-				502C6C6D0FB87970002BF3C2 /* CCParallaxNode.m in Sources */,
 				50CB3B0F100AC43A00B7A750 /* CCActionManager.m in Sources */,
 				D3903B11199528A0003AA81A /* CCRenderDispatch.m in Sources */,
 				B7E775D118527EF0004221AA /* CCAppDelegate.m in Sources */,
@@ -2418,7 +2405,6 @@
 				7A5947D619E3759F00F65F90 /* CCSpriteFrameCache.m in Sources */,
 				7A5947D919E3759F00F65F90 /* CCResponder.m in Sources */,
 				7A5947DB19E3759F00F65F90 /* CCResponderManager.m in Sources */,
-				7A5947EB19E375A100F65F90 /* CCParallaxNode.m in Sources */,
 				7A5947F619E375A200F65F90 /* CCScene.m in Sources */,
 				7A5947F819E375A200F65F90 /* CCTransition.m in Sources */,
 				7A5947FA19E375A200F65F90 /* CCPhysicsBody.m in Sources */,

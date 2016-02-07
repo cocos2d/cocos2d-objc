@@ -80,6 +80,9 @@
 		089949F81C67F97D00ECC92C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949EB1C67F97D00ECC92C /* SSZipArchive.m */; };
 		089949F91C67F97D00ECC92C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949EB1C67F97D00ECC92C /* SSZipArchive.m */; };
 		089949FA1C67F97D00ECC92C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949EB1C67F97D00ECC92C /* SSZipArchive.m */; };
+		089949FE1C67FAB000ECC92C /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949FD1C67FAB000ECC92C /* CCParallaxNode.m */; };
+		089949FF1C67FAB000ECC92C /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949FD1C67FAB000ECC92C /* CCParallaxNode.m */; };
+		08994A001C67FAB000ECC92C /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949FD1C67FAB000ECC92C /* CCParallaxNode.m */; };
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
@@ -444,6 +447,8 @@
 		089949E91C67F97D00ECC92C /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		089949EA1C67F97D00ECC92C /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = external/SSZipArchive/SSZipArchive/SSZipArchive.h; sourceTree = SOURCE_ROOT; };
 		089949EB1C67F97D00ECC92C /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = external/SSZipArchive/SSZipArchive/SSZipArchive.m; sourceTree = SOURCE_ROOT; };
+		089949FC1C67FAB000ECC92C /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
+		089949FD1C67FAB000ECC92C /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
 		0E28FE19197FCE4500F78989 /* CCCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCacheTest.m; path = "cocos2d-ui-tests/tests/CCCacheTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
@@ -668,6 +673,7 @@
 		084781FF1C66666B00C3817B /* cocos2d-ext */ = {
 			isa = PBXGroup;
 			children = (
+				089949FB1C67FAB000ECC92C /* CCParallaxNode */,
 				089949871C67F40000ECC92C /* CCPackages */,
 				0899496F1C67F2D600ECC92C /* CCParticles */,
 				089949691C67F1BE00ECC92C /* CCClippingNode */,
@@ -784,6 +790,16 @@
 			);
 			name = minizip;
 			path = external/SSZipArchive/SSZipArchive/minizip;
+			sourceTree = SOURCE_ROOT;
+		};
+		089949FB1C67FAB000ECC92C /* CCParallaxNode */ = {
+			isa = PBXGroup;
+			children = (
+				089949FC1C67FAB000ECC92C /* CCParallaxNode.h */,
+				089949FD1C67FAB000ECC92C /* CCParallaxNode.m */,
+			);
+			name = CCParallaxNode;
+			path = "cocos2d-ext/CCParallaxNode";
 			sourceTree = SOURCE_ROOT;
 		};
 		755569EC1856361100ED1B0F /* Supporting Files */ = {
@@ -1462,6 +1478,7 @@
 				92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */,
 				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
 				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
+				089949FF1C67FAB000ECC92C /* CCParallaxNode.m in Sources */,
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
 				089949F61C67F97D00ECC92C /* zip.c in Sources */,
 				0899497B1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
@@ -1504,6 +1521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				089949FE1C67FAB000ECC92C /* CCParallaxNode.m in Sources */,
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */,
 				0847820C1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
@@ -1564,6 +1582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08994A001C67FAB000ECC92C /* CCParallaxNode.m in Sources */,
 				D3763D3819E734C5006C050D /* MainMenu.m in Sources */,
 				D3763D3919E734C5006C050D /* TestBase.m in Sources */,
 				0847820E1C66669300C3817B /* CCTiledMapLayer.m in Sources */,
