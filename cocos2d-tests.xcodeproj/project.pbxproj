@@ -19,6 +19,9 @@
 		084782121C66669300C3817B /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782081C66669300C3817B /* CCTMXXMLParser.m */; };
 		084782131C66669300C3817B /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782081C66669300C3817B /* CCTMXXMLParser.m */; };
 		084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782081C66669300C3817B /* CCTMXXMLParser.m */; };
+		089949641C67F10A00ECC92C /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949631C67F10A00ECC92C /* CCMotionStreak.m */; };
+		089949651C67F10A00ECC92C /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949631C67F10A00ECC92C /* CCMotionStreak.m */; };
+		089949661C67F10A00ECC92C /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 089949631C67F10A00ECC92C /* CCMotionStreak.m */; };
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
@@ -330,6 +333,8 @@
 		084782071C66669300C3817B /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTMXXMLParser.h; path = "cocos2d-ext/TileMaps/CCTMXXMLParser.h"; sourceTree = SOURCE_ROOT; };
 		084782081C66669300C3817B /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTMXXMLParser.m; path = "cocos2d-ext/TileMaps/CCTMXXMLParser.m"; sourceTree = SOURCE_ROOT; };
 		084782171C6667B000C3817B /* CCTileMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTileMaps.h; path = "cocos2d-ext/TileMaps/CCTileMaps.h"; sourceTree = SOURCE_ROOT; };
+		089949621C67F10A00ECC92C /* CCMotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak.h; sourceTree = "<group>"; };
+		089949631C67F10A00ECC92C /* CCMotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMotionStreak.m; sourceTree = "<group>"; };
 		0E28FE19197FCE4500F78989 /* CCCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCCacheTest.m; path = "cocos2d-ui-tests/tests/CCCacheTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
@@ -553,6 +558,7 @@
 		084781FF1C66666B00C3817B /* cocos2d-ext */ = {
 			isa = PBXGroup;
 			children = (
+				089949611C67F10A00ECC92C /* CCMotionStreak */,
 				084782151C66669A00C3817B /* TileMaps */,
 			);
 			name = "cocos2d-ext";
@@ -574,6 +580,16 @@
 			);
 			name = TileMaps;
 			sourceTree = "<group>";
+		};
+		089949611C67F10A00ECC92C /* CCMotionStreak */ = {
+			isa = PBXGroup;
+			children = (
+				089949621C67F10A00ECC92C /* CCMotionStreak.h */,
+				089949631C67F10A00ECC92C /* CCMotionStreak.m */,
+			);
+			name = CCMotionStreak;
+			path = "cocos2d-ext/CCMotionStreak";
+			sourceTree = SOURCE_ROOT;
 		};
 		755569EC1856361100ED1B0F /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -1250,6 +1266,7 @@
 				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
+				089949651C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
 				E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */,
 				E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */,
@@ -1284,6 +1301,7 @@
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
 				0847820F1C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				089949641C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				084782121C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				084782091C66669300C3817B /* CCTiledMap.m in Sources */,
 				A6167B93189A7D4D0044D391 /* VertexZTest.m in Sources */,
@@ -1324,6 +1342,7 @@
 				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
 				D3763D4119E734C5006C050D /* CCTransitionTest.m in Sources */,
 				084782111C66669300C3817B /* CCTiledMapObjectGroup.m in Sources */,
+				089949661C67F10A00ECC92C /* CCMotionStreak.m in Sources */,
 				084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				0847820B1C66669300C3817B /* CCTiledMap.m in Sources */,
 				D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */,
