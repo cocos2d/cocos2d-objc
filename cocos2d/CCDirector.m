@@ -557,7 +557,8 @@ static CCDirector *_sharedDirector = nil;
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition startTransition:scene];
+    [transition prepareTransition:scene];
+    [self startTransition:transition];
 }
 
 -(void) popScene
@@ -588,7 +589,8 @@ static CCDirector *_sharedDirector = nil;
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition startTransition:incomingScene];
+        [transition prepareTransition:incomingScene];
+        [self startTransition:transition];
     }
 }
 
@@ -600,7 +602,8 @@ static CCDirector *_sharedDirector = nil;
 -(void) popToRootSceneWithTransition:(CCTransition *)transition {
 	[self popToRootScene];
 	_sendCleanupToScene = YES;
-    [transition startTransition:_nextScene];
+    [transition prepareTransition:_nextScene];
+    [self startTransition:transition];
 }
 
 -(void) popToSceneStackLevel:(NSUInteger)level
@@ -658,7 +661,8 @@ static CCDirector *_sharedDirector = nil;
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
-    [transition startTransition:scene];
+    [transition prepareTransition:scene];
+    [self startTransition:transition];
 }
 
 // -----------------------------------------------------------------
