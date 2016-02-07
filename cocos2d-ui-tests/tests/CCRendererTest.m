@@ -2,6 +2,7 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCMotionStreak.h"
+#import "CCClippingNode.h"
 
 @interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end
 @implementation CustomSprite
