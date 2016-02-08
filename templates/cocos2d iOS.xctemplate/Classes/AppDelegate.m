@@ -68,19 +68,18 @@
     // Lets get this thing on the road!
     [self setupCocos2dWithOptions:startUpOptions];
 	
+    CCDirectorIOS* director = (CCDirectorIOS*)[CCDirector sharedDirector];
+    
+    // Creat a scene
+    CCScene* main = [HelloWorldScene new];
+    
+    // Run the director with the scene.
+    // Push as much scenes as you want (maybe useful for 3D touch)
+    [director runWithScene:main];
+    
     // Stay positive. Always return a YES :)
 	return YES;
 }
-
-// -----------------------------------------------------------------------
-// This method should return the very first scene to be run when your app starts.
-
-- (CCScene *)startScene
-{
-	return [HelloWorldScene new];
-}
-
-// -----------------------------------------------------------------------
 
 @end
 
