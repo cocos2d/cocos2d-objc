@@ -73,17 +73,6 @@
 @property (atomic, readonly) CCNavigationController *navController;
 
 // -----------------------------------------------------------------------
-/** @name Creating the Start Scene */
-// -----------------------------------------------------------------------
-
-/**
- *  Override this method to return the very first scene that Cocos2D should present.
- *
- *  @return The first scene of your app. It will be presented automatically.
- */
-- (CCScene*) startScene;
-
-// -----------------------------------------------------------------------
 /** @name Cocos2d Setup */
 // -----------------------------------------------------------------------
 

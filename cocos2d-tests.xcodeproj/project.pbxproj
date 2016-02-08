@@ -64,7 +64,6 @@
 		089949B91C67F40000ECC92C /* CCPackageUnzipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */; };
 		089949BA1C67F40000ECC92C /* CCPackageUnzipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */; };
 		089949BB1C67F40000ECC92C /* CCPackageUnzipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899499F1C67F40000ECC92C /* CCPackageUnzipper.m */; };
-		089949BF1C67F59F00ECC92C /* libSSZipArchiveMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 089949BE1C67F59F00ECC92C /* libSSZipArchiveMac.a */; };
 		089949EC1C67F97D00ECC92C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E21C67F97D00ECC92C /* ioapi.c */; };
 		089949ED1C67F97D00ECC92C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E21C67F97D00ECC92C /* ioapi.c */; };
 		089949EE1C67F97D00ECC92C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 089949E21C67F97D00ECC92C /* ioapi.c */; };
@@ -652,7 +651,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				089949BF1C67F59F00ECC92C /* libSSZipArchiveMac.a in Frameworks */,
 				D3763DDD19E73667006C050D /* AppKit.framework in Frameworks */,
 				D3763DDB19E7364F006C050D /* OpenGL.framework in Frameworks */,
 				D3763DD919E735CB006C050D /* libcocos2d-mac.a in Frameworks */,
@@ -942,7 +940,6 @@
 			children = (
 				084781FF1C66666B00C3817B /* cocos2d-ext */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
-				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B71B087F17EA5B500082EBC0 /* Tests */,
 				D3E1842A19E861FC00A08B01 /* MetalShaders */,
 				B7E261EC17E7D27A007067F0 /* Platform/iOS */,
@@ -983,13 +980,6 @@
 			name = "Resources-iOS";
 			path = "cocos2d-ui-tests/ios/Resources";
 			sourceTree = SOURCE_ROOT;
-		};
-		B7E2621D17E7D38D007067F0 /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = AppDelegate;
-			sourceTree = "<group>";
 		};
 		B7E2621E17E7D398007067F0 /* Testbed */ = {
 			isa = PBXGroup;

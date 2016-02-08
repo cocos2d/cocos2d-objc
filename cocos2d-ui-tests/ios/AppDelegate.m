@@ -52,6 +52,8 @@
 			CCSetupTabletScale2X: @YES,
 			CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
 		}];
+    
+    [[CCDirector sharedDirector] runWithScene:[MainMenu scene]];
 }
 
 - (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
@@ -75,16 +77,16 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
 }
 
-- (CCScene*) startScene
+/*- (CCScene*) startScene
 {
-	const char *testName = getenv("Test");
-	
-	if(testName){
-		return [TestBase sceneWithTestName:[NSString stringWithCString:testName encoding:NSUTF8StringEncoding]];
-	} else {
-		return [MainMenu scene];
-	}
-}
+    const char *testName = getenv("Test");
+    
+    if(testName){
+        return [TestBase sceneWithTestName:[NSString stringWithCString:testName encoding:NSUTF8StringEncoding]];
+    } else {
+        return [MainMenu scene];
+    }
+}*/
 
 //// I'm going to leave this in for testing the fixed size screen mode in the future.
 //- (CCScene*) startScene
