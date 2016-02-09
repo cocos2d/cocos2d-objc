@@ -37,8 +37,9 @@
 #import "CCDirector_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCAnimationManager_Private.h"
+#if CC_EFFECTS
 #import "CCEffectStack.h"
-
+#endif
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
 #endif
@@ -931,8 +932,10 @@ static inline float readFloat(CCBReader *self)
             [node setValue:@(f) forKey:name];
         }
     }
+
 	else if(type == kCCBPropTypeEffects)
 	{
+#if CC_EFFECTS
 		CCEffect * effect  = [self readEffects];
 		
 		if(effect)
@@ -940,7 +943,7 @@ static inline float readFloat(CCBReader *self)
 		//Hmmm..... Force it to write to @"effect" property.
 		[node setValue:effect forKey:@"effect"];
 		}
-				
+#endif
 	}
     else if(type == kCCBPropTypeTokenArray)
     {
@@ -958,7 +961,7 @@ static inline float readFloat(CCBReader *self)
 }
 
 
-
+#if CC_EFFECTS
 //Either returns a CCStackEffect or the one single effect.
 -(CCEffect*)readEffects
 {
@@ -1004,6 +1007,7 @@ static inline float readFloat(CCBReader *self)
 	return [[CCEffectStack alloc] initWithArray:effectsStack];
 
 }
+#endif
 
 - (BOOL)isPropertyKeySettable:(NSString *)key onInstance:(id)instance
 {

@@ -61,22 +61,6 @@
 #import "CCConfiguration.h"
 #import "CCDirector.h"
 #import "CCDrawNode.h"
-#import "CCEffect.h"
-#import "CCEffectBloom.h"
-#import "CCEffectBrightness.h"
-#import "CCEffectColorChannelOffset.h"
-#import "CCEffectContrast.h"
-#import "CCEffectBlur.h"
-#import "CCEffectGlass.h"
-#import "CCEffectDropShadow.h"
-#import "CCEffectHue.h"
-#import "CCEffectLighting.h"
-#import "CCEffectNode.h"
-#import "CCEffectPixellate.h"
-#import "CCEffectReflection.h"
-#import "CCEffectRefraction.h"
-#import "CCEffectSaturation.h"
-#import "CCEffectStack.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelTTF.h"
 #import "CCLightNode.h"
@@ -94,14 +78,6 @@
 #import "CCTransition.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
-
-#if CC_EFFECTS_EXPERIMENTAL
-#import "CCEffectOutline.h"
-#import "CCEffectDFOutline.h"
-#import "CCEffectDistanceField.h"
-#import "CCEffectDFInnerGlow.h"
-#import "CCEffectStereo.h"
-#endif
 
 // Layouts
 #import "CCLayout.h"
