@@ -86,7 +86,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
 	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
+#if CC_EFFECTS
 	if (_effect)
 	{
 		_effectRenderer.contentSize = self.contentSizeInPoints;
@@ -104,6 +104,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
 	}
 	else
+#endif
 	{
 		EnqueueTriangles(self, renderer, transform);
 	}

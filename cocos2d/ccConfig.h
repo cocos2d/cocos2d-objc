@@ -166,6 +166,10 @@
 #define CC_SHADER_DEFAULT_FRAGMENT_PRECISION mediump
 #endif
 
+#ifndef CC_EFFECTS
+#define CC_EFFECTS 0
+#endif
+
 #ifndef CC_EFFECTS_EXPERIMENTAL
 #define CC_EFFECTS_EXPERIMENTAL 0
 #endif

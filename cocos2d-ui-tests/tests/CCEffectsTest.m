@@ -1,3 +1,5 @@
+#if 0
+
 #import "TestBase.h"
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
@@ -2633,3 +2635,5 @@
 }
 
 @end
+
+#endif

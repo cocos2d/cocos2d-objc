@@ -24,9 +24,10 @@
  */
 
 #import "CCSprite.h"
+#if CC_EFFECTS
 #import "CCEffectRenderer.h"
 #import "CCEffect_Private.h"
-
+#endif
 @interface CCSprite () {
 	@private
 	
@@ -35,15 +36,16 @@
 	
 	// Center of extents (half width/height) of the sprite for culling purposes.
 	GLKVector2 _vertexCenter, _vertexExtents;
-	
+#if CC_EFFECTS
 	CCEffect *_effect;
 	CCEffectRenderer *_effectRenderer;
+#endif
 }
 
 + (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY;
-
+#if CC_EFFECTS
 - (void)updateShaderUniformsFromEffect;
-
+#endif
 @end
 
 
