@@ -63,7 +63,6 @@
 #import "CCDrawNode.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelTTF.h"
-#import "CCLightNode.h"
 #import "CCNode+Debug.h"
 #import "CCNode.h"
 #import "CCNodeColor.h"

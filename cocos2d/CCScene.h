@@ -26,9 +26,9 @@
  */
 
 #import "CCNode.h"
-
+#if CC_LIGHTING
 @class CCLightCollection;
-
+#endif
 /** CCScene is a subclass of CCNode. The scene represents the root node of the node hierarchy.
 
  A scene is created using the default node initializer:
@@ -40,6 +40,7 @@
  */
 @interface CCScene : CCNode
 
+#if CC_LIGHTING
 /** @name Accessing Lights */
 /** 
  A collection of lights in the scene.
@@ -47,7 +48,7 @@
  @since v3.4 and later
  */
 @property (nonatomic, readonly, strong) CCLightCollection *lights;
-
+#endif
 /// -----------------------------------------------------------------------
 /// @name Creating a Scene
 /// -----------------------------------------------------------------------
