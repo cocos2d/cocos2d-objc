@@ -38,7 +38,9 @@
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
 #import "CCShader.h"
+#if CC_PHYSICS
 #import "CCPhysics+ObjectiveChipmunk.h"
+#endif
 #import "CCDirector_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
@@ -111,12 +113,13 @@ NodeToPhysicsScale(CCNode * node)
 	
 }
 
+#if CC_PHYSICS
 inline CGAffineTransform
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
 }
-
+#endif
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static NSUInteger globalOrderOfArrival = 1;
 
@@ -223,6 +226,7 @@ static NSUInteger globalOrderOfArrival = 1;
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
 {
+#if CC_PHYSICS
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if (body)
     {
@@ -233,6 +237,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		self.position = position;
 	}
     else
+#endif
     {
 		_rotationalSkewX = newRotation;
 		_rotationalSkewY = newRotation;
@@ -242,20 +247,26 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(float) rotation
 {
+#if CC_PHYSICS
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
-	} else {
+	} else
+#endif
+    {
 		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. rotationalSkewX != rotationalSkewY. Don't know which one to return");
 		return _rotationalSkewX;
 	}
 }
 
 -(float)rotationalSkewX {
+#if CC_PHYSICS
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
-	} else {
+	} else
+#endif
+    {
 		return _rotationalSkewX;
 	}
 }
@@ -270,10 +281,13 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(float)rotationalSkewY
 {
+#if CC_PHYSICS
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
-	} else {
+	} else
+#endif
+    {
 		return _rotationalSkewY;
 	}
 }
@@ -339,6 +353,7 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 
 -(void) setPosition: (CGPoint)newPosition
 {
+#if CC_PHYSICS
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		CGPoint currentPosition = GetPositionFromBody(self, body);
@@ -347,7 +362,9 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 		CGPoint delta = ccpSub(newPositionInPoints, currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.parent)));
         body.relativePosition = newPositionInPoints;
-	} else {
+	} else
+#endif
+    {
 		_position = newPosition;
 		_isTransformDirty = _isInverseDirty = YES;
 	}
@@ -958,11 +975,13 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(CGAffineTransform)nonRigidTransform
 {
 	CGAffineTransform toPhysics = NodeToPhysicsTransform(self);
-	
+#if CC_PHYSICS
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(body.absoluteTransform));
-	} else {
+	} else
+#endif
+    {
 		// Body is not active yet, so this is more of a mess. :-\
 		// Need to guess the rigid part of the transform.
 		float radians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
@@ -973,8 +992,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 // Overriden by CCPhysicsNode to return YES.
 -(BOOL)isPhysicsNode {return NO;}
+#if CC_PHYSICS
 -(CCPhysicsNode *)physicsNode {return (self.isPhysicsNode ? (CCPhysicsNode *)self : self.parent.physicsNode);}
+#endif
 
+#if CC_PHYSICS
 -(void)setupPhysicsBody:(CCPhysicsBody *)physicsBody
 {
 	if(physicsBody){
@@ -1015,6 +1037,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 #endif
 	}
 }
+
 
 -(void)teardownPhysics
 {
@@ -1057,6 +1080,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		_physicsBody.node = self;
 	}
 }
+#endif
 
 #pragma mark CCNode SceneManagement
 
@@ -1067,13 +1091,15 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(void) onEnter
 {
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
-	
+#if CC_PHYSICS
 	[self setupPhysicsBody:_physicsBody];
+#endif
 	[_scheduler scheduleTarget:self];
 	
 	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = YES;
-	
+
+#if CC_PHYSICS
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
 	BOOL hasPhysicsNode = self.physicsNode != nil;
 	if(hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManagerFixed)
@@ -1081,7 +1107,13 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		[[CCDirector sharedDirector].actionManagerFixed migrateActions:self from:[CCDirector sharedDirector].actionManager];
 		[self setActionManager:[CCDirector sharedDirector].actionManagerFixed];
 	}
-	else if(!hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManager)
+	else
+#endif
+    if(
+#if CC_PHYSICS
+       !hasPhysicsNode &&
+#endif
+       _actionManager != [CCDirector sharedDirector].actionManager)
 	{
 		[[CCDirector sharedDirector].actionManager migrateActions:self from:[CCDirector sharedDirector].actionManagerFixed];
 		[self setActionManager:[CCDirector sharedDirector].actionManager];
@@ -1108,8 +1140,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(void) onExit
 {
+#if CC_PHYSICS
 	[self teardownPhysics];
-	
+#endif
 	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = NO;
 	[self wasRunning:wasRunning];
@@ -1502,12 +1535,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 - (CGAffineTransform)nodeToParentTransform
 {
+#if CC_PHYSICS
 	// The body ivar cannot be changed while this method is running and it's ARC retain/release is 70% of the profile samples for this method.
 	__unsafe_unretained CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
         
 		CGAffineTransform rigidTransform;
-		
 		if(physicsBody.type == CCPhysicsBodyTypeKinematic)
 		{
 			CGPoint anchorPointInPointsScaled = ccpCompMult(_anchorPointInPoints,
@@ -1524,7 +1557,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		}
 
 		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX , _scaleY), rigidTransform);
-	} else if ( _isTransformDirty ) {
+	} else
+#endif
+    if ( _isTransformDirty ) {
         
         // Get content size
         CGSize contentSizeInPoints;

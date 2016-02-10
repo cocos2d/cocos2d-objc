@@ -86,12 +86,6 @@
 // Shaders
 #import "CCShader.h"
 
-// Physics
-#import "CCPhysicsBody.h"
-#import "CCPhysicsJoint.h"
-#import "CCPhysicsNode.h"
-#import "CCPhysicsShape.h"
-
 // Sound
 #import "OALSimpleAudio.h"
 
