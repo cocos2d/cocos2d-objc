@@ -9,9 +9,6 @@
 #import "cocos2d.h"
 #import "CCTouch.h"
 #import "CCDirector.h"
-#if __CC_PLATFORM_ANDROID
-#import "CCTouchAndroid.h"
-#endif
 
 @implementation CCTouch
 

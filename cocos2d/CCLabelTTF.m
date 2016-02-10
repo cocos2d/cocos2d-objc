@@ -44,7 +44,7 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 #import <CoreText/CoreText.h>
 #endif
 
@@ -974,9 +974,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         NSString *fontName = nil;
 
         BOOL needsCGFontFailback = NO;
-#if __CC_PLATFORM_ANDROID
-        needsCGFontFailback = YES;
-#endif
+        
         if (needsCGFontFailback) {
             CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
             if (!descriptors || CFArrayGetCount(descriptors)<1) {

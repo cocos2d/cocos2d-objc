@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 #import "ccMacros.h"
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
 #endif
 
@@ -41,18 +41,6 @@
 #import <GLKit/GLKMath.h>
 #endif
 
-#if __CC_PLATFORM_ANDROID
-#import "CCMathTypesAndroid.h"
-
-#import "CCMatrix3.h"
-#import "CCMatrix4.h"
-#import "CCVector2.h"
-#import "CCVector3.h"
-#import "CCVector4.h"
-#import "CCQuaternion.h"
-
-#import "CCMathUtilsAndroid.h"
-#endif 
 
 #import "Platforms/CCGL.h"
 
