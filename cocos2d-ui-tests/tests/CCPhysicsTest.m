@@ -5,7 +5,7 @@
 //
 //  Created by Andy Korth on 11/15/13.
 //
-
+#if 0
 #import "cocos2d.h"
 #import "TestBase.h"
 
@@ -444,3 +444,4 @@
 }
 
 @end
+#endif

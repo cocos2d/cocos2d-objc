@@ -77,6 +77,7 @@
 
 -(void)pauseTestWithParent:(CCNode *)parent objectToPause:(CCNode *)objectToPause
 {
+#if 0
 	{
 		// Set up a simple physics scene.
 		CCPhysicsNode *physics = [CCPhysicsNode node];
@@ -99,7 +100,7 @@
 		[physics addChild:ball];
 		[parent addChild:physics];
 	}
-	
+#endif
 	{
 		// Tests pausing update: and fixedUpdate:
 		CCSprite *sprite = [SchedulerTestSprite spriteWithImageNamed:@"Sprites/bird.png"];

@@ -43,6 +43,37 @@
 #if CC_CCBREADER
     // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
     [CCBReader configureCCFileUtils];
+#else 
+    CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+    
+    // Setup file utils for use with SpriteBuilder
+    [sharedFileUtils setEnableiPhoneResourcesOniPad:NO];
+    
+    sharedFileUtils.directoriesDict =
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+     @"resources-tablet", CCFileUtilsSuffixiPad,
+     @"resources-tablethd", CCFileUtilsSuffixiPadHD,
+     @"resources-phone", CCFileUtilsSuffixiPhone,
+     @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
+     @"resources-phone", CCFileUtilsSuffixiPhone5,
+     @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
+     @"resources-phone", CCFileUtilsSuffixMac,
+     @"resources-phonehd", CCFileUtilsSuffixMacHD,
+     @"", CCFileUtilsSuffixDefault,
+     nil];
+
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+    
+    sharedFileUtils.enableiPhoneResourcesOniPad = YES;
+    sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
+    [sharedFileUtils buildSearchResolutionsOrder];
+    
+    [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] loadSpriteFrameLookupDictionaryFromFile:@"spriteFrameFileList.plist"];
 #endif
 
     [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
