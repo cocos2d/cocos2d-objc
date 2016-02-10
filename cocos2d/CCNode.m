@@ -29,7 +29,9 @@
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
+#if CC_CCBREADER
 #import "CCAnimationManager.h"
+#endif
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -200,9 +202,10 @@ static NSUInteger globalOrderOfArrival = 1;
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
-    
+#if CC_CCBREADER
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
     [_animationManager performSelector:@selector(cleanup)];
+#endif
 }
 
 - (NSString*) description
@@ -1084,9 +1087,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		[self setActionManager:[CCDirector sharedDirector].actionManager];
 	}
 
+#if CC_CCBREADER
     if(_animationManager) {
         [_animationManager performSelector:@selector(onEnter)];
     }
+#endif
 	
 	[self wasRunning:wasRunning];
 }
@@ -1300,11 +1305,15 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
+#if CC_CCBREADER
         [_animationManager setPaused:NO];
+#endif
 	} else if(!isRunning && wasRunning){
 		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
+#if CC_CCBREADER
         [_animationManager setPaused:YES];
+#endif
 	}
 }
 
