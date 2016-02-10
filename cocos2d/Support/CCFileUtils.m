@@ -155,7 +155,7 @@ static CCFileUtils *fileUtils = nil;
 		
 		_filenameLookup = [[NSMutableDictionary alloc] initWithCapacity:10];
 								
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 						 @"-ipad", CCFileUtilsSuffixiPad,
 						 @"-ipadhd", CCFileUtilsSuffixiPadHD,
@@ -217,7 +217,7 @@ static CCFileUtils *fileUtils = nil;
 	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
 	[_searchResolutionsOrder removeAllObjects];
 	
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 	if (device == CCDeviceiPadRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPadHD];
@@ -399,7 +399,7 @@ static CCFileUtils *fileUtils = nil;
 		NSString *value = [dictionary objectForKey:key];
 		if( [value isEqualToString:k] ) {
 			
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 			// XXX Add this in a Dictionary
 			if( [key isEqualToString:CCFileUtilsSuffixiPad] )
 				return 1.0*_iPadContentScaleFactor;
@@ -685,7 +685,7 @@ static CCFileUtils *fileUtils = nil;
 	}
 }
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 
 -(void) setiPadRetinaDisplaySuffix:(NSString *)suffix
 {

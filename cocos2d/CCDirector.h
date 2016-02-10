@@ -68,17 +68,13 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 #define CC_VIEWCONTROLLER NSObject
 #define CC_VIEW NSOpenGLView
 
-#elif __CC_PLATFORM_ANDROID
-#define CC_VIEWCONTROLLER NSObject
-#define CC_VIEW CCGLView
-
 #endif
 
 
 
 /** The director creates and handles the main Window and the Cocos2D view. It also presents Scenes and initiates scene updates and drawing.
  
- CCDirector inherits from CC_VIEWCONTROLLER which is equivalent to UIViewController on iOS, and NSObject on OS X and Android.
+ CCDirector inherits from CC_VIEWCONTROLLER which is equivalent to UIViewController on iOS, and NSObject on OS X.
 
  Since the CCDirector is a singleton, the standard way to use its methods and properties is:
  
@@ -210,7 +206,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Working with View and Projection */
 
-/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCGLView on Android.
+/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCGLView.
 /// @see CCDirectorView
 @property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
 /** Sets an OpenGL projection

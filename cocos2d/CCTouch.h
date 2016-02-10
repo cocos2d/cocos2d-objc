@@ -11,10 +11,7 @@
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #define PlatformTouch UITouch
-#elif __CC_PLATFORM_ANDROID
-@class CCTouchAndroid;
-#define PlatformTouch CCTouchAndroid // Note: Replace this with MotionEvent or some Android touch object
-#else 
+#else
 #define PlatformTouch NSObject
 #endif
 
@@ -37,7 +34,7 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 };
 
 /** Thin wrapper around platform-specific touch events (ie [UITouch](https://developer.apple.com/library/ios/documentation/uikit/reference/UITouch_Class/index.html)).
- CCTouch is platform independent version of the touch event objects sent by iOS, Android and OS X.
+ CCTouch is platform independent version of the touch event objects sent by iOS and OS X.
  
  @note You should never create instances of CCTouch. */
 @interface CCTouch : NSObject
@@ -63,8 +60,7 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 */
 @property (nonatomic, strong) CCGLView *view;
 /** The associated platform-specific touch event (ie UITouch).
- PlatformTouch is equivalent to UITouch on iOS, CCTouchAndroid on Android and NSObject on OS X.
- @note The CCTouchAndroid class is not documented, it is just a subset of CCTouch.
+ PlatformTouch is equivalent to UITouch on iOS and NSObject on OS X.
  @since v3.2 and later
 */
 @property (nonatomic, strong) PlatformTouch* uiTouch;

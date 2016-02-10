@@ -121,14 +121,6 @@
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/NSEvent+CC.h"
-
-#elif __CC_PLATFORM_ANDROID
-#import "Platforms/Android/CCActivity.h"
-#import "Platforms/Android/CCGLView.h"
-#import "Platforms/Android/CCDirectorAndroid.h"
-
-#import <android/native_window.h>
-#import <bridge/runtime.h>
 #endif
 
 //

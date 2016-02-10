@@ -46,7 +46,7 @@
 
 #import "ccMacros.h"
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 #import <CoreGraphics/CGGeometry.h>
 #elif __CC_PLATFORM_MAC
 #import <Foundation/Foundation.h>

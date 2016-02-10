@@ -41,12 +41,6 @@
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
 #import "Mac/CCGLView.h"
 
-#elif __CC_PLATFORM_ANDROID
-#define GL_GLEXT_PROTOTYPES 1
-#include <EGL/egl.h> // requires ndk r5 or newer
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#import "Android/CCGLView.h"
 #endif
 
 #if DEBUG
@@ -98,7 +92,7 @@ __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_
 
 
 // iOS
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES

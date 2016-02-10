@@ -224,7 +224,7 @@
 // -----------------------------------------------------------------
 
 //#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 - (void)touchesBegan:(NSSet *)touches withEvent:(CCTouchEvent *)event
 {
     if (!_enabled) return;

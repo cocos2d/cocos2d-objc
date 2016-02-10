@@ -36,12 +36,10 @@
 #import "CCTouchEvent.h"
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
-#if !__CC_PLATFORM_ANDROID
+
 #import <UIKit/UIKit.h>
 #define RESPONDER UIResponder
-#else
-#define RESPONDER NSObject
-#endif
+
 
 #pragma mark - iOS Running Responder
 
@@ -108,10 +106,6 @@ typedef NS_ENUM(NSInteger, CCMouseButton)
 @property (nonatomic, assign) CCMouseButton button;
 
 @end
-
-#else // __CC__PLATFORM_ANDROIDj
-
-#define RESPONDER NSObject
 
 #endif
 

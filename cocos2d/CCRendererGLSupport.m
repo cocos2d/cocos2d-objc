@@ -104,7 +104,6 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 -(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type
 {
 	if((self = [super initWithCapacity:capacity elementSize:elementSize type:type])){
-		// TODO Does Android look up GL functions by name like Windows/Linux?
 		_mapBufferRange = glMapBufferRangeEXT;
 		_flushMappedBufferRange = glFlushMappedBufferRangeEXT;
 		_unmapBuffer = glUnmapBufferOES;
@@ -290,46 +289,6 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			
 			GLuint width = (GLuint)texture.pixelWidth;
 			GLuint height = (GLuint)texture.pixelHeight;
-
-#if __CC_PLATFORM_ANDROID
-			
-			// Some android devices *only* support combined depth buffers (like all iOS devices), some android devices do not
-			// support combined depth buffers, thus we have to create a seperate stencil buffer
-			if(_depthStencilFormat)
-			{
-					//create and attach depth buffer
-			
-					if(![[CCConfiguration sharedConfiguration] supportsPackedDepthStencil])
-					{
-							glGenRenderbuffers(1, &_depthRenderBuffer);
-							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-							glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height); //GL_DEPTH_COMPONENT24_OES
-							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-
-							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-							if(_depthStencilFormat == GL_DEPTH24_STENCIL8)
-							{
-									glGenRenderbuffers(1, &_stencilRenderBuffer);
-									glBindRenderbuffer(GL_RENDERBUFFER, _stencilRenderBuffer);
-									glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, width, height);
-									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilRenderBuffer);
-							}
-					}
-					else
-					{
-							glGenRenderbuffers(1, &_depthRenderBuffer);
-							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-							glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, width, height);
-							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-							
-							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-							if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
-									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-							}
-					}
-			}
-			
-#else
 			
 			if(depthStencilFormat){
 				//create and attach depth buffer
@@ -343,8 +302,6 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 				}
 			}
-			
-#endif
 		
 			// check if it worked (probably worth doing :) )
 			NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");

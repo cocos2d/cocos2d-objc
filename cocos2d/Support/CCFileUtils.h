@@ -181,7 +181,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 @property (nonatomic, readwrite, copy) NSMutableDictionary *filenameLookup;
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 /** 
    The iPhone RetinaDisplay suffixes to load resources.
    By default it is "-hd" and "" in that order.
@@ -343,7 +343,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  you might need to load differerent resources for a given file in the different platforms.
  *  Examples:
  *  - In iPad mode: "image.png" -> "image.pvr" -> "/full/path/image-ipad.pvr" (in case the -ipad file exists)
- *  - In Android: "image.png" -> "image.png" -> "/full/path/image.png"
  *
  *  @param filename Filename to get full path for.
  *
@@ -366,7 +365,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  you might need to load differerent resources for a given file in the different platforms.
  *  Examples:
  *  - In iPad mode: "image.png" -> "image.pvr" -> "/full/path/image-ipad.pvr" (in case the -ipad file exists)
- *  - In Android: "image.png" -> "image.png" -> "/full/path/image.png"
  *
  *  @param filename       Filename to get full path for.
  *  @param contentScale scale factor
@@ -389,7 +387,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  you might need to load differerent resources for a given file in the different platforms.
  *  Examples:
  *  - On iOS: "sound.wav" -> "sound.caf" -> "/full/path/sound.caf" (in case the key dictionary says that "sound.wav" should be converted to "sound.caf")
- *  - On Android: "sound.wav" -> "sound.wav" -> "/full/path/sound.caf" (in case the key dictionary says that "sound.wav" should be converted to "sound.caf")
  *
  *  @param key Key to get full path for.
  *

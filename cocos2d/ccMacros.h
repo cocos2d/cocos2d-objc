@@ -39,20 +39,12 @@
  cocos2d helper macros
  */
 
-#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && !defined(COCOS2D_ANDROID)
+#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED)
 #define __CC_PLATFORM_IOS 1
 #define __CC_PLATFORM_MAC 0
-#define __CC_PLATFORM_ANDROID_FIXME 1
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && !defined(COCOS2D_ANDROID)
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define __CC_PLATFORM_MAC 1
 #define __CC_PLATFORM_IOS 0
-#endif
-
-#ifdef COCOS2D_ANDROID
-#define __CC_PLATFORM_MAC 0
-#define __CC_PLATFORM_IOS 0
-#define __CC_PLATFORM_ANDROID 1
-#define __CC_PLATFORM_ANDROID_FIXME 1
 #endif
 
 // Metal is only supported on iOS devices (currently does not include the simulator) and on iOS 8 and greater.

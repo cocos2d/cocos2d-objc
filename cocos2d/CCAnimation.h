@@ -26,7 +26,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 #import <CoreGraphics/CoreGraphics.h>
 #endif
 

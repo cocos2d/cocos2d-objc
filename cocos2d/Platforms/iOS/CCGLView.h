@@ -90,7 +90,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  underneath the CCGLView.
  
  @note Setting the view non-opaque will only work if the pixelFormat is also set to `kEAGLColorFormatRGBA8` upon initialization.
- @note This documentation is for the iOS version of the class. OS X and Android use specific variants of CCGLView which 
+ @note This documentation is for the iOS version of the class. OS X use specific variants of CCGLView which 
  inherit from other base classes (ie NSOpenGLView on OS X).
 
  Parameters:

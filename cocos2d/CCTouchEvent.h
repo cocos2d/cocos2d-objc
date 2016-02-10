@@ -15,7 +15,7 @@
 
 /** Timestamp for this event. */
 @property(nonatomic) NSTimeInterval timestamp;
-/** A dictionary containing the current touches. The keys are `PlatformTouch` pointers (UITouch on iOS, CCTouchAndroid on Android, NSObject on Mac)
+/** A dictionary containing the current touches. The keys are `PlatformTouch` pointers (UITouch on iOS, NSObject on Mac)
  and the values are CCTouch objects. 
  @see CCTouch */
 @property(nonatomic, readonly) NSMutableDictionary* allTouches;

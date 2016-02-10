@@ -62,9 +62,6 @@
 #elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
-#elif __CC_PLATFORM_ANDROID
-#import "Platforms/Android/CCDirectorAndroid.h"
-#define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
 #import "CCDirector_Private.h"
@@ -210,7 +207,7 @@ static CCDirector *_sharedDirector = nil;
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
 		
 		// Force the graphics API to be selected if it hasn't already done so.
-		// Startup code is annoyingly different for iOS/Mac/Android.
+		// Startup code is annoyingly different for iOS/Mac.
 		[[CCConfiguration sharedConfiguration] graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
@@ -389,8 +386,6 @@ static CCDirector *_sharedDirector = nil;
 		CGSize size = CCNSSizeToCGSize(self.view.bounds.size);
 #if __CC_PLATFORM_IOS
 		CGFloat scale = self.view.layer.contentsScale ?: 1.0;
-#elif __CC_PLATFORM_ANDROID
-        CGFloat scale = _view.contentScaleFactor;
 #else
 		//self.view.wantsBestResolutionOpenGLSurface = YES;
 		CGFloat scale = self.view.window.backingScaleFactor;

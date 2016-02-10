@@ -28,9 +28,6 @@
 
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>		// Needed for UIDevice
-#elif __CC_PLATFORM_ANDROID
-#import <AndroidKit/AndroidWindowManager.h>
-#import <AndroidKit/AndroidDisplay.h>
 #endif
 
 #import "Platforms/CCGL.h"
@@ -122,8 +119,6 @@ static char * glExtensions;
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
 #elif __CC_PLATFORM_MAC
 		NSString *OSVer = [self getMacVersion];
-#elif __CC_PLATFORM_ANDROID
-        NSString *OSVer = @"?";//[AndroidBuild DISPLAY];
 #endif
 		NSArray *arr = [OSVer componentsSeparatedByString:@"."];
 		int idx = 0x01000000;
@@ -186,37 +181,7 @@ static char * glExtensions;
 {
 	// TODO: This method really needs to go very away in v4
 	
-#if __CC_PLATFORM_ANDROID
-    
-    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
-    [[CCActivity currentActivity].windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
-
-    double yInches= metrics.heightPixels/metrics.ydpi;
-    double xInches= metrics.widthPixels/metrics.xdpi;
-    double diagonalInches = sqrt(xInches*xInches + yInches*yInches);
-    if (diagonalInches<=CC_MINIMUM_TABLET_SCREEN_DIAGONAL){
-
-        
-        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
-        {
-            return CCDeviceiPhoneRetinaDisplay;
-        }
-        else
-        {
-            return CCDeviceiPhone;
-        }
-    } else {
-        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
-        {
-            return CCDeviceiPadRetinaDisplay;
-        }
-        else
-        {
-            return CCDeviceiPad;
-        }
-
-    }
-#elif __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
@@ -276,10 +241,6 @@ static char * glExtensions;
 #elif __CC_PLATFORM_MAC
 		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
         _supportsPackedDepthStencil = YES;
-#elif __CC_PLATFORM_ANDROID
-        // source: http://www.khronos.org/registry/gles/
-        _supportsNPOT = [self checkForGLExtension:@"GL_OES_texture_npot"] || [self checkForGLExtension:@"GL_NV_texture_npot_2D_mipmap"];
-        _supportsPackedDepthStencil = [self checkForGLExtension:@"GL_OES_packed_depth_stencil"];
 #endif
 		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 
@@ -291,8 +252,6 @@ static char * glExtensions;
 		_supportsBGRA8888 = bgra8a | bgra8b;
 #elif __CC_PLATFORM_MAC
 		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
-#elif __CC_PLATFORM_ANDROID
-    _supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_texture_format_BGRA8888"];
 #endif
 			_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
@@ -397,8 +356,6 @@ static char * glExtensions;
 
 #if __CC_PLATFORM_IOS
 	NSString *OSVer = [[UIDevice currentDevice] systemVersion];
-#elif __CC_PLATFORM_ANDROID
-    NSString *OSVer = @"?";//[AndroidBuild DISPLAY];
 #else //__CC_PLATFORM_MAC
 	NSString *OSVer = [self getMacVersion];
 #endif

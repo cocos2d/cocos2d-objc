@@ -77,7 +77,7 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
     
     CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
 	
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 
     // Update font size
     [copy enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
@@ -108,20 +108,6 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
         }
     }];
 #endif
-#if 0 /*__CC_PLATFORM_ANDROID_FIXME*/
-    // Update shadows
-    [copy enumerateAttribute:NSShadowAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
-        if (value)
-        {
-            NSShadow* shadow = value;
-            [copy removeAttribute:NSShadowAttributeName range:range];
-            shadow.shadowBlurRadius = shadow.shadowBlurRadius * scale;
-            CGSize offset = shadow.shadowOffset;
-            shadow.shadowOffset = CGSizeMake(offset.width * scale, offset.height * scale);
-            [copy addAttribute:NSShadowAttributeName value:shadow range:range];
-        }
-    }];
-#endif
     return copy;
 }
 
@@ -130,7 +116,7 @@ float NSAttributedStringSingleFontSize(NSAttributedString *attrString){
     __block BOOL foundValue = NO;
     __block BOOL singleValue = YES;
     __block float fontSize = 0;
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
     [attrString enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
@@ -177,7 +163,7 @@ float NSAttributedStringSingleFontSize(NSAttributedString *attrString){
 NSAttributedString *NSAttributedStringCopyWithNewFontSize(NSAttributedString *attrString, float size){
     NSMutableAttributedString* copy = [attrString mutableCopy];
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
     CFTypeRef value = (__bridge CTFontRef)([attrString attribute:(id)kCTFontAttributeName atIndex:0 effectiveRange:NULL]);
     NSCAssert((CFGetTypeID(value)==CTFontGetTypeID()), @"CFTypeID does not match");
     CTFontRef font = (CTFontRef)value;
@@ -198,12 +184,6 @@ CGColorRef CGColorCreateWithPlatformSpecificColor(id platformColor) {
     return CGColorRetain(((UIColor *)platformColor).CGColor);
 #elif __CC_PLATFORM_MAC
     return CGColorRetain(((NSColor *)platformColor).CGColor);
-#elif __CC_PLATFORM_ANDROID_ANDROID_COLOR
-    int32_t androidColor = (int32_t)[(NSNumber *)platformColor intValue];
-    return CGColorCreateGenericRGB([AndroidColor redWithColor:androidColor]/255.0,
-                                   [AndroidColor greenWithColor:androidColor]/255.0,
-                                   [AndroidColor blueWithColor:androidColor]/255.0,
-                                   [AndroidColor alphaWithColor:androidColor]/255.0);
 #else
     return NULL;
 #endif
@@ -219,7 +199,6 @@ CTFontRef CTFontCreateWithPlatformSpecificFont(id font) {
 #endif
 }
 
-#if !__CC_PLATFORM_ANDROID
 static NSTextAlignment NSTextAlignmentFromCCTextAlignment(CCTextAlignment ccAligment) {
 #if __CC_PLATFORM_IOS
     switch (ccAligment) {
@@ -247,15 +226,13 @@ static NSTextAlignment NSTextAlignmentFromCCTextAlignment(CCTextAlignment ccAlig
     return 0;
 #endif
     
-    
 }
-#endif
 
 
 BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedString* string, CCColor* defaultColor, NSString* defaultFontName, CGFloat defaultFontSize, CCTextAlignment defaultHorizontalAlignment){
     NSRange fullRange = NSMakeRange(0, string.length);
     BOOL useFullColor = NO;
-#if !__CC_PLATFORM_ANDROID
+    
     if (NSAttributedStringHasAttribute(string, NSForegroundColorAttributeName)) {
         CGColorRef color = CGColorCreateWithPlatformSpecificColor([string attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:NULL]);
         [string addAttribute:(id)kCTForegroundColorFromContextAttributeName value:(__bridge id)color range:fullRange];
@@ -279,51 +256,10 @@ BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedS
     NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
     style.alignment = NSTextAlignmentFromCCTextAlignment(defaultHorizontalAlignment);
     NSMutableAttributedStringSetDefaultAttribute(string, NSParagraphStyleAttributeName, style);
-    
-    
-    
-#else
-    // You betcha not to have those attributes on Android, they are not supported
-    assert(!NSAttributedStringHasAttribute(string, @"NSParagraphStyle"));
-    assert(!NSAttributedStringHasAttribute(string, @"NSFont"));
-    assert(!NSAttributedStringHasAttribute(string, @"NSForegroundColor"));
-    
-    // Shadow (No CT alternative)
-    if (NSAttributedStringHasAttribute(string, @"NSShadow"))
-    {
-        useFullColor = YES;
-    }
-    
-    
-    CTTextAlignment alignment;
-    if (defaultHorizontalAlignment == CCTextAlignmentLeft) alignment = kCTTextAlignmentLeft;
-    else if (defaultHorizontalAlignment == CCTextAlignmentCenter) alignment = kCTTextAlignmentCenter;
-    else if (defaultHorizontalAlignment == CCTextAlignmentRight) alignment = kCTTextAlignmentRight;
-    
-    
-    CTParagraphStyleSetting paragraphStyleSettings[] = {
-        {
-            .spec = kCTParagraphStyleSpecifierAlignment,
-            .valueSize = sizeof(typeof(alignment)),
-            .value = &alignment
-        },
-    };
-    
-    CTParagraphStyleRef style = CTParagraphStyleCreate(paragraphStyleSettings, sizeof(paragraphStyleSettings) / sizeof(CTParagraphStyleSetting));
-    NSMutableAttributedStringSetDefaultAttribute(string, (NSString *)kCTParagraphStyleAttributeName, (__bridge id)style);
-    
-    CFRelease(style);
-    
-    
-#endif
-    
-    
-    
-#if !__CC_PLATFORM_ANDROID
+
+
     NSString *foregroundColorAttributeName = NSForegroundColorAttributeName;
-#else
-    NSString *foregroundColorAttributeName = (__bridge id)kCTForegroundColorAttributeName;
-#endif
+
     BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge id)defaultColor.CGColor);
     useFullColor |= (![defaultColor isEqualToColor:[CCColor whiteColor]]) && colorChanged;
     
