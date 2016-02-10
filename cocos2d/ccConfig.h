@@ -170,6 +170,10 @@
 #define CC_EFFECTS 0
 #endif
 
+#ifndef CC_OBJECT_AL
+#define CC_OBJECT_AL 0
+#endif
+
 #ifndef CC_EFFECTS_EXPERIMENTAL
 #define CC_EFFECTS_EXPERIMENTAL 0
 #endif

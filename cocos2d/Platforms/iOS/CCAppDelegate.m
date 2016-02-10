@@ -201,9 +201,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change this setting at any time.
 	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-    
-    // Initialise OpenAL
-    [OALSimpleAudio sharedInstance];
 	
 	// Create a Navigation Controller with the Director
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];

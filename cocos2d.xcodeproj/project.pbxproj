@@ -24,7 +24,6 @@
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
 		0899494A1C66000000ECC92C /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B153484C1BE1E7A20022C4BB /* libObjectiveChipmunk.a */; };
-		0899494B1C66001900ECC92C /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = B15348371BE1E78C0022C4BB /* libObjectAL (Mac).a */; };
 		0EFC792D1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */; };
 		0EFC792E1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */; };
 		5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
@@ -449,24 +448,9 @@
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
-		FC64014019C79716003E595A /* libObjectAL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961B19C3B92F00C93E5E /* libObjectAL.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B15348341BE1E78C0022C4BB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FC39961219C3B80E00C93E5E;
-			remoteInfo = "ObjectAL (Android)";
-		};
-		B15348361BE1E78C0022C4BB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
-			remoteInfo = "ObjectAL (Mac)";
-		};
 		B15348431BE1E7A20022C4BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B15348391BE1E7A10022C4BB /* Chipmunk7.xcodeproj */;
@@ -522,20 +506,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7A4037A719E37038007B6E8F;
 			remoteInfo = "cocos2d-mac";
-		};
-		FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CBBAB312171D0B84009B955F;
-			remoteInfo = "ObjectAL (iOS)";
-		};
-		FCFDA23D19C78E2D00B90910 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = CBBAB311171D0B84009B955F;
-			remoteInfo = "ObjectAL (iOS)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -797,7 +767,6 @@
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
-		FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectAL.xcodeproj; path = external/ObjectAL/ObjectAL/ObjectAL.xcodeproj; sourceTree = "<group>"; };
 		FC55599F1991A26300E29CCE /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = "external/ogg/android/ogg/build/Debug-android/libogg.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -807,7 +776,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B15348511BE1E7B70022C4BB /* libObjectiveChipmunk-iPhone.a in Frameworks */,
-				FC64014019C79716003E595A /* libObjectAL.a in Frameworks */,
 				D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */,
 				D24FAEEC198014B90043E27D /* GLKit.framework in Frameworks */,
 				D28A2E211954F85700ADC03D /* AVFoundation.framework in Frameworks */,
@@ -826,7 +794,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0899494B1C66001900ECC92C /* libObjectAL (Mac).a in Frameworks */,
 				0899494A1C66000000ECC92C /* libObjectiveChipmunk.a in Frameworks */,
 				7A4037C819E3712A007B6E8F /* OpenGL.framework in Frameworks */,
 				7A4037C619E37126007B6E8F /* QuartzCore.framework in Frameworks */,
@@ -935,7 +902,6 @@
 			isa = PBXGroup;
 			children = (
 				B15348391BE1E7A10022C4BB /* Chipmunk7.xcodeproj */,
-				FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */,
 			);
 			name = external;
 			sourceTree = "<group>";
@@ -1415,16 +1381,6 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		FC39961419C3B92F00C93E5E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FC39961B19C3B92F00C93E5E /* libObjectAL.a */,
-				B15348351BE1E78C0022C4BB /* libObjectAL (Android).a */,
-				B15348371BE1E78C0022C4BB /* libObjectAL (Mac).a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1689,7 +1645,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */,
 			);
 			name = "cocos2d-ios";
 			productName = cocos2d;
@@ -1767,10 +1722,6 @@
 					ProductGroup = B153483A1BE1E7A10022C4BB /* Products */;
 					ProjectRef = B15348391BE1E7A10022C4BB /* Chipmunk7.xcodeproj */;
 				},
-				{
-					ProductGroup = FC39961419C3B92F00C93E5E /* Products */;
-					ProjectRef = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1783,20 +1734,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		B15348351BE1E78C0022C4BB /* libObjectAL (Android).a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libObjectAL (Android).a";
-			remoteRef = B15348341BE1E78C0022C4BB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B15348371BE1E78C0022C4BB /* libObjectAL (Mac).a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libObjectAL (Mac).a";
-			remoteRef = B15348361BE1E78C0022C4BB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B15348441BE1E7A20022C4BB /* ChipmunkDemo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1844,13 +1781,6 @@
 			fileType = wrapper.cfbundle;
 			path = ObjectiveChipmunkTests.xctest;
 			remoteRef = B153484F1BE1E7A20022C4BB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC39961B19C3B92F00C93E5E /* libObjectAL.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libObjectAL.a;
-			remoteRef = FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2088,11 +2018,6 @@
 			isa = PBXTargetDependency;
 			target = 7A4037A719E37038007B6E8F /* cocos2d-mac */;
 			targetProxy = B7E7DE4D1A76DB8B004234B7 /* PBXContainerItemProxy */;
-		};
-		FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ObjectAL (iOS)";
-			targetProxy = FCFDA23D19C78E2D00B90910 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2385,7 +2310,7 @@
 					"external/ObjectAL/**",
 					"external/SSZipArchive/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -2440,7 +2365,7 @@
 					"external/ObjectAL/**",
 					"external/SSZipArchive/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
