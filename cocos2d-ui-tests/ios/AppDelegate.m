@@ -40,8 +40,10 @@
 
 - (void)configureCocos2d
 {
+#if CC_CCBREADER
     // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
     [CCBReader configureCCFileUtils];
+#endif
 
     [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
 
