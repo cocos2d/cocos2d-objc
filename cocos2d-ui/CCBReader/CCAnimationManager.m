@@ -462,6 +462,7 @@ static NSInteger ccbAnimationManagerID = 0;
     return [CCActionSequence actionWithArray:actions];
 }
 
+#if CC_OBJECT_AL
 - (id)actionForSoundChannel:(CCBSequenceProperty*) channel {
     
     float lastKeyframeTime = 0;
@@ -488,6 +489,7 @@ static NSInteger ccbAnimationManagerID = 0;
     
     return [CCActionSequence actionWithArray:actions];
 }
+#endif
 
 - (void)runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration {
     
@@ -577,6 +579,7 @@ static NSInteger ccbAnimationManagerID = 0;
     }
     
     if (seq.soundChannel) {
+#if CC_OBJECT_AL
         // Build sound actions for channel
         CCAction* action = [self actionForSoundChannel:seq.soundChannel];
         if (action) {
@@ -584,6 +587,7 @@ static NSInteger ccbAnimationManagerID = 0;
             [action startWithTarget:self.rootNode];
             [_currentActions addObject:action];
         }
+#endif
     }
 
 }

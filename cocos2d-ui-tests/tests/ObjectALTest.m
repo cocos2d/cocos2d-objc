@@ -7,7 +7,7 @@
 //
 
 #import "TestBase.h"
-#import "OALSimpleAudio.h"
+#import "CCOAL.h"
 
 @interface ObjectALTest : TestBase @end
 
