@@ -188,6 +188,7 @@
 		}
 }
 
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -197,6 +198,7 @@
 
 	return ret;
 }
+#endif
 
 // Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
 //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

@@ -230,10 +230,11 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			return nil;
 		}
-        
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
         /** Multiple touch default enabled
          */
         self.multipleTouchEnabled = YES;
+#endif
 
         _touchEvent = [[CCTouchEvent alloc] init];
 	}

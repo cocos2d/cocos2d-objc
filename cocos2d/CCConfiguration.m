@@ -187,8 +187,16 @@ static char * glExtensions;
 	{
 		return ([UIScreen mainScreen].scale == 2) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
 	}
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+    else if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
+        //FIXME: Temporary solution
+        return CCDeviceiPadRetinaDisplay;
+        
+    }
+#endif
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
 	{
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
 		CGSize preferredSize = [[UIScreen mainScreen] preferredMode].size;
 		// This code makes me sad. Very glad it's going away in v4.
 		
@@ -201,6 +209,7 @@ static char * glExtensions;
 		} else {
 			return ([UIScreen mainScreen].scale == 2 ? CCDeviceiPhone6 : CCDeviceiPhone6Plus);
 		}
+#endif
 	}
 	
 #elif __CC_PLATFORM_MAC
