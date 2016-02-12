@@ -119,10 +119,12 @@ const CGSize FIXED_SIZE = {568, 384};
 
 @synthesize window=window_, navController=navController_;
 
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
 	return UIInterfaceOrientationMaskAll;
 }
+#endif
 
 static CGFloat
 FindPOTScale(CGFloat size, CGFloat fixedSize)
@@ -176,8 +178,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	}
 	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
-	
-	director.wantsFullScreenLayout = YES;
 	
 	// Display FSP and SPF
 	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
@@ -263,7 +263,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // iOS8 hack around orientation bug
 -(void)forceOrientation
 {
-#if __CC_PLATFORM_IOS && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+#if __CC_PLATFORM_IOS && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0 && !defined(__TV_OS_VERSION_MAX_ALLOWED)
     if([navController_.screenOrientation isEqual:CCScreenOrientationAll])
     {
         [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationUnknown];
