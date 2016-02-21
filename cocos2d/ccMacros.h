@@ -54,6 +54,12 @@
 #define __CC_METAL_SUPPORTED_AND_ENABLED 0
 #endif
 
+// Android legacy
+#if __CC_PLATFORM_IOS
+#define CCTouch UITouch
+#define CCTouchEvent UIEvent
+#endif
+
 /*
  * if COCOS2D_DEBUG is not defined, or if it is 0 then
  *	all CCLOGXXX macros will be disabled

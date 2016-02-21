@@ -26,8 +26,7 @@
 #import "CCControlSubclass.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
-#import "CCTouch.h"
-#import "CCTouchEvent.h"
+#import "UITouch+CC.h"
 
 #if __CC_PLATFORM_IOS
 

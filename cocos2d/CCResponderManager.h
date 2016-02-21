@@ -31,10 +31,7 @@
 // TODO: Grab mouse and touch by implementing onPressed, onReleased, onClicked
 
 #import <Foundation/Foundation.h>
-
-#import "CCTouch.h"
-#import "CCTouchEvent.h"
-
+#import "ccMacros.h"
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 
 #import <UIKit/UIKit.h>

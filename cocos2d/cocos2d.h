@@ -77,6 +77,7 @@
 #import "CCTransition.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
+#import "UITouch+CC.h"
 
 // Layouts
 #import "CCLayout.h"

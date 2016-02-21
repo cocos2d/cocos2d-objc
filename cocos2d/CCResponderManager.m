@@ -32,12 +32,11 @@
 #import "CCDirector.h"
 #import "CCDirectorMac.h"
 #import "CCScene.h"
-#import "CCTouch.h"
 
 // -----------------------------------------------------------------
 #pragma mark -
 // -----------------------------------------------------------------
-
+@class CCGLView;
 @implementation CCRunningResponder
 
 @end

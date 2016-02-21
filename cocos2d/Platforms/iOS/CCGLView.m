@@ -77,8 +77,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
 #import "CCScene.h"
-#import "CCTouch.h"
-#import "CCTouchEvent.h"
 
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
@@ -152,7 +150,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 @end
 
 @implementation CCGLView {
-	CCTouchEvent* _touchEvent;
 	NSMutableArray *_fences;
 	
 	EAGLContext *_context;
@@ -235,8 +232,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
          */
         self.multipleTouchEnabled = YES;
 #endif
-
-        _touchEvent = [[CCTouchEvent alloc] init];
 	}
 
 	return self;
@@ -484,31 +479,23 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _touchEvent.timestamp = event.timestamp;
-    [_touchEvent updateTouchesBegan:touches];
-    [[CCDirector sharedDirector].responderManager touchesBegan:_touchEvent.currentTouches withEvent:_touchEvent];
+    [[CCDirector sharedDirector].responderManager touchesBegan:touches withEvent:event];
     
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _touchEvent.timestamp = event.timestamp;
-    [_touchEvent updateTouchesMoved:touches];
-    [[CCDirector sharedDirector].responderManager touchesMoved:_touchEvent.currentTouches withEvent:_touchEvent];
+    [[CCDirector sharedDirector].responderManager touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _touchEvent.timestamp = event.timestamp;
-    [_touchEvent updateTouchesEnded:touches];
-    [[CCDirector sharedDirector].responderManager touchesEnded:_touchEvent.currentTouches withEvent:_touchEvent];
+    [[CCDirector sharedDirector].responderManager touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _touchEvent.timestamp = event.timestamp;
-    [_touchEvent updateTouchesCancelled:touches];
-    [[CCDirector sharedDirector].responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
+    [[CCDirector sharedDirector].responderManager touchesCancelled:touches withEvent:event];
 }
  
 @end

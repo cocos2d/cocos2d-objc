@@ -29,8 +29,7 @@
 #import "CCActionEase.h"
 #import "CCActionInstant.h"
 #import "CCResponderManager.h"
-#import "CCTouch.h"
-
+#import "UITouch+CC.h"
 
 #if __CC_PLATFORM_IOS
 
