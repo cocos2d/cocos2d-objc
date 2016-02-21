@@ -30,6 +30,7 @@
 #import "CCProgressNode.h"
 #import "CCActionEase.h"
 #import "CCActionTween.h"
+#import "cocos2d.h"
 
 @interface CCPotentiometer () 
 @property (nonatomic, strong) CCSprite        *thumbSprite;
