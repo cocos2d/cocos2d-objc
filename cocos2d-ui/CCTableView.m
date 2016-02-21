@@ -38,7 +38,7 @@
 
 @interface CCTableViewCellHolder : NSObject
 
-@property (nonatomic,strong) CCTableViewCell* cell;
+@property (nonatomic,strong) id<CCTableViewCellProtocol> cell;
 
 @end
 
@@ -67,11 +67,12 @@
 
 @interface CCTableViewCell (Helper)
 
-@property (nonatomic,assign) NSUInteger index;
-
 @end
 
+
 @implementation CCTableViewCell
+
+@synthesize index;
 
 - (id) init
 {
@@ -92,16 +93,6 @@
 - (void) pressedCell:(id)sender
 {
     [(CCTableView*)(self.parent.parent) selectedRow:self.index];
-}
-
-- (void) setIndex:(NSUInteger)index
-{
-    _index = index;
-}
-
-- (NSUInteger) index
-{
-    return _index;
 }
 
 @end
@@ -244,7 +235,7 @@
             CCTableViewCellHolder* holder = [_rows objectAtIndex:oldIdx];
             if (holder)
             {
-                [self.contentNode removeChild:holder.cell cleanup:YES];
+                [self.contentNode removeChild:(CCNode*)holder.cell cleanup:YES];
                 holder.cell = NULL;
             }
         }
@@ -255,18 +246,23 @@
         if (!NSLocationInRange(newIdx, _currentlyVisibleRange))
         {
             CCTableViewCellHolder* holder = [_rows objectAtIndex:newIdx];
+            CCNode* node;
             if (!holder.cell)
             {
                 holder.cell = [_dataSource tableView:self nodeForRowAtIndex:newIdx];
                 holder.cell.index = newIdx;
-                holder.cell.position = CGPointMake(0, [self locationForCellWithIndex:newIdx]);
-                holder.cell.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
-                holder.cell.anchorPoint = CGPointMake(0, 1);
+                
+                node = (CCNode*)holder.cell;
+                node.position = CGPointMake(0, [self locationForCellWithIndex:newIdx]);
+                node.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
+                node.anchorPoint = CGPointMake(0, 1);
+            } else {
+                node = (CCNode*)holder.cell;
             }
             
             if (holder.cell)
             {
-                [self.contentNode addChild:holder.cell];
+                [self.contentNode addChild:node];
             }
         }
     }
@@ -395,7 +391,7 @@
 	}];
 }
 
-- (void) selectedRow:(NSUInteger) row
+- (void) selectedRow:(NSUInteger)row
 {
     self.selectedRow = row;
     [self triggerAction];
