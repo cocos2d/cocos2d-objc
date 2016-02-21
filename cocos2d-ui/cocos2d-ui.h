@@ -30,6 +30,7 @@
 #import "CCTextField.h"
 #import "CCSlider.h"
 #import "CCProgressNode.h"
+#import "CCPotentiometer.h"
 
 #if CC_CCBREADER
 // CCBReader
