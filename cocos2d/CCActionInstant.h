@@ -369,3 +369,4 @@
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 @end
+
