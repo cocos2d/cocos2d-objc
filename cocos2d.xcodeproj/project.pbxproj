@@ -615,7 +615,6 @@
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
-		50B2C9BF0E109A5900AE9530 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		50BAF3970F33CCD8003F654C /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		50C508C40F7C194400799124 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		50C508C50F7C194400799124 /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
@@ -754,7 +753,6 @@
 		D39FA9C718C1BC6B00441627 /* CCShader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShader_Private.h; sourceTree = "<group>"; };
 		D3C12815199D40AC005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CCShaders.metal; sourceTree = "<group>"; };
 		D3E3752E19CC842A0076CDBB /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRendererSharedTypes.h; sourceTree = "<group>"; };
-		DCF7B34D1A1D426000E0EEAF /* API-Index.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "API-Index.md"; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
@@ -867,10 +865,8 @@
 				E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */,
 				A0707F6215F946E9001C1263 /* LICENSE_CCBReader.txt */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
-				DCF7B34D1A1D426000E0EEAF /* API-Index.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
 				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
-				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				B78AE45917E7AF010028BE0B /* cocos2d-ui */,
