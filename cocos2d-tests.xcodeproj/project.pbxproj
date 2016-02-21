@@ -432,7 +432,6 @@
 		D3763D3F19E734C5006C050D /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 		D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */; };
 		D3763D4119E734C5006C050D /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
-		D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B772F69E1811C8D9005C069B /* CCResponderTest.m */; };
 		D3763D4319E734C5006C050D /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 		D3763D4419E734C5006C050D /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697818186D5200B983FE /* CCTextFieldTest.m */; };
 		D3763D4519E734C5006C050D /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
@@ -2246,7 +2245,6 @@
 				084782141C66669300C3817B /* CCTMXXMLParser.m in Sources */,
 				0847820B1C66669300C3817B /* CCTiledMap.m in Sources */,
 				089949B21C67F40000ECC92C /* CCPackageHelper.m in Sources */,
-				D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */,
 				D3763D4319E734C5006C050D /* CCSprite9SliceTest.m in Sources */,
 				0899497C1C67F2D600ECC92C /* CCParticleBatchNode.m in Sources */,
 				089949821C67F2D600ECC92C /* CCParticleSystem.m in Sources */,
