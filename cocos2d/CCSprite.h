@@ -54,7 +54,12 @@ typedef struct CCSpriteTexCoordSet {
  
  The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol, CCEffectProtocol>
+@interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol
+// A bit ugly, will refactor later
+#if CC_EFFECTS
+, CCEffectProtocol
+#endif
+>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Sprite with an Image File or Sprite Frame Name
