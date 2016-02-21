@@ -43,7 +43,6 @@
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_Private.h"
-#import "CCTouch.h"
 #import "CCRenderDispatch_Private.h"
 
 // support imports
