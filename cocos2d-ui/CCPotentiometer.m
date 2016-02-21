@@ -164,6 +164,7 @@
     
 }
 
+#if __CC_PLATFORM_IOS
 -(void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     
     _previousLocation = [touch locationInNode:self];
@@ -185,6 +186,8 @@
 -(void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     [self touchEnded:touch withEvent:event];
 }
+
+#endif
 
 #pragma mark -
 #pragma mark CCControlPotentiometer Public Methods
