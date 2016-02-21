@@ -29,6 +29,7 @@
 #import "CCTableView.h"
 #import "CCTextField.h"
 #import "CCSlider.h"
+#import "CCProgressNode.h"
 
 #if CC_CCBREADER
 // CCBReader

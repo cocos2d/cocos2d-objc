@@ -55,7 +55,6 @@
 #import "CCActionEase.h"
 #import "CCActionInstant.h"
 #import "CCActionInterval.h"
-#import "CCActionProgressTimer.h"
 #import "CCActionTween.h"
 #import "CCColor.h"
 #import "CCConfiguration.h"

@@ -23,6 +23,18 @@
 /* Begin PBXBuildFile section */
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
+		08A4EB6F1C7A553E00A08923 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB6B1C7A553E00A08923 /* CCActionProgressTimer.h */; };
+		08A4EB701C7A553E00A08923 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB6B1C7A553E00A08923 /* CCActionProgressTimer.h */; };
+		08A4EB711C7A553E00A08923 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB6B1C7A553E00A08923 /* CCActionProgressTimer.h */; };
+		08A4EB721C7A553E00A08923 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */; };
+		08A4EB731C7A553E00A08923 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */; };
+		08A4EB741C7A553E00A08923 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */; };
+		08A4EB751C7A553E00A08923 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */; };
+		08A4EB761C7A553E00A08923 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */; };
+		08A4EB771C7A553E00A08923 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */; };
+		08A4EB781C7A553E00A08923 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */; };
+		08A4EB791C7A553E00A08923 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */; };
+		08A4EB7A1C7A553E00A08923 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */; };
 		08F4AAB01C6E98A1004DAAF7 /* NSValue+CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */; };
 		08F4AAB11C6E98A1004DAAF7 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
 		08F4AAB21C6E98A1004DAAF7 /* CCNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2550DFDEAFF00C013A5 /* CCNode.m */; };
@@ -57,7 +69,6 @@
 		08F4AAD11C6E98A1004DAAF7 /* CCTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E1357210ADEB1B00C9E7FA /* CCTexture.m */; };
 		08F4AAD21C6E98A1004DAAF7 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 503862D911007181005D2C92 /* CCConfiguration.m */; };
 		08F4AAD31C6E98A1004DAAF7 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
-		08F4AAD41C6E98A1004DAAF7 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50150436113300F900A9CA65 /* CCActionProgressTimer.m */; };
 		08F4AAD51C6E98A1004DAAF7 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
 		08F4AAD61C6E98A1004DAAF7 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 		08F4AAD71C6E98A1004DAAF7 /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B0C1995288D003AA81A /* CCNoARC.m */; };
@@ -77,7 +88,6 @@
 		08F4AAE51C6E98A1004DAAF7 /* CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D38058191889AD6000822437 /* CCRenderer.m */; };
 		08F4AAE61C6E98A1004DAAF7 /* CCRendererBasicTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6819C3A7B3009BED7A /* CCRendererBasicTypes.m */; };
 		08F4AAE71C6E98A1004DAAF7 /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A039EBFE155C686B0061EE37 /* CCNode+Debug.m */; };
-		08F4AAE81C6E98A1004DAAF7 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B791E85C182074C500DAE1D7 /* CCProgressNode.m */; };
 		08F4AAE91C6E98A1004DAAF7 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BC215BCDCA200E80A92 /* CCDrawNode.m */; };
 		08F4AAEA1C6E98A1004DAAF7 /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DD1819E75700B983FE /* CCLayout.m */; };
 		08F4AAEB1C6E98A1004DAAF7 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
@@ -140,7 +150,6 @@
 		08F4AB271C6E98A1004DAAF7 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B79F905817FE2A2E00908504 /* CCTableView.h */; };
 		08F4AB281C6E98A1004DAAF7 /* CCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357110ADEB1B00C9E7FA /* CCTexture.h */; };
 		08F4AB291C6E98A1004DAAF7 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
-		08F4AB2A1C6E98A1004DAAF7 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
 		08F4AB2B1C6E98A1004DAAF7 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
 		08F4AB2C1C6E98A1004DAAF7 /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D898EF1192CB7500458C29 /* uthash.h */; };
 		08F4AB2D1C6E98A1004DAAF7 /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAC2F1193F8B0007F058D /* utlist.h */; };
@@ -164,7 +173,6 @@
 		08F4AB3F1C6E98A1004DAAF7 /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28F14C1DB7D0005BBF2 /* CCGLView.h */; };
 		08F4AB401C6E98A1004DAAF7 /* NSValue+CCRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = D34CAD5F19C3A0B5009BED7A /* NSValue+CCRenderer.h */; };
 		08F4AB411C6E98A1004DAAF7 /* CCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E29114C1DB7D0005BBF2 /* CCWindow.h */; };
-		08F4AB421C6E98A1004DAAF7 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85B182074C500DAE1D7 /* CCProgressNode.h */; };
 		08F4AB431C6E98A1004DAAF7 /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DC1819E75700B983FE /* CCLayout.h */; };
 		08F4AB441C6E98A1004DAAF7 /* NSThread+performBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */; };
 		08F4AB451C6E98A1004DAAF7 /* CCMetalView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3903B12199528B6003AA81A /* CCMetalView.h */; };
@@ -197,8 +205,6 @@
 		08F4AB631C6E98A1004DAAF7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		0EFC792D1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */; };
 		0EFC792E1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */; };
-		5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
-		5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50150436113300F900A9CA65 /* CCActionProgressTimer.m */; };
 		5018F2690DFDEAFF00C013A5 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
 		5018F26A0DFDEAFF00C013A5 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
 		5018F26B0DFDEAFF00C013A5 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CCNode.h */; };
@@ -287,7 +293,6 @@
 		7A5946AA19E372F200F65F90 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2600DFDEAFF00C013A5 /* CCScene.h */; };
 		7A5946AC19E372F200F65F90 /* CCTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DC4E0718055DCC00C280A6 /* CCTransition.h */; };
 		7A5946B919E372F300F65F90 /* CCNodeColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */; };
-		7A5946BF19E372F400F65F90 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85B182074C500DAE1D7 /* CCProgressNode.h */; };
 		7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AA410291280003ACFE7 /* CCRenderTexture.h */; };
 		7A5946C319E372F400F65F90 /* CCProgressNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */; };
 		7A5946C419E372F400F65F90 /* CCRenderTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B840C31909F447008063EA /* CCRenderTexture_Private.h */; };
@@ -298,7 +303,6 @@
 		7A5946E419E372F800F65F90 /* CCActionInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25A0DFDEAFF00C013A5 /* CCActionInterval.h */; };
 		7A5946E619E372F900F65F90 /* CCActionEase.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F7B2760F28DE7C00057537 /* CCActionEase.h */; };
 		7A5946E819E372F900F65F90 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */; };
-		7A5946EA19E372F900F65F90 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
 		7A5946EC19E372FA00F65F90 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
 		7A5946EE19E372FA00F65F90 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		7A5946F019E372FA00F65F90 /* CCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357110ADEB1B00C9E7FA /* CCTexture.h */; };
@@ -378,7 +382,6 @@
 		7A5947F619E375A200F65F90 /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2610DFDEAFF00C013A5 /* CCScene.m */; };
 		7A5947F819E375A200F65F90 /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DC4E0818055DCC00C280A6 /* CCTransition.m */; };
 		7A59480519E375A300F65F90 /* CCNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */; };
-		7A59480B19E375A400F65F90 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B791E85C182074C500DAE1D7 /* CCProgressNode.m */; };
 		7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50316AA510291280003ACFE7 /* CCRenderTexture.m */; };
 		7A59482A19E375A700F65F90 /* CCActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* CCActionManager.m */; };
 		7A59482C19E375A800F65F90 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
@@ -386,7 +389,6 @@
 		7A59483019E375A800F65F90 /* CCActionInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */; };
 		7A59483219E375A800F65F90 /* CCActionEase.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F7B2770F28DE7C00057537 /* CCActionEase.m */; };
 		7A59483419E375A900F65F90 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */; };
-		7A59483619E375A900F65F90 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50150436113300F900A9CA65 /* CCActionProgressTimer.m */; };
 		7A59483819E375A900F65F90 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
 		7A59483A19E375A900F65F90 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		7A59483C19E375A900F65F90 /* CCTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E1357210ADEB1B00C9E7FA /* CCTexture.m */; };
@@ -469,7 +471,6 @@
 		B78AE46C17E7AF6C0028BE0B /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */; };
 		B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE46B17E7AF6C0028BE0B /* UITouch+CC.m */; };
 		B791E85D182074C500DAE1D7 /* CCProgressNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */; };
-		B791E85E182074C500DAE1D7 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85B182074C500DAE1D7 /* CCProgressNode.h */; };
 		B798D13D181F2E4500E7BFCD /* CCNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D13C181F2E4500E7BFCD /* CCNode_Private.h */; };
 		B798D143181F469100E7BFCD /* CCLabelBMFont_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */; };
 		B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1441820305400E7BFCD /* CCSprite_Private.h */; };
@@ -508,7 +509,6 @@
 		D34CAD6719C3A7A5009BED7A /* CCRendererBasicTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D34CAD6519C3A7A5009BED7A /* CCRendererBasicTypes.h */; };
 		D34CAD6C19C3AA10009BED7A /* CCRendererBasicTypes_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D34CAD6A19C3AA10009BED7A /* CCRendererBasicTypes_Private.h */; };
 		D369415F19CFDF170092A0BD /* CCRendererBasicTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6819C3A7B3009BED7A /* CCRendererBasicTypes.m */; };
-		D36D31B718BD3CAA00E45F08 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B791E85C182074C500DAE1D7 /* CCProgressNode.m */; };
 		D37D197B18B6666E00B23FDE /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 		D380581A1889AD6000822437 /* CCRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = D38058181889AD6000822437 /* CCRenderer.h */; };
 		D380581B1889AD6000822437 /* CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D38058191889AD6000822437 /* CCRenderer.m */; };
@@ -559,6 +559,10 @@
 /* Begin PBXFileReference section */
 		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
+		08A4EB6B1C7A553E00A08923 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActionProgressTimer.h; path = "cocos2d-ui/CCActionProgressTimer.h"; sourceTree = "<group>"; };
+		08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActionProgressTimer.m; path = "cocos2d-ui/CCActionProgressTimer.m"; sourceTree = "<group>"; };
+		08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCProgressNode.h; path = "cocos2d-ui/CCProgressNode.h"; sourceTree = "<group>"; };
+		08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCProgressNode.m; path = "cocos2d-ui/CCProgressNode.m"; sourceTree = "<group>"; };
 		08F4AB671C6E98A1004DAAF7 /* libcocos2d-tvos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-tvos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E0094961B3ACC3E006EA7FC /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = "<group>"; };
 		0E0094971B3ACC4B006EA7FC /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
@@ -566,8 +570,6 @@
 		1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		50150435113300F900A9CA65 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProgressTimer.h; sourceTree = "<group>"; };
-		50150436113300F900A9CA65 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		5018F2530DFDEAFF00C013A5 /* CCAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAction.m; sourceTree = "<group>"; };
@@ -690,8 +692,6 @@
 		B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
 		B78AE46B17E7AF6C0028BE0B /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
 		B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressNode_Private.h; sourceTree = "<group>"; };
-		B791E85B182074C500DAE1D7 /* CCProgressNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B791E85C182074C500DAE1D7 /* CCProgressNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProgressNode.m; sourceTree = "<group>"; };
 		B798D13C181F2E4500E7BFCD /* CCNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_Private.h; sourceTree = "<group>"; };
 		B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont_Private.h; sourceTree = "<group>"; };
 		B798D1441820305400E7BFCD /* CCSprite_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_Private.h; sourceTree = "<group>"; };
@@ -1070,8 +1070,6 @@
 				50F7B2770F28DE7C00057537 /* CCActionEase.m */,
 				A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */,
 				A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */,
-				50150435113300F900A9CA65 /* CCActionProgressTimer.h */,
-				50150436113300F900A9CA65 /* CCActionProgressTimer.m */,
 				50FBB2D8117613F500150761 /* CCActionTween.h */,
 				50FBB2D9117613F500150761 /* CCActionTween.m */,
 			);
@@ -1118,8 +1116,6 @@
 			children = (
 				5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */,
 				5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */,
-				B791E85B182074C500DAE1D7 /* CCProgressNode.h */,
-				B791E85C182074C500DAE1D7 /* CCProgressNode.m */,
 				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
 				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
 				B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */,
@@ -1192,6 +1188,10 @@
 			children = (
 				571CD01A19649E03003D460C /* Platform */,
 				B7C6237917EA7D8600928F91 /* cocos2d-ui.h */,
+				08A4EB6B1C7A553E00A08923 /* CCActionProgressTimer.h */,
+				08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */,
+				08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */,
+				08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */,
 				B78AE45C17E7AF1C0028BE0B /* CCControl.h */,
 				B750162218124B6000708A2F /* CCControlSubclass.h */,
 				B78AE45D17E7AF1C0028BE0B /* CCControl.m */,
@@ -1342,6 +1342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08F4AAFD1C6E98A1004DAAF7 /* CCAction.h in Headers */,
+				08A4EB711C7A553E00A08923 /* CCActionProgressTimer.h in Headers */,
 				08F4AAFE1C6E98A1004DAAF7 /* CCNode.h in Headers */,
 				08F4AAFF1C6E98A1004DAAF7 /* CCDirector.h in Headers */,
 				08F4AB001C6E98A1004DAAF7 /* CCActionInstant.h in Headers */,
@@ -1385,9 +1386,9 @@
 				08F4AB271C6E98A1004DAAF7 /* CCTableView.h in Headers */,
 				08F4AB281C6E98A1004DAAF7 /* CCTexture.h in Headers */,
 				08F4AB291C6E98A1004DAAF7 /* CCProfiling.h in Headers */,
-				08F4AB2A1C6E98A1004DAAF7 /* CCActionProgressTimer.h in Headers */,
 				08F4AB2B1C6E98A1004DAAF7 /* CCActionTween.h in Headers */,
 				08F4AB2C1C6E98A1004DAAF7 /* uthash.h in Headers */,
+				08A4EB771C7A553E00A08923 /* CCProgressNode.h in Headers */,
 				08F4AB2D1C6E98A1004DAAF7 /* utlist.h in Headers */,
 				08F4AB2E1C6E98A1004DAAF7 /* CCSpriteBatchNode.h in Headers */,
 				08F4AB2F1C6E98A1004DAAF7 /* ccUtils.h in Headers */,
@@ -1409,7 +1410,6 @@
 				08F4AB3F1C6E98A1004DAAF7 /* CCGLView.h in Headers */,
 				08F4AB401C6E98A1004DAAF7 /* NSValue+CCRenderer.h in Headers */,
 				08F4AB411C6E98A1004DAAF7 /* CCWindow.h in Headers */,
-				08F4AB421C6E98A1004DAAF7 /* CCProgressNode.h in Headers */,
 				08F4AB431C6E98A1004DAAF7 /* CCLayout.h in Headers */,
 				08F4AB441C6E98A1004DAAF7 /* NSThread+performBlock.h in Headers */,
 				08F4AB451C6E98A1004DAAF7 /* CCMetalView.h in Headers */,
@@ -1437,6 +1437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5018F2690DFDEAFF00C013A5 /* CCAction.h in Headers */,
+				08A4EB6F1C7A553E00A08923 /* CCActionProgressTimer.h in Headers */,
 				5018F26B0DFDEAFF00C013A5 /* CCNode.h in Headers */,
 				5018F26D0DFDEAFF00C013A5 /* CCDirector.h in Headers */,
 				5018F26F0DFDEAFF00C013A5 /* CCActionInstant.h in Headers */,
@@ -1480,9 +1481,9 @@
 				B79F905A17FE2A2E00908504 /* CCTableView.h in Headers */,
 				50E1357510ADEB1B00C9E7FA /* CCTexture.h in Headers */,
 				0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */,
-				5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */,
 				50FBB2DA117613F500150761 /* CCActionTween.h in Headers */,
 				50D898F31192CB7500458C29 /* uthash.h in Headers */,
+				08A4EB751C7A553E00A08923 /* CCProgressNode.h in Headers */,
 				508EAC311193F8B0007F058D /* utlist.h in Headers */,
 				E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */,
 				E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */,
@@ -1504,7 +1505,6 @@
 				A046E29714C1DB7D0005BBF2 /* CCGLView.h in Headers */,
 				D34CAD6119C3A0B5009BED7A /* NSValue+CCRenderer.h in Headers */,
 				A046E29914C1DB7E0005BBF2 /* CCWindow.h in Headers */,
-				B791E85E182074C500DAE1D7 /* CCProgressNode.h in Headers */,
 				B7EE69E01819E75700B983FE /* CCLayout.h in Headers */,
 				A0C87D1A14F9A3A100C0E8B2 /* NSThread+performBlock.h in Headers */,
 				D3903B14199528B6003AA81A /* CCMetalView.h in Headers */,
@@ -1535,6 +1535,7 @@
 				7A59467019E372EE00F65F90 /* CCNode+Debug.h in Headers */,
 				7A59467219E372EF00F65F90 /* CCNode_Private.h in Headers */,
 				7A59467319E372EF00F65F90 /* CCLayout.h in Headers */,
+				08A4EB701C7A553E00A08923 /* CCActionProgressTimer.h in Headers */,
 				7A59467519E372EF00F65F90 /* CCLayoutBox.h in Headers */,
 				7A59467719E372EF00F65F90 /* CCDrawNode.h in Headers */,
 				7A59467919E372EF00F65F90 /* CCLabelBMFont.h in Headers */,
@@ -1552,7 +1553,6 @@
 				7A5946AA19E372F200F65F90 /* CCScene.h in Headers */,
 				7A5946AC19E372F200F65F90 /* CCTransition.h in Headers */,
 				7A5946B919E372F300F65F90 /* CCNodeColor.h in Headers */,
-				7A5946BF19E372F400F65F90 /* CCProgressNode.h in Headers */,
 				7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */,
 				7A5946C319E372F400F65F90 /* CCProgressNode_Private.h in Headers */,
 				7A5946C419E372F400F65F90 /* CCRenderTexture_Private.h in Headers */,
@@ -1563,7 +1563,6 @@
 				7A5946E419E372F800F65F90 /* CCActionInterval.h in Headers */,
 				7A5946E619E372F900F65F90 /* CCActionEase.h in Headers */,
 				7A5946E819E372F900F65F90 /* CCActionCatmullRom.h in Headers */,
-				7A5946EA19E372F900F65F90 /* CCActionProgressTimer.h in Headers */,
 				7A5946EC19E372FA00F65F90 /* CCActionTween.h in Headers */,
 				7A5946EE19E372FA00F65F90 /* CCTexturePVR.h in Headers */,
 				7A5946F019E372FA00F65F90 /* CCTexture.h in Headers */,
@@ -1621,6 +1620,7 @@
 				7A59477B19E3731E00F65F90 /* CCControlSubclass.h in Headers */,
 				7A59477D19E3731F00F65F90 /* CCButton.h in Headers */,
 				7A59477F19E3731F00F65F90 /* CCTableView.h in Headers */,
+				08A4EB761C7A553E00A08923 /* CCProgressNode.h in Headers */,
 				7A59478119E3732000F65F90 /* CCScrollView.h in Headers */,
 				7A59478319E3732100F65F90 /* CCControlTextureFactory.h in Headers */,
 				7A59478519E3732100F65F90 /* CCTextField.h in Headers */,
@@ -1785,6 +1785,7 @@
 				08F4AAB11C6E98A1004DAAF7 /* CCAction.m in Sources */,
 				08F4AAB21C6E98A1004DAAF7 /* CCNode.m in Sources */,
 				08F4AAB31C6E98A1004DAAF7 /* CCDirector.m in Sources */,
+				08A4EB741C7A553E00A08923 /* CCActionProgressTimer.m in Sources */,
 				08F4AAB41C6E98A1004DAAF7 /* CCActionInstant.m in Sources */,
 				08F4AAB51C6E98A1004DAAF7 /* CCActionInterval.m in Sources */,
 				08F4AAB71C6E98A1004DAAF7 /* CCLabelTTF.m in Sources */,
@@ -1815,7 +1816,6 @@
 				08F4AAD11C6E98A1004DAAF7 /* CCTexture.m in Sources */,
 				08F4AAD21C6E98A1004DAAF7 /* CCConfiguration.m in Sources */,
 				08F4AAD31C6E98A1004DAAF7 /* CCProfiling.m in Sources */,
-				08F4AAD41C6E98A1004DAAF7 /* CCActionProgressTimer.m in Sources */,
 				08F4AAD51C6E98A1004DAAF7 /* CCActionTween.m in Sources */,
 				08F4AAD61C6E98A1004DAAF7 /* CCSpriteBatchNode.m in Sources */,
 				08F4AAD71C6E98A1004DAAF7 /* CCNoARC.m in Sources */,
@@ -1835,7 +1835,6 @@
 				08F4AAE51C6E98A1004DAAF7 /* CCRenderer.m in Sources */,
 				08F4AAE61C6E98A1004DAAF7 /* CCRendererBasicTypes.m in Sources */,
 				08F4AAE71C6E98A1004DAAF7 /* CCNode+Debug.m in Sources */,
-				08F4AAE81C6E98A1004DAAF7 /* CCProgressNode.m in Sources */,
 				08F4AAE91C6E98A1004DAAF7 /* CCDrawNode.m in Sources */,
 				08F4AAEA1C6E98A1004DAAF7 /* CCLayout.m in Sources */,
 				08F4AAEB1C6E98A1004DAAF7 /* ccFPSImages.m in Sources */,
@@ -1850,6 +1849,7 @@
 				08F4AAF51C6E98A1004DAAF7 /* CCButton.m in Sources */,
 				08F4AAF61C6E98A1004DAAF7 /* CCControl.m in Sources */,
 				08F4AAF71C6E98A1004DAAF7 /* CCControlTextureFactory.m in Sources */,
+				08A4EB7A1C7A553E00A08923 /* CCProgressNode.m in Sources */,
 				08F4AAF81C6E98A1004DAAF7 /* CCCache.m in Sources */,
 				08F4AAF91C6E98A1004DAAF7 /* CCRendererGLSupport.m in Sources */,
 				08F4AAFA1C6E98A1004DAAF7 /* CCScrollView.m in Sources */,
@@ -1865,6 +1865,7 @@
 				5018F26A0DFDEAFF00C013A5 /* CCAction.m in Sources */,
 				5018F26C0DFDEAFF00C013A5 /* CCNode.m in Sources */,
 				5018F26E0DFDEAFF00C013A5 /* CCDirector.m in Sources */,
+				08A4EB721C7A553E00A08923 /* CCActionProgressTimer.m in Sources */,
 				5018F2700DFDEAFF00C013A5 /* CCActionInstant.m in Sources */,
 				5018F2720DFDEAFF00C013A5 /* CCActionInterval.m in Sources */,
 				5018F2740DFDEAFF00C013A5 /* CCLabelTTF.m in Sources */,
@@ -1895,7 +1896,6 @@
 				50E1357610ADEB1B00C9E7FA /* CCTexture.m in Sources */,
 				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
 				0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */,
-				5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */,
 				50FBB2DB117613F500150761 /* CCActionTween.m in Sources */,
 				D37D197B18B6666E00B23FDE /* CCSpriteBatchNode.m in Sources */,
 				D3903B0D1995288D003AA81A /* CCNoARC.m in Sources */,
@@ -1915,7 +1915,6 @@
 				D380581B1889AD6000822437 /* CCRenderer.m in Sources */,
 				D369415F19CFDF170092A0BD /* CCRendererBasicTypes.m in Sources */,
 				A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */,
-				D36D31B718BD3CAA00E45F08 /* CCProgressNode.m in Sources */,
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
 				B7EE69E11819E75700B983FE /* CCLayout.m in Sources */,
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
@@ -1930,6 +1929,7 @@
 				B78AE46317E7AF1C0028BE0B /* CCButton.m in Sources */,
 				B78AE46517E7AF1C0028BE0B /* CCControl.m in Sources */,
 				B78AE46717E7AF1C0028BE0B /* CCControlTextureFactory.m in Sources */,
+				08A4EB781C7A553E00A08923 /* CCProgressNode.m in Sources */,
 				D38058211889CE7700822437 /* CCCache.m in Sources */,
 				0EFC792D1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */,
 				B78AE46917E7AF1C0028BE0B /* CCScrollView.m in Sources */,
@@ -1945,6 +1945,7 @@
 				7A5947BC19E3759C00F65F90 /* CCNode+Debug.m in Sources */,
 				7A5947BF19E3759C00F65F90 /* CCLayout.m in Sources */,
 				7A5947C119E3759C00F65F90 /* CCLayoutBox.m in Sources */,
+				08A4EB731C7A553E00A08923 /* CCActionProgressTimer.m in Sources */,
 				7A5947C319E3759D00F65F90 /* CCDrawNode.m in Sources */,
 				7A5947C519E3759D00F65F90 /* CCLabelBMFont.m in Sources */,
 				7A5947C719E3759D00F65F90 /* CCLabelTTF.m in Sources */,
@@ -1960,7 +1961,6 @@
 				7A5947F619E375A200F65F90 /* CCScene.m in Sources */,
 				7A5947F819E375A200F65F90 /* CCTransition.m in Sources */,
 				7A59480519E375A300F65F90 /* CCNodeColor.m in Sources */,
-				7A59480B19E375A400F65F90 /* CCProgressNode.m in Sources */,
 				7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */,
 				0EFC792E1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */,
 				7A59482A19E375A700F65F90 /* CCActionManager.m in Sources */,
@@ -1969,7 +1969,6 @@
 				7A59483019E375A800F65F90 /* CCActionInterval.m in Sources */,
 				7A59483219E375A800F65F90 /* CCActionEase.m in Sources */,
 				7A59483419E375A900F65F90 /* CCActionCatmullRom.m in Sources */,
-				7A59483619E375A900F65F90 /* CCActionProgressTimer.m in Sources */,
 				7A59483819E375A900F65F90 /* CCActionTween.m in Sources */,
 				7A59483A19E375A900F65F90 /* CCTexturePVR.m in Sources */,
 				7A59483C19E375A900F65F90 /* CCTexture.m in Sources */,
@@ -2010,6 +2009,7 @@
 				7A5948C719E375BC00F65F90 /* CCControl.m in Sources */,
 				7A5948C919E375BD00F65F90 /* CCButton.m in Sources */,
 				7A5948CB19E375BD00F65F90 /* CCTableView.m in Sources */,
+				08A4EB791C7A553E00A08923 /* CCProgressNode.m in Sources */,
 				7A5948CD19E375BD00F65F90 /* CCScrollView.m in Sources */,
 				7A5948CF19E375BE00F65F90 /* CCControlTextureFactory.m in Sources */,
 				7A5948D119E375BE00F65F90 /* CCTextField.m in Sources */,
