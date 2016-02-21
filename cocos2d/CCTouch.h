@@ -8,12 +8,7 @@
 
 #import "ccMacros.h"
 
-#if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
-#define PlatformTouch UITouch
-#else
-#define PlatformTouch NSObject
-#endif
 
 @class CCGLView;
 @class CCNode;
@@ -63,10 +58,10 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
  PlatformTouch is equivalent to UITouch on iOS and NSObject on OS X.
  @since v3.2 and later
 */
-@property (nonatomic, strong) PlatformTouch* uiTouch;
+@property (nonatomic, strong) UITouch* uiTouch;
 
-- (instancetype)initWithPlatformTouch:(PlatformTouch*)touch;
-+ (instancetype)touchWithPlatformTouch:(PlatformTouch*)touch;
+- (instancetype)initWithUITouch:(UITouch*)touch;
++ (instancetype)touchWithUITouch:(UITouch*)touch;
 
 /** @name Convert Touch Location to Node Coordinate System */
 

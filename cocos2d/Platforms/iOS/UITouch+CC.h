@@ -31,7 +31,7 @@
 #import "cocos2d.h"
 #import <UIKit/UIKit.h>
 
-@interface PlatformTouch (CC)
+@interface UITouch (CC)
 
 - (CGPoint) locationInNode:(CCNode*) node;
 - (CGPoint) locationInWorld;

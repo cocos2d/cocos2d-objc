@@ -31,7 +31,7 @@
         _deadTouches = [[NSMutableSet alloc] init];
         for(int i = 0; i < 10; i++)
         {
-            [_deadTouches addObject:[CCTouch touchWithPlatformTouch:nil]];
+            [_deadTouches addObject:[CCTouch touchWithUITouch:nil]];
         }
         
         _allTouches = [[NSMutableDictionary alloc] init];
@@ -47,7 +47,7 @@
     [_currentTouches removeAllObjects];
 
     // Began touches - move touches from dead pool to allTouches
-    for(PlatformTouch* touch in touches)
+    for(UITouch* touch in touches)
     {
         CCTouch* ccTouch = [_deadTouches anyObject];
         ccTouch.uiTouch = touch;
@@ -58,7 +58,7 @@
     }
     
     // Set currentTouches
-    for(PlatformTouch* touch in touches)
+    for(UITouch* touch in touches)
     {
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
@@ -75,7 +75,7 @@
     [_currentTouches removeAllObjects];
     
     // Set currentTouches
-    for(PlatformTouch* touch in touches)
+    for(UITouch* touch in touches)
     {
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
@@ -94,7 +94,7 @@
     NSMutableArray* keys = [[NSMutableArray alloc] init];
     
     // Set currentTouches
-    for(PlatformTouch* touch in touches)
+    for(UITouch* touch in touches)
     {
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
@@ -109,7 +109,7 @@
     
     
     // Ended touches - remove touches from allTouches and place them back into the deadpool
-    NSArray* deadTouches = [_allTouches objectsForKeys:keys notFoundMarker:[CCTouch touchWithPlatformTouch:nil]];
+    NSArray* deadTouches = [_allTouches objectsForKeys:keys notFoundMarker:[CCTouch touchWithUITouch:nil]];
     [_deadTouches addObjectsFromArray:deadTouches];
     [_allTouches removeObjectsForKeys:keys];
 }
@@ -121,7 +121,7 @@
     NSMutableArray* keys = [[NSMutableArray alloc] init];
     
     // Set currentTouches
-    for(PlatformTouch* touch in touches)
+    for(UITouch* touch in touches)
     {
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
@@ -136,7 +136,7 @@
     
     
     // Ended touches - remove touches from allTouches and place them back into the deadpool
-    NSArray* deadTouches = [_allTouches objectsForKeys:keys notFoundMarker:[CCTouch touchWithPlatformTouch:nil]];
+    NSArray* deadTouches = [_allTouches objectsForKeys:keys notFoundMarker:[CCTouch touchWithUITouch:nil]];
     [_deadTouches addObjectsFromArray:deadTouches];
     [_allTouches removeObjectsForKeys:keys];
 }

@@ -12,7 +12,7 @@
 
 @implementation CCTouch
 
-- (instancetype)initWithPlatformTouch:(PlatformTouch*)touch
+- (instancetype)initWithUITouch:(UITouch*)touch
 {
     if((self = [super init]))
     {
@@ -24,7 +24,7 @@
     return self;
 }
 
-+ (instancetype)touchWithPlatformTouch:(PlatformTouch*)touch
++ (instancetype)touchWithUITouch:(UITouch*)touch
 {
     return [[self alloc] initWithPlatformTouch:touch];
 }
