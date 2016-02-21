@@ -572,8 +572,6 @@
 		08A4EB7B1C7A563900A08923 /* CCPotentiometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPotentiometer.h; path = "cocos2d-ui/CCPotentiometer.h"; sourceTree = "<group>"; };
 		08A4EB7C1C7A563900A08923 /* CCPotentiometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPotentiometer.m; path = "cocos2d-ui/CCPotentiometer.m"; sourceTree = "<group>"; };
 		08F4AB671C6E98A1004DAAF7 /* libcocos2d-tvos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-tvos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E0094961B3ACC3E006EA7FC /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = "<group>"; };
-		0E0094971B3ACC4B006EA7FC /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
 		0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRendererGLSupport.m; sourceTree = "<group>"; };
 		1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -849,15 +847,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E0094951B3ACC24006EA7FC /* Installer */ = {
-			isa = PBXGroup;
-			children = (
-				0E0094961B3ACC3E006EA7FC /* install.sh */,
-				0E0094971B3ACC4B006EA7FC /* templates */,
-			);
-			name = Installer;
-			sourceTree = "<group>";
-		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -872,7 +861,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				0E0094951B3ACC24006EA7FC /* Installer */,
 				E0BC7D711342CC58001B4DCC /* LICENSE_cocos2d.txt */,
 				E0BC7D6E1342CC58001B4DCC /* LICENSE_artwork.txt */,
 				E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */,
