@@ -572,5 +572,14 @@ FlipY(GLKMatrix4 projection)
     _contentSizeChanged = YES;
 }
 
+// See issue #1271
+-(void)setShader:(CCShader *)shader {
+    self.sprite.shader = shader;
+}
+
+-(CCShader *)shader
+{
+    return self.sprite.shader;
+}
 @end
 
