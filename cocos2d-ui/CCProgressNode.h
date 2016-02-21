@@ -26,6 +26,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CCSprite.h"
+#import "CCActionProgressTimer.h"
 
 /** Progress Node type used by CCProgressNode. */
 typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
