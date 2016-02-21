@@ -35,6 +35,12 @@
 		08A4EB781C7A553E00A08923 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */; };
 		08A4EB791C7A553E00A08923 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */; };
 		08A4EB7A1C7A553E00A08923 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */; };
+		08A4EB7D1C7A563900A08923 /* CCPotentiometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB7B1C7A563900A08923 /* CCPotentiometer.h */; };
+		08A4EB7E1C7A563900A08923 /* CCPotentiometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB7B1C7A563900A08923 /* CCPotentiometer.h */; };
+		08A4EB7F1C7A563900A08923 /* CCPotentiometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A4EB7B1C7A563900A08923 /* CCPotentiometer.h */; };
+		08A4EB801C7A563900A08923 /* CCPotentiometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB7C1C7A563900A08923 /* CCPotentiometer.m */; };
+		08A4EB811C7A563900A08923 /* CCPotentiometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB7C1C7A563900A08923 /* CCPotentiometer.m */; };
+		08A4EB821C7A563900A08923 /* CCPotentiometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4EB7C1C7A563900A08923 /* CCPotentiometer.m */; };
 		08F4AAB01C6E98A1004DAAF7 /* NSValue+CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */; };
 		08F4AAB11C6E98A1004DAAF7 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
 		08F4AAB21C6E98A1004DAAF7 /* CCNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2550DFDEAFF00C013A5 /* CCNode.m */; };
@@ -563,6 +569,8 @@
 		08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActionProgressTimer.m; path = "cocos2d-ui/CCActionProgressTimer.m"; sourceTree = "<group>"; };
 		08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCProgressNode.h; path = "cocos2d-ui/CCProgressNode.h"; sourceTree = "<group>"; };
 		08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCProgressNode.m; path = "cocos2d-ui/CCProgressNode.m"; sourceTree = "<group>"; };
+		08A4EB7B1C7A563900A08923 /* CCPotentiometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPotentiometer.h; path = "cocos2d-ui/CCPotentiometer.h"; sourceTree = "<group>"; };
+		08A4EB7C1C7A563900A08923 /* CCPotentiometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPotentiometer.m; path = "cocos2d-ui/CCPotentiometer.m"; sourceTree = "<group>"; };
 		08F4AB671C6E98A1004DAAF7 /* libcocos2d-tvos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-tvos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E0094961B3ACC3E006EA7FC /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = "<group>"; };
 		0E0094971B3ACC4B006EA7FC /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = templates; sourceTree = "<group>"; };
@@ -1192,6 +1200,8 @@
 				08A4EB6C1C7A553E00A08923 /* CCActionProgressTimer.m */,
 				08A4EB6D1C7A553E00A08923 /* CCProgressNode.h */,
 				08A4EB6E1C7A553E00A08923 /* CCProgressNode.m */,
+				08A4EB7B1C7A563900A08923 /* CCPotentiometer.h */,
+				08A4EB7C1C7A563900A08923 /* CCPotentiometer.m */,
 				B78AE45C17E7AF1C0028BE0B /* CCControl.h */,
 				B750162218124B6000708A2F /* CCControlSubclass.h */,
 				B78AE45D17E7AF1C0028BE0B /* CCControl.m */,
@@ -1360,6 +1370,7 @@
 				08F4AB0C1C6E98A1004DAAF7 /* CCPlatformTextField.h in Headers */,
 				08F4AB0D1C6E98A1004DAAF7 /* CCSprite_Private.h in Headers */,
 				08F4AB0E1C6E98A1004DAAF7 /* ccMacros.h in Headers */,
+				08A4EB7F1C7A563900A08923 /* CCPotentiometer.h in Headers */,
 				08F4AB0F1C6E98A1004DAAF7 /* CCNode_Private.h in Headers */,
 				08F4AB101C6E98A1004DAAF7 /* CCSprite.h in Headers */,
 				08F4AB111C6E98A1004DAAF7 /* CCFileUtils.h in Headers */,
@@ -1455,6 +1466,7 @@
 				571CD02819649E03003D460C /* CCPlatformTextField.h in Headers */,
 				B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
+				08A4EB7D1C7A563900A08923 /* CCPotentiometer.h in Headers */,
 				B798D13D181F2E4500E7BFCD /* CCNode_Private.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
@@ -1596,6 +1608,7 @@
 				7A59473719E3730900F65F90 /* UITouch+CC.h in Headers */,
 				7A59473919E3730900F65F90 /* CCDirectorIOS.h in Headers */,
 				7A59473D19E3730A00F65F90 /* CCAppDelegate.h in Headers */,
+				08A4EB7E1C7A563900A08923 /* CCPotentiometer.h in Headers */,
 				7A59474119E3730B00F65F90 /* CCMetalSupport_Private.h in Headers */,
 				7A59474319E3730C00F65F90 /* CCDirectorMac.h in Headers */,
 				7A59474519E3730C00F65F90 /* CCGLView.h in Headers */,
@@ -1800,6 +1813,7 @@
 				08F4AAC01C6E98A1004DAAF7 /* CCActionEase.m in Sources */,
 				08F4AAC11C6E98A1004DAAF7 /* CCPlatformTextField.m in Sources */,
 				08F4AAC21C6E98A1004DAAF7 /* CCSlider.m in Sources */,
+				08A4EB821C7A563900A08923 /* CCPotentiometer.m in Sources */,
 				08F4AAC31C6E98A1004DAAF7 /* CCSprite.m in Sources */,
 				08F4AAC41C6E98A1004DAAF7 /* CCFileUtils.m in Sources */,
 				08F4AAC61C6E98A1004DAAF7 /* CGPointExtension.m in Sources */,
@@ -1880,6 +1894,7 @@
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
 				571CD02919649E03003D460C /* CCPlatformTextField.m in Sources */,
 				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
+				08A4EB801C7A563900A08923 /* CCPotentiometer.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
@@ -1960,6 +1975,7 @@
 				7A5947DB19E3759F00F65F90 /* CCResponderManager.m in Sources */,
 				7A5947F619E375A200F65F90 /* CCScene.m in Sources */,
 				7A5947F819E375A200F65F90 /* CCTransition.m in Sources */,
+				08A4EB811C7A563900A08923 /* CCPotentiometer.m in Sources */,
 				7A59480519E375A300F65F90 /* CCNodeColor.m in Sources */,
 				7A59480D19E375A400F65F90 /* CCRenderTexture.m in Sources */,
 				0EFC792E1B3B0E14008926DD /* CCRendererGLSupport.m in Sources */,
