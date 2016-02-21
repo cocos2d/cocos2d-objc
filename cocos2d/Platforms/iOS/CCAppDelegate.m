@@ -33,8 +33,6 @@
 #import "CCScheduler.h"
 #import "CCGLView.h"
 
-#import "OALSimpleAudio.h"
-
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalView.h"
 #endif

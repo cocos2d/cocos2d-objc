@@ -30,7 +30,6 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 #import <objc/message.h>
-#import "OALSimpleAudio.h"
 
 //
 // InstantAction
