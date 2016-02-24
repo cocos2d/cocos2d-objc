@@ -160,6 +160,7 @@ float ccpAngle(CGPoint a, CGPoint b)
 	return angle;
 }
 
+#if !__CC_PLATFORM_IOS
 @implementation NSValue (CCValue)
 
 + (NSValue *)valueWithCGPoint:(CGPoint)point
@@ -212,4 +213,5 @@ float ccpAngle(CGPoint a, CGPoint b)
 
 @end
 
+#endif
 
