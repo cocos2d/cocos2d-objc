@@ -230,7 +230,9 @@ static NSInteger ccbAnimationManagerID = 0;
         // TODO is this a mild bug?
         // What happens if an easing curve is applied to this?
         return (CCActionInterval *)[CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
-    } else if ([node isKindOfClass:[CCLightNode class]]) {
+    }
+#if CC_LIGHTING
+    else if ([node isKindOfClass:[CCLightNode class]]) {
         if ([name isEqualToString:@"intensity"] ||
             [name isEqualToString:@"specularIntensity"] ||
             [name isEqualToString:@"ambientIntensity"] ||
@@ -244,6 +246,8 @@ static NSInteger ccbAnimationManagerID = 0;
         {
             return [CCBActionTweenColor actionWithDuration:duration key:name from:kf0.value to:kf1.value];
         }
+    }
+#endif
     } else {
         CCLOG(@"CCBReader: Failed to create animation for property: %@", name);
     }
