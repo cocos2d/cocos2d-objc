@@ -36,10 +36,10 @@ NSString *cocos2dVersion()
     
     if ([COCOS2D_BUILD isEqualToString:@"release"])
     {
-        return [NSString stringWithFormat:@"Cocos2D-Swift version %d.%d.%d", major, minor, rev];
+        return [NSString stringWithFormat:@"Cocos2D-ObjC version %d.%d.%d", major, minor, rev];
     }
     else
     {
-        return([[NSString stringWithFormat:@"Cocos2D-Swift version %d.%d.%d-", major, minor, rev] stringByAppendingString:COCOS2D_BUILD]);
+        return([[NSString stringWithFormat:@"Cocos2D-ObjC version %d.%d.%d-", major, minor, rev] stringByAppendingString:COCOS2D_BUILD]);
     }
 }
