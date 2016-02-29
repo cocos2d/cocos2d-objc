@@ -29,7 +29,7 @@
 #import "CCAppDelegate.h"
 #import "CCTexture.h"
 #import "CCFileUtils.h"
-#import "CCDirector_Private.h"
+#import "CCDirector.h"
 #import "CCScheduler.h"
 #import "CCGLView.h"
 

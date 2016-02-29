@@ -7,7 +7,6 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-#import "CCDirector_Private.h"
 
 @interface CCNodeTests : XCTestCase
 

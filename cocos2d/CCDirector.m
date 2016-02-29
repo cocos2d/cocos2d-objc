@@ -64,8 +64,6 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
-#import "CCDirector_Private.h"
-
 #pragma mark -
 #pragma mark Director - global variables (optimization)
 

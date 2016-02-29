@@ -162,6 +162,11 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
     CCActionManager *_actionManagerFixed;
 	
 	NSMutableArray *_rendererPool;
+    
+@protected
+    GLKMatrix4 _projectionMatrix;
+    __weak id<CCDirectorDelegate> _delegate;
+    __weak NSThread *_runningThread;
 }
 
 // Undocumented members (considered private)
@@ -216,6 +221,12 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /// Projection matrix used for rendering.
 /// @see projection
 @property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
+
+/// Rect of the visible screen area in GL coordinates.
+@property(nonatomic, readonly) CGRect viewportRect;
+
+/* Sets the glViewport*/
+-(void) setViewport;
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
@@ -343,6 +354,13 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  */
 -(void) popToRootSceneWithTransition:(CCTransition *)transition;
 
+/* Pops out all scenes from the queue until it reaches `level`.
+ If level is 0, it will end the director.
+ If level is 1, it will pop all scenes until it reaches to root scene.
+ If level is <= than the current stack level, it won't do anything.
+ */
+-(void) popToSceneStackLevel:(NSUInteger)level;
+
 // purposefully undocumented: is the same as calling presentScene:
 -(void) replaceScene: (CCScene*) scene;
 
@@ -365,6 +383,13 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *	@see popScene
  */
 - (void)popSceneWithTransition:(CCTransition *)transition;
+
+- (void)startTransition:(CCTransition *)transition;
+
+/* Draw the scene.
+ This method is called every frame. Don't call it manually.
+ */
+-(void) drawScene;
 
 /** @name Animating the Active Scene */
 
@@ -436,7 +461,53 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** Removes all the cocos2d resources that have been previously loaded and automatically cached, textures for instance. */
 -(void) purgeCachedData;
 
+#pragma mark Internal stuff
+
+/* Whether or not the replaced scene will receive the cleanup message.
+ If the new scene is pushed, then the old scene won't receive the "cleanup" message.
+ If the new scene replaces the old one, the it will receive the "cleanup" message.
+ */
+@property (nonatomic, readonly) BOOL sendCleanupToScene;
+
+/* This object will be visited after the main scene is visited.
+ This object MUST implement the "visit" selector.
+ Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
+ */
+@property (nonatomic, readwrite, strong) id	notificationNode;
+
+/* CCScheduler associated with this director
+ */
+@property (nonatomic,readwrite,strong) CCScheduler *scheduler;
+
+/* CCActionManager associated with this director
+ */
+@property (nonatomic,readwrite,strong) CCActionManager *actionManager;
+
+/* CCFixedActionManager associated with this director
+ */
+@property (nonatomic,readwrite,strong) CCActionManager *actionManagerFixed;
+
+/// XXX: missing description
+-(float) getZEye;
+
+/// Get a renderer object to use for rendering.
+/// This method is thread safe.
+-(CCRenderer *)rendererFromPool;
+
+/// Return a renderer to a pool after rendering.
+/// This method is thread safe.
+-(void)poolRenderer:(CCRenderer *)renderer;
+
+/// Add a block to be called when the GPU finishes rendering a frame.
+/// This is used to pool rendering resources (renderers, buffers, textures, etc) without stalling the GPU pipeline.
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
+
+-(void) createStatsLabel;
+
 @end
+
+// optimization. Should only be used to read it. Never to write it.
+extern NSUInteger __ccNumberOfDraws;
 
 // optimization. Should only be used to read it. Never to write it.
 extern CGFloat	__ccContentScaleFactor;

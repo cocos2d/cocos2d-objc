@@ -53,8 +53,6 @@
 #import "../../Support/CCProfiling.h"
 #endif
 
-#import "CCDirector_Private.h"
-
 #pragma mark -
 #pragma mark Director
 

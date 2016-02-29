@@ -30,7 +30,6 @@
 #import "CCScene.h"
 #import "Support/CGPointExtension.h"
 #import "CCDirector.h"
-#import "CCDirector_Private.h"
 #if CC_LIGHTING
 #import "CCLightCollection.h"
 #endif

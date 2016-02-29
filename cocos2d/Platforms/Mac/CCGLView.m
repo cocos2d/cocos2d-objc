@@ -39,9 +39,6 @@
 #import "../../ccConfig.h"
 #import "../../ccMacros.h"
 
-#import "CCDirector_Private.h"
-
-
 @interface CCGLViewFence : NSObject
 
 /// Is the fence ready to be inserted?
