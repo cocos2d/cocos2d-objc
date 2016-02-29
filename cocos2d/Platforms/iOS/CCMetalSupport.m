@@ -28,7 +28,6 @@
 
 #import "CCMetalView.h"
 #import "CCTexture_Private.h"
-#import "CCShader_Private.h"
 
 @implementation CCMetalContext {
 	id<MTLTexture> _destinationTexture;
