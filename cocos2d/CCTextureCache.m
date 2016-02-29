@@ -45,7 +45,6 @@
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
-#import "CCTexture_Private.h"
 #import "CCRenderer_Private.h"
 
 // needed for CCCallFuncO in Mac-display_link version

@@ -41,7 +41,7 @@
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
 #import "Support/CCFileUtils.h"
-#import "CCTexture_Private.h"
+#import "CCTexture.h"
 
 
 @interface CCSpriteFrame(Proxy)

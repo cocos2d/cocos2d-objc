@@ -38,7 +38,7 @@
 #import "CCShader.h"
 #import "Support/CGPointExtension.h"
 #import "CCTiledMapLayer_Private.h"
-#import "CCTexture_Private.h"
+#import "CCTexture.h"
 // #import "CCMathTypesAndroid.h"
 
 #pragma mark -

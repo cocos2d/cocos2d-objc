@@ -32,8 +32,6 @@
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 
-#import "CCTexture_Private.h"
-
 @implementation CCProgressNode {
 	CCProgressNodeType _type;
 	float _percentage;

@@ -24,7 +24,6 @@
 
 #import "CCRendererBasicTypes.h"
 #import "CCRenderer_Private.h"
-#import "CCTexture_Private.h"
 #import "CCCache.h"
 
 //MARK: Blend Option Keys.

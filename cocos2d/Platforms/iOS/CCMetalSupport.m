@@ -27,7 +27,7 @@
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
 #import "CCMetalView.h"
-#import "CCTexture_Private.h"
+#import "CCTexture.h"
 
 @implementation CCMetalContext {
 	id<MTLTexture> _destinationTexture;

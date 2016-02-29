@@ -27,7 +27,6 @@
 #import "cocos2d.h"
 #import "CCRenderer_Private.h"
 #import "CCCache.h"
-#import "CCTexture_Private.h"
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 

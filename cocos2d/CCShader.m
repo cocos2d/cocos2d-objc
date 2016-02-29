@@ -29,7 +29,6 @@
 #import "Support/CCFileUtils.h"
 #import "Support/uthash.h"
 #import "CCRenderer_Private.h"
-#import "CCTexture_private.h"
 #import "CCDirector.h"
 #import "CCCache.h"
 #import "CCGL.h"

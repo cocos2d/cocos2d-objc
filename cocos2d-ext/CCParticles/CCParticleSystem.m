@@ -47,7 +47,7 @@
 
 #import "CCParticleSystemBase_Private.h"
 #import "CCParticleSystem_Private.h"
-#import "CCTexture_Private.h"
+#import "CCTexture.h"
 
 @implementation CCParticleSystem {
 	GLKVector2 _texCoord1[4];

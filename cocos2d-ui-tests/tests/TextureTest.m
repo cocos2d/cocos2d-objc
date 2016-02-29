@@ -9,7 +9,6 @@
 #import "TestBase.h"
 
 #import "CCTextureCache.h"
-#import "CCTexture_Private.h"
 
 @interface TextureTest : TestBase @end
 
