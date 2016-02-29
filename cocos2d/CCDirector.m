@@ -76,6 +76,71 @@ NSUInteger	__ccNumberOfDraws = 0;
 
 extern NSString * cocos2dVersion(void);
 
+
+
+@interface CCFPSLabel : CCNode<CCTextureProtocol>
+@property(nonatomic, strong) NSString *string;
+@end
+
+static const int CCFPSLabelChars = 12;
+static const float CCFPSLabelItemWidth = 12;
+static const float CCFPSLabelItemHeight = 32;
+
+@implementation CCFPSLabel {
+    CCSpriteVertexes _charVertexes[CCFPSLabelChars];
+}
+
+-(instancetype)initWithString:(NSString *)string texture:(CCTexture *)texture
+{
+    if((self = [super init])){
+        _string = string;
+        
+        self.texture = texture;
+        self.shader = [CCShader positionTextureColorShader];
+        
+        float w = CCFPSLabelItemWidth;
+        float h = CCFPSLabelItemHeight;
+        
+        float tx = CCFPSLabelItemWidth/texture.contentSize.width;
+        float ty = CCFPSLabelItemHeight/texture.contentSize.height;
+        
+        for(int i=0; i<CCFPSLabelChars; i++){
+            float tx0 = i*tx;
+            float tx1 = (i + 1)*tx;
+            _charVertexes[i].bl = (CCVertex){GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx0, 0.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+            _charVertexes[i].br = (CCVertex){GLKVector4Make(   w, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx1, 0.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+            _charVertexes[i].tr = (CCVertex){GLKVector4Make(   w,    h, 0.0f, 1.0f), GLKVector2Make(tx1,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+            _charVertexes[i].tl = (CCVertex){GLKVector4Make(0.0f,    h, 0.0f, 1.0f), GLKVector2Make(tx0,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+        }
+    }
+    
+    return self;
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+    for(int i=0; i<_string.length; i++){
+        int c = [_string characterAtIndex:i];
+        
+        // Skip spaces.
+        if(c == ' ') continue;
+        
+        // Index relative to '.'.
+        c = MAX(0, MIN(CCFPSLabelChars - 1, c - '.'));
+        GLKMatrix4 t = GLKMatrix4Multiply(*transform, GLKMatrix4MakeTranslation(i*CCFPSLabelItemWidth, 0.0f, 0.0f));
+        
+        CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:NSIntegerMax];
+        CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_charVertexes[c].bl, &t));
+        CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_charVertexes[c].br, &t));
+        CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_charVertexes[c].tr, &t));
+        CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_charVertexes[c].tl, &t));
+        CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+        CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+    }
+}
+
+@end
+
 @interface CCScheduler (Private)
 @property(nonatomic, assign) CCTime fixedUpdateInterval;
 @end
@@ -841,165 +906,96 @@ static CCDirector *_sharedDirector = nil;
 	self.scheduler.fixedUpdateInterval = fixedUpdateInterval;
 }
 
-@end
-
-
-@interface CCFPSLabel : CCNode<CCTextureProtocol>
-@property(nonatomic, strong) NSString *string;
-@end
-
-static const int CCFPSLabelChars = 12;
-static const float CCFPSLabelItemWidth = 12;
-static const float CCFPSLabelItemHeight = 32;
-
-@implementation CCFPSLabel {
-	CCSpriteVertexes _charVertexes[CCFPSLabelChars];
-}
-
--(instancetype)initWithString:(NSString *)string texture:(CCTexture *)texture
-{
-	if((self = [super init])){
-		_string = string;
-		
-		self.texture = texture;
-		self.shader = [CCShader positionTextureColorShader];
-		
-		float w = CCFPSLabelItemWidth;
-		float h = CCFPSLabelItemHeight;
-		
-		float tx = CCFPSLabelItemWidth/texture.contentSize.width;
-		float ty = CCFPSLabelItemHeight/texture.contentSize.height;
-		
-		for(int i=0; i<CCFPSLabelChars; i++){
-			float tx0 = i*tx;
-			float tx1 = (i + 1)*tx;
-			_charVertexes[i].bl = (CCVertex){GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx0, 0.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-			_charVertexes[i].br = (CCVertex){GLKVector4Make(   w, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx1, 0.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-			_charVertexes[i].tr = (CCVertex){GLKVector4Make(   w,    h, 0.0f, 1.0f), GLKVector2Make(tx1,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-			_charVertexes[i].tl = (CCVertex){GLKVector4Make(0.0f,    h, 0.0f, 1.0f), GLKVector2Make(tx0,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-		}
-	}
-	
-	return self;
-}
-
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
-	for(int i=0; i<_string.length; i++){
-		int c = [_string characterAtIndex:i];
-		
-		// Skip spaces.
-		if(c == ' ') continue;
-		
-		// Index relative to '.'.
-		c = MAX(0, MIN(CCFPSLabelChars - 1, c - '.'));
-		GLKMatrix4 t = GLKMatrix4Multiply(*transform, GLKMatrix4MakeTranslation(i*CCFPSLabelItemWidth, 0.0f, 0.0f));
-		
-		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:NSIntegerMax];
-		CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_charVertexes[c].bl, &t));
-		CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_charVertexes[c].br, &t));
-		CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_charVertexes[c].tr, &t));
-		CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_charVertexes[c].tl, &t));
-		CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-		CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-	}
-}
-
-@end
-
-
-@implementation CCDirector(Stats)
-
 // display statistics
 -(void) showStats
 {
-	_frames++;
-	_accumDt += _dt;
-
-	if( _displayStats ) {
-		// Ms per Frame
-
-		if( _accumDt > CC_DIRECTOR_STATS_INTERVAL)
-		{
-			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", _secondsPerFrame];
-			[_SPFLabel setString:spfstr];
-
-			_frameRate = _frames/_accumDt;
-			_frames = 0;
-			_accumDt = 0;
-
-//			sprintf(format,"%.1f",frameRate);
-//			[FPSLabel setCString:format];
-
-			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
-			[_FPSLabel setString:fpsstr];
-			
-			// Subtract one for the stat label's own batch. This caused a lot of confusion on the forums...
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
-			[_drawsLabel setString:draws];
-		}
-		
-		// TODO should pass as a parameter instead? Requires changing method signatures...
-		CCRenderer *renderer = [CCRenderer currentRenderer];
-		[_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
-		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
-		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
-	}
-	
-	__ccNumberOfDraws = 0;
+    _frames++;
+    _accumDt += _dt;
+    
+    if( _displayStats ) {
+        // Ms per Frame
+        
+        if( _accumDt > CC_DIRECTOR_STATS_INTERVAL)
+        {
+            NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", _secondsPerFrame];
+            [_SPFLabel setString:spfstr];
+            
+            _frameRate = _frames/_accumDt;
+            _frames = 0;
+            _accumDt = 0;
+            
+            //			sprintf(format,"%.1f",frameRate);
+            //			[FPSLabel setCString:format];
+            
+            NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
+            [_FPSLabel setString:fpsstr];
+            
+            // Subtract one for the stat label's own batch. This caused a lot of confusion on the forums...
+            NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
+            [_drawsLabel setString:draws];
+        }
+        
+        // TODO should pass as a parameter instead? Requires changing method signatures...
+        CCRenderer *renderer = [CCRenderer currentRenderer];
+        [_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
+        [_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
+        [_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
+    }
+    
+    __ccNumberOfDraws = 0;
 }
 
 -(void) calculateMPF
 {
-	struct timeval now;
-	gettimeofday( &now, NULL);
-
-	_secondsPerFrame = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+    struct timeval now;
+    gettimeofday( &now, NULL);
+    
+    _secondsPerFrame = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
 }
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	*datapointer = cc_fps_images_png;
-	*len = cc_fps_images_len();
-	*scale = 1.0;
+    *datapointer = cc_fps_images_png;
+    *len = cc_fps_images_len();
+    *scale = 1.0;
 }
 
 -(void) createStatsLabel
 {
-	if( _FPSLabel && _SPFLabel ) {
-		_FPSLabel = nil;
-		_SPFLabel = nil;
-		_drawsLabel = nil;
-		
-		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
-	}
-
-	CCTexturePixelFormat currentFormat = [CCTexture defaultAlphaPixelFormat];
-	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA4444];
-
-	unsigned char *data;
-	NSUInteger data_len;
-	CGFloat contentScale = 0;
-	[self getFPSImageData:&data length:&data_len contentScale:&contentScale];
-	
-	NSData *nsdata = [NSData dataWithBytes:data length:data_len];
-	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) nsdata);
-	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
-	CCTexture *texture = [[CCTexture alloc] initWithCGImage:imageRef contentScale:contentScale];
-	CGDataProviderRelease(imgDataProvider);
-	CGImageRelease(imageRef);
-
-	_FPSLabel = [[CCFPSLabel alloc]  initWithString:@"00.0" texture:texture];
-	_SPFLabel = [[CCFPSLabel alloc]  initWithString:@"0.000" texture:texture];
-	_drawsLabel = [[CCFPSLabel alloc]  initWithString:@"000" texture:texture];
-
-	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
-	
-	CGPoint offset = [self convertToGL:ccp(0, (self.flipY == 1.0) ? 0 : self.view.bounds.size.height)];
-	CGPoint pos = ccpAdd(CC_DIRECTOR_STATS_POSITION, offset);
-	[_drawsLabel setPosition: ccpAdd( ccp(0,34), pos ) ];
-	[_SPFLabel setPosition: ccpAdd( ccp(0,17), pos ) ];
-	[_FPSLabel setPosition: pos ];
+    if( _FPSLabel && _SPFLabel ) {
+        _FPSLabel = nil;
+        _SPFLabel = nil;
+        _drawsLabel = nil;
+        
+        [[CCFileUtils sharedFileUtils] purgeCachedEntries];
+    }
+    
+    CCTexturePixelFormat currentFormat = [CCTexture defaultAlphaPixelFormat];
+    [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA4444];
+    
+    unsigned char *data;
+    NSUInteger data_len;
+    CGFloat contentScale = 0;
+    [self getFPSImageData:&data length:&data_len contentScale:&contentScale];
+    
+    NSData *nsdata = [NSData dataWithBytes:data length:data_len];
+    CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) nsdata);
+    CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
+    CCTexture *texture = [[CCTexture alloc] initWithCGImage:imageRef contentScale:contentScale];
+    CGDataProviderRelease(imgDataProvider);
+    CGImageRelease(imageRef);
+    
+    _FPSLabel = [[CCFPSLabel alloc]  initWithString:@"00.0" texture:texture];
+    _SPFLabel = [[CCFPSLabel alloc]  initWithString:@"0.000" texture:texture];
+    _drawsLabel = [[CCFPSLabel alloc]  initWithString:@"000" texture:texture];
+    
+    [CCTexture setDefaultAlphaPixelFormat:currentFormat];
+    
+    CGPoint offset = [self convertToGL:ccp(0, (self.flipY == 1.0) ? 0 : self.view.bounds.size.height)];
+    CGPoint pos = ccpAdd(CC_DIRECTOR_STATS_POSITION, offset);
+    [_drawsLabel setPosition: ccpAdd( ccp(0,34), pos ) ];
+    [_SPFLabel setPosition: ccpAdd( ccp(0,17), pos ) ];
+    [_FPSLabel setPosition: pos ];
 }
 
 @end
