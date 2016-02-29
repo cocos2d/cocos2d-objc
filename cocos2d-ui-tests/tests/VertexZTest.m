@@ -8,7 +8,6 @@
 
 #import "TestBase.h"
 #import "CCTextureCache.h"
-#import "CCSprite_Private.h"
 
 @interface GlobalSortSprite : CCSprite @end
 
