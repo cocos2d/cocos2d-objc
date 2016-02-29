@@ -133,7 +133,6 @@
 		08F4AB111C6E98A1004DAAF7 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C508C40F7C194400799124 /* CCFileUtils.h */; };
 		08F4AB121C6E98A1004DAAF7 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
 		08F4AB131C6E98A1004DAAF7 /* CCPlatformTextFieldIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD02119649E03003D460C /* CCPlatformTextFieldIOS.h */; };
-		08F4AB141C6E98A1004DAAF7 /* CCTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B706B19718209A8300B27A2C /* CCTexture_Private.h */; };
 		08F4AB151C6E98A1004DAAF7 /* CCLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DE1819E75700B983FE /* CCLayoutBox.h */; };
 		08F4AB171C6E98A1004DAAF7 /* CCRenderDispatch.h in Headers */ = {isa = PBXBuildFile; fileRef = D3903B0E199528A0003AA81A /* CCRenderDispatch.h */; };
 		08F4AB181C6E98A1004DAAF7 /* CCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E260D618171D2000A0E872 /* CCTextField.h */; };
@@ -304,7 +303,6 @@
 		7A5946EC19E372FA00F65F90 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
 		7A5946EE19E372FA00F65F90 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		7A5946F019E372FA00F65F90 /* CCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357110ADEB1B00C9E7FA /* CCTexture.h */; };
-		7A5946F219E372FA00F65F90 /* CCTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B706B19718209A8300B27A2C /* CCTexture_Private.h */; };
 		7A5946F319E372FB00F65F90 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */; };
 		7A5946F519E372FB00F65F90 /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D898EF1192CB7500458C29 /* uthash.h */; };
 		7A5946F619E372FB00F65F90 /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAC2F1193F8B0007F058D /* utlist.h */; };
@@ -452,7 +450,6 @@
 		A6A0734B17C78EF3004343C8 /* CCResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A0734917C78EF3004343C8 /* CCResponder.m */; };
 		A6DC4E0918055DCC00C280A6 /* CCTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DC4E0718055DCC00C280A6 /* CCTransition.h */; };
 		A6DC4E0A18055DCC00C280A6 /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DC4E0818055DCC00C280A6 /* CCTransition.m */; };
-		B706B19818209A8300B27A2C /* CCTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B706B19718209A8300B27A2C /* CCTexture_Private.h */; };
 		B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */ = {isa = PBXBuildFile; fileRef = B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */; };
 		B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */ = {isa = PBXBuildFile; fileRef = B74C2B9A17BDA63A00A829C0 /* CCSprite9Slice.m */; };
 		B75C2E7C17C5908B002B0E0D /* NSAttributedString+CCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */; };
@@ -663,7 +660,6 @@
 		A6A0734917C78EF3004343C8 /* CCResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponder.m; sourceTree = "<group>"; };
 		A6DC4E0718055DCC00C280A6 /* CCTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransition.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A6DC4E0818055DCC00C280A6 /* CCTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransition.m; sourceTree = "<group>"; };
-		B706B19718209A8300B27A2C /* CCTexture_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture_Private.h; sourceTree = "<group>"; };
 		B706B19918209FA000B27A2C /* CCDirector_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirector_Private.h; sourceTree = "<group>"; };
 		B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
 		B74C2B9A17BDA63A00A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
@@ -1073,7 +1069,6 @@
 				E0F924701224140400EF2362 /* CCTexturePVR.m */,
 				50E1357110ADEB1B00C9E7FA /* CCTexture.h */,
 				50E1357210ADEB1B00C9E7FA /* CCTexture.m */,
-				B706B19718209A8300B27A2C /* CCTexture_Private.h */,
 				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
 				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
 			);
@@ -1085,9 +1080,6 @@
 			children = (
 				5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */,
 				5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */,
-				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
-				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
-				D2B840C31909F447008063EA /* CCRenderTexture_Private.h */,
 			);
 			name = "Misc Nodes";
 			sourceTree = "<group>";
@@ -1230,6 +1222,9 @@
 		D34CAD5E19C3A070009BED7A /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
+				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
+				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
+				D2B840C31909F447008063EA /* CCRenderTexture_Private.h */,
 				0EFC792C1B3B0E14008926DD /* CCRendererGLSupport.m */,
 				D3903B0E199528A0003AA81A /* CCRenderDispatch.h */,
 				D3903B0F199528A0003AA81A /* CCRenderDispatch.m */,
@@ -1333,7 +1328,6 @@
 				08F4AB111C6E98A1004DAAF7 /* CCFileUtils.h in Headers */,
 				08F4AB121C6E98A1004DAAF7 /* CGPointExtension.h in Headers */,
 				08F4AB131C6E98A1004DAAF7 /* CCPlatformTextFieldIOS.h in Headers */,
-				08F4AB141C6E98A1004DAAF7 /* CCTexture_Private.h in Headers */,
 				08F4AB151C6E98A1004DAAF7 /* CCLayoutBox.h in Headers */,
 				08F4AB171C6E98A1004DAAF7 /* CCRenderDispatch.h in Headers */,
 				08F4AB181C6E98A1004DAAF7 /* CCTextField.h in Headers */,
@@ -1425,7 +1419,6 @@
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
 				571CD02A19649E03003D460C /* CCPlatformTextFieldIOS.h in Headers */,
-				B706B19818209A8300B27A2C /* CCTexture_Private.h in Headers */,
 				B7EE69E21819E75700B983FE /* CCLayoutBox.h in Headers */,
 				D3903B10199528A0003AA81A /* CCRenderDispatch.h in Headers */,
 				B7E260D818171D2000A0E872 /* CCTextField.h in Headers */,
@@ -1525,7 +1518,6 @@
 				7A5946EC19E372FA00F65F90 /* CCActionTween.h in Headers */,
 				7A5946EE19E372FA00F65F90 /* CCTexturePVR.h in Headers */,
 				7A5946F019E372FA00F65F90 /* CCTexture.h in Headers */,
-				7A5946F219E372FA00F65F90 /* CCTexture_Private.h in Headers */,
 				7A5946F319E372FB00F65F90 /* CCTextureCache.h in Headers */,
 				7A5946F519E372FB00F65F90 /* uthash.h in Headers */,
 				7A5946F619E372FB00F65F90 /* utlist.h in Headers */,

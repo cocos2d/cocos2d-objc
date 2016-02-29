@@ -33,7 +33,6 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 
-#import "CCTexture_Private.h"
 #import "CCDirector_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"

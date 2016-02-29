@@ -84,7 +84,6 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
-#import "CCTexture_Private.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 

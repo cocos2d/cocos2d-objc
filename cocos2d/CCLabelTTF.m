@@ -36,7 +36,6 @@
 #import "NSAttributedString+CCAdditions.h"
 #import "CCConfiguration.h"
 #import "CCDirector.h"
-#import "CCTexture_Private.h"
 #import <Foundation/Foundation.h>
 
 #if __CC_PLATFORM_IOS

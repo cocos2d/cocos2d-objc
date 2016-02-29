@@ -38,7 +38,6 @@
 #import "Support/CGPointExtension.h"
 #import "Support/CCProfiling.h"
 #import "CCRenderer_Private.h"
-#import "CCTexture_Private.h"
 
 #pragma mark -
 #pragma mark CCSprite

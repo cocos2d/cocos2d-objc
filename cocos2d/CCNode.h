@@ -715,7 +715,7 @@
  @note The animationManager property is nil during a node's init methods.
  @see CCAnimationManager
  */
-@property (nonatomic, readwrite) CCAnimationManager * animationManager;
+@property (nonatomic, assign, readwrite) CCAnimationManager * animationManager;
 
 
 /// -----------------------------------------------------------------------
