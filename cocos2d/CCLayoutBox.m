@@ -26,7 +26,6 @@
 #import "CCLayoutBox.h"
 #import "ccMacros.h"
 #import "CGPointExtension.h"
-#import "CCNode_Private.h"
 
 @implementation CCLayoutBox
 

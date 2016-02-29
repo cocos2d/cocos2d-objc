@@ -1,5 +1,4 @@
 #import "TestBase.h"
-#import "CCNode_Private.h"
 
 @interface SpritePerformanceTest : TestBase @end
 @implementation SpritePerformanceTest

@@ -39,7 +39,6 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
-#import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"
 
 #import "CCTexture_Private.h"

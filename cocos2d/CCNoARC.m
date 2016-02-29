@@ -1,5 +1,4 @@
 #import "CCTexture_Private.h"
-#import "CCNode_Private.h"
 #import "CCSprite_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"

@@ -33,8 +33,6 @@
 #import "ccMacros.h"
 #import "CCShader.h"
 #import "Support/CGPointExtension.h"
-#import "CCNode_Private.h"
-
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"

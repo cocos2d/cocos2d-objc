@@ -28,7 +28,6 @@
 #import "CCSprite9Slice.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
-#import "CCNode_Private.h"
 
 // ---------------------------------------------------------------------
 

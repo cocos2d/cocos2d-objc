@@ -35,7 +35,6 @@
 
 #import "CCTexture_Private.h"
 #import "CCDirector_Private.h"
-#import "CCNode_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
 #import "CCRenderDispatch.h"
