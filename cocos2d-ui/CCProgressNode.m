@@ -30,7 +30,7 @@
 #import "CCTextureCache.h"
 #import "CCShader.h"
 #import "CCDirector.h"
-#import "Support/CGPointExtension.h"
+#import "CGPointExtension.h"
 
 @implementation CCProgressNode {
 	CCProgressNodeType _type;
