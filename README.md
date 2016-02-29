@@ -38,7 +38,7 @@ SpriteBuilder also allows you to update the Cocos2D version in your project, to 
 You can find the full Cocos2D documentation and user guide at our [documentation page](http://cocos2d-objc.org/docs/).
 
 **Important:**
-Since 3.5 Cocos2D changed ideology a bit. First of all, Android support is gone. It happened due to Apportable company bankraptcy, they were providing the UIKit implementation for Android, but it broken since XCode 7.2. Android support is unlikely to be back. Now Cocos2D is fully open-oriented with rich Metal support and other cool features that are available only on Apple platform.
+Since 3.5 Cocos2D changed ideology a bit. First of all, Android support is gone. It happened due to Apportable company bankraptcy, they were providing the UIKit implementation for Android, but it broken since XCode 7.2. Android support is unlikely to be back. Now Cocos2D is fully Apple-oriented with rich Metal support and other cool features that are available only on Apple platform.
 
 All releases will be incremental now. Even if backwards compatibility will broke it will be a matter of changing a few lines in code. Backwards compatibility are guaranteed for now.
 
@@ -72,6 +72,7 @@ All releases will be incremental now. Even if backwards compatibility will broke
    * Bug fixed for Siri dictation.
    * CCWarnings are fixed.
    * CCRenderTexture shader is now forwarded to sprite.
+   * Most of the private heads in core cocos2d are now merged with public ones. It is done due to maintaing cocos2d reputation as a very customizable engine.
 
 Features
 -------------
