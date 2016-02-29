@@ -33,9 +33,11 @@
 #import "CCBKeyframe.h"
 #import "CCBLocalizationManager.h"
 #import "CCBReader_Private.h"
-#import "CCNode_Private.h"
-#import "CCDirector_Private.h"
+#import "CCNode.h"
+#import "CCDirector.h"
+#if CC_PHYSICS
 #import "CCPhysics+ObjectiveChipmunk.h"
+#endif
 #import "CCAnimationManager_Private.h"
 #if CC_EFFECTS
 #import "CCEffectStack.h"
@@ -1165,6 +1167,7 @@ static inline float readFloat(CCBReader *self)
 	}
 }
 
+#if CC_PHYSICS
 -(void)readJoints
 {
     int numJoints = readIntWithSign(self, NO);
@@ -1175,10 +1178,8 @@ static inline float readFloat(CCBReader *self)
     }
 }
 
-
 -(void)readJoint
 {
-    
     CCPhysicsJoint * joint = nil;
     NSString* className = [self readCachedString];
 
@@ -1320,7 +1321,7 @@ static inline float readFloat(CCBReader *self)
     [joint resetScale:NodeToPhysicsScale(nodeBodyA).x];
     
 }
-
+#endif
 -(CCNode*) nodeFromClassName:(NSString*)nodeClassName
 {
     Class nodeClass = NSClassFromString(nodeClassName);
@@ -1521,6 +1522,7 @@ SelectorNameForProperty(objc_property_t property)
     
     animatedProps = NULL;
     
+#if CC_PHYSICS
     // Read physics
     BOOL hasPhysicsBody = readBool(self);
     if (hasPhysicsBody)
@@ -1645,7 +1647,7 @@ SelectorNameForProperty(objc_property_t property)
 //#endif
 
     }
-    
+#endif
     // Read and add children
     int numChildren = readIntWithSign(self, NO);
     for (int i = 0; i < numChildren; i++)
@@ -1809,7 +1811,10 @@ SelectorNameForProperty(objc_property_t property)
     actionManagers = am;
     
     CCNode* node = [self readNodeGraphParent:NULL];
+    
+#if CC_PHYSICS
     [self readJoints];
+#endif
 	[self postDeserialization];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];

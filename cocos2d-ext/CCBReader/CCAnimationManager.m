@@ -31,7 +31,7 @@
 #import "CCBKeyframe.h"
 #import <objc/runtime.h>
 
-#import "CCDirector_Private.h"
+#import "CCDirector.h"
 #import "CCBReader_Private.h"
 #import "CCActionManager.h"
 
@@ -248,7 +248,7 @@ static NSInteger ccbAnimationManagerID = 0;
         }
     }
 #endif
-    } else {
+    else {
         CCLOG(@"CCBReader: Failed to create animation for property: %@", name);
     }
               

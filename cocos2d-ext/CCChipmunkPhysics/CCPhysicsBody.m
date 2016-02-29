@@ -27,7 +27,7 @@
 
 #import "CCPhysicsBody.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
-#import "CCNode_Private.h"
+#import "CCNode.h"
 
 
 @interface CCNode(Private)
