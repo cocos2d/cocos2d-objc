@@ -10,7 +10,6 @@
 #import "cocos2d.h"
 
 #import "CCPhysics+ObjectiveChipmunk.h"
-#import "CCDirector_Private.h"
 #import "AppDelegate.h"
 
 @interface CCScheduler(Test)

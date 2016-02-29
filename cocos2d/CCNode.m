@@ -40,7 +40,6 @@
 #if CC_PHYSICS
 #import "CCPhysics+ObjectiveChipmunk.h"
 #endif
-#import "CCDirector_Private.h"
 #import "CCRenderer_Private.h"
 
 #if CC_NODE_RENDER_SUBPIXEL

@@ -27,7 +27,7 @@
 #import "cocos2d.h"
 #import "CCRenderer_Private.h"
 #import "CCCache.h"
-#import "CCDirector_Private.h"
+#import "CCDirector.h"
 #import "CCRenderDispatch.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED

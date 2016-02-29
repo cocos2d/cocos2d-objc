@@ -78,7 +78,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../CCConfiguration.h"
 #import "CCScene.h"
 
-#import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 
 

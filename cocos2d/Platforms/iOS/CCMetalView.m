@@ -11,7 +11,6 @@
 #import "../../CCConfiguration.h"
 #import "CCScene.h"
 
-#import "CCDirector_Private.h"
 #import "CCMetalSupport_Private.h"
 
 

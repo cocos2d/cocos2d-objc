@@ -24,7 +24,7 @@
 
 #import "CCTextField.h"
 #import "CCControlSubclass.h"
-#import "CCDirector_Private.h"
+#import "CCDirector.h"
 #import "CCPlatformTextField.h"
 #if __CC_PLATFORM_IOS
 #import "CCPlatformTextFieldIOS.h"

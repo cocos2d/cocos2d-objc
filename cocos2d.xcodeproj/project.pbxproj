@@ -343,7 +343,6 @@
 		7A59475419E3731000F65F90 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */; };
 		7A59475619E3731100F65F90 /* CCProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E2A25110A46CC600D894CE /* CCProtocols.h */; };
 		7A59475719E3731100F65F90 /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* CCScheduler.h */; };
-		7A59475919E3731100F65F90 /* CCDirector_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B706B19918209FA000B27A2C /* CCDirector_Private.h */; };
 		7A59476019E3731400F65F90 /* CCPlatformTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD01E19649E03003D460C /* CCPlatformTextField.h */; };
 		7A59476219E3731400F65F90 /* CCPlatformTextFieldIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD02119649E03003D460C /* CCPlatformTextFieldIOS.h */; };
 		7A59476419E3731500F65F90 /* CCPlatformTextFieldMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD02419649E03003D460C /* CCPlatformTextFieldMac.h */; };
@@ -657,7 +656,6 @@
 		A6A0734917C78EF3004343C8 /* CCResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponder.m; sourceTree = "<group>"; };
 		A6DC4E0718055DCC00C280A6 /* CCTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransition.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A6DC4E0818055DCC00C280A6 /* CCTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransition.m; sourceTree = "<group>"; };
-		B706B19918209FA000B27A2C /* CCDirector_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirector_Private.h; sourceTree = "<group>"; };
 		B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
 		B74C2B9A17BDA63A00A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
 		B750162218124B6000708A2F /* CCControlSubclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCControlSubclass.h; path = "cocos2d-ui/CCControlSubclass.h"; sourceTree = "<group>"; };
@@ -923,7 +921,6 @@
 				50E2A25110A46CC600D894CE /* CCProtocols.h */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
 				506602100E38A70D000B500E /* CCScheduler.m */,
-				B706B19918209FA000B27A2C /* CCDirector_Private.h */,
 				D3903B0C1995288D003AA81A /* CCNoARC.m */,
 			);
 			path = cocos2d;
@@ -1554,7 +1551,6 @@
 				7A59475419E3731000F65F90 /* CCConfiguration.h in Headers */,
 				7A59475619E3731100F65F90 /* CCProtocols.h in Headers */,
 				7A59475719E3731100F65F90 /* CCScheduler.h in Headers */,
-				7A59475919E3731100F65F90 /* CCDirector_Private.h in Headers */,
 				7A59476019E3731400F65F90 /* CCPlatformTextField.h in Headers */,
 				7A59476219E3731400F65F90 /* CCPlatformTextFieldIOS.h in Headers */,
 				7A59476419E3731500F65F90 /* CCPlatformTextFieldMac.h in Headers */,
