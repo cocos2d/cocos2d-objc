@@ -130,7 +130,6 @@
 		08F4AB0C1C6E98A1004DAAF7 /* CCPlatformTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD01E19649E03003D460C /* CCPlatformTextField.h */; };
 		08F4AB0D1C6E98A1004DAAF7 /* CCSprite_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1441820305400E7BFCD /* CCSprite_Private.h */; };
 		08F4AB0E1C6E98A1004DAAF7 /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 50BAF3970F33CCD8003F654C /* ccMacros.h */; };
-		08F4AB0F1C6E98A1004DAAF7 /* CCNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D13C181F2E4500E7BFCD /* CCNode_Private.h */; };
 		08F4AB101C6E98A1004DAAF7 /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* CCSprite.h */; };
 		08F4AB111C6E98A1004DAAF7 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C508C40F7C194400799124 /* CCFileUtils.h */; };
 		08F4AB121C6E98A1004DAAF7 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 503798C40F912C2000986724 /* CGPointExtension.h */; };
@@ -280,7 +279,6 @@
 		7A4037C819E3712A007B6E8F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C719E3712A007B6E8F /* OpenGL.framework */; };
 		7A59466E19E372EE00F65F90 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CCNode.h */; };
 		7A59467019E372EE00F65F90 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
-		7A59467219E372EF00F65F90 /* CCNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D13C181F2E4500E7BFCD /* CCNode_Private.h */; };
 		7A59467319E372EF00F65F90 /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DC1819E75700B983FE /* CCLayout.h */; };
 		7A59467519E372EF00F65F90 /* CCLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DE1819E75700B983FE /* CCLayoutBox.h */; };
 		7A59467719E372EF00F65F90 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BC115BCDCA200E80A92 /* CCDrawNode.h */; };
@@ -477,7 +475,6 @@
 		B78AE46C17E7AF6C0028BE0B /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */; };
 		B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE46B17E7AF6C0028BE0B /* UITouch+CC.m */; };
 		B791E85D182074C500DAE1D7 /* CCProgressNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */; };
-		B798D13D181F2E4500E7BFCD /* CCNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D13C181F2E4500E7BFCD /* CCNode_Private.h */; };
 		B798D143181F469100E7BFCD /* CCLabelBMFont_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */; };
 		B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1441820305400E7BFCD /* CCSprite_Private.h */; };
 		B79F905A17FE2A2E00908504 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B79F905817FE2A2E00908504 /* CCTableView.h */; };
@@ -696,7 +693,6 @@
 		B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
 		B78AE46B17E7AF6C0028BE0B /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
 		B791E85A182074C500DAE1D7 /* CCProgressNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressNode_Private.h; sourceTree = "<group>"; };
-		B798D13C181F2E4500E7BFCD /* CCNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_Private.h; sourceTree = "<group>"; };
 		B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont_Private.h; sourceTree = "<group>"; };
 		B798D1441820305400E7BFCD /* CCSprite_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_Private.h; sourceTree = "<group>"; };
 		B79F905817FE2A2E00908504 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
@@ -1073,7 +1069,6 @@
 				5018F2550DFDEAFF00C013A5 /* CCNode.m */,
 				A039EBFD155C686B0061EE37 /* CCNode+Debug.h */,
 				A039EBFE155C686B0061EE37 /* CCNode+Debug.m */,
-				B798D13C181F2E4500E7BFCD /* CCNode_Private.h */,
 			);
 			name = "Base Nodes";
 			sourceTree = "<group>";
@@ -1353,7 +1348,6 @@
 				08F4AB0D1C6E98A1004DAAF7 /* CCSprite_Private.h in Headers */,
 				08F4AB0E1C6E98A1004DAAF7 /* ccMacros.h in Headers */,
 				08A4EB7F1C7A563900A08923 /* CCPotentiometer.h in Headers */,
-				08F4AB0F1C6E98A1004DAAF7 /* CCNode_Private.h in Headers */,
 				08F4AB101C6E98A1004DAAF7 /* CCSprite.h in Headers */,
 				08F4AB111C6E98A1004DAAF7 /* CCFileUtils.h in Headers */,
 				08F4AB121C6E98A1004DAAF7 /* CGPointExtension.h in Headers */,
@@ -1449,7 +1443,6 @@
 				B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
 				08A4EB7D1C7A563900A08923 /* CCPotentiometer.h in Headers */,
-				B798D13D181F2E4500E7BFCD /* CCNode_Private.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
@@ -1527,7 +1520,6 @@
 			files = (
 				7A59466E19E372EE00F65F90 /* CCNode.h in Headers */,
 				7A59467019E372EE00F65F90 /* CCNode+Debug.h in Headers */,
-				7A59467219E372EF00F65F90 /* CCNode_Private.h in Headers */,
 				7A59467319E372EF00F65F90 /* CCLayout.h in Headers */,
 				08A4EB701C7A553E00A08923 /* CCActionProgressTimer.h in Headers */,
 				7A59467519E372EF00F65F90 /* CCLayoutBox.h in Headers */,

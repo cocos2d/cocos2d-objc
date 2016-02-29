@@ -26,7 +26,6 @@
  */
 
 #import "CCNode.h"
-#import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
 #if CC_CCBREADER

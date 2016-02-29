@@ -145,12 +145,10 @@
  
  is called.  This offers an opportunity for the node to carry out any cleanup such as removing possible circular references that might cause a memory leak.
  
- CCNode implements a base level of functionality for cleanup and if your subclass needs to implement it, you will need to import CCNode_Private.h.
- 
  @note that if you override cleanup, you must call [super cleanup] <em>after</em> any cleanup of your own.
  
  */
-@interface CCNode : CCResponder < CCSchedulerTarget > {
+@interface CCNode : CCResponder < CCSchedulerTarget, CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
     
 	// Rotation angle.
 	float _rotationalSkewX, _rotationalSkewY;
@@ -234,6 +232,16 @@
 	
 	// Number of paused parent or ancestor nodes.
 	int _pausedAncestors;
+    
+@protected
+    CCRenderState *_renderState;
+    
+    CCShader *_shader;
+    NSMutableDictionary *_shaderUniforms;
+    
+    CCBlendMode *_blendMode;
+    CCTexture *_texture;
+    
 }
 
 
@@ -707,7 +715,7 @@
  @note The animationManager property is nil during a node's init methods.
  @see CCAnimationManager
  */
-@property (nonatomic, readonly) CCAnimationManager * animationManager;
+@property (nonatomic, readwrite) CCAnimationManager * animationManager;
 
 
 /// -----------------------------------------------------------------------
@@ -1127,8 +1135,79 @@
  */
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
 
+/// Returns true if the node is not using custom uniforms.
+-(BOOL)hasDefaultShaderUniforms;
+
+/// Cache and return the current render state.
+/// Should be set to nil whenever changing a property that affects the renderstate.
+@property(nonatomic, strong) CCRenderState *renderState;
+
+/* The real openGL Z vertex.
+ Differences between openGL Z vertex and cocos2d Z order:
+ - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
+ - OpenGL Z might require to set 2D projection
+ - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: vertexZ = 0
+ @warning: Use it at your own risk since it might break the cocos2d parent-children z order
+ */
+@property (nonatomic,readwrite) float vertexZ;
+
+@property (nonatomic,readonly) BOOL isPhysicsNode;
+
+/* used internally for zOrder sorting, don't change this manually */
+@property(nonatomic,readwrite) NSUInteger orderOfArrival;
+
+/* CCActionManager used by all the actions.
+ IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
+ */
+@property (nonatomic, readwrite, strong) CCActionManager *actionManager;
+
+/* CCScheduler used to schedule all "updates" and timers.
+ IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
+ */
+@property (nonatomic, readwrite, strong) CCScheduler *scheduler;
+
+/* Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
+- (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
+
+/* Reorders a child according to a new z value.
+ * The child MUST be already added.
+ */
+-(void) reorderChild:(CCNode*)child z:(NSInteger)zOrder;
+
+/* performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
+ don't call this manually unless a child added needs to be removed in the same frame */
+- (void) sortAllChildren;
+
+/* Event that is called when the running node is no longer running (eg: its CCScene is being removed from the "stage" ).
+ On cleanup you should break any possible circular references.
+ CCNode's cleanup removes any possible scheduled timer and/or any possible action.
+ If you override cleanup, you must call [super cleanup] <em>after</em> any cleanup of your own.
+ */
+-(void) cleanup __attribute__((objc_requires_super));
+
+///* performs OpenGL view-matrix transformation of its ancestors.
+// Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
+// */
+//-(void) transformAncestors;
+
+/* final method called to actually remove a child node from the children.
+ *  @param node    The child node to remove
+ *  @param cleanup Stops all scheduled events and actions
+ */
+-(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
+
+- (void) contentSizeChanged;
+- (void) parentsContentSizeChanged;
+
 @end
 
+CGPoint NodeToPhysicsScale(CCNode * node);
+float NodeToPhysicsRotation(CCNode *node);
+CGAffineTransform NodeToPhysicsTransform(CCNode *node);
+CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
+CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
+CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
+CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
 
 @interface CCNode(NoARC)
 

@@ -8,8 +8,6 @@
 
 #import "CCRenderTexture.h"
 
-#import "CCNode_Private.h"
-
 @class CCFrameBufferObject;
 
 @interface CCRenderTexture() {

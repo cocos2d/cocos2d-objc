@@ -28,7 +28,6 @@
 #import "CCTextureCache.h"
 #import "CCShader.h"
 #import "ccMacros.h"
-#import "CCNode_Private.h"
 #import "CCTexture_Private.h"
 #import "CCRenderer_Private.h"
 

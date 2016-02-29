@@ -24,7 +24,6 @@
  */
 
 #import "CCLayout.h"
-#import "CCNode_Private.h"
 
 @implementation CCLayout
 

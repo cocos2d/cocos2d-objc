@@ -30,7 +30,6 @@
 #import "CCSpriteBatchNode.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
-#import "CCNode_Private.h"
 
 @implementation CCSpriteBatchNode {
 }

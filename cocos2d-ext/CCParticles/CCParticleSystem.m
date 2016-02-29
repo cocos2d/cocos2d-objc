@@ -45,7 +45,6 @@
 #import "Support/CGPointExtension.h"
 #import "Support/NSThread+performBlock.h"
 
-#import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"
 #import "CCParticleSystem_Private.h"
 #import "CCTexture_Private.h"

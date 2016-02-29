@@ -32,7 +32,6 @@
 #import "CCDirector.h"
 #import "CGPointExtension.h"
 
-#import "CCNode_Private.h"
 #import "CCRenderDispatch.h"
 #import "CCConfiguration.h"
 

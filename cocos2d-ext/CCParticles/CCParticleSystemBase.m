@@ -54,7 +54,6 @@
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "Support/CCProfiling.h"
-#import "CCNode_Private.h"
 
 // support
 #import "Support/CGPointExtension.h"

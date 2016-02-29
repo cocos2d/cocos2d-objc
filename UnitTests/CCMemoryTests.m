@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-#import "CCNode_private.h"
 
 @interface CCMemoryNode : CCNode
 
