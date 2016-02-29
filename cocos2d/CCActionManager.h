@@ -147,6 +147,7 @@ typedef struct _hashElement {
  */
 -(void)resumeTargets:(NSSet *)targetsToResume;
 
+-(void)migrateActions:(id)target from:(CCActionManager*)oldManager;
 @end
 
 

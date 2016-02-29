@@ -28,7 +28,6 @@
 
 
 #import "CCActionManager.h"
-#import "CCActionManager_Private.h"
 #import "ccMacros.h"
 
 @interface CCActionManager (Private)
