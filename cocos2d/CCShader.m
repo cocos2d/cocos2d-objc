@@ -25,8 +25,6 @@
 //	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-#import "CCShader_private.h"
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
 #import "Support/uthash.h"

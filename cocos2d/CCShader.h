@@ -37,12 +37,20 @@
 
 /// Macro to embed Metal shading language source.
 #define CC_METAL(x) @#x
+
+#import <Metal/Metal.h>
+#import "CCMetalSupport_Private.h"
 #endif
 
+@class CCRenderer;
+typedef void (^CCUniformSetter)(
+                                __unsafe_unretained CCRenderer *renderer,
+                                __unsafe_unretained NSDictionary *shaderUniforms,
+                                __unsafe_unretained NSDictionary *globalShaderUniforms
+                                );
 
 /// Macro to embed GLSL source.
 #define CC_GLSL(x) @#x
-
 
 /// GL attribute locations for built-in Cocos2D vertex attributes. Used by CCShader.
 typedef NS_ENUM(NSUInteger, CCShaderAttribute){
@@ -72,7 +80,16 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 
 
 /** A wrapper for OpenGL or Metal shader programs. Also gives you access to the built-in shaders used by Cocos2D. */
-@interface CCShader : NSObject<NSCopying>
+@interface CCShader : NSObject<NSCopying> {
+@public
+    GLuint _program;
+    NSDictionary *_uniformSetters;
+    
+    // TODO This should really be split into a separate subclass somehow.
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+    id<MTLFunction> _vertexFunction, _fragmentFunction;
+#endif
+}
 
 /** @name Creating a OpenGL Shader */
 
