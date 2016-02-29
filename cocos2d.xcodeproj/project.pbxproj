@@ -295,7 +295,6 @@
 		7A5946B919E372F300F65F90 /* CCNodeColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */; };
 		7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AA410291280003ACFE7 /* CCRenderTexture.h */; };
 		7A5946C419E372F400F65F90 /* CCRenderTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B840C31909F447008063EA /* CCRenderTexture_Private.h */; };
-		7A5946DD19E372F700F65F90 /* CCActionManager_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */; };
 		7A5946DE19E372F800F65F90 /* CCActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* CCActionManager.h */; };
 		7A5946E019E372F800F65F90 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
 		7A5946E219E372F800F65F90 /* CCActionInstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2580DFDEAFF00C013A5 /* CCActionInstant.h */; };
@@ -638,7 +637,6 @@
 		7A4037C519E37126007B6E8F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C719E3712A007B6E8F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		83E1A88D19C8C19D000A3BCA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A039EBFD155C686B0061EE37 /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
@@ -1030,7 +1028,6 @@
 		50A24E770F3780A2007CAEB0 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */,
 				50CB3B0C100AC43A00B7A750 /* CCActionManager.h */,
 				50CB3B0D100AC43A00B7A750 /* CCActionManager.m */,
 				5018F2520DFDEAFF00C013A5 /* CCAction.h */,
@@ -1519,7 +1516,6 @@
 				7A5946B919E372F300F65F90 /* CCNodeColor.h in Headers */,
 				7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */,
 				7A5946C419E372F400F65F90 /* CCRenderTexture_Private.h in Headers */,
-				7A5946DD19E372F700F65F90 /* CCActionManager_Private.h in Headers */,
 				7A5946DE19E372F800F65F90 /* CCActionManager.h in Headers */,
 				7A5946E019E372F800F65F90 /* CCAction.h in Headers */,
 				7A5946E219E372F800F65F90 /* CCActionInstant.h in Headers */,

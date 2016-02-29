@@ -43,7 +43,6 @@
 #import "CCDirector_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
-#import "CCActionManager_Private.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
