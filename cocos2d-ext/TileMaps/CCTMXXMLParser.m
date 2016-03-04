@@ -268,11 +268,11 @@
 				tileset.firstGid = _currentFirstGID;
 				_currentFirstGID = 0;
 			}
-			tileset.spacing = [[attributeDict objectForKey:@"spacing"] intValue]/_contentScale;
-			tileset.margin = [[attributeDict objectForKey:@"margin"] intValue]/_contentScale;
+			tileset.spacing = [[attributeDict objectForKey:@"spacing"] intValue] / _contentScale;
+			tileset.margin = [[attributeDict objectForKey:@"margin"] intValue] / _contentScale;
 			CGSize s;
-			s.width = [[attributeDict objectForKey:@"tilewidth"] intValue]/_contentScale;
-			s.height = [[attributeDict objectForKey:@"tileheight"] intValue]/_contentScale;
+			s.width = [[attributeDict objectForKey:@"tilewidth"] intValue] / _contentScale;
+			s.height = [[attributeDict objectForKey:@"tileheight"] intValue] / _contentScale;
 			tileset.tileSize = s;
 			tileset.tileOffset = CGPointZero; //default offset (0,0)
 			tileset.contentScale = _contentScale;
@@ -303,6 +303,8 @@
 		CGSize s;
 		s.width = [[attributeDict objectForKey:@"width"] intValue];
 		s.height = [[attributeDict objectForKey:@"height"] intValue];
+
+		// The layer size is the row * column
 		layer.layerSize = s;
 
 		layer.visible = ![[attributeDict objectForKey:@"visible"] isEqualToString:@"0"];
@@ -313,9 +315,10 @@
 			layer.opacity = 1.0;
 		}
 
-		int x = [[attributeDict objectForKey:@"x"] intValue];
-		int y = [[attributeDict objectForKey:@"y"] intValue];
-		layer.offset = ccp(x,y);
+		CGPoint offset;
+		offset.x = [[attributeDict objectForKey:@"offsetx"] floatValue];
+		offset.y = [[attributeDict objectForKey:@"offsety"] floatValue];
+		layer.offset = ccpMult(offset , 1 / _contentScale);
 
 		[_layers addObject:layer];
 
@@ -327,9 +330,9 @@
 		CCTiledMapObjectGroup *objectGroup = [[CCTiledMapObjectGroup alloc] init];
 		objectGroup.groupName = [attributeDict objectForKey:@"name"];
 		CGPoint positionOffset;
-		positionOffset.x = [[attributeDict objectForKey:@"x"] intValue] * _tileSize.width;
-		positionOffset.y = [[attributeDict objectForKey:@"y"] intValue] * _tileSize.height;
-		objectGroup.positionOffset = positionOffset;
+		positionOffset.x = [[attributeDict objectForKey:@"offsetx"] floatValue];
+		positionOffset.y = [[attributeDict objectForKey:@"offsety"] floatValue];
+		objectGroup.positionOffset = ccpMult(positionOffset, 1 / _contentScale);
 
 		[_objectGroups addObject:objectGroup];
 
@@ -386,14 +389,14 @@
 		// X
 		NSString *value = [attributeDict objectForKey:@"x"];
 		if( value ) {
-			int x = [value intValue] + objectGroup.positionOffset.x;
+			int x = [value intValue] / _contentScale + objectGroup.positionOffset.x;
 			[dict setObject:[NSNumber numberWithInt:x] forKey:@"x"];
 		}
 		
 		// Y
 		value = [attributeDict objectForKey:@"y"];
 		if( value )  {
-		int y = [value intValue] + objectGroup.positionOffset.y;
+		int y = [value intValue]  / _contentScale + objectGroup.positionOffset.y;
 
 			// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
 			y = (_mapSize.height * _tileSize.height) - y - [[attributeDict objectForKey:@"height"] intValue];
