@@ -101,7 +101,7 @@
 		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
-		[self setPosition:ccpMult(offset, pixelsToPoints)];
+		[self setPosition:offset];
 
 		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth, _mapRows * _tileHeight)];
 
