@@ -97,14 +97,13 @@
 		_tileWidth = mapInfo.tileSize.width;
 		_tileHeight = mapInfo.tileSize.height;
 		_layerOrientation = mapInfo.orientation;
-		
-		CGFloat pixelsToPoints = tex ? 1.0/tex.contentScale : 1.0;
+
 		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
 		[self setPosition:ccpMult(offset, pixelsToPoints)];
 
-		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth * pixelsToPoints, _mapRows * _tileHeight * pixelsToPoints )];
+		[self setContentSize:CGSizeMake( _mapColumns * _tileWidth, _mapRows * _tileHeight)];
 
 		_useAutomaticVertexZ= NO;
 		_vertexZvalue = 0;
