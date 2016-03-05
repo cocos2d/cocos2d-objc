@@ -30,6 +30,7 @@
 #import "CCTexture.h"
 #import "CCFileUtils.h"
 #import "CCDirector.h"
+#import "CCConfiguration.h"
 #import "CCScheduler.h"
 #import "CCGLView.h"
 
