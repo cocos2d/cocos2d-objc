@@ -37,42 +37,11 @@ SpriteBuilder also allows you to update the Cocos2D version in your project, to 
 
 You can find the full Cocos2D documentation and user guide at our [documentation page](http://cocos2d-objc.org/docs/).
 
-**Important:**
-Since 3.5 Cocos2D changed ideology a bit. First of all, Android support is gone. It happened due to Apportable company bankraptcy, they were providing the UIKit implementation for Android, but it broken since XCode 7.2. Android support is unlikely to be back. Now Cocos2D is fully Apple-oriented with rich Metal support and other cool features that are available only on Apple platform.
+Important:
+---------------------
+Version 3.5 is introduced.
+[See release notes](https://github.com/cocos2d/cocos2d-objc/wiki/Cocos2D-3.5-Release-notes)
 
-All releases will be incremental now. Even if backwards compatibility will broke it will be a matter of changing a few lines in code. Backwards compatibility are guaranteed for now.
-
-**Changelog for 3.5 (Sits in README for clearing things up):**
-   * Hacky templates are gone, official installer is introduced
-   * Cocos2D is now running on native resolutions on all devices. 
-   * XIB Launch screen are used by default.
-   * All android-relative and caused-by-android code is gone.
-   * Image assets support (enables user to load images with native content scale and also makes your app really small in size due to App Thinning technology).
-   * 3D Touch support.
-   * App thinning support.
-   * CCTouch are gone, touch dispatching is gone too, so perfomance on this is much better. Native touches are now used instead.
-   * CCTransition are now meant to be overriden. Creating custom trunstions is easy as ever. Small refactoring required - Rename CCTransition to CCDefaultTransition everywhere.
-   * ObjectAL is not shipped in bundle with Cocos2D anymore, because it is marked as deprecated by Apple. You are free to choose now, which sound engine you prefer.
-   * Chipmunk physics is an option now. There are still a lot of love paid for Box2D. You are not forced to use particular physics engine anymore. Chipmunk is still available and integrated, but served as extension.
-   * CCLayoutBox takes transformations into account.
-   * Mac compilation out-of-the-box is back.
-   * TVOS support introduced.
-   * Metal rendering back and is now working.
-   * All tile map code is now an extension. There are a lot of better frameworks which can be used instead of cocos2d native tilemap code.
-   * CCScrollView sends delegate messages while animating too.
-   * A lot of nodes now moved to extension. Such as CCParallaxNode, CCPackages, CCParticles, CCClippingNode, CCMotionStreak etc. 
-   * Cocos2D can be now used as a drop-in solution, no more husling with XCode subprojects etc.
-   * Start-up code is reconsidireted. Unfortunately, we still have to use CCAppDelegate, but it will be gone in next release. `startScene` method is gone. Why? Because now you can stack scenes in the start-up, this allowing you, for example, launch a level from 3D touch shortcut with a stack level of two, and put `MainScene` into stack level 1. This won't break your app in any way, allowing all of buttons like "Home", "Back" etc working without any new code.
-   * CCEffects are now served as extension.
-   * SSZipArchive dependency is gone in default bundle.
-   * SpriteBuilder is an option now. If you don't want to use it, there will be no related files.
-   * CCTableView is improved.
-   * New control is introduced in -ui: CCPotentioMeter.
-   * Repo is generally cleaned.
-   * Bug fixed for Siri dictation.
-   * CCWarnings are fixed.
-   * CCRenderTexture shader is now forwarded to sprite.
-   * Most of the private heads in core cocos2d are now merged with public ones. It is done due to maintaing cocos2d reputation as a very customizable engine.
 
 Features
 -------------
