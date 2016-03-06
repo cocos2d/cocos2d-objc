@@ -594,12 +594,14 @@ static CCDirector *_sharedDirector = nil;
 }
 
 -(void) popToRootSceneWithTransition:(CCTransition *)transition {
-	[self popToRootScene];
-	_sendCleanupToScene = YES;
-    [transition startTransition:_nextScene];
+    [self popToSceneStackLevel:1 withTransition:transition];
 }
 
--(void) popToSceneStackLevel:(NSUInteger)level
+-(void) popToSceneStackLevel:(NSUInteger)level {
+    return [self popToSceneStackLevel:level withTransition:nil];
+}
+
+-(void) popToSceneStackLevel:(NSUInteger)level withTransition:(CCTransition *)transition
 {
 	NSAssert(_runningScene != nil, @"A running Scene is needed");
 	NSUInteger c = [_scenesStack count];
@@ -617,7 +619,7 @@ static CCDirector *_sharedDirector = nil;
 	// pop stack until reaching desired level
 	while (c > level) {
 		CCScene *current = [_scenesStack lastObject];
-		if( current.runningInActiveScene ){
+		if( current.runningInActiveScene && transition == nil ){
 			[current onExitTransitionDidStart];
 			[current onExit];
 		}
@@ -627,7 +629,10 @@ static CCDirector *_sharedDirector = nil;
 		c--;
 	}
 	_nextScene = [_scenesStack lastObject];
-	_sendCleanupToScene = NO;
+	_sendCleanupToScene = transition != nil;
+    if (transition) {
+        [transition startTransition:_nextScene];
+    }
 }
 
 // -----------------------------------------------------------------
