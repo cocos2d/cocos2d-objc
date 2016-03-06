@@ -28,11 +28,7 @@
 #import "../cocos2d/CCMacros.h"
 #import <objc/runtime.h>
 
-#if __CC_PLATFORM_ANDROID
-#define kCCTestMenuItemHeight 88
-#else
 #define kCCTestMenuItemHeight 44
-#endif
 
 static CGPoint scrollPosition;
 

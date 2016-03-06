@@ -195,7 +195,7 @@
     
     [super layout];
 }
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+#if __CC_PLATFORM_IOS
 
 - (void) touchEntered:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {

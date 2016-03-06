@@ -30,8 +30,6 @@
 #import "CCPlatformTextFieldIOS.h"
 #elif __CC_PLATFORM_MAC
 #import "CCPlatformTextFieldMac.h"
-#elif __CC_PLATFORM_ANDROID
-#import "CCPlatformTextFieldAndroid.h"
 #endif
 
 @implementation CCTextField {
@@ -66,8 +64,6 @@
     
 #if __CC_PLATFORM_IOS
     _platformTextField = [[CCPlatformTextFieldIOS alloc] init];
-#elif __CC_PLATFORM_ANDROID
-    _platformTextField = [[CCPlatformTextFieldAndroid alloc] init];
 #elif __CC_PLATFORM_MAC
     _platformTextField = [[CCPlatformTextFieldMac alloc] init];
 #endif
@@ -155,19 +151,7 @@
     [super layout];
 }
 
-- (void) setEnabled:(BOOL)enabled {
-//#if !__CC_PLATFORM_ANDROID
-//    _textField.enabled = enabled;
-//#endif
-    [super setEnabled:enabled];
-}
-
-
-
-
 #pragma mark Properties
-
-
 
 - (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
