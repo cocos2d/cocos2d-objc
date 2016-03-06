@@ -36,7 +36,7 @@
 #import "CCActionEase.h"
 
 #ifndef M_PI_X_2
-#define M_PI_X_2 (float)M_PI * 2.0f
+#define M_PI_X_2 M_PI * 2.0
 #endif
 
 #pragma mark EaseAction
@@ -98,7 +98,7 @@
 @implementation CCActionEaseSineIn
 -(void) update: (CCTime) t
 {
-	[_inner update:-1*cosf(t * (float)M_PI_2) +1];
+	[_inner update:-1*cosf(t * M_PI_2) +1];
 }
 
 - (CCActionInterval*) reverse
@@ -113,7 +113,7 @@
 @implementation CCActionEaseSineOut
 -(void) update: (CCTime) t
 {
-	[_inner update:sinf(t * (float)M_PI_2)];
+	[_inner update:sinf(t * M_PI_2)];
 }
 
 - (CCActionInterval*) reverse
@@ -128,7 +128,7 @@
 @implementation CCActionEaseSineInOut
 -(void) update: (CCTime) t
 {
-	[_inner update:-0.5f*(cosf( (float)M_PI*t) - 1)];
+	[_inner update:-0.5*(cosf( M_PI*t) - 1)];
 }
 @end
 
@@ -138,12 +138,12 @@
 
 @implementation CCActionEaseRate
 @synthesize rate=_rate;
-+(instancetype) actionWithAction: (CCActionInterval*) action rate:(float)rate
++(instancetype) actionWithAction: (CCActionInterval*) action rate:(CGFloat)rate
 {
 	return [[self alloc] initWithAction: action rate:rate];
 }
 
--(id) initWithAction: (CCActionInterval*) action rate:(float)rate
+-(id) initWithAction: (CCActionInterval*) action rate:(CGFloat)rate
 {
 	if( (self=[super initWithAction:action ]) )
 		self.rate = rate;
@@ -176,7 +176,7 @@
 @implementation CCActionEaseOut
 -(void) update: (CCTime) t
 {
-    [_inner update: 1.0f - powf(1.0f - t, _rate)];
+    [_inner update: 1.0 - powf(1.0 - t, _rate)];
 }
 @end
 
@@ -186,10 +186,10 @@
 {
 	t *= 2;
 	if (t < 1) {
-		[_inner update: 0.5f * powf (t, _rate)];
+		[_inner update: 0.5 * powf (t, _rate)];
     }
 	else {
-		[_inner update: 1.0f - 0.5f * powf(2-t, _rate)];
+		[_inner update: 1.0 - 0.5 * powf(2-t, _rate)];
     }
 }
 
@@ -211,20 +211,20 @@
 
 +(instancetype) actionWithAction: (CCActionInterval*) action
 {
-	return [[self alloc] initWithAction:action period:0.3f];
+	return [[self alloc] initWithAction:action period:0.3];
 }
 
-+(instancetype) actionWithAction: (CCActionInterval*) action period:(float)period
++(instancetype) actionWithAction: (CCActionInterval*) action period:(CGFloat)period
 {
 	return [[self alloc] initWithAction:action period:period];
 }
 
 -(id) initWithAction: (CCActionInterval*) action
 {
-	return [self initWithAction:action period:0.3f];
+	return [self initWithAction:action period:0.3];
 }
 
--(id) initWithAction: (CCActionInterval*) action period:(float)period
+-(id) initWithAction: (CCActionInterval*) action period:(CGFloat)period
 {
 	if( (self=[super initWithAction:action]) )
 		_period = period;
@@ -255,7 +255,7 @@
 		newT = t;
 
 	else {
-		float s = _period / 4;
+		CGFloat s = _period / 4;
 		t = t - 1;
 		newT = -powf(2, 10 * t) * sinf( (t-s) *M_PI_X_2 / _period);
 	}
@@ -279,7 +279,7 @@
 		newT = t;
 
 	} else {
-		float s = _period / 4;
+		CGFloat s = _period / 4;
 		newT = powf(2, -10 * t) * sinf( (t-s) *M_PI_X_2 / _period) + 1;
 	}
 	[_inner update:newT];
@@ -303,14 +303,14 @@
 	else {
 		t = t * 2;
 		if(! _period )
-			_period = 0.3f * 1.5f;
+			_period = 0.3 * 1.5;
 		CCTime s = _period / 4;
 
 		t = t -1;
 		if( t < 0 )
-			newT = -0.5f * powf(2, 10 * t) * sinf((t - s) * M_PI_X_2 / _period);
+			newT = -0.5 * powf(2, 10 * t) * sinf((t - s) * M_PI_X_2 / _period);
 		else
-			newT = powf(2, -10 * t) * sinf((t - s) * M_PI_X_2 / _period) * 0.5f + 1;
+			newT = powf(2, -10 * t) * sinf((t - s) * M_PI_X_2 / _period) * 0.5 + 1;
 	}
 	[_inner update:newT];
 }
@@ -330,19 +330,19 @@
 -(CCTime) bounceTime:(CCTime) t
 {
 	if (t < 1 / 2.75) {
-		return 7.5625f * t * t;
+		return 7.5625 * t * t;
 	}
 	else if (t < 2 / 2.75) {
-		t -= 1.5f / 2.75f;
-		return 7.5625f * t * t + 0.75f;
+		t -= 1.5 / 2.75;
+		return 7.5625 * t * t + 0.75;
 	}
 	else if (t < 2.5 / 2.75) {
-		t -= 2.25f / 2.75f;
-		return 7.5625f * t * t + 0.9375f;
+		t -= 2.25 / 2.75;
+		return 7.5625 * t * t + 0.9375;
 	}
 
-	t -= 2.625f / 2.75f;
-	return 7.5625f * t * t + 0.984375f;
+	t -= 2.625 / 2.75;
+	return 7.5625 * t * t + 0.984375;
 }
 @end
 
@@ -397,9 +397,9 @@
 		newT = t;
 	else if (t < 0.5) {
 		t = t * 2;
-		newT = (1 - [self bounceTime:1-t] ) * 0.5f;
+		newT = (1 - [self bounceTime:1-t] ) * 0.5;
 	} else
-		newT = [self bounceTime:t * 2 - 1] * 0.5f + 0.5f;
+		newT = [self bounceTime:t * 2 - 1] * 0.5 + 0.5;
 
 	[_inner update:newT];
 }
@@ -413,7 +413,7 @@
 
 -(void) update: (CCTime) t
 {
-	CCTime overshoot = 1.70158f;
+	CCTime overshoot = 1.70158;
 	[_inner update: t * t * ((overshoot + 1) * t - overshoot)];
 }
 
@@ -427,7 +427,7 @@
 @implementation CCActionEaseBackOut
 -(void) update: (CCTime) t
 {
-	CCTime overshoot = 1.70158f;
+	CCTime overshoot = 1.70158;
 
 	t = t - 1;
 	[_inner update: t * t * ((overshoot + 1) * t + overshoot) + 1];
@@ -444,7 +444,7 @@
 
 -(void) update: (CCTime) t
 {
-	CCTime overshoot = 1.70158f * 1.525f;
+	CCTime overshoot = 1.70158 * 1.525;
 
 	t = t * 2;
 	if (t < 1)
