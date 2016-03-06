@@ -136,12 +136,12 @@
  *  CCActionEaseRate adds an additional rate property to control the rate of change for the specified action.
  */
 @interface CCActionEaseRate :  CCActionEase <NSCopying> {
-	float	_rate;
+	CGFloat	_rate;
 }
 
 // purposefully undocumented: little need to change rate while action is running
 /* Rate value for the ease action. */
-@property (nonatomic,readwrite,assign) float rate;
+@property (nonatomic,readwrite,assign) CGFloat rate;
 
 /** @name Creating an Ease Action */
 
@@ -153,7 +153,7 @@
  *
  *  @return New rate action.
  */
-+ (id)actionWithAction:(CCActionInterval*)action rate:(float)rate;
++ (id)actionWithAction:(CCActionInterval*)action rate:(CGFloat)rate;
 
 /**
  *  Initializes the action with the inner action and the rate parameter.
@@ -163,7 +163,7 @@
  *
  *  @return New rate action.
  */
-- (id)initWithAction:(CCActionInterval*)action rate:(float)rate;
+- (id)initWithAction:(CCActionInterval*)action rate:(CGFloat)rate;
 
 @end
 
@@ -196,12 +196,12 @@
  *  CCActionEaseElastic adds a period property and applies a dampened oscillation to the specified action.
  */
 @interface CCActionEaseElastic : CCActionEase <NSCopying> {
-	float _period;
+	CGFloat _period;
 }
 
 // purposefully undocumented: little need to change period while action is running
 /* Period of the wave in radians. Default is 0.3. */
-@property (nonatomic,readwrite) float period;
+@property (nonatomic,readwrite) CGFloat period;
 
 /** @name Creating an Ease Action */
 
@@ -209,21 +209,21 @@
  *  Creates the action with the inner action and the period in radians (default is 0.3).
  *
  *  @param action Action to apply ease action to.
- *  @param period eriod of wave in radians.
+ *  @param period period of wave in radians.
  *
  *  @return New elastic action.
  */
-+ (id)actionWithAction:(CCActionInterval*)action period:(float)period;
++ (id)actionWithAction:(CCActionInterval*)action period:(CGFloat)period;
 
 /**
  *  Initializes the action with the inner action and the period in radians (default is 0.3).
  *
  *  @param action Action to apply ease action to.
- *  @param period eriod of wave in radians.
+ *  @param period period of wave in radians.
  *
  *  @return New elastic action.
  */
-- (id)initWithAction:(CCActionInterval*)action period:(float)period;
+- (id)initWithAction:(CCActionInterval*)action period:(CGFloat)period;
 
 @end
 

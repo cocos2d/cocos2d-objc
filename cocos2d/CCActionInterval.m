@@ -101,7 +101,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	_elapsed = 0.0f;
+	_elapsed = 0.0;
 	_firstTick = YES;
 }
 
@@ -215,7 +215,7 @@
 {
 
 	int found = 0;
-	CCTime new_t = 0.0f;
+	CCTime new_t = 0.0;
 	
 	if( t < _split ) {
 		// action[0]
@@ -239,13 +239,13 @@
 		if( _last == -1 ) {
 			// action[0] was skipped, execute it.
 			[_actions[0] startWithTarget:_target];
-			[_actions[0] update:1.0f];
+			[_actions[0] update:1.0];
 			[_actions[0] stop];
 		}
 		else if( _last == 0 )
 		{
 			// switching to action 1. stop action 0.
-			[_actions[0] update: 1.0f];
+			[_actions[0] update: 1.0];
 			[_actions[0] stop];
 		}
 	}
@@ -337,7 +337,7 @@
 		while (dt > _nextDt && _total < _times)
 		{
 
-			[_innerAction update:1.0f];
+			[_innerAction update:1.0];
 			_total++;
 
 			[_innerAction stop];
@@ -346,7 +346,7 @@
 		}
 		
 		// fix for issue #1288, incorrect end value of repeat
-		if(dt >= 1.0f && _total < _times) 
+		if(dt >= 1.0 && _total < _times)
 		{
 			_total++;
 		}
@@ -368,7 +368,7 @@
 	}
 	else
 	{
-		[_innerAction update:fmodf(dt * _times,1.0f)];
+		[_innerAction update:fmodf(dt * _times,1.0)];
 	}
 }
 
@@ -606,9 +606,9 @@
     //Calculate X
 	_startAngleX = [_target rotationalSkewX];
 	if (_startAngleX > 0)
-		_startAngleX = fmodf(_startAngleX, 360.0f);
+		_startAngleX = fmodf(_startAngleX, 360.0);
 	else
-		_startAngleX = fmodf(_startAngleX, -360.0f);
+		_startAngleX = fmodf(_startAngleX, -360.0);
 
 	_diffAngleX = _dstAngleX - _startAngleX;
 	if (_diffAngleX > 180)
@@ -620,9 +620,9 @@
    //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
 	_startAngleY = [_target rotationalSkewY];
 	if (_startAngleY > 0)
-		_startAngleY = fmodf(_startAngleY, 360.0f);
+		_startAngleY = fmodf(_startAngleY, 360.0);
 	else
-		_startAngleY = fmodf(_startAngleY, -360.0f);
+		_startAngleY = fmodf(_startAngleY, -360.0);
   
 	_diffAngleY = _dstAngleY - _startAngleY;
 	if (_diffAngleY > 180)
@@ -836,9 +836,9 @@
 	_startSkewX = [_target skewX];
 
 	if (_startSkewX > 0)
-		_startSkewX = fmodf(_startSkewX, 180.0f);
+		_startSkewX = fmodf(_startSkewX, 180.0);
 	else
-		_startSkewX = fmodf(_startSkewX, -180.0f);
+		_startSkewX = fmodf(_startSkewX, -180.0);
 
 	_deltaX = _endSkewX - _startSkewX;
 
@@ -852,9 +852,9 @@
 	_startSkewY = [_target skewY];
 
 	if (_startSkewY > 0)
-		_startSkewY = fmodf(_startSkewY, 360.0f);
+		_startSkewY = fmodf(_startSkewY, 360.0);
 	else
-		_startSkewY = fmodf(_startSkewY, -360.0f);
+		_startSkewY = fmodf(_startSkewY, -360.0);
 
 	_deltaY = _endSkewY - _startSkewY;
 
@@ -946,7 +946,7 @@
 //	y += _delta.y * dt;
 	
 //	// parabolic jump (since v0.8.2)
-	CGFloat frac = fmodf( t * _jumps, 1.0f );
+	CGFloat frac = fmodf( t * _jumps, 1.0 );
 	CGFloat y = _height * 4 * frac * (1 - frac);
 	y += _delta.y * t;
 
@@ -1218,7 +1218,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 -(void) update: (CCTime) t
 {
 	if( ! [self isDone] ) {
-		CCTime slice = 1.0f / _times;
+		CCTime slice = 1.0 / _times;
 		CCTime m = fmodf(t, slice);
 		[_target setVisible: (m > slice/2) ? YES : NO];
 	}
@@ -1545,7 +1545,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 {
 	
 	// if t==1, ignore. Animation should finish with t==1
-	if( t < 1.0f ) {
+	if( t < 1.0 ) {
 		t *= _animation.loops;
 		
 		// new loop?  If so, reset frame counter
@@ -1556,7 +1556,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 		}
 		
 		// new t for animations
-		t = fmodf(t, 1.0f);
+		t = fmodf(t, 1.0);
 	}
 	
 	NSArray *frames = [_animation frames];
