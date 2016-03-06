@@ -39,7 +39,6 @@
 #import "Support/CGPointExtension.h"
 #import "CCTiledMapLayer_Private.h"
 #import "CCTexture.h"
-// #import "CCMathTypesAndroid.h"
 
 #pragma mark -
 #pragma mark CCTMXLayer

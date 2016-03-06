@@ -51,7 +51,7 @@
 @property (nonatomic, copy, readonly) NSString *resolution;
 
 /**
- *  OS of the package e.g. iOS, Android, Mac
+ *  OS of the package e.g. iOS, Mac
  *  @since v3.3 and later
  *  @see standardIdentifier
  */

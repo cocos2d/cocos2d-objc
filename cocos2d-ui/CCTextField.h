@@ -27,18 +27,11 @@
 
 #import "CCPlatformTextField.h"
 
-#if __CC_PLATFORM_ANDROID
-#import <AndroidKit/AndroidEditText.h>
-#endif
-
-
 @class CCPlatformTextField;
 
 /**
  A text field is used for editing text. It is implemented by encapsulating the platform's native text field ([NSTextField](https://developer.apple.com/library/mac/Documentation/Cocoa/Reference/ApplicationKit/Classes/NSTextField_Class/index.html#//apple_ref/doc/uid/20000128-SW2)
- on Mac and [UITextField](https://developer.apple.com/library/ios/documentation/Uikit/reference/UITextField_Class/index.html) on iOS and
- [EditText](http://developer.android.com/reference/android/widget/EditText.html) on Android).
- 
+ on Mac and [UITextField](https://developer.apple.com/library/ios/documentation/Uikit/reference/UITextField_Class/index.html) on iOS.
  An action callback will be sent when the user is done editing the text (clicks/taps outside) or when the return key is pressed.
  
  A CCSprite9Slice is used a the text field's background image.
@@ -77,17 +70,14 @@
 
 /** @name Accessing the Platform-Specific Text Field */
 
-/** The platform-native text field object. On iOS it's a UITextField, on OS X it's a NSTextField, on Android it's a EditText.
+/** The platform-native text field object. On iOS it's a UITextField, on OS X it's a NSTextField.
  @see [UITextField](https://developer.apple.com/library/ios/documentation/Uikit/reference/UITextField_Class/index.html)
  @see [NSTextField](https://developer.apple.com/library/mac/Documentation/Cocoa/Reference/ApplicationKit/Classes/NSTextField_Class/index.html#//apple_ref/doc/uid/20000128-SW2)
- @see [EditText](http://developer.android.com/reference/android/widget/EditText.html)
  */
 #if __CC_PLATFORM_IOS
 @property (nonatomic,readonly) UITextField* textField;
 #elif __CC_PLATFORM_MAC
 @property (nonatomic,readonly) NSTextField* textField;
-#elif __CC_PLATFORM_ANDROID
-@property (nonatomic,readonly) AndroidEditText* textField;
 #endif
 
 // purposefully undocumented: internal property

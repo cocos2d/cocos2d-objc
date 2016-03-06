@@ -8,9 +8,7 @@
 
 + (NSString *)currentOS
 {
-#if __CC_PLATFORM_ANDROID
-    return @"Android";
-#elif __CC_PLATFORM_MAC || __CC_PLATFORM_IOS
+#if __CC_PLATFORM_MAC || __CC_PLATFORM_IOS
     return @"iOS";
 #endif
     return nil;

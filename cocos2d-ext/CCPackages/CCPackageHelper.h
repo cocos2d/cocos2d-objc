@@ -6,7 +6,7 @@
 @interface CCPackageHelper : NSObject
 
 /**
- * Returns the current OS, possible values: `iOS` or `Android`. 
+ * Returns the current OS, possible values: `iOS`. 
  * @note On OS X this will also return `iOS`.
  * @since v3.3 and later
  */

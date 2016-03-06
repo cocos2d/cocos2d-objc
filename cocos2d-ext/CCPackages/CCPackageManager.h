@@ -82,7 +82,7 @@
  *
  *  @param name Name of the package
  *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
- *  @param os operating system string (ie iOS, Android, Mac)
+ *  @param os operating system string (ie iOS, Mac)
  *  @since v3.3 and later
  *  @see CCPackage
  */
