@@ -177,6 +177,10 @@
 - (void) keyboardWillBeHidden:(NSNotification*) notification
 {
     _keyboardIsShown = NO;
+    BOOL focusOnTextField = _textField.isEditing;
+    
+    if (focusOnTextField)
+        [self endFocusingOnTextField];
 }
 
 
