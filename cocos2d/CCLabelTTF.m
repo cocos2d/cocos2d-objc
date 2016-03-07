@@ -886,15 +886,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle font color
-    
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    const CGFloat components[] = {_fontColor.red, _fontColor.green, _fontColor.blue, _fontColor.alpha};
-    CGColorRef color = CGColorCreate(colorspace, components);
-    CGColorSpaceRelease(colorspace);
-
+    CGColorRef color = _fontColor.CGColor;
     CGContextSetFillColorWithColor(context, color);
     CGContextSetStrokeColorWithColor(context, color);
-    CGColorRelease(color);
 
     [self drawString:string withFont:font inContext:context inRect:drawArea];
 
