@@ -39,6 +39,8 @@ NSString * const CCFileUtilsSuffixiPhone = @"iphone";
 NSString * const CCFileUtilsSuffixiPhoneHD = @"iphonehd";
 NSString * const CCFileUtilsSuffixiPhone5 = @"iphone5";
 NSString * const CCFileUtilsSuffixiPhone5HD = @"iphone5hd";
+NSString * const CCFileUtilsSuffixiPhone6Plus = @"iphone6plus";
+NSString * const CCFileUtilsSuffixiPhone6PlusHD = @"iphone6plushd";
 NSString * const CCFileUtilsSuffixMac = @"mac";
 NSString * const CCFileUtilsSuffixMacHD = @"machd";
 NSString * const CCFileUtilsSuffix2x = @"2x";
@@ -163,6 +165,8 @@ static CCFileUtils *fileUtils = nil;
 						 @"-hd", CCFileUtilsSuffixiPhoneHD,
 						 @"-iphone5", CCFileUtilsSuffixiPhone5,
 						 @"-iphone5hd", CCFileUtilsSuffixiPhone5HD,
+                         @"-iphone6plus", CCFileUtilsSuffixiPhone6Plus,
+                         @"-iphone6plushd", CCFileUtilsSuffixiPhone6PlusHD,
 						 @"", CCFileUtilsSuffixDefault,
 						 nil];
 
@@ -173,6 +177,8 @@ static CCFileUtils *fileUtils = nil;
 							@"resources-iphonehd", CCFileUtilsSuffixiPhoneHD,
 							@"resources-iphone5", CCFileUtilsSuffixiPhone5,
 							@"resources-iphone5hd", CCFileUtilsSuffixiPhone5HD,
+                            @"resources-iphone6plus", CCFileUtilsSuffixiPhone6Plus,
+                            @"resources-iphone6plushd", CCFileUtilsSuffixiPhone6PlusHD,
 							@"", CCFileUtilsSuffixDefault,
 							nil];
 
@@ -223,6 +229,8 @@ static CCFileUtils *fileUtils = nil;
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPadHD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPad];
 		if( _enableiPhoneResourcesOniPad ) {
+            [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone6PlusHD];
+            [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone6Plus];
 			[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5HD];
 			[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
 		}
@@ -240,6 +248,8 @@ static CCFileUtils *fileUtils = nil;
 	{
 		// Terrible, terrible iPhone 6+ hack.
 		[self setiPadContentScaleFactor:2.0];
+        [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone6PlusHD];
+        [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone6Plus];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPadHD];
 		
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5HD];
@@ -413,6 +423,10 @@ static CCFileUtils *fileUtils = nil;
 				return 1.0*_iPhoneContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixiPhone5HD] )
 				return 2.0*_iPhoneContentScaleFactor;
+            if( [key isEqualToString:CCFileUtilsSuffixiPhone6PlusHD] )
+                return 2.0*_iPadContentScaleFactor;
+            if( [key isEqualToString:CCFileUtilsSuffixiPhone6Plus] )
+                return 1.0*_iPadContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixDefault] )
 				return 1.0;
 #elif __CC_PLATFORM_MAC

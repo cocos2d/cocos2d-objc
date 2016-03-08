@@ -98,6 +98,9 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
 /** Progress start position. */
 @property (nonatomic, readwrite) CGPoint midpoint;
 
+/** Radial Reverse Direction */
+@property (nonatomic, readwrite) BOOL reverseRadial;
+
 /// -----------------------------------------------------------------------
 /// @name Animating the Progress Node
 /// -----------------------------------------------------------------------

@@ -36,6 +36,8 @@ extern NSString * const CCFileUtilsSuffixiPhone;
 extern NSString * const CCFileUtilsSuffixiPhoneHD;
 extern NSString * const CCFileUtilsSuffixiPhone5;
 extern NSString * const CCFileUtilsSuffixiPhone5HD;
+extern NSString * const CCFileUtilsSuffixiPhone6Plus;
+extern NSString * const CCFileUtilsSuffixiPhone6PlusHD;
 extern NSString * const CCFileUtilsSuffixMac;
 extern NSString * const CCFileUtilsSuffixMacHD;
 

@@ -57,6 +57,7 @@
 @synthesize sprite = _sprite;
 @synthesize type = _type;
 @synthesize reverseDirection = _reverseDirection;
+@synthesize reverseRadial = _reverseRadial;
 @synthesize midpoint = _midpoint;
 @synthesize barChangeRate = _barChangeRate;
 
@@ -76,6 +77,7 @@
 	if(( self = [super init] )){
 		_type = CCProgressNodeTypeRadial;
 		_reverseDirection = NO;
+        _reverseRadial = NO;
 		_percentage = 0.f;
 		_verts = NULL;
 		_vertexCount = 0;
@@ -144,6 +146,15 @@
 		_dirtyVertexData = YES;
 		_needsUpdateProgress = YES;
 	}
+}
+
+-(void)setReverseRadial:(BOOL)counterClockWise {
+    if(_reverseRadial != counterClockWise) {
+        _reverseRadial = counterClockWise;
+        
+        _dirtyVertexData = YES;
+        _needsUpdateProgress = YES;
+    }
 }
 
 -(void)setColor:(CCColor*)c
@@ -259,10 +270,15 @@
 }
 
 static inline CGPoint
-BoundryTexCoord(int index)
+BoundryTexCoord(int index, bool reverse)
 {
-	static const CGPoint points[] = {{1,1}, {1,0}, {0,0}, {0,1}};
-	return points[index];
+    if (!reverse) {
+        static const CGPoint points[] = {{1,1}, {1,0}, {0,0}, {0,1}};
+        return points[index];
+    } else {
+        static const CGPoint points[] = {{0,1}, {0,0}, {1,0}, {1,1}};
+        return points[index];
+    }
 }
 
 ///
@@ -283,6 +299,7 @@ BoundryTexCoord(int index)
 	float alpha = _percentage / 100.f;
   
 	float angle = 2.f*((float)M_PI) * ( _reverseDirection == YES ? alpha : 1.f - alpha);
+    angle *= (_reverseRadial == YES) ? -1.f : 1.f;
   
 	//	We find the vector to do a hit detection based on the percentage
 	//	We know the first vector is the one @ 12 o'clock (top,mid) so we rotate
@@ -314,8 +331,8 @@ BoundryTexCoord(int index)
 		for (int i = 0; i <= 4; ++i) {
 			int pIndex = (i + 3)%4;
       
-			CGPoint edgePtA = BoundryTexCoord(i % 4);
-			CGPoint edgePtB = BoundryTexCoord(pIndex);
+            CGPoint edgePtA = BoundryTexCoord(i % 4, _reverseRadial);
+            CGPoint edgePtB = BoundryTexCoord(pIndex, _reverseRadial);
       
 			//	Remember that the top edge is split in half for the 12 o'clock position
 			//	Let's deal with that here by finding the correct endpoints
@@ -385,7 +402,7 @@ BoundryTexCoord(int index)
 		_verts[1].position = [self vertexFromAlphaPoint:topMid];
     
 		for(int i = 0; i < index; ++i){
-			CGPoint alphaPoint = BoundryTexCoord(i);
+			CGPoint alphaPoint = BoundryTexCoord(i, _reverseRadial);
 			_verts[i+2].texCoord1 = [self textureCoordFromAlphaPoint:alphaPoint];
 			_verts[i+2].position = [self vertexFromAlphaPoint:alphaPoint];
 		}
