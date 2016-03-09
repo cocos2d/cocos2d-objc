@@ -37,9 +37,6 @@
 
 /// Macro to embed Metal shading language source.
 #define CC_METAL(x) @#x
-
-#import <Metal/Metal.h>
-#import "CCMetalSupport_Private.h"
 #endif
 
 @class CCRenderer;
