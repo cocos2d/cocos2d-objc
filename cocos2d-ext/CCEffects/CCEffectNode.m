@@ -17,9 +17,9 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 
-#import "CCTexture_Private.h"
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
+#import "CCTexture.h"
+#import "CCDirector.h"
+#import "CCNode.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
 #import "CCEffect_Private.h"

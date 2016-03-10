@@ -35,6 +35,14 @@
 #import "CCBReader_Private.h"
 #import "CCActionManager.h"
 
+#if CC_LIGHTING
+#import "CCLightNode.h"
+#endif
+
+#if CC_OBJECT_AL
+#import "CCActionAudio.h"
+#endif
+
 // Unique Manager ID
 static NSInteger ccbAnimationManagerID = 0;
 
