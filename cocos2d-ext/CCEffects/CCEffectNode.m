@@ -16,12 +16,11 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-
 #import "CCTexture.h"
 #import "CCDirector.h"
 #import "CCNode.h"
 #import "CCRenderer_Private.h"
-#import "CCRenderTexture_Private.h"
+#import "CCRenderTexture.h"
 #import "CCEffect.h"
 
 #if __CC_PLATFORM_MAC
