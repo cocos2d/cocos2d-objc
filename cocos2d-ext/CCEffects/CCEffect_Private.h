@@ -7,7 +7,7 @@
 //
 
 #import "CCEffect.h"
-#import "CCEffectStackProtocol.h"
+#import "CCSprite.h"
 
 
 extern NSString * const CCShaderUniformPreviousPassTexture;

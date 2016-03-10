@@ -1,4 +1,7 @@
 #import "CCRenderer_Private.h"
+#import "CCEffect.h"
+#import "CCEffectRenderer.h"
+#import "CCEffect_Private.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"

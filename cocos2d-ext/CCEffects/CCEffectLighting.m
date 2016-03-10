@@ -19,7 +19,7 @@
 #import "CCTexture.h"
 
 #import "CCEffect_Private.h"
-#import "CCSprite_Private.h"
+#import "CCSprite.h"
 
 
 typedef struct _CCLightKey
@@ -328,10 +328,10 @@ static float conditionShininess(float shininess);
                 passInputs.shaderUniforms[passInputs.uniformTranslationTable[lightSpecularColorLabel]] = [NSValue valueWithGLKVector4:lightSpecularColor];
             }
         }
-
+        #if CC_LIGHTING
         CCColor *ambientColor = [CCEffectUtilsGetNodeScene(passInputs.sprite).lights findAmbientSumForLightsWithMask:weakInterface.groupMask];
         passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:ambientColor.glkVector4];
-        
+        #endif
         if (weakInterface.needsSpecular)
         {
             passInputs.shaderUniforms[passInputs.uniformTranslationTable[@"u_specularExponent"]] = weakInterface.conditionedShininess;
@@ -382,7 +382,7 @@ static float conditionShininess(float shininess);
     _needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
     CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
-    
+    #if CC_LIGHTING
     CCLightCollection *lightCollection = CCEffectUtilsGetNodeScene(sprite).lights;
     if (self.groupMaskDirty)
     {
@@ -406,6 +406,7 @@ static float conditionShininess(float shininess);
         result.status = CCEffectPrepareSuccess;
         result.changes = CCEffectPrepareShaderChanged | CCEffectPrepareUniformsChanged;
     }
+    #endif
     return result;
 }
 

@@ -66,27 +66,32 @@
 - (void)onEnter
 {
     [super onEnter];
+    #if CC_LIGHTING
     [self.scene.lights addLight:self];
 
     CCLightCollection *lightCollection = self.scene.lights;
     NSAssert(lightCollection, @"The light node is in a scene but there's no light collection.");
     _groupMask = [lightCollection maskForGroups:_groups];
+    #endif
 }
 
 - (void)onExit
 {
     _groupMask = 0;
-    
+    #if CC_LIGHTING
     [self.scene.lights removeLight:self];
+    #endif
     [super onExit];
 }
 
 -(void)setGroups:(NSArray *)groups
 {
     _groups = [groups copy];
-
+    #if CC_LIGHTING
     CCLightCollection *lightCollection = self.scene.lights;
+    
     _groupMask = [lightCollection maskForGroups:_groups];
+    #endif
 }
 
 -(void)setIntensity:(float)intensity
