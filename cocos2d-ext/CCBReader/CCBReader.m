@@ -32,7 +32,7 @@
 #import "CCBSequenceProperty.h"
 #import "CCBKeyframe.h"
 #import "CCBLocalizationManager.h"
-#import "CCBReader_Private.h"
+#import "CCBReader.h"
 #import "CCNode.h"
 #import "CCDirector.h"
 #if CC_PHYSICS
