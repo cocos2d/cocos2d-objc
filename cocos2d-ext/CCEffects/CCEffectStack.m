@@ -8,7 +8,7 @@
 
 #import "CCEffectStack.h"
 #import "CCEffectStack_Private.h"
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 
 
 @implementation CCEffectStack

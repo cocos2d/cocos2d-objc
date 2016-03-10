@@ -3,7 +3,6 @@
 #if CC_EFFECTS
 #import "CCEffect.h"
 #import "CCEffectRenderer.h"
-#import "CCEffect_Private.h"
 #endif
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED

@@ -41,7 +41,7 @@
 
 #import "CCEffectDropShadow.h"
 #import "CCEffectUtils.h"
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 #import "CCTexture.h"
 
 

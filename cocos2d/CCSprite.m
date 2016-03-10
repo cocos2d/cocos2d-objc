@@ -40,7 +40,7 @@
 #import "CCRenderer_Private.h"
 
 #if CC_EFFECTS
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 #import "CCEffectRenderer.h"
 #endif
 
