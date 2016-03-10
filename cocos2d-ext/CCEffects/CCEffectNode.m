@@ -22,7 +22,7 @@
 #import "CCNode.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
