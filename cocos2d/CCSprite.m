@@ -38,8 +38,11 @@
 #import "Support/CGPointExtension.h"
 #import "Support/CCProfiling.h"
 #import "CCRenderer_Private.h"
+
+#if CC_EFFECTS
 #import "CCEffect_Private.h"
 #import "CCEffectRenderer.h"
+#endif
 
 #pragma mark -
 #pragma mark CCSprite
