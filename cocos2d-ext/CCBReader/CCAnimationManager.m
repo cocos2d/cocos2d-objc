@@ -32,7 +32,7 @@
 #import <objc/runtime.h>
 
 #import "CCDirector.h"
-#import "CCBReader_Private.h"
+#import "CCBReader.h"
 #import "CCActionManager.h"
 
 #if CC_LIGHTING
