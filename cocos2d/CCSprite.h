@@ -30,8 +30,6 @@
 #import "CCProtocols.h"
 
 #if CC_EFFECTS
-//#import "CCEffectRenderer.h"
-//#import "CCEffect_Private.h"
 @class CCEffectRenderer;
 #endif
 
