@@ -5,7 +5,6 @@
 #import "CCPackage.h"
 #import "CCPackageConstants.h"
 #import "ccMacros.h"
-#import "CCPackage_private.h"
 #import "CCFileUtils.h"
 
 @interface CCPackageDownload()

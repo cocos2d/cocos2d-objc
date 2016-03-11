@@ -2,7 +2,6 @@
 #import "CCPackageConstants.h"
 #import "CCPackage.h"
 #import "ccMacros.h"
-#import "CCPackage_private.h"
 #import "CCPackageHelper.h"
 
 
