@@ -39,8 +39,6 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
-#import "CCParticleSystemBase_Private.h"
-
 #define kCCParticleDefaultCapacity 500
 
 @interface CCNode()

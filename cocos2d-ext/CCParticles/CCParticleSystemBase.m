@@ -61,8 +61,6 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
-#import "CCParticleSystemBase_Private.h"
-
 @implementation CCParticleSystemBase
 @synthesize active = _active, duration = _duration;
 @synthesize sourcePosition = _sourcePosition, posVar = _posVar;
