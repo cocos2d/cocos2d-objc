@@ -40,6 +40,8 @@
  will turn them all into sprites, possibly adding a significant memory overhead.
  */
 
+typedef void (^CCTiledMapLayerAnimationBlock)(NSUInteger tileX, NSUInteger tileY, uint32_t *gid, uint32_t *flags, GLKVector4 *color);
+
 @interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
 
 /// -----------------------------------------------------------------------
@@ -200,5 +202,10 @@
  *  @see CCNode
  */
 -(void) addChild:(CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
+
+@property(nonatomic, copy) CCTiledMapLayerAnimationBlock animationBlock;
+
+// Setup the tiles.
+-(void) setupTiles;
 
 @end
