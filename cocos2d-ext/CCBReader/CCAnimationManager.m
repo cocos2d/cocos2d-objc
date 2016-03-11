@@ -23,7 +23,6 @@
  */
 
 #import "CCAnimationManager.h"
-#import "CCAnimationManager_Private.h"
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"
 #import "CCBSequenceProperty.h"

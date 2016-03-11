@@ -38,7 +38,6 @@
 #if CC_PHYSICS
 #import "CCPhysics+ObjectiveChipmunk.h"
 #endif
-#import "CCAnimationManager_Private.h"
 #if CC_EFFECTS
 #import "CCEffectStack.h"
 #endif

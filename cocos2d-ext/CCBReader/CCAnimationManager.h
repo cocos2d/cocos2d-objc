@@ -129,4 +129,35 @@
 /// @see CCBAnimationManagerDelegate
 @property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
 
+// Sequence Array
+@property (nonatomic,readonly) NSMutableArray* sequences;
+
+
+// Auto play sequence id.
+@property (nonatomic,assign) int autoPlaySequenceId;
+
+// Base node.
+@property (nonatomic,unsafe_unretained) CCNode* rootNode;
+
+// (CCB) Optional owner
+@property (nonatomic,unsafe_unretained) id owner;
+
+// (CCB) Resolution and default container size.
+@property (nonatomic,assign) CGSize rootContainerSize;
+
+// (CCB) Node Management
+- (CGSize) containerSize:(CCNode*)node;
+- (void) addNode:(CCNode*)node andSequences:(NSDictionary*)seq;
+- (void) moveAnimationsFromNode:(CCNode*)fromNode toNode:(CCNode*)toNode;
+
+// Reset node state.
+- (void) setBaseValue:(id)value forNode:(CCNode*)node propertyName:(NSString*)propName;
+
+- (void) runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration;
+
+- (void)timeSeekForSequenceId:(int)seqId time:(float)time;
+
+#pragma mark Simple Sequence Builder
+- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCBSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop;
+
 @end
