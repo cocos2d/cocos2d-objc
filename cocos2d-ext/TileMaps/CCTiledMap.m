@@ -37,8 +37,6 @@
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
-#import "CCTiledMapLayer_Private.h"
-
 #pragma mark -
 #pragma mark CCTMXTiledMap
 
