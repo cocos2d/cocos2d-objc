@@ -614,5 +614,10 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  @see rotatePerSecond */
 @property (nonatomic,readwrite,assign) float rotatePerSecondVar;
 
+// Update.
+-(void) update: (CCTime) dt;
+
+// System full status.
+-(BOOL) isFull;
 
 @end

@@ -50,5 +50,13 @@
  */
 -(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect;
 
+// OS X
+// Initilizes the texture with a rectangle measured in points.
+-(void) initTexCoordsWithRect:(CGRect)rect;
+
+// OS X
+// Set sprite frame for system.
+-(void)setSpriteFrame:(CCSpriteFrame*)spriteFrame;
+
 @end
 
