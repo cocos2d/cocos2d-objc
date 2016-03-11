@@ -26,8 +26,6 @@
 #import "CCLightGroups.h"
 #import "CCLightNode.h"
 
-#import "CCLightNode_Private.h"
-
 
 const CCLightGroupMask CCLightCollectionAllGroups = ~((CCLightGroupMask)0);
 static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;

@@ -10,8 +10,6 @@
 #import "CCLightCollection.h"
 #import "CCScene.h"
 
-#import "CCLightNode_Private.h"
-
 
 @implementation CCLightNode
 
