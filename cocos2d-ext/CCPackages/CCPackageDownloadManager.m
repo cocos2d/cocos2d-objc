@@ -4,7 +4,6 @@
 #import "CCPackageDownloadManagerDelegate.h"
 #import "CCPackageConstants.h"
 #import "ccMacros.h"
-#import "CCPackage_private.h"
 
 
 @interface CCPackageDownloadManager()

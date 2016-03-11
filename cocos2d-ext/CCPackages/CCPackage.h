@@ -41,21 +41,21 @@
  *  @since v3.3 and later
  *  @see standardIdentifier
  */
-@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, readwrite) NSString *name;
 
 /**
  *  Resolution of the package, e.g. tablethd, phonehd, etc.
  *  @since v3.3 and later
  *  @see standardIdentifier
  */
-@property (nonatomic, copy, readonly) NSString *resolution;
+@property (nonatomic, copy, readwrite) NSString *resolution;
 
 /**
  *  OS of the package e.g. iOS, Mac
  *  @since v3.3 and later
  *  @see standardIdentifier
  */
-@property (nonatomic, copy, readonly) NSString *os;
+@property (nonatomic, copy, readwrite) NSString *os;
 
 /**
  *  Returns an identifier of the package: The pattern is `<NAME>-<OS>-<RESOLUTION>`. Example: `DLC_Bundle-iOS-phonehd`.
@@ -72,7 +72,7 @@
  *  The remote URL of the package
  *  @since v3.3 and later
  */
-@property (nonatomic, copy, readonly) NSURL *remoteURL;
+@property (nonatomic, copy, readwrite) NSURL *remoteURL;
 
 /**
  *  The relative local URL where the package is installed. The URL is relative to the caches folder.
@@ -80,7 +80,7 @@
  *  @since v3.3 and later
  *  @see installFullURL
  */
-@property (nonatomic, copy, readonly) NSURL *installRelURL;
+@property (nonatomic, copy, readwrite) NSURL *installRelURL;
 
 /**
  *  Full local URL where the package is installed.
@@ -95,13 +95,13 @@
  *  is used which won't be accessible.
  *  @since v3.3 and later
  */
-@property (nonatomic, copy, readonly) NSURL *localDownloadURL;
+@property (nonatomic, copy, readwrite) NSURL *localDownloadURL;
 
 /**
  *  Local URL of the folder the package is unzipped to
  *  @since v3.3 and later
  */
-@property (nonatomic, copy, readonly) NSURL *unzipURL;
+@property (nonatomic, copy, readwrite) NSURL *unzipURL;
 
 /**
  *  Name of the folder inside the unzip folder. A zipped package is supposed to contain a folder named
@@ -110,7 +110,7 @@
  *  during installation.
  *  @since v3.3 and later
  */
-@property (nonatomic, copy, readonly) NSString *folderName;
+@property (nonatomic, copy, readwrite) NSString *folderName;
 
 /** @name Accessing Package Status */
 
@@ -118,14 +118,14 @@
  *  Whether or not the the package should be enabled in cocos2d after installation.
  *  @since v3.3 and later
  */
-@property (nonatomic, readonly) BOOL enableOnDownload;
+@property (nonatomic, readwrite) BOOL enableOnDownload;
 
 /**
  *  The current status of the package
  *  @since v3.3 and later
  *  @see statusToString
  */
-@property (nonatomic, readonly) CCPackageStatus status;
+@property (nonatomic, readwrite) CCPackageStatus status;
 
 /**
  *  Returns the status as a string.
