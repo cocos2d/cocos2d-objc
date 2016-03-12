@@ -7,7 +7,7 @@
 //
 
 #import "CCEffectInvert.h"
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 
 
 @interface CCEffectInvertImpl : CCEffectImpl

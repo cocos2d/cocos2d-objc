@@ -7,11 +7,10 @@
 //
 #import "CCEffectOutline.h"
 
-
 #if CC_EFFECTS_EXPERIMENTAL
 
-#import "CCEffect_Private.h"
-#import "CCSprite_Private.h"
+#import "CCEffect.h"
+#import "CCSprite.h"
 #import "CCTexture.h"
 #import "CCSpriteFrame.h"
 

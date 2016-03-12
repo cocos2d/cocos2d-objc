@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "CCPackage.h"
 #import "CCPackageHelper.h"
-#import "CCPackage_private.h"
 
 static NSUInteger PACKAGE_SERIALIZATION_VERSION = 1;
 static NSString *const PACKAGE_SERIALIZATION_KEY_NAME = @"name";

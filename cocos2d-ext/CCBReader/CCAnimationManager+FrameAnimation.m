@@ -7,7 +7,7 @@
 //
 
 #import "CCAnimationManager+FrameAnimation.h"
-#import "CCAnimationManager_Private.h"
+#import "CCAnimationManager.h"
 
 @implementation CCAnimationManager (FrameAnimation)
 

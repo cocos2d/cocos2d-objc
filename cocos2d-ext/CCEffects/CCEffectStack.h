@@ -93,4 +93,10 @@
  */
 @property (nonatomic, readonly) NSUInteger effectCount;
 
+@property (nonatomic, assign) BOOL stitchingEnabled;
+
+@property (nonatomic, readonly) NSArray *effects;
+
+@property (nonatomic, readonly) NSArray *flattenedEffects;
+
 @end

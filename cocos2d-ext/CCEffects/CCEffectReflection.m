@@ -14,8 +14,8 @@
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
 
-#import "CCEffect_Private.h"
-#import "CCSprite_Private.h"
+#import "CCEffect.h"
+#import "CCSprite.h"
 
 
 

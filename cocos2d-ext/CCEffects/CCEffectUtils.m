@@ -7,7 +7,7 @@
 //
 
 #import "CCEffectUtils.h"
-#import "CCRenderTexture_Private.h"
+#import "CCRenderTexture.h"
 
 #ifndef BLUR_OPTIMIZED_RADIUS_MAX
 #define BLUR_OPTIMIZED_RADIUS_MAX 4UL

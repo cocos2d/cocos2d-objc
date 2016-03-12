@@ -35,6 +35,8 @@
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
+@class CCFrameBufferObject;
+
 /**
  *  Image format when saving render textures. Used by CCRenderTexture.
  */
@@ -57,6 +59,29 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  There are also functions for saving the render texture to disk in PNG or JPG format.
  */
 @interface CCRenderTexture : CCNode
+{
+    
+@protected
+    GLenum _pixelFormat;
+    GLuint _depthStencilFormat;
+    
+    // Reference to the previous render to be restored by end.
+    CCRenderer *_previousRenderer;
+    
+    GLKVector4 _clearColor;
+    
+    float _contentScale;
+    
+    // Raw projection matrix used for rendering.
+    // For metal will be flipped on the y-axis compared to the .projection property.
+    GLKMatrix4 _projection;
+    
+    CCSprite* _sprite;
+    
+    CCFrameBufferObject *_framebuffer;
+    
+    BOOL _contentSizeChanged;
+}
 
 /**
  *  @name Creating a Render Texture
@@ -315,6 +340,22 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 -(BOOL)saveToFilePath:(NSString*)filePath format:(CCRenderTextureImageFormat)format;
 
 #endif // __CC_PLATFORM_IOS
+
+-(void)createTextureAndFboWithPixelSize:(CGSize)pixelSize;
+
+-(void)destroy;
+
+-(void)assignSpriteTexture;
+
+@end
+
+
+
+@interface CCRenderTextureSprite : CCSprite
+
+@property (nonatomic, weak) CCRenderTexture *renderTexture;
+
+- (CGAffineTransform)nodeToWorldTransform;
 
 @end
 

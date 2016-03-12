@@ -23,7 +23,6 @@
  */
 
 #import "CCAnimationManager.h"
-#import "CCAnimationManager_Private.h"
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"
 #import "CCBSequenceProperty.h"
@@ -32,8 +31,16 @@
 #import <objc/runtime.h>
 
 #import "CCDirector.h"
-#import "CCBReader_Private.h"
+#import "CCBReader.h"
 #import "CCActionManager.h"
+
+#if CC_LIGHTING
+#import "CCLightNode.h"
+#endif
+
+#if CC_OBJECT_AL
+#import "CCActionAudio.h"
+#endif
 
 // Unique Manager ID
 static NSInteger ccbAnimationManagerID = 0;

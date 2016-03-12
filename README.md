@@ -14,7 +14,7 @@ Please note, that the official site has moved. Please update your bookmarks
 [The Official Forum][3]  
 
 [Cocos2D-ObjC][1] is a framework for building 2D games, demos, and other
-graphical/interactive applications for iOS, Mac and Android.
+graphical/interactive applications for iOS, Mac and tvOS.
 It is based on the [Cocos2D][2] design, but instead of using Python it uses Swift and / or Objective-C.
 
 Cocos2D-ObjC is:
