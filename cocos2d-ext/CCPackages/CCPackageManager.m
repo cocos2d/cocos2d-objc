@@ -8,7 +8,6 @@
 #import "CCPackageCocos2dEnabler.h"
 #import "ccMacros.h"
 #import "CCPackageHelper.h"
-#import "CCPackage_private.h"
 #import "CCDirector.h"
 
 

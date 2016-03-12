@@ -3,7 +3,6 @@
 #import "CCPackage.h"
 #import "CCFileUtils.h"
 #import "CCSpriteFrameCache.h"
-#import "CCPackage_private.h"
 #import "CCPackageHelper.h"
 
 

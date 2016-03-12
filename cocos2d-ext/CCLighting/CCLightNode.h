@@ -7,6 +7,7 @@
 //
 
 #import "CCNode.h"
+#import "CCLightGroups.h"
 
 /** Light Types used by CCLightNode. */
 typedef NS_ENUM(NSUInteger, CCLightType)
@@ -223,5 +224,7 @@ specularIntensity:(float)specularIntensity
  @since v3.4 and later
  */
 @property (nonatomic, assign) float ambientIntensity;
+
+@property (nonatomic, assign) CCLightGroupMask groupMask;
 
 @end

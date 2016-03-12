@@ -13,11 +13,10 @@
 #import "CCEffectStack.h"
 #import "CCEffectUtils.h"
 #import "CCTexture.h"
-
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 #import "CCRenderer_Private.h"
-#import "CCSprite_Private.h"
-#import "CCTexture_Private.h"
+#import "CCSprite.h"
+#import "CCTexture.h"
 
 
 typedef NS_ENUM(NSUInteger, CCEffectTexCoordSource)

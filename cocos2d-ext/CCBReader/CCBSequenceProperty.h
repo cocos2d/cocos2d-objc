@@ -24,7 +24,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "CCBReader_Private.h"
+#import "CCBReader.h"
 
 typedef NS_ENUM(NSInteger, CCBSequencePropertyType) {
     CCBSequencePropertyTypeSpriteFrame = kCCBPropTypeSpriteFrame

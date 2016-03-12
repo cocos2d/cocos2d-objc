@@ -32,9 +32,8 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-
 #import "CCRenderer_Private.h"
-#import "CCRenderTexture_Private.h"
+#import "CCRenderTexture.h"
 #import "CCRenderDispatch.h"
 #import "CCMetalSupport_Private.h"
 

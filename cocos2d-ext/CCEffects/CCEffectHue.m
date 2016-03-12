@@ -7,7 +7,7 @@
 
 
 #import "CCEffectHue.h"
-#import "CCEffect_Private.h"
+#import "CCEffect.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 

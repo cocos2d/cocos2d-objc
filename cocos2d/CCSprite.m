@@ -39,6 +39,11 @@
 #import "Support/CCProfiling.h"
 #import "CCRenderer_Private.h"
 
+#if CC_EFFECTS
+#import "CCEffect.h"
+#import "CCEffectRenderer.h"
+#endif
+
 #pragma mark -
 #pragma mark CCSprite
 
