@@ -270,19 +270,34 @@ CompileShaderSources(GLenum type, NSArray *sources)
 //MARK: GL Uniform Setters:
 
 static CCUniformSetter
-GLUniformSetFloat(NSString *name, GLint location)
+GLUniformSetFloat(NSString *name, GLint location, GLint size)
 {
-	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
-		NSNumber *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: @(0.0);
-		NSCAssert([value isKindOfClass:[NSNumber class]], @"Shader uniform '%@' value must be wrapped in a NSNumber.", name);
-		
-		glUniform1f(location, value.floatValue);
-	};
+    if (size > 1)
+        return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+            NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name];
+            NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform array '%@' pointer must be wrapped in a NSValue.", name);
+
+            glUniform1fv(location, size, value.pointerValue);
+        };
+    return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+        NSNumber *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: @(0.0);
+        NSCAssert([value isKindOfClass:[NSNumber class]], @"Shader uniform '%@' value must be wrapped in a NSNumber.", name);
+        
+        glUniform1f(location, value.floatValue);
+    };
+
 }
 
 static CCUniformSetter
-GLUniformSetVec2(NSString *name, GLint location)
+GLUniformSetVec2(NSString *name, GLint location, GLint size)
 {
+    if (size > 1)
+        return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+            NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name];
+            NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform array '%@' pointer must be wrapped in a NSValue.", name);
+            
+            glUniform2fv(location, size, value.pointerValue);
+        };
 	NSString *textureName = nil;
 	bool pixelSize = [name hasSuffix:@"PixelSize"];
 	if(pixelSize){
@@ -324,8 +339,15 @@ GLUniformSetVec2(NSString *name, GLint location)
 }
 
 static CCUniformSetter
-GLUniformSetVec3(NSString *name, GLint location)
+GLUniformSetVec3(NSString *name, GLint location, GLint size)
 {
+    if (size > 1)
+        return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+            NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name];
+            NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform array '%@' pointer must be wrapped in a NSValue.", name);
+            
+            glUniform3fv(location, size, value.pointerValue);
+        };
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)];
 		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
@@ -337,8 +359,15 @@ GLUniformSetVec3(NSString *name, GLint location)
 }
 
 static CCUniformSetter
-GLUniformSetVec4(NSString *name, GLint location)
+GLUniformSetVec4(NSString *name, GLint location, GLint size)
 {
+    if (size > 1)
+        return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+            NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name];
+            NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform array '%@' pointer must be wrapped in a NSValue.", name);
+            
+            glUniform4fv(location, size, value.pointerValue);
+        };
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)];
 		
@@ -357,8 +386,15 @@ GLUniformSetVec4(NSString *name, GLint location)
 }
 
 static CCUniformSetter
-GLUniformSetMat4(NSString *name, GLint location)
+GLUniformSetMat4(NSString *name, GLint location, GLint size)
 {
+    if (size > 1)
+        return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+            NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name];
+            NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform array '%@' pointer must be wrapped in a NSValue.", name);
+            
+            glUniformMatrix4fv(location, size, GL_FALSE, value.pointerValue);
+        };
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
 		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
@@ -388,7 +424,6 @@ GLUniformSettersForProgram(GLuint program)
 		GLenum type = 0;
 		
 		glGetActiveUniform(program, i, sizeof(cname), &length, &size, &type, cname);
-		NSCAssert(size == 1, @"Uniform arrays not supported. (yet?)");
 		
 		NSString *name = @(cname);
 		GLint location = glGetUniformLocation(program, cname);
@@ -396,12 +431,14 @@ GLUniformSettersForProgram(GLuint program)
 		// Setup a block that is responsible for binding that uniform variable's value.
 		switch(type){
 			default: NSCAssert(NO, @"Uniform type not supported. (yet?)");
-			case GL_FLOAT: uniformSetters[name] = GLUniformSetFloat(name, location); break;
-			case GL_FLOAT_VEC2: uniformSetters[name] = GLUniformSetVec2(name, location); break;
-			case GL_FLOAT_VEC3: uniformSetters[name] = GLUniformSetVec3(name, location); break;
-			case GL_FLOAT_VEC4: uniformSetters[name] = GLUniformSetVec4(name, location); break;
-			case GL_FLOAT_MAT4: uniformSetters[name] = GLUniformSetMat4(name, location); break;
+			case GL_FLOAT: uniformSetters[name]      = GLUniformSetFloat(name, location, size); break;
+			case GL_FLOAT_VEC2: uniformSetters[name] = GLUniformSetVec2(name, location, size); break;
+			case GL_FLOAT_VEC3: uniformSetters[name] = GLUniformSetVec3(name, location, size); break;
+			case GL_FLOAT_VEC4: uniformSetters[name] = GLUniformSetVec4(name, location, size); break;
+			case GL_FLOAT_MAT4: uniformSetters[name] = GLUniformSetMat4(name, location, size); break;
 			case GL_SAMPLER_2D: {
+                NSCAssert(size == 1, @"Texture uniform arrays not supported. (yet?)");
+                
 				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 					CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];

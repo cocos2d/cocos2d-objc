@@ -797,5 +797,54 @@ ProgressPercent(CCTime t)
 	}
 }
 
+
+- (void)setupShaderUniformsArrayTest
+{
+    self.subTitle = @"Testing uniform arrays. Should display red surface. ";
+    
+    /*
+     uniform highp float uni1[3];
+     uniform highp vec2 uni2[3];
+     uniform highp vec3 uni3[3];
+     uniform highp vec4 uni4[3];
+    */
+    { // Red
+        CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor whiteColor] width:self.contentSizeInPoints.width height:self.contentSizeInPoints.height];
+        node.shader = [CCShader shaderNamed:@"UniformArrayTest"];
+        
+        float* uni1 = malloc(sizeof(float) * 3);
+        for (int i = 0; i < 3; i++)
+            uni1[i] = 1.0;
+        
+        float* uni2 = malloc(sizeof(float) * 6);
+        for (int i = 0; i < 6; i++)
+            uni2[i] = 1.0;
+        
+        float* uni3 = malloc(sizeof(float) * 9);
+        for (int i = 0; i < 9; i++)
+            uni3[i] = 1.0;
+        
+        float* uni4 = malloc(sizeof(float) * 12);
+        for (int i = 0; i < 12; i++)
+            uni4[i] = 1.0;
+        
+        
+        node.shaderUniforms[@"uni1[0]"] = [NSValue valueWithPointer:uni1];
+        
+        node.shaderUniforms[@"uni2[0]"] = [NSValue valueWithPointer:uni2];
+        
+        node.shaderUniforms[@"uni3[0]"] = [NSValue valueWithPointer:uni3];
+        
+        node.shaderUniforms[@"uni4[0]"] = [NSValue valueWithPointer:uni4];
+        node.positionType = CCPositionTypeNormalized;
+        node.position = ccp(0.5, 0.5);
+        node.anchorPoint = ccp(0.5, 0.5);
+        
+        [self.contentNode addChild:node];
+    }
+}
+
+
+
 @end
 
