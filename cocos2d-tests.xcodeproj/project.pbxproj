@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		083355D21C988C5600FEFB0E /* UniformArrayTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 083355D11C988C5600FEFB0E /* UniformArrayTest.fsh */; };
 		084782091C66669300C3817B /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782011C66669300C3817B /* CCTiledMap.m */; };
 		0847820A1C66669300C3817B /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782011C66669300C3817B /* CCTiledMap.m */; };
 		0847820B1C66669300C3817B /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 084782011C66669300C3817B /* CCTiledMap.m */; };
@@ -593,6 +594,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		083355D11C988C5600FEFB0E /* UniformArrayTest.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = UniformArrayTest.fsh; sourceTree = SOURCE_ROOT; };
 		084782001C66669300C3817B /* CCTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTiledMap.h; path = "cocos2d-ext/TileMaps/CCTiledMap.h"; sourceTree = SOURCE_ROOT; };
 		084782011C66669300C3817B /* CCTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTiledMap.m; path = "cocos2d-ext/TileMaps/CCTiledMap.m"; sourceTree = SOURCE_ROOT; };
 		084782021C66669300C3817B /* CCTiledMapLayer_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTiledMapLayer_Private.h; path = "cocos2d-ext/TileMaps/CCTiledMapLayer_Private.h"; sourceTree = SOURCE_ROOT; };
@@ -1258,6 +1260,7 @@
 				758A6C7F184410EE00D1A8D2 /* Particles */,
 				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
 				758A6C6B1843E5C500D1A8D2 /* Images */,
+				083355D11C988C5600FEFB0E /* UniformArrayTest.fsh */,
 			);
 			name = "Test Resources";
 			path = "cocos2d-ui-tests-ios";
@@ -1826,6 +1829,7 @@
 				B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */,
 				B7E2621017E7D34D007067F0 /* Default.png in Resources */,
 				D4AFE9421977100000261299 /* Paint Boy.ttf in Resources */,
+				083355D21C988C5600FEFB0E /* UniformArrayTest.fsh in Resources */,
 				D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */,
 				B7E2621117E7D34D007067F0 /* Default@2x.png in Resources */,
 				D4AFE93F1977100000261299 /* markerFelt-hd.png in Resources */,
