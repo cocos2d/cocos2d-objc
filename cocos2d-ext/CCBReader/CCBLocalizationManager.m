@@ -58,7 +58,7 @@
     NSDictionary* ser = [NSDictionary dictionaryWithContentsOfFile:path];
     
     // Check that format of file is correct
-    NSAssert([[ser objectForKey:@"fileType"] isEqualToString:@"SpriteBuilderTranslations"], @"Invalid file format for SpriteBuilder localizations");
+    NSAssert([[ser objectForKey:@"fileType"] isEqualToString:@"CocosBuilderTranslations"], @"Invalid file format for CocosBuilder localizations");
     
     // Check that file version is correct
     NSAssert([[ser objectForKey:@"fileVersion"] intValue] == 1, @"Translation file version is incompatible with this reader");
