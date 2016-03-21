@@ -1,5 +1,4 @@
 /*
- * SpriteBuilder: http://www.spritebuilder.org
  *
  * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
@@ -28,7 +27,7 @@
 #import "cocos2d.h"
 
 /**
- The CCBReader loads SpriteBuilder (CCB) documents.
+ The CCBReader loads CocosBuilder (CCB) documents.
  
  For the most part you'll just use one of these two methods:
  
@@ -41,10 +40,10 @@
     // load a CCB document wrapped in a CCScene instance
     CCScene* scene = [CCBReader loadAsScene:@"MyNode"];
  
- You can optionally pass an owner object to the CCBReader load methods. This owner object then gets assigned all of the SpriteBuilder document's member variables that are marked to be set to the "Owner".
+ You can optionally pass an owner object to the CCBReader load methods. This owner object then gets assigned all of the CocosBuilder document's member variables that are marked to be set to the "Owner".
  In all other cases owner is nil and assigning variables to Owner discards their assignment.
  
- When a SpriteBuilder document was loaded, all nodes created from the document will receive the didLoadFromCCB message, if implemented as follows:
+ When a CocosBuilder document was loaded, all nodes created from the document will receive the didLoadFromCCB message, if implemented as follows:
  
  **Objective-C:**
  
@@ -58,7 +57,7 @@
         NSLog("%@ did load", self)
     }
  
- Nodes created from a SpriteBuilder document will also have a valid CCAnimationManager instance assigned to their [CCNode animationManager] property.
+ Nodes created from a CocosBuilder document will also have a valid CCAnimationManager instance assigned to their [CCNode animationManager] property.
  */
 
 #define kCCBVersion 10
@@ -167,7 +166,7 @@ enum
 /// -----------------------------------------------------------------------
 
 /**
- *  Call this method to configure the CCFileUtils to work correctly with SpriteBuilder. It will setup search paths for the resources to use with the current device and resolution. It assumes that the SpriteBuilder resources has been published to a directory named Published-iOS that has been added as a blue folder in Xcode.
+ *  Call this method to configure the CCFileUtils to work correctly with CocosBuilder. It will setup search paths for the resources to use with the current device and resolution. It assumes that the CocosBuilder resources has been published to a directory named Published-iOS that has been added as a blue folder in Xcode.
  */
 + (void) configureCCFileUtils;
 
@@ -183,7 +182,7 @@ enum
 + (CCBReader*) reader;
 
 /// -----------------------------------------------------------------------
-/// @name Loading SpriteBuilder documents
+/// @name Loading CocosBuilder documents
 /// -----------------------------------------------------------------------
 
 /**
@@ -214,7 +213,7 @@ enum
 + (CCScene*) loadAsScene:(NSString*) file;
 
 /// -----------------------------------------------------------------------
-/// @name Loading SpriteBuilder documents with custom owner
+/// @name Loading CocosBuilder documents with custom owner
 /// -----------------------------------------------------------------------
 
 /**

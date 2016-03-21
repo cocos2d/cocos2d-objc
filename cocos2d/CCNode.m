@@ -202,7 +202,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
 #if CC_CCBREADER
-    // CCAnimationManager Cleanup (Set by SpriteBuilder)
+    // CCAnimationManager Cleanup (Set by CocosBuilder)
     [_animationManager performSelector:@selector(cleanup)];
 #endif
 }

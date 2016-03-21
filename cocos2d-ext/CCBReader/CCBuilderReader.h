@@ -1,5 +1,4 @@
 /*
- * CocosBuilder: http://www.spritebuilder.org
  *
  * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.

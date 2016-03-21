@@ -138,7 +138,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
  ### Supported editors
  
- A particle system can be edited visually within SpriteBuilder or compatible 3rd party tools such as
+ A particle system can be edited visually within CocosBuilder or compatible 3rd party tools such as
  [Particle Designer](http://particledesigner.71squared.com/) and several others.
  
  @warning It is strongly recommended to use a visual design tool to create particle effects. Creating and tweaking particle
