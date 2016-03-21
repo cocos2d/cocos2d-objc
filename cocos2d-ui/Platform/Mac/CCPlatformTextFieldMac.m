@@ -58,6 +58,11 @@
     return YES;
 }
 
+- (id)nativeTextField
+{
+    return _textField;
+}
+
 - (void)setFontSize:(float)fontSize {
     NSFont* font = _textField.font;
     _textField.font = [NSFont fontWithName:font.fontName size:fontSize];
