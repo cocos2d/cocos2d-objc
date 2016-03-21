@@ -1,5 +1,4 @@
 /*
- * SpriteBuilder: http://www.spritebuilder.org
  *
  * Copyright (c) 2013 Apportable Inc.
  *
@@ -72,7 +71,7 @@
     NSArray* preferredLangs = [NSLocale preferredLanguages];
     for (NSString* preferredLang in preferredLangs)
     {
-        // now loop thru languages from our spritebuilder
+        // now loop thru languages from our cocosbuilder
         for (NSString *localizedLanguage in languages)
         {
             // doing range of string as we might have en-GB set in our phone and that will match our en from the activeLanguages
