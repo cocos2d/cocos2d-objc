@@ -43,7 +43,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    [self loadStringsFile:@"Strings.ccbLang"];
+    [self loadStringsFile:@"Strings.ccblang"];
     
     return self;
 }
