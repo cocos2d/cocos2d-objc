@@ -1,5 +1,4 @@
 /*
- * SpriteBuilder: http://www.spritebuilder.org
  *
  * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
@@ -79,7 +78,7 @@
 {
     CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
     
-    // Setup file utils for use with SpriteBuilder
+    // Setup file utils for use with CocosBuilder
     [sharedFileUtils setEnableiPhoneResourcesOniPad:NO];
     
     sharedFileUtils.directoriesDict =

@@ -46,7 +46,7 @@
 #pragma mark Animation Manager
 
 /**
- The animation manager plays back animations, usually created by a tool such as SpriteBuilder.
+ The animation manager plays back animations, usually created by a tool such as CocosBuilder.
  Any animation can have an arbitrary number of sequences (timelines) which each have keyframes for different properties.
  
  @note Animation names are case sensitive.

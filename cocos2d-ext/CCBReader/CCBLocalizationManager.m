@@ -1,5 +1,4 @@
 /*
- * SpriteBuilder: http://www.spritebuilder.org
  *
  * Copyright (c) 2013 Apportable Inc.
  *
@@ -44,7 +43,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    [self loadStringsFile:@"Strings.ccbLang"];
+    [self loadStringsFile:@"Strings.ccblang"];
     
     return self;
 }
@@ -58,7 +57,7 @@
     NSDictionary* ser = [NSDictionary dictionaryWithContentsOfFile:path];
     
     // Check that format of file is correct
-    NSAssert([[ser objectForKey:@"fileType"] isEqualToString:@"SpriteBuilderTranslations"], @"Invalid file format for SpriteBuilder localizations");
+    NSAssert([[ser objectForKey:@"fileType"] isEqualToString:@"CocosBuilderTranslations"], @"Invalid file format for CocosBuilder localizations");
     
     // Check that file version is correct
     NSAssert([[ser objectForKey:@"fileVersion"] intValue] == 1, @"Translation file version is incompatible with this reader");
@@ -72,7 +71,7 @@
     NSArray* preferredLangs = [NSLocale preferredLanguages];
     for (NSString* preferredLang in preferredLangs)
     {
-        // now loop thru languages from our spritebuilder
+        // now loop thru languages from our cocosbuilder
         for (NSString *localizedLanguage in languages)
         {
             // doing range of string as we might have en-GB set in our phone and that will match our en from the activeLanguages
