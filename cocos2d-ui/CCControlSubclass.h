@@ -55,7 +55,7 @@
 
 /**
  Can be implemented by sub-classes. Override this method if you are using custom properties and need to set them by name using the setValue:forKey method.
- This is needed for integration with editors such as SpriteBuilder. When overriding this method, make sure to call its super method if you cannot handle the key.
+ This is needed for integration with editors such as CocosBuilder. When overriding this method, make sure to call its super method if you cannot handle the key.
  
  @param value The value to set.
  @param key   The key to set the value for.

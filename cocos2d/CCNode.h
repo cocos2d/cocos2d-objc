@@ -110,7 +110,7 @@
  - CCSizeUnitInset - The content size will be the size of it's parent container, but inset by a number of points.
  - CCSizeUnitInsetScaled - The content size will be the size of it's parent container, but inset by a number of points multiplied by the UIScaleFactor.
  
- Even if the positions and content sizes are not set in points you can use actions to animate the nodes. See the examples and tests for more information on how to set positions and content sizes, or use SpriteBuilder to easily play around with the settings. There are also more positioning options available by using CCLayout and CCLayoutBox.
+ Even if the positions and content sizes are not set in points you can use actions to animate the nodes. See the examples and tests for more information on how to set positions and content sizes, or use CocosBuilder to easily play around with the settings. There are also more positioning options available by using CCLayout and CCLayoutBox.
  
 #### Prefer to use ..InPoints
  
@@ -706,7 +706,7 @@
 -(NSUInteger) numberOfRunningActions;
 
 /// -----------------------------------------------------------------------
-/// @name SpriteBuilder Animation Manager
+/// @name CocosBuilder Animation Manager
 /// -----------------------------------------------------------------------
 
 /**

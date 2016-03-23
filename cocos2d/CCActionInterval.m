@@ -595,7 +595,7 @@
 {
 	[super startWithTarget:aTarget];
     
-    // Simple Rotation (Support SpriteBuilder)
+    // Simple Rotation (Support CocosBuilder)
     if(_simple) {
         _startAngleX = _startAngleY = [(CCNode*)_target rotation];
         _diffAngleX = _dstAngleX - _startAngleX;

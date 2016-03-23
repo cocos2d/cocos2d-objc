@@ -90,7 +90,7 @@
  *  - `CCSetupFixedUpdateInterval`: NSNumber with double. Specifies the desired interval between fixed updates. Should be smaller than `CCSetupAnimationInterval`. Defaults to `1.0/60.0` (60 Hz).
  *  - `CCSetupShowDebugStats`: NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be rendered. Defaults to NO.
  *  - `CCSetupTabletScale2X`: NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 points "logical" screen size with a "Retina" pixel resolution of 1024x768. 
- *      This makes it much easier to make universal iOS games. This is the default mode for SpriteBuilder projects. This value is ignored when using the fixed screen mode.
+ *      This makes it much easier to make universal iOS games. This is the default mode for CocosBuilder projects. This value is ignored when using the fixed screen mode.
  *
  *  - `CCSetupDepthFormat`: NSNumber with integer. Specifies the desired depth buffer format. Values are 0 (no depth buffering), `GL_DEPTH24_STENCIL8_OES` (8-Bit depth buffer) and `GL_DEPTH_COMPONENT24_OES` (24-bit depth buffer).
  *      Depth buffering is only needed in rare cases and comes at the expense of performance and additional memory usage.

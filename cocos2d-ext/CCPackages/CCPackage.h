@@ -3,7 +3,7 @@
 
 @class CCPackageManager;
 
-/** CCPackage represents a Spritebuilder package. It's a data object managed by CCPackageManager describing the details of a package.
+/** CCPackage represents a CocosBuilder package. It's a data object managed by CCPackageManager describing the details of a package.
  A package is a bundle containing resource files.
 
  Most of the properties are readonly and are not meant to be set by a developer. They are set by the CCPackageManager.

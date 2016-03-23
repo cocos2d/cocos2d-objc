@@ -300,7 +300,7 @@
 
 @end
 
-// SpriteBuilder Support Ease
+// CocosBuilder Support Ease
 @interface CCActionEaseInstant : CCActionEase <NSCopying>
 
 @end

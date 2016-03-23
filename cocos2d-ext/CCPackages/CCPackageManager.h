@@ -70,7 +70,7 @@
  *  Helpful if you are using packages of a different resolution.
  *
  *  @param name Name of the package
- *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
+ *  @param resolution CocosBuilder resolution string (ie `phonehd`)
  *  @since v3.3 and later
  *  @see CCPackage
  */
@@ -81,7 +81,7 @@
  *  Helpful if you are using packages of a different resolution and os
  *
  *  @param name Name of the package
- *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
+ *  @param resolution CocosBuilder resolution string (ie `phonehd`)
  *  @param os operating system string (ie iOS, Mac)
  *  @since v3.3 and later
  *  @see CCPackage
