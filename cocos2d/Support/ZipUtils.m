@@ -27,12 +27,12 @@
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
-static int inflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, unsigned int outlengthHint )
+static int inflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, unsigned int outLengthHint )
 {
 	/* ret value */
 	int err = Z_OK;
 
-	int bufferSize = outlengthHint;
+	int bufferSize = outLengthHint;
 	*out = (unsigned char*) malloc(bufferSize);
 
     z_stream d_stream; /* decompression stream */
@@ -183,8 +183,110 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	return offset;
 }
 
+typedef struct {
+    uint8_t			sig[4];				// signature. Should be 'CCZp' 4 bytes
+    uint16_t		compression_type;	// should 0
+    uint16_t		version;			// should be 2 (although version type==1 is also supported)
+    uint32_t		checksum;			// Checksum
+    uint32_t		len;				// size of the uncompressed file
+} CCPHeader;
+
+static uint32_t caw_key[4] = {0,0,0,0};
+static uint32_t caw_longKey[1024];
+static bool caw_longKeyValid=false;
+
+void caw_setkey_part(int index, uint32_t value)
+{
+    assert(index >= 0);
+    assert(index < 4);
+    if(caw_key[index] != value)
+    {
+        caw_key[index] = value;
+        caw_longKeyValid = false;        
+    }
+}
+
+static inline void caw_encdec (uint32_t *data, int len)
+{
+    const int enclen = 1024;
+    const int securelen = 512;
+    const int distance = 64;
+    
+    // check if key was set
+    // make sure to call caw_setkey_part() for all 4 key parts
+    assert(caw_key[0] != 0);
+    assert(caw_key[1] != 0);
+    assert(caw_key[2] != 0);
+    assert(caw_key[3] != 0);
+    
+    // create long key
+    if(!caw_longKeyValid)
+    {
+        uint32_t y;
+        unsigned int p, rounds=6, e;
+        
+        uint32_t sum = 0;
+        uint32_t z = caw_longKey[enclen-1];
+        do
+        {
+            #define DELTA 0x9e3779b9
+            #define MX (((z>>5^y<<2) + (y>>3^z<<4)) ^ ((sum^y) + (caw_key[(p&3)^e] ^ z)))
+            
+            sum += DELTA;
+            e = (sum >> 2) & 3;
+            for (p=0; p<enclen-1; p++)
+            {
+                y = caw_longKey[p+1];
+                z = caw_longKey[p] += MX;
+            }
+            y = caw_longKey[0];
+            z = caw_longKey[enclen-1] += MX;
+        } while (--rounds);
+        
+        caw_longKeyValid = true;
+    }
+    
+    int b=0;
+    int i=0;
+    
+    // encrypt first part completely
+    for(; i<len && i<securelen; i++)
+    {
+        data[i] ^= caw_longKey[b++];
+        if(b >= enclen)
+        {
+            b=0;
+        }
+    }
+    
+    // encrypt second section partially
+    for(; i<len; i+=distance)
+    {
+        data[i] ^= caw_longKey[b++];
+        if(b >= enclen)
+        {
+            b=0;
+        }
+    }
+}
+
+static inline uint32_t caw_checksum(const uint32_t *data, int len)
+{
+    uint32_t cs=0;
+    const int cslen=128;
+    len = (len < cslen) ? len : cslen;
+    for(int i=0; i<len; i++)
+    {
+        cs = cs ^ data[i];
+    }
+    return cs;
+}
+
+
 int ccInflateCCZFile(const char *path, unsigned char **out)
 {
+    printf("inflating: %s\n", path);
+    
 	NSCAssert( out, @"ccInflateCCZFile: invalid 'out' parameter");
 	NSCAssert( &*out, @"ccInflateCCZFile: invalid 'out' parameter");
 
@@ -196,31 +298,80 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 		return -1;
 	}
 
-	struct CCZHeader *header = (struct CCZHeader*) compressed;
+    uint32_t len = 0;
+    uint32_t headerSize = 0;
+    
+	if( compressed[0] == 'C' && compressed[1] == 'C' && compressed[2] == 'Z' && compressed[3] == '!' )
+    {
+        // standard ccz file
+        struct CCZHeader *header = (struct CCZHeader*) compressed;        
 
-	// verify header
-	if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) {
+        // verify header version
+        uint16_t version = CFSwapInt16BigToHost( header->version );
+        if( version > 2 ) {
+            CCLOG(@"cocos2d: Unsupported CCZ header format");
+            free(compressed);
+            return -1;
+        }
+        
+        // verify compression format
+        if( CFSwapInt16BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
+            CCLOG(@"cocos2d: CCZ Unsupported compression method");
+            free(compressed);
+            return -1;
+        }
+
+        len = CFSwapInt32BigToHost( header->len );
+        
+        headerSize = sizeof(struct CCZHeader);
+	}
+    else if(compressed[0] == 'C' && compressed[1] == 'C' && compressed[2] == 'Z' && compressed[3] == 'p' )
+    {        
+        // encrypted ccz file
+        CCPHeader *header = (CCPHeader*) compressed;
+
+        // verify header version
+        uint16_t version = CFSwapInt16BigToHost( header->version );
+        if( version > 0 ) {
+            CCLOG(@"cocos2d: Unsupported CCZ header format");
+            free(compressed);
+            return -1;
+        }
+        
+        // verify compression format
+        if( CFSwapInt16BigToHost(header->compression_type) != 0 ) {
+            CCLOG(@"cocos2d: CCZ Unsupported compression method");
+            free(compressed);
+            return -1;
+        }
+
+        // decrypt
+        headerSize = sizeof(CCPHeader);
+        uint32_t* ints = (uint32_t*)(compressed+12);
+        int enclen = (fileLen-12)/4;
+        
+        caw_encdec(ints, enclen);
+        
+        len = CFSwapInt32BigToHost( header->len );
+        
+#ifndef NDEBUG
+        // verify checksum in debug mode
+        uint32_t calculated = caw_checksum(ints, enclen);
+        uint32_t required = CFSwapInt32BigToHost( header->checksum );
+        if(calculated != required)
+        {
+            CCLOG(@"cocos2d: Can't decrypt image file: Invalid decryption key");
+            free(compressed);
+            return -1;            
+        }
+#endif
+    }
+    else {
 		CCLOG(@"cocos2d: Invalid CCZ file");
 		free(compressed);
 		return -1;
-	}
+    }
 
-	// verify header version
-	uint16_t version = CFSwapInt16BigToHost( header->version );
-	if( version > 2 ) {
-		CCLOG(@"cocos2d: Unsupported CCZ header format");
-		free(compressed);
-		return -1;
-	}
-
-	// verify compression format
-	if( CFSwapInt16BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
-		CCLOG(@"cocos2d: CCZ Unsupported compression method");
-		free(compressed);
-		return -1;
-	}
-
-	uint32_t len = CFSwapInt32BigToHost( header->len );
 
 	*out = malloc( len );
 	if(! *out )
@@ -232,8 +383,8 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 
 
 	uLongf destlen = len;
-	uLongf source = (uLongf) compressed + sizeof(*header);
-	int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(*header) );
+	uLongf source = (uLongf) compressed + headerSize;
+	int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - headerSize );
 
 	free( compressed );
 
