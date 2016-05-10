@@ -4,20 +4,24 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "65E71B0513DBFB09F39CEEF3A8B769CB93E66994" : 0,
+    "BC2AB06997720A016323C7919B01EE36E5BB4297" : 0,
     "999D2B244F4BEADDDD09CD5EE2574031B24F399A" : 0,
+    "65E71B0513DBFB09F39CEEF3A8B769CB93E66994" : 0,
     "5D7004AFA0F8477414D2D2070527EE503A955943" : 0,
-    "A21E964CF35F95307B1FB121F2B5F3025ACF2ED9" : 0
+    "A21E964CF35F95307B1FB121F2B5F3025ACF2ED9" : 0,
+    "9737A059EB4BD58811631A38AD2B82FB29A813BD" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9723964C-A64C-4E06-B1F6-D036568D414E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "65E71B0513DBFB09F39CEEF3A8B769CB93E66994" : "cocos2d-objcexternal\/SSZipArchive",
+    "BC2AB06997720A016323C7919B01EE36E5BB4297" : "cocos2d-objc\/external\/ObjectAL\/external\/ogg\/",
     "999D2B244F4BEADDDD09CD5EE2574031B24F399A" : "cocos2d-objcexternal\/Chipmunk",
+    "65E71B0513DBFB09F39CEEF3A8B769CB93E66994" : "cocos2d-objcexternal\/SSZipArchive",
     "5D7004AFA0F8477414D2D2070527EE503A955943" : "cocos2d-objc",
-    "A21E964CF35F95307B1FB121F2B5F3025ACF2ED9" : "cocos2d-objcexternal\/ObjectAL"
+    "A21E964CF35F95307B1FB121F2B5F3025ACF2ED9" : "cocos2d-objcexternal\/ObjectAL",
+    "9737A059EB4BD58811631A38AD2B82FB29A813BD" : "cocos2d-objc\/external\/ObjectAL\/external\/tremor\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "cocos2d",
-  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "cocos2d.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
@@ -31,6 +35,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "65E71B0513DBFB09F39CEEF3A8B769CB93E66994"
     },
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/spritebuilder\/tremor.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9737A059EB4BD58811631A38AD2B82FB29A813BD"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/slembcke\/Chipmunk2D.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "999D2B244F4BEADDDD09CD5EE2574031B24F399A"
@@ -39,6 +48,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/spritebuilder\/ObjectAL-for-Cocos2D.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A21E964CF35F95307B1FB121F2B5F3025ACF2ED9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/spritebuilder\/ogg.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BC2AB06997720A016323C7919B01EE36E5BB4297"
     }
   ]
 }
