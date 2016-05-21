@@ -42,7 +42,7 @@
 #import "CCSprite.h"
 #import "Support/CCFileUtils.h"
 #import "CCTexture.h"
-
+#import "CCDirector.h"
 
 @interface CCSpriteFrame(Proxy)
 - (BOOL)hasProxy;
@@ -180,6 +180,43 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - loading sprite frames
 
+-(void) addSpriteFrameWithDictionary:(NSDictionary*)frameDict texture:(CCTexture *)texture scaleSuffix:(NSString *)scaleSuffix
+{
+    // Reducing frame name string to base asset name by cutting of extensions and resolution suffix.
+    NSString *frameName = [[frameDict objectForKey:@"name"] stringByDeletingPathExtension];
+    NSString *frameDictKey = frameName;
+    
+    if (frameName.length > 3) {
+        NSString *resolutionComponent = [frameName substringWithRange:NSMakeRange(frameName.length -3, 3)];
+        if ([resolutionComponent isEqualToString:scaleSuffix]) {
+            frameDictKey = [frameDictKey stringByReplacingCharactersInRange:NSMakeRange(frameDictKey.length - 3, 3) withString:@""];
+        }
+    }
+    
+    CCSpriteFrame *spriteFrame=nil;
+    
+    // get values
+    CGSize spriteSize = CCRectFromString([frameDict objectForKey:@"textureRect"]).size;
+    CGPoint spriteOffset = CCPointFromString([frameDict objectForKey:@"spriteOffset"]);
+    CGSize spriteSourceSize = CCSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
+    CGRect textureRect = CCRectFromString([frameDict objectForKey:@"textureRect"]);
+    BOOL textureRotated = [[frameDict objectForKey:@"textureRotated"] boolValue];
+    
+    // get aliases
+    NSArray *aliases = [frameDict objectForKey:@"aliases"];
+    for(NSString *alias in aliases) {
+        if( [_spriteFramesAliases objectForKey:alias] )
+            CCLOGWARN(@"cocos2d: WARNING: an alias with name %@ already exists",alias);
+        
+        [_spriteFramesAliases setObject:frameDictKey forKey:alias];
+    }
+    
+    // set frame info
+    CGRect rectInPixels = CGRectMake(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height);
+    
+    [self addSpriteFrame:spriteFrame withTextureReference:texture key:frameDictKey rectInPixels:rectInPixels rotated:textureRotated offset:spriteOffset originalSize:spriteSourceSize];
+}
+
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureReference:(id)textureReference
 {
 	/*
@@ -272,31 +309,36 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 			frameOffset = spriteOffset;
 			originalSize = spriteSourceSize;
 		}
-
-		NSString *textureFileName = nil;
-		CCTexture * texture = nil;
-
-		if ( [textureReference isKindOfClass:[NSString class]] )
-		{
-			textureFileName	= textureReference;
-		}
-        else if ( [textureReference isKindOfClass:[CCTexture class]] )
-		{
-			texture = textureReference;
-		}
-
-		if ( textureFileName )
-		{
-			spriteFrame = [[CCSpriteFrame alloc] initWithTextureFilename:textureFileName rectInPixels:rectInPixels rotated:isRotated offset:frameOffset originalSize:originalSize];
-		}
-		else
-		{
-			spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture rectInPixels:rectInPixels rotated:isRotated offset:frameOffset originalSize:originalSize];
-		}
-
-		// add sprite frame
-		[_spriteFrames setObject:spriteFrame forKey:frameDictKey];
+        
+        [self addSpriteFrame:spriteFrame withTextureReference:textureReference key:frameDictKey rectInPixels:rectInPixels rotated:isRotated offset:frameOffset originalSize:originalSize];
 	}
+}
+
+- (void)addSpriteFrame:(CCSpriteFrame *)spriteFrame withTextureReference:(id)textureReference key:(NSString *)key rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
+{
+    NSString *textureFileName = nil;
+    CCTexture * texture = nil;
+    
+    if ( [textureReference isKindOfClass:[NSString class]] )
+    {
+        textureFileName	= textureReference;
+    }
+    else if ( [textureReference isKindOfClass:[CCTexture class]] )
+    {
+        texture = textureReference;
+    }
+    
+    if ( textureFileName )
+    {
+        spriteFrame = [[CCSpriteFrame alloc] initWithTextureFilename:textureFileName rectInPixels:rect rotated:rotated offset:offset originalSize:originalSize];
+    }
+    else
+    {
+        spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture rectInPixels:rect rotated:rotated offset:offset originalSize:originalSize];
+    }
+    
+    // add sprite frame
+    [_spriteFrames setObject:spriteFrame forKey:key];
 }
 
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)textureFilename
@@ -374,6 +416,93 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	else 
 		CCLOGINFO(@"cocos2d: CCSpriteFrameCache: file already loaded: %@", plist);
 
+}
+
+-(void) addSpriteFramesFromSpriteAtlasAssetNamed:(NSString *)atlasAssetName
+{
+    NSDictionary *dictionary = [self dictionaryForSpriteAtlasAssetNamed:atlasAssetName];
+    if (!dictionary) {
+        CCLOG(@"cocos2d: CCSpriteFrameCache: No sprite atlas asset found with name: %@", atlasAssetName);
+        return;
+    }
+    if (dictionary != nil) {
+        NSInteger version = [[dictionary objectForKey:@"version"] integerValue];
+        if (version != 1) {
+            CCLOG(@"cocos2d: WARNING: Unsupported version of sprite atlas asset file version: %ld filename: %@", (long)version, atlasAssetName);
+            return;
+        }
+        
+        NSAssert([[dictionary objectForKey:@"format"] isEqualToString:@"APPL"], @"format is not supported for CCSpriteFrameCache addSpriteFramesFromSpriteAtlasAssetNamed:textureFilename:");
+        
+        int scale = [[CCDirector sharedDirector] contentScaleFactor];
+        NSString *scaleSuffix = scale == 1 ? @"" : [NSString stringWithFormat:@"@%dx",scale];
+        
+        NSArray <NSDictionary *>*imageDicts = [dictionary objectForKey:@"images"];
+        NSArray *imagePaths = [imageDicts valueForKeyPath:@"path"];
+        
+        // Trying to find image paths for the current devices native resolution.
+        NSMutableIndexSet *indexes = [self indexesForImagePaths:imagePaths forFilename:atlasAssetName withSuffix:scaleSuffix].mutableCopy;
+        
+        if (indexes.count == 0) {
+            // Falling back to using @1x graphics if the expected resolution is not found.
+            [indexes addIndexes:[self indexesForImagePaths:imagePaths forFilename:atlasAssetName withSuffix:nil]];
+            scaleSuffix = nil;
+        }
+        
+        // Only processing the image dictionaries that are using textures with the correct resolution.
+        for (NSDictionary *imageDict in [imageDicts objectsAtIndexes:indexes]) {
+            NSArray *spriteFrames = [imageDict objectForKey:@"subimages"];
+            NSString *resourceName = [imageDict objectForKey:@"path"];
+            NSString *resourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:[NSString stringWithFormat:@"/%@.atlasc/%@",atlasAssetName,resourceName]];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
+                // Loading the sprite atlas image from the file system
+                NSData *imageData = [NSData dataWithContentsOfFile:resourcePath];
+                CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) imageData);
+                CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
+                
+                // Scale suffix will be an empty string if there wasn't any native resolution graphics in the sprite atlas.
+                // In that case the @1x graphics is loaded as fallback.
+                CCTexture *texture =  [[CCTexture alloc] initWithCGImage:imageRef contentScale:scaleSuffix.length > 0 ? [[CCDirector sharedDirector] contentScaleFactor] : 1.0];
+                
+                CGDataProviderRelease(imgDataProvider);
+                CGImageRelease(imageRef);
+                
+                // Loading the frames and connecting them with the texture.
+                for (NSDictionary *frameDict in spriteFrames) {
+                    [self addSpriteFrameWithDictionary:frameDict texture:texture scaleSuffix:scaleSuffix];
+                }
+            } else {
+                CCLOG(@"cocos2d: WARNING: image not found at file path: %@",resourcePath);
+            }
+        }
+    }
+}
+
+- (NSDictionary *) dictionaryForSpriteAtlasAssetNamed:(NSString *)assetName
+{
+    // Looking for the file in resource root
+    NSString *resourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:[NSString stringWithFormat:@"/%1$@.atlasc/%1$@.plist",assetName]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:resourcePath]) {
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:resourcePath];
+        
+        return dict;
+    }
+    return nil;
+}
+
+- (NSIndexSet *)indexesForImagePaths:(NSArray *)imagePaths forFilename:(NSString *)filename withSuffix:(NSString *)scaleSuffix
+{
+    // Checking for indexes that has image paths with the provided suffix.
+    NSMutableIndexSet *indexes = [[NSMutableIndexSet alloc] init];
+    for (NSString * searchString in imagePaths) {
+        NSString *strippedString = [searchString stringByDeletingPathExtension];
+        strippedString = [strippedString stringByReplacingOccurrencesOfString:filename withString:@""];
+        strippedString = [strippedString stringByReplacingCharactersInRange:NSMakeRange(0, 2) withString:@""];
+        if ([strippedString isEqualToString:scaleSuffix]) {
+            [indexes addIndex:[imagePaths indexOfObject:searchString]];
+        }
+    }
+    return indexes;
 }
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
