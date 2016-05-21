@@ -77,6 +77,13 @@
 -(void) addSpriteFramesWithFile:(NSString*)plist;
 
 /**
+ *  Add Sprite frames to the cache from the specified sprite atlas asset.
+ *
+ *  @param name the name of the sprite atlas asset.
+ */
+-(void) addSpriteFramesFromSpriteAtlasAssetNamed:(NSString *)name;
+
+/**
  *  Add sprite frames to the cache from the specified plist and texture file.
  *
  *  @param plist    Plist file to use.
@@ -99,6 +106,8 @@
  *  @param frameName Frame name to use.
  */
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName;
+
+
 
 /**
  *  Registers a sprite sheet with the sprite frame cache so that the sprite frames can be loaded by name.
