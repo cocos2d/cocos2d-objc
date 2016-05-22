@@ -445,7 +445,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
         
         if (indexes.count == 0) {
             // Falling back to using @1x graphics if the expected resolution is not found.
-            [indexes addIndexes:[self indexesForImagePaths:imagePaths forFilename:atlasAssetName withSuffix:nil]];
+            [indexes addIndexes:[self indexesForImagePaths:imagePaths forFilename:atlasAssetName withSuffix:@""]];
             scaleSuffix = nil;
         }
         
