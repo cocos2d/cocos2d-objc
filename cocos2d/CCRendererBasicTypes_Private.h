@@ -87,7 +87,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 		CCRenderDispatch(NO, ^{[buffer resize:required*1.5];});
 	}
 	
-	void *array = buffer->_ptr + buffer->_count*buffer->_elementSize;
+	void *array = (uint8_t *)buffer->_ptr + buffer->_count*buffer->_elementSize;
 	buffer->_count += requestedCount;
 	
 	return array;
