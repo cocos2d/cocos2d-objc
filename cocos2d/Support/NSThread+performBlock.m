@@ -25,7 +25,7 @@ typedef void (^BlockWithParam)(id param);
 @implementation CCObjectWith2Params
 @synthesize block, param;
 - (void)dealloc {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 }
 @end
