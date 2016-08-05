@@ -258,7 +258,9 @@
 
 	// New action. Start it.
 	if( found != _last )
-		[_actions[found] startWithTarget:_target];
+        if (_target) {
+            [_actions[found] startWithTarget:_target];
+        }
 	
 	[_actions[found] update: new_t];
 	_last = found;
