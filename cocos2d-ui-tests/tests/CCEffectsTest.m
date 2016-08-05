@@ -396,8 +396,135 @@
                                                                   nil
                                                                   ]]];
     };
-    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 50.0f, @"Point Light\nPosition matters, orientation does not.");
-    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, orientation does.");
+    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 50.0f, @"Point Light\nPosition matters, light orientation does not.");
+    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, light orientation does.");
+}
+
+-(void)setupLightingRenderTextureTest
+{
+    self.subTitle = @"Lighting + Render Texture Test";
+    
+    [self.contentNode.scene.lights flushGroupNames];
+    
+    NSString *normalMapImage = @"Images/powered_normals.png";
+    NSString *diffuseImage = @"Images/powered.png";
+    
+    CCNode* (^setupBlock)(CGPoint position, CCLightType type, float lightDepth, NSString *title) = ^CCNode* (CGPoint position, CCLightType type, float lightDepth, NSString *title)
+    {
+        CCLightNode *light = [[CCLightNode alloc] init];
+        light.type = type;
+        light.groups = @[title];
+        light.positionType = CCPositionTypeNormalized;
+        light.position = ccp(0.8f, 0.8f);
+        light.anchorPoint = ccp(0.5f, 0.5f);
+        light.intensity = 1.0f;
+        light.ambientIntensity = 0.2f;
+        light.cutoffRadius = 0.0f;
+        light.depth = lightDepth;
+        
+        CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
+        
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.groups = @[title];
+        lightingEffect.shininess = 0.1f;
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.5f, 0.5f);
+        sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+        sprite.effect = lightingEffect;
+        sprite.scale = 0.5f;
+        
+        CCNode *root = [[CCNode alloc] init];
+        root.positionType = CCPositionTypeNormalized;
+        root.position = position;
+        root.anchorPoint = ccp(0.5f, 0.5f);
+        root.contentSizeType = CCSizeTypePoints;
+        root.contentSize = CGSizeMake(200.0f, 200.0f);
+        
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector currentDirector].UIScaleFactor];
+        label.color = [CCColor whiteColor];
+        label.positionType = CCPositionTypeNormalized;
+        label.position = ccp(0.5f, 1.0f);
+        label.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [root addChild:label];
+        [root addChild:sprite];
+        [root addChild:light];
+        [light addChild:lightSprite];
+        
+        return root;
+    };
+
+    CCNode *subgraph = nil;
+    
+    const float border = 0.12f;
+    const float step = (1.0f - 2.0f * border) / 3.0f;
+    float xPos = border;
+    
+    // Case 1
+    // Create a sprite and light and add them directly to the scene
+    subgraph = setupBlock(ccp(xPos, 0.5f), CCLightPoint, 50.0f, @"No Render Texture\nLit Correctly");
+    [self.contentNode addChild:subgraph];
+    xPos += step;
+    
+    // Case 2
+    // Create a sprite and light and add them as children of a render texture with autodraw
+    // enabled.
+    CCRenderTexture *rt1 = [CCRenderTexture renderTextureWithWidth:256 height:256];
+    rt1.positionType = CCPositionTypeNormalized;
+    rt1.position = ccp(xPos, 0.5f);
+    rt1.anchorPoint = ccp(0.5f, 0.5f);
+    rt1.autoDraw = YES;
+    rt1.sprite.anchorPoint = ccp(0.0f, 0.0f);
+    [self.contentNode addChild:rt1];
+
+    subgraph = setupBlock(ccp(0.5f, 0.5f), CCLightPoint, 50.0f, @"Render Texture\nAuto Draw\nLit Correctly");
+    [rt1 addChild:subgraph];
+    xPos += step;
+    
+    // Case 3
+    // Create a sprite and light and render them into a render texture with a manual
+    // call to visit. The sprite should be all black because it is not part of the scene
+    // and therefore the effect cannot access the light collection.
+    CCRenderTexture *rt2 = [CCRenderTexture renderTextureWithWidth:256 height:256];
+    rt2.positionType = CCPositionTypeNormalized;
+    rt2.position = ccp(xPos, 0.5f);
+    rt2.anchorPoint = ccp(0.5f, 0.5f);
+    rt2.autoDraw = NO;
+    rt2.sprite.anchorPoint = ccp(0.0f, 0.0f);
+    [self.contentNode addChild:rt2];
+    
+    subgraph = setupBlock(ccp(0.5f, 0.5f), CCLightPoint, 50.0f, @"Render Texture\nManual Draw\nSprite is Black");
+    subgraph.positionType = CCPositionTypePoints;
+    subgraph.position = ccp(128.0f, 128.0f);
+    
+    [rt2 beginWithClear:0 g:0 b:0 a:0];
+    [subgraph visit];
+    [rt2 end];
+    xPos += step;
+    
+    // Case 4
+    // Create a sprite and light and add them to a render texture but still draw them with a
+    // manual call to visit. The sprite should render correctly because it is now part of the
+    // scene and the effect will be able to fine the light collection.
+    CCRenderTexture *rt3 = [CCRenderTexture renderTextureWithWidth:256 height:256];
+    rt3.positionType = CCPositionTypeNormalized;
+    rt3.position = ccp(xPos, 0.5f);
+    rt3.anchorPoint = ccp(0.5f, 0.5f);
+    rt3.autoDraw = NO;
+    rt3.sprite.anchorPoint = ccp(0.0f, 0.0f);
+    [self.contentNode addChild:rt3];
+    
+    subgraph = setupBlock(ccp(0.5f, 0.5f), CCLightPoint, 50.0f, @"Render Texture\nSprite Child of RT\nManual Draw\nLit Correctly");
+    subgraph.positionType = CCPositionTypePoints;
+    subgraph.position = ccp(128.0f, 128.0f);
+    [rt3 addChild:subgraph];
+    
+    [rt3 beginWithClear:0 g:0 b:0 a:0];
+    [subgraph visit];
+    [rt3 end];
+    xPos += step;
 }
 
 -(void)setupLightingRenderTextureTest
