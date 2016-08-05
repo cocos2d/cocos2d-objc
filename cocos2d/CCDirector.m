@@ -253,7 +253,7 @@ static CCDirector *_sharedDirector = nil;
 		[renderer prepareWithProjection:&projection framebuffer:_framebuffer];
 		[CCRenderer bindRenderer:renderer];
 		
-		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBAAsGLkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
 		
 		// Render
 		[_runningScene visit:renderer parentTransform:&projection];

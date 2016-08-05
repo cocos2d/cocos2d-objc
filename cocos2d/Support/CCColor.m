@@ -15,7 +15,8 @@
 
 - (void)dealloc
 {
-    CGColorRelease(_color);
+    // Ensure that the cached CGColor object (if any) is released.
+    [self releaseCGColor];
 }
 
 + (CCColor*) colorWithWhite:(float)white alpha:(float)alpha
@@ -59,6 +60,9 @@
     _g = white;
     _b = white;
     _a = alpha;
+    
+    // Ensure that the cached CGColor object (if any) is released.
+    [self releaseCGColor];
     
     return self;
 }
@@ -116,6 +120,9 @@
     _b = blue;
     _a = alpha;
     
+    // Ensure that the cached CGColor object (if any) is released.
+    [self releaseCGColor];
+    
     return self;
 }
 
@@ -128,6 +135,9 @@
     _g = green;
     _b = blue;
     _a = 1;
+    
+    // Ensure that the cached CGColor object (if any) is released.
+    [self releaseCGColor];
     
     return self;
 }
@@ -143,6 +153,9 @@
     _g = (float) components[1];
     _b = (float) components[2];
     _a = (float) components[3];
+    
+    // Ensure that the cached CGColor object (if any) is released.
+    [self releaseCGColor];
     
     return self;
 }
@@ -171,13 +184,31 @@
     {
         NSAssert(NO, @"UIColor has unsupported color space model");
     }
+
+    // Ensure that the cached CGColor object (if any) is released.
+    [self releaseCGColor];
     
     return self;
 }
 #endif
 
+/**
+ Releases the CGColor field, if it exists.  This method exists so that there is a controlled,
+ specific method for releasing the object.  It should be called on dealloc(), and whenever any of the
+ components of the color are changed.
+ */
+- (void) releaseCGColor {
+    if (_color != NULL) {
+        CGColorRelease(_color);
+        _color = NULL;
+    }
+}
+
 - (CGColorRef) CGColor
 {
+    // Only create the result if it doesn't already exist.  It should not be possible for the components of
+    // the color represented by self to change without affecting CGColor.
+    //
     if (_color == NULL)
     {
         CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
