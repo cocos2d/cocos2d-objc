@@ -56,7 +56,8 @@
 #endif
 
 // Metal is only supported on iOS devices (currently does not include the simulator) and on iOS 8 and greater.
-#if __CC_PLATFORM_IOS && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+// Metal is only supported on 64-bit devices.
+#if __CC_PLATFORM_IOS && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0 && defined(__LP64__)
 #define __CC_METAL_SUPPORTED_AND_ENABLED (CC_ENABLE_METAL_RENDERING && !TARGET_IPHONE_SIMULATOR)
 #else
 #define __CC_METAL_SUPPORTED_AND_ENABLED 0
