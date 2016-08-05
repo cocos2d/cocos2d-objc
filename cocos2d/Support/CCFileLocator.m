@@ -281,6 +281,10 @@ NSString * const CCFILELOCATOR_SEARCH_OPTION_NOTRACE = @"CCFILELOCATOR_SEARCH_OP
         // Then the untagged variant.
         if(block(filename, self.untaggedContentScale, NO)) return;
         
+                
+        // Then the tagged version of the untagged variant (because that feature wasn't implemented)
+        if(block([self contentScaleFilenameWithBasefilename:filename contentScale:self.untaggedContentScale], self.untaggedContentScale, YES)) return;
+
         // Then the lower-res tagged variants.
         while(true)
         {
