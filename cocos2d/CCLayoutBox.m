@@ -74,13 +74,18 @@ static float roundUpToEven(float f)
     }
     else
     {
-        // Get the maximum width
-        float maxWidth = 0;
+        // Get the maximum width and height
+        float maxWidth = 0, maxHeight = 0;
         for (CCNode* child in self.children)
         {
-            float width = child.contentSizeInPoints.width;
-            if (width > maxWidth) maxWidth = width;
+            CGSize childSize = child.contentSizeInPoints;
+            if (childSize.width > maxWidth) maxWidth = childSize.width;
+            maxHeight += childSize.height + _spacing;
         }
+        
+        // Account for last added increment
+        maxHeight -= _spacing;
+        if (maxHeight < 0) maxHeight = 0;
         
         // Position the nodes
         float height = 0;
@@ -88,23 +93,21 @@ static float roundUpToEven(float f)
         {
             CGSize childSize = child.contentSizeInPoints;
             
+            // increase the height first because we are going top down
+            height += childSize.height;
+            
             CGPoint offset = child.anchorPointInPoints;
-            CGPoint localPos = ccp(roundf((maxWidth-childSize.width)/2.0f), roundf(height));
+            CGPoint localPos = ccp(roundf((maxWidth-childSize.width)/2.0f), roundf(maxHeight-height));
             CGPoint position = ccpAdd(localPos, offset);
             
             child.position = position;
             child.positionType = CCPositionTypePoints;
             
-            height += childSize.height;
             height += _spacing;
         }
         
-        // Account for last added increment
-        height -= _spacing;
-        if (height < 0) height = 0;
-        
         self.contentSizeType = CCSizeTypePoints;
-        self.contentSize = CGSizeMake(roundUpToEven(maxWidth), roundUpToEven(height));
+        self.contentSize = CGSizeMake(roundUpToEven(maxWidth), roundUpToEven(maxHeight));
     }
 }
 
