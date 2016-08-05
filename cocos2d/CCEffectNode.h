@@ -15,11 +15,12 @@
 #import "CCTexture.h"
 #import "CCEffect.h"
 #import "CCEffectStack.h"
-#import "CCEffectGlow.h"
+#import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
 #import "CCEffectContrast.h"
 #import "CCEffectPixellate.h"
 #import "CCEffectSaturation.h"
+#import "CCEffectRefraction.h"
 
 
 #ifdef __CC_PLATFORM_IOS

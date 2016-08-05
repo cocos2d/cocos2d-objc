@@ -46,14 +46,23 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@implementation CCEffectSaturation
+static float conditionSaturation(float saturation);
 
+
+@interface CCEffectSaturation ()
+
+@property (nonatomic) float conditionedSaturation;
+
+@end
+
+
+@implementation CCEffectSaturation
 
 -(id)init
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectSaturation";
         return self;
@@ -65,7 +74,7 @@
 {
     if((self = [self init]))
     {
-        _saturation = saturation;
+        _conditionedSaturation = conditionSaturation(saturation);
     }
     return self;
 }
@@ -77,38 +86,55 @@
 
 -(void)buildFragmentFunctions
 {
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
 
-                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    float luminance = dot(inputValue.rgb, luminanceWeighting);
                                    vec3 greyScaleColor = vec3(luminance);
 
                                    return vec4(mix(greyScaleColor, inputValue.rgb, u_saturation), inputValue.a);
                                    );
 
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
     __weak CCEffectSaturation *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
-    };
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.conditionedSaturation];
+    } copy]];
     
     self.renderPasses = @[pass0];
 }
 
+-(void)setSaturation:(float)saturation
+{
+    _conditionedSaturation = conditionSaturation(saturation);
+}
 @end
+
+
+float conditionSaturation(float saturation)
+{
+    NSCAssert((saturation >= -1.0) && (saturation <= 1.0), @"Supplied saturation out of range [-1..1].");
+    
+    // Map from [-1..1] to [0..2]. The input values are photoshop equivalents
+    // (-1 is complete desaturation, 0 is no change, and 1 is saturation boost)
+    // while the output values are fed into the GLSL mix mix(a, b, t) function
+    // where t=0 yields a and t=1 yields b. In our case a is the grayscale value
+    // and b is the unmodified color value.
+    float clampedSaturation = clampf(saturation, -1.0f, 1.0f);
+    return clampedSaturation += 1.0f;
+}
 #endif

@@ -332,6 +332,16 @@
 	return &_verts;
 }
 
+- (CGAffineTransform)nodeToTextureTransform
+{
+    CGFloat sx = (_verts.br.texCoord1.s - _verts.bl.texCoord1.s) / (_verts.br.position.x - _verts.bl.position.x);
+    CGFloat sy = (_verts.tl.texCoord1.t - _verts.bl.texCoord1.t) / (_verts.tl.position.y - _verts.bl.position.y);
+    CGFloat tx = (_verts.bl.texCoord1.s - _verts.bl.position.x * sx);
+    CGFloat ty = (_verts.bl.texCoord1.t - _verts.bl.position.y * sy);
+    
+	return CGAffineTransformMake(sx, 0.0f, 0.0f, sy, tx, ty);
+}
+
 #pragma mark CCSprite - draw
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
@@ -343,14 +353,6 @@
     {
         _effectRenderer.contentSize = self.texture.contentSize;
         [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
-        
-        if (!self.effect.supportsDirectRendering)
-        {
-            CCTexture *backup = self.texture;
-            self.texture = _effectRenderer.outputTexture;
-            [self enqueueTriangles:renderer transform:transform];
-            self.texture = backup;
-        }
     }
     else
 #endif

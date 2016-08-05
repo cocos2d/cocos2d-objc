@@ -11,11 +11,10 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectGaussianBlur : CCEffect
 
-@property (nonatomic) float blurStrength;
 @property (nonatomic) GLKVector2 blurDirection;
 
--(id)initWithbBurStrength:(float)blurStrength direction:(GLKVector2)direction;
-+(id)effectWithBlurStrength:(float)blurStrength direction:(GLKVector2)direction;
+-(id)initWithPixelBlurRadius:(NSUInteger)blurRadius;
++(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius;
 
 @end
 #endif

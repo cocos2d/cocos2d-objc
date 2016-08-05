@@ -56,9 +56,10 @@ static float conditionBlockSize(float blockSize);
     CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
     CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectPixellate";
+        self.stitchFlags = CCEffectFunctionStitchAfter;
         return self;
     }
     return self;
@@ -86,32 +87,30 @@ static float conditionBlockSize(float blockSize);
                                    return texture2D(cc_PreviousPassTexture, samplePos);
                                    );
 
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"pixellateEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"pixellateEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
     __weak CCEffectPixellate *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
 
         float aspect = previousPassTexture.contentSize.width / previousPassTexture.contentSize.height;
         float uStep = self.blockSize / previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
-        weakPass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
-        weakPass.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
-    };
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
+    } copy]];
     
     self.renderPasses = @[pass0];
 }
