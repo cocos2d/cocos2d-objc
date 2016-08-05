@@ -45,6 +45,7 @@ extern const NSString *CCShaderUniformSinTime;
 extern const NSString *CCShaderUniformCosTime;
 extern const NSString *CCShaderUniformRandom01;
 extern const NSString *CCShaderUniformMainTexture;
+extern const NSString *CCShaderUniformNormalMapTexture;
 extern const NSString *CCShaderUniformAlphaTestValue;
 
 

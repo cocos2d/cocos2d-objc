@@ -36,34 +36,84 @@ static NSString* vertBase =
 
 @implementation CCEffectFunction
 
--(id)initWithName:(NSString *)name body:(NSString*)body returnType:(NSString *)returnType
+-(id)initWithName:(NSString *)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString *)returnType
 {
     if((self = [super init]))
     {
         _body = [body copy];
         _name = [name copy];
+        _inputs = [inputs copy];
         _returnType = [returnType copy];
+
+        _inputString = @"void";
+        if (_inputs.count)
+        {
+            NSMutableString *tmpString = [[NSMutableString alloc] init];
+            for (CCEffectFunctionInput *input in _inputs)
+            {
+                [tmpString appendFormat:@"%@ %@", input.type, input.name];
+            }
+            _inputString = tmpString;
+        }
+        
         return self;
     }
     
     return self;
 }
 
-+(id)functionWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType
++(id)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType
 {
-    return [[self alloc] initWithName:name body:body returnType:returnType];
+    return [[self alloc] initWithName:name body:body inputs:inputs returnType:returnType];
 }
 
 -(NSString*)function
 {
-    NSString* function = [NSString stringWithFormat:@"%@ %@(void)\n{\n%@\n}", _returnType, _name, _body];
+    NSString* function = [NSString stringWithFormat:@"%@ %@(%@)\n{\n%@\n}", _returnType, _name, _inputString, _body];
     return function;
 }
 
--(NSString*)method
+-(NSString*)callStringWithInputs:(NSArray*)inputs
 {
-    NSString* method = [NSString stringWithFormat:@"%@()", _name];
-    return method;
+    NSMutableString *callString = [[NSMutableString alloc] initWithFormat:@"%@(", _name];
+    for (NSString *input in inputs)
+    {
+        if ([inputs lastObject] != input)
+        {
+            [callString appendFormat:@"%@, ", input];
+        }
+        else
+        {
+            [callString appendFormat:@"%@", input];
+        }
+    }
+    [callString appendString:@")"];
+    
+    return callString;
+}
+
+@end
+
+#pragma mark CCEffectFunctionInput
+
+@implementation CCEffectFunctionInput
+
+-(id)initWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet
+{
+    if((self = [super init]))
+    {
+        _type = [type copy];
+        _name = [name copy];
+        _snippet = [snippet copy];
+        return self;
+    }
+    
+    return self;
+}
+
++(id)inputWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet
+{
+    return [[self alloc] initWithType:type name:name snippet:snippet];
 }
 
 @end
@@ -105,11 +155,8 @@ static NSString* vertBase =
 
 -(id)initWithType:(NSString*)type name:(NSString*)name
 {
-    if((self = [super init]))
+    if((self = [self initWithType:type name:name count:0]))
     {
-        _name = [name copy];
-        _type = [type copy];
-        
         return self;
     }
     
@@ -121,9 +168,35 @@ static NSString* vertBase =
     return [[self alloc] initWithType:type name:name];
 }
 
+-(id)initWithType:(NSString*)type name:(NSString*)name count:(NSInteger)count
+{
+    if((self = [super init]))
+    {
+        _name = name;
+        _type = type;
+        _count = count;
+        
+        return self;
+    }
+    
+    return self;
+}
+
++(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count
+{
+    return [[self alloc] initWithType:type name:name count:count];
+}
+
+
 -(NSString*)declaration
 {
-    NSString* declaration = [NSString stringWithFormat:@"varying %@ %@;", _type, _name];
+    NSString* declaration;
+
+    if(_count == 0)
+        declaration = [NSString stringWithFormat:@"varying %@ %@;", _type, _name];
+    else
+        declaration = [NSString stringWithFormat:@"varying %@ %@[%lu];", _type, _name, (long)_count];
+    
     return declaration;
 }
 
@@ -137,19 +210,17 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
-        __weak CCEffectRenderPass *weakSelf = self;
-        
-        _beginBlock = [^(CCTexture *previousPassTexture){} copy];
-        _endBlock = [^{} copy];
+        _beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){} copy]];
+        _endBlocks = @[[^(CCEffectRenderPass *pass){} copy]];
 
-        CCEffectRenderPassUpdateBlock updateBlock = ^{
-            if (weakSelf.needsClear)
+        CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass){
+            if (pass.needsClear)
             {
-                [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [pass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             }
-            [weakSelf enqueueTriangles];
+            [pass enqueueTriangles];
         };
-        _updateBlock = [updateBlock copy];
+        _updateBlocks = @[[updateBlock copy]];
         _blendMode = [CCBlendMode premultipliedAlphaMode];
         
         return self;
@@ -158,7 +229,30 @@ static NSString* vertBase =
     return self;
 }
 
-//
+-(void)begin:(CCTexture *)previousPassTexture
+{
+    for (CCEffectRenderPassBeginBlock block in _beginBlocks)
+    {
+        block(self, previousPassTexture);
+    }
+}
+
+-(void)update
+{
+    for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
+    {
+        block(self);
+    }
+}
+
+-(void)end
+{
+    for (CCEffectRenderPassUpdateBlock block in _endBlocks)
+    {
+        block(self);
+    }
+}
+
 -(void)enqueueTriangles
 {
     CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
@@ -191,115 +285,137 @@ static NSString* vertBase =
     return @[];
 }
 
++ (NSSet *)defaultEffectFragmentUniformNames
+{
+    return [[NSSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
+}
+
++ (NSSet *)defaultEffectVertexUniformNames
+{
+    return [[NSSet alloc] initWithArray:@[]];
+}
+
+
 -(id)init
 {
+    return [self initWithFragmentFunction:nil vertexFunctions:nil fragmentUniforms:nil vertexUniforms:nil varying:nil];
+}
+
+-(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
+{
+    return [self initWithFragmentFunction:nil vertexFunctions:nil fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varying:varying];
+}
+
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
+{
+    return [self initWithFragmentFunction:fragmentFunctions vertexFunctions:nil fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varying:varying];
+}
+
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
+{
     if((self = [super init]))
+    {
+        [self buildEffectWithFragmentFunction:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varying:varying];
+    }
+    return self;
+}
+
+- (void)buildEffectWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
+{
+    if (fragmentFunctions)
+    {
+        _fragmentFunctions = fragmentFunctions;
+    }
+    else
+    {
+        [self buildFragmentFunctions];
+    }
+    
+    if (vertexFunctions)
+    {
+        _vertexFunctions = vertexFunctions;
+    }
+    else
+    {
+        [self buildVertexFunctions];
+    }
+    
+    if (fragmentUniforms)
+    {
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+    }
+    else
     {
         _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] copy];
+    }
+    
+    if (vertexUniforms)
+    {
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
+        
+    }
+    else
+    {
         _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
-        _fragmentFunctions = [[NSMutableArray alloc] init];
-        _vertexFunctions = [[NSMutableArray alloc] init];
-        
-        [self buildFragmentFunctions];
-        [self buildVertexFunctions];
-        [self buildEffectShader];
-        [self buildRenderPasses];
-        
-        return self;
     }
     
-    return self;
-}
-
--(id)initWithUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
-{
-    if((self = [super init]))
-    {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
-        _varyingVars = [varying copy];
-        _fragmentFunctions = [[NSMutableArray alloc] init];
-        _vertexFunctions = [[NSMutableArray alloc] init];
-        
-        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
-        [self buildFragmentFunctions];
-        [self buildVertexFunctions];
-        [self buildEffectShader];
-        [self buildRenderPasses];
-        
-        return self;
-    }
+    [self setVarying:varying];
     
-    return self;
-}
-
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
-{
-    if((self = [super init]))
-    {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
-        _fragmentFunctions = fragmentFunctions;
-        _varyingVars = [varying copy];
-        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
-        [self buildVertexFunctions];
-        [self buildEffectShader];
-        [self buildRenderPasses];
-        
-        return self;
-    }
+    _stitchFlags = CCEffectFunctionStitchBoth;
     
-    return self;
-}
-
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
-{
-    if((self = [super init]))
-    {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
-        _fragmentFunctions = fragmentFunctions;
-        _vertexFunctions = vertextFunctions;
-        _varyingVars = [varying copy];
-        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
-        [self buildEffectShader];
-        [self buildRenderPasses];
-        
-        return self;
-    }
+    [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
+    [self buildUniformTranslationTable];
     
-    return self;
+    [self buildEffectShader];
+    [self buildRenderPasses];
 }
 
 -(void)buildShaderUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
 {
-    [_shaderUniforms removeAllObjects];
+    _shaderUniforms = [[NSMutableDictionary alloc] init];
     
     for(CCEffectUniform* uniform in fragmentUniforms)
     {
-        if(_shaderUniforms == nil)
-            _shaderUniforms = [[NSMutableDictionary alloc] init];
-        
         [_shaderUniforms setObject:uniform.value forKey:uniform.name];
     }
     
     for(CCEffectUniform* uniform in vertexUniforms)
     {
-        if(_shaderUniforms == nil)
-            _shaderUniforms = [[NSMutableDictionary alloc] init];
-        
         [_shaderUniforms setObject:uniform.value forKey:uniform.name];
+    }
+}
+
+-(void)buildUniformTranslationTable
+{
+    self.uniformTranslationTable = [[NSMutableDictionary alloc] init];
+    for(CCEffectUniform* uniform in _vertexUniforms)
+    {
+        self.uniformTranslationTable[uniform.name] = uniform.name;
+    }
+
+    for(CCEffectUniform* uniform in _fragmentUniforms)
+    {
+        self.uniformTranslationTable[uniform.name] = uniform.name;
+    }
+}
+
+-(void)setVarying:(NSArray*)varying
+{
+    if (varying)
+    {
+        _varyingVars = [varying copy];
+    }
+    else
+    {
+        _varyingVars = nil;
     }
 }
 
 -(void)buildEffectShader
 {
-    if(_shader != nil)
-        return;
-    
     //Build varying vars
     NSMutableString* varyingVarsToInsert = [[NSMutableString alloc] init];
-    for(CCEffectUniform* varying in _varyingVars)
+    for(CCEffectVarying* varying in _varyingVars)
     {
         [varyingVarsToInsert appendFormat:@"%@\n", varying.declaration];
     }
@@ -314,24 +430,36 @@ static NSString* vertBase =
     
     NSMutableString* fragFunctions = [[NSMutableString alloc] init];
     NSMutableString* effectFunctionBody = [[NSMutableString alloc] init];
-    [effectFunctionBody appendString:@"return "];
+    [effectFunctionBody appendString:@"vec4 tmp;\n"];
     
     for(CCEffectFunction* curFunction in _fragmentFunctions)
     {
         [fragFunctions appendFormat:@"%@\n", curFunction.function];
         
-        [effectFunctionBody appendString:curFunction.method];
-        if([_fragmentFunctions lastObject] != curFunction)
-            [effectFunctionBody appendString:@" + "];
-        else
-            [effectFunctionBody appendString:@";"];
+        if([_fragmentFunctions firstObject] == curFunction)
+        {
+            for (CCEffectFunctionInput *input in curFunction.inputs)
+            {
+                [effectFunctionBody appendFormat:@"tmp = %@;\n", input.snippet];
+            }
+        }
+        
+        NSMutableArray *inputs = [[NSMutableArray alloc] init];
+        for (CCEffectFunctionInput *input in curFunction.inputs)
+        {
+            [inputs addObject:@"tmp"];
+        }
+        
+        [effectFunctionBody appendFormat:@"tmp = %@;\n", [curFunction callStringWithInputs:inputs]];
     }
+    [effectFunctionBody appendString:@"return tmp;\n"];
     
-    CCEffectFunction* effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody returnType:@"vec4"];
+    CCEffectFunction* effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
     [fragFunctions appendFormat:@"%@\n", effectFunction.function];
     
-    NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, effectFunction.method];
-    //NSLog(@"\n------------fragBody:\n%@", fragBody);
+    NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, [effectFunction callStringWithInputs:nil]];
+//    NSLog(@"\n------------fragBody:\n%@", fragBody);
+    
     
     
     // Build vertex body
@@ -350,18 +478,18 @@ static NSString* vertBase =
     {
         [vertexFunctions appendFormat:@"%@\n", curFunction.function];
         
-        [effectFunctionBody appendString:curFunction.method];
+        [effectFunctionBody appendString:[curFunction callStringWithInputs:nil]];
         if([_vertexFunctions lastObject] != curFunction)
             [effectFunctionBody appendString:@" + "];
         else
             [effectFunctionBody appendString:@";"];
     }
     
-    effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody returnType:@"vec4"];
+    effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
     [vertexFunctions appendFormat:@"%@\n", effectFunction.function];
     
-    NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, effectFunction.method];
-    //NSLog(@"\n------------vertBody:\n%@", vertBody);
+    NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, [effectFunction callStringWithInputs:nil]];
+//    NSLog(@"\n------------vertBody:\n%@", vertBody);
     
     _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
 
@@ -369,14 +497,14 @@ static NSString* vertBase =
 
 -(void)buildFragmentFunctions
 {
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" returnType:@"vec4"];
-    [_fragmentFunctions addObject:fragmentFunction];
+    _fragmentFunctions = [[NSMutableArray alloc] init];
+    [_fragmentFunctions addObject:[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" inputs:nil returnType:@"vec4"]];
 }
 
 -(void)buildVertexFunctions
 {
-    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" returnType:@"vec4"];
-    [_vertexFunctions addObject:vertexFunction];
+    _vertexFunctions = [[NSMutableArray alloc] init];
+    [_vertexFunctions addObject:[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" inputs:nil returnType:@"vec4"]];
 }
 
 -(void)buildRenderPasses
@@ -394,9 +522,14 @@ static NSString* vertBase =
     return YES;
 }
 
-- (BOOL)prepareForRendering
+- (BOOL)readyForRendering
 {
     return YES;
+}
+
+- (CCEffectPrepareStatus)prepareForRendering
+{
+    return CCEffectPrepareNothingToDo;
 }
 
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex
@@ -404,6 +537,13 @@ static NSString* vertBase =
     NSAssert((passIndex >= 0) && (passIndex < _renderPasses.count), @"Pass index out of range.");
     return _renderPasses[passIndex];;
 }
+
+-(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch
+{
+    NSAssert(stitch && ((stitch & CCEffectFunctionStitchBoth) == stitch), @"Invalid stitch flag specified");
+    return ((stitch & _stitchFlags) == stitch);
+}
+
 
 @end
 #endif

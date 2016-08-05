@@ -15,16 +15,44 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 extern const NSString *CCShaderUniformPreviousPassTexture;
 
+typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
+{
+    CCEffectFunctionStitchBefore     = 1 << 0,
+    CCEffectFunctionStitchAfter      = 1 << 1,
+    CCEffectFunctionStitchBoth       = (CCEffectFunctionStitchBefore | CCEffectFunctionStitchAfter),
+};
+
+typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
+{
+    CCEffectPrepareNothingToDo   = 0,
+    CCEffectPrepareFailure       = 1,
+    CCEffectPrepareSuccess       = 2,
+};
+
 @interface CCEffectFunction : NSObject
 
 @property (nonatomic, readonly) NSString* body;
 @property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSArray* inputs;
+@property (nonatomic, readonly) NSString* inputString;
 @property (nonatomic, readonly) NSString* returnType;
 @property (nonatomic, readonly) NSString* function;
-@property (nonatomic, readonly) NSString* method;
 
--(id)initWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
-+(id)functionWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
+-(id)initWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
++(id)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
+
+-(NSString*)callStringWithInputs:(NSArray*)inputs;
+
+@end
+
+@interface CCEffectFunctionInput : NSObject
+
+@property (nonatomic, readonly) NSString* type;
+@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSString* snippet;
+
+-(id)initWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
++(id)inputWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
 
 @end
 
@@ -45,15 +73,20 @@ extern const NSString *CCShaderUniformPreviousPassTexture;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* type;
 @property (nonatomic, readonly) NSString* declaration;
+@property (nonatomic, readonly) NSInteger count;
 
 -(id)initWithType:(NSString*)type name:(NSString*)name;
+-(id)initWithType:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 +(id)varying:(NSString*)type name:(NSString*)name;
++(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 
 @end
 
-typedef void (^CCEffectRenderPassBeginBlock)(CCTexture *previousPassTexture);
-typedef void (^CCEffectRenderPassUpdateBlock)();
-typedef void (^CCEffectRenderPassEndBlock)();
+@class CCEffectRenderPass;
+
+typedef void (^CCEffectRenderPassBeginBlock)(CCEffectRenderPass *pass, CCTexture *previousPassTexture);
+typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass);
+typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 
 // Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
@@ -66,10 +99,13 @@ typedef void (^CCEffectRenderPassEndBlock)();
 @property (nonatomic) CCShader* shader;
 @property (nonatomic) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) BOOL needsClear;
-@property (nonatomic,copy) CCEffectRenderPassBeginBlock beginBlock;
-@property (nonatomic,copy) CCEffectRenderPassUpdateBlock updateBlock;
-@property (nonatomic,copy) CCEffectRenderPassEndBlock endBlock;
+@property (nonatomic,copy) NSArray* beginBlocks;
+@property (nonatomic,copy) NSArray* updateBlocks;
+@property (nonatomic,copy) NSArray* endBlocks;
 
+-(void)begin:(CCTexture *)previousPassTexture;
+-(void)update;
+-(void)end;
 -(void)enqueueTriangles;
 
 @end
@@ -80,15 +116,20 @@ typedef void (^CCEffectRenderPassEndBlock)();
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
+@property (nonatomic, readonly) BOOL readyForRendering;
 @property (nonatomic, copy) NSString *debugName;
 
 
--(id)initWithUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 
--(BOOL)prepareForRendering;
+-(CCEffectPrepareStatus)prepareForRendering;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex;
+
+-(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
+
+-(void)setVarying:(NSArray*)varying;
 
 @end
 #endif

@@ -60,6 +60,14 @@
 -(void)setEffect:(CCEffect *)effect
 {
     _effect = effect;
+    if (effect)
+    {
+        [self updateShaderUniformsFromEffect];
+    }
+    else
+    {
+        _shaderUniforms = nil;
+    }
 }
 
 -(void)begin
@@ -158,41 +166,24 @@
 
     // Done pre-render
     
-    _sprite.texture = self.texture;
-    _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
-    
-    if (!_effect.supportsDirectRendering || !_effect)
+    if (_effect)
     {
-        // XXX We may want to make this post-render step overridable by the
-        // last effect in the stack. That would look like the code in the
-        // pre-render override comment above.
-        //
-        
-        // Draw accumulated results from the last textureinto the real framebuffer
-        // The texture property always points to the most recently allocated
-        // texture so it will contain any accumulated results for the effect stack.
-        [_renderer pushGroup];
-        
-        if (_effect)
+        _effectRenderer.contentSize = self.texture.contentSize;
+        if ([_effect prepareForRendering] == CCEffectPrepareSuccess)
         {
-            _sprite.texture = _effectRenderer.outputTexture;
+            // Preparing an effect for rendering can modify its uniforms
+            // dictionary which means we need to reinitialize our copy of the
+            // uniforms.
+            [self updateShaderUniformsFromEffect];
         }
-        else
-        {
-            _sprite.texture = self.texture;
-        }
-        
+        [_effectRenderer drawSprite:_sprite withEffect:_effect uniforms:_shaderUniforms renderer:_renderer transform:transform];
+    }
+    else
+    {
         _sprite.anchorPoint = ccp(0.0f, 0.0f);
         _sprite.position = ccp(0.0f, 0.0f);
-        _sprite.shader = [CCShader positionTextureColorShader];
         [_sprite visit:_renderer parentTransform:transform];
-        
-        [_renderer popGroupWithDebugLabel:@"CCEffectNode: Post-render composite pass" globalSortOrder:0];
-        
-        // Done framebuffer composite
     }
-    
     
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;
@@ -200,6 +191,19 @@
         [CCRenderer bindRenderer:nil];
 
     _renderer = nil;
+}
+
+- (void)updateShaderUniformsFromEffect
+{
+    // Initialize the shader uniforms dictionary with the node's main texture and an
+    // empty entry for the normal map (because effect node's don't have normal maps
+    // like sprites do).
+    _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          CCShaderUniformNormalMapTexture : [CCTexture none]
+                          } mutableCopy];
+    
+    // And then copy the new effect's uniforms into the node's uniforms dictionary.
+    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
 }
 
 @end

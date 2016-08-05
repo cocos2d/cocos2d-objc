@@ -19,10 +19,9 @@
 
 @property (nonatomic, assign) CGSize contentSize;
 @property (nonatomic, assign) float contentScale;
-@property (nonatomic, readonly) CCTexture *outputTexture;
 
 -(id)init;
--(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect uniforms:(NSMutableDictionary *)uniforms renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 @end
 #endif
