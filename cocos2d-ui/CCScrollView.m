@@ -371,6 +371,7 @@
 
     if (animated)
     {
+        [self scrollViewWillBeginDragging];
         CGPoint oldPos = self.scrollPosition;
         float dist = ccpDistance(newPos, oldPos);
         
@@ -431,11 +432,13 @@
 - (void) xAnimationDone
 {
     _animatingX = NO;
+    [_delegate scrollViewDidEndDecelerating:self];
 }
 
 - (void) yAnimationDone
 {
     _animatingY = NO;
+    [_delegate scrollViewDidEndDecelerating:self];
 }
 
 - (CGPoint) scrollPosition
