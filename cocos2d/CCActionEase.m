@@ -467,7 +467,7 @@
 @implementation CCActionEaseInstant
 -(void) update: (CCTime) t
 {
-    if (t < 0)
+    if (t < 1)
     {
         [self.inner update:0];
     }
