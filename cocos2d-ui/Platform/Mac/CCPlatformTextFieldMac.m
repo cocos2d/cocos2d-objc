@@ -101,6 +101,14 @@
 {
     return _textField.stringValue;
 }
+
+- (BOOL)hidden {
+    return _textField.hidden;
+}
+
+- (void) setHidden:(BOOL)hidden {
+    _textField.hidden = hidden;
+}
 @end
 
 #endif
