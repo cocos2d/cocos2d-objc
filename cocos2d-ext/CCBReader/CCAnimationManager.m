@@ -985,7 +985,7 @@ static NSInteger ccbAnimationManagerID = 0;
         [newFrame setValue:[CCSpriteFrame frameWithImageNamed:[frameDict objectForKey:@"value"]]];
         
         [sequenceProperty.keyframes addObject:newFrame];
-        duration=newFrame.time;
+        duration += newFrame.time;
     }
     
     // Set Sequence Duration
