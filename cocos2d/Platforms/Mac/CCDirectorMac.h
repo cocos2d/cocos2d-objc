@@ -30,7 +30,7 @@
 #import "../../ccMacros.h"
 #if __CC_PLATFORM_MAC
 
-#import <QuartzCore/CVDisplayLink.h>
+#import <QuartzCore/QuartzCore.h>
 #import "../../CCDirector.h"
 
 enum  {

@@ -39,6 +39,22 @@
 #define CC_DEPRECATED_X(msg)
 #endif
 
+/** @def CC_ENABLE_DEPRECATED_METHODS
+ If enabled, methods that are deprecated are not included in compilation
+
+ Disabled by default. Enable to be compatible with older code.
+
+ */
+#ifndef CC_ENABLE_DEPRECATED_METHODS
+#define CC_ENABLE_DEPRECATED_METHODS 0
+#endif
+
+/** @def CC_DEFAULT_FRAMERATE
+ Default engine framerate
+ Set to 60 by default
+
+ */
+#define CC_DEFAULT_FRAMERATE        60
 
 
 /** @def CC_ENABLE_STACKABLE_ACTIONS

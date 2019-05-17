@@ -28,6 +28,8 @@
 
 #import "CCNode.h"
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 @class CCTexture;
 @class CCSprite;
 
@@ -43,7 +45,7 @@
  Failing to meet these requirements will result in a runtime error.
  
  */
-__attribute__((deprecated))
+CC_DEPRECATED("Engine is able to draw sprites in batches itself - use CCNode")
 @interface CCSpriteBatchNode : CCNode<CCTextureProtocol, CCBlendProtocol>
 
 
@@ -92,3 +94,5 @@ __attribute__((deprecated))
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 @end
+
+#endif

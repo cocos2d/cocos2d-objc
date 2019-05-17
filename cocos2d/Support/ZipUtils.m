@@ -373,7 +373,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
         // decrypt
         headerSize = sizeof(CCPHeader);
         uint32_t* ints = (uint32_t*)(compressed+12);
-        int enclen = (fileLen-12)/4;
+        int enclen = (int)((fileLen-12)/4);
         
         caw_encdec(ints, enclen);
         

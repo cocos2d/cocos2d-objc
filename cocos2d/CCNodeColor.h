@@ -188,6 +188,8 @@
 /** The vector that determines the gradient's direction. Defaults to {0, -1}. */
 @property (nonatomic, readwrite) CGPoint vector;
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 // purposefully undocumented: property marked as deprecated
 /*
  Deprecated in 3.1. All colors are correctly displayed across the node's rectangle.
@@ -198,7 +200,9 @@
  
  If compressedInterpolation is enabled (default mode) you will see both the start and end colors of the gradient.
  */
-@property (nonatomic, readwrite) BOOL compressedInterpolation __attribute__((deprecated));
+@property (nonatomic, readwrite) BOOL compressedInterpolation CC_DEPRECATED("Deprecated");
+
+#endif
 
 @end
 

@@ -95,14 +95,13 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 
 
 /// Internal abstract class used to wrap vertex buffer state. (GL VAOs, etc)
-@interface CCGraphicsBufferBindings : NSObject {
-	@public
-	CCGraphicsBuffer *_vertexBuffer;
-	CCGraphicsBuffer *_indexBuffer;
+@interface CCGraphicsBufferBindings : NSObject
+
+@property (nonatomic, retain) CCGraphicsBuffer* vertexBuffer;
+@property (nonatomic, retain) CCGraphicsBuffer* indexBuffer;
 	
-	// Not used by the GL2 renderer.
-	CCGraphicsBuffer *_uniformBuffer;
-}
+// Not used by the GL2 renderer.
+@property (nonatomic, retain) CCGraphicsBuffer* uniformBuffer;
 
 /// Make the buffers ready to use by drawing commands.
 -(void)bind:(BOOL)bind vertexPage:(NSUInteger)vertexPage;

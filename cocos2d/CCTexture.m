@@ -143,7 +143,7 @@ static const MTLPixelFormat MetalPixelFormats[] = {
 -(CGPoint)offset {return [(CCSpriteFrame *)_target offset];}
 -(BOOL)rotated {return [_target rotated];}
 -(CGSize)originalSize {return [_target originalSize];}
--(CCTexture *)texture {return [_target texture];}
+-(CCTexture *)texture {return (CCTexture *)[_target texture];}
 
 // Let the rest fall back to a slow forwarded path.
 - (id)forwardingTargetForSelector:(SEL)aSelector
@@ -168,23 +168,29 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 #pragma mark -
 #pragma mark CCTexture2D - Main
 
+@interface CCTexture()
+
+@property(nonatomic) GLuint name;
+@property(nonatomic) BOOL hasMipmaps;
+@property(nonatomic) NSUInteger pixelWidth;
+@property(nonatomic) NSUInteger pixelHeight;
+
+@end
+
 @implementation CCTexture
 {
-	GLuint _name;
 	CGSize _sizeInPixels;
 	CGFloat _contentScale;
-	NSUInteger _width, _height;
 	CCTexturePixelFormat _format;
 	GLfloat _maxS, _maxT;
 	BOOL _premultipliedAlpha;
-	BOOL _hasMipmaps;
-	
+
 	BOOL _antialiased;
 	
 	CCProxy __weak *_proxy;
 }
 
-@synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
+@synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, name = _name, maxS = _maxS, maxT = _maxT;
 @synthesize premultipliedAlpha = _premultipliedAlpha;
 @synthesize contentScale = _contentScale;
 @synthesize antialiased = _antialiased;
@@ -261,8 +267,10 @@ static CCTexture *CCTextureNone = nil;
 			else
 				glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
-			glGenTextures(1, &_name);
-			glBindTexture(GL_TEXTURE_2D, _name);
+            GLuint name;
+			glGenTextures(1, &name);
+			glBindTexture(GL_TEXTURE_2D, name);
+            self.name = name;
 			
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -305,8 +313,8 @@ static CCTexture *CCTextureNone = nil;
 		});
 
 		_sizeInPixels  = sizeInPixels;
-		_width = width;
-		_height = height;
+		_pixelWidth = width;
+		_pixelHeight = height;
 		_format = pixelFormat;
 		_maxS = sizeInPixels.width / (float)width;
 		_maxT = sizeInPixels.height / (float)height;
@@ -378,7 +386,8 @@ static CCTexture *CCTextureNone = nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %lux%lu | Pixel format = %@ | Coordinates = (%.2f, %.2f)>", [self class], self, _name, (unsigned long)_width, (unsigned long)_height, [self stringForFormat], _maxS, _maxT];
+	return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %lux%lu | Pixel format = %@ | Coordinates = (%.2f, %.2f)>",
+            [self class], self, _name, (unsigned long)_pixelWidth, (unsigned long)_pixelHeight, [self stringForFormat], _maxS, _maxT];
 }
 
 -(CGSize) contentSize
@@ -416,9 +425,9 @@ static CCTexture *CCTextureNone = nil;
 			{
 				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
 				
-				glBindTexture(GL_TEXTURE_2D, _name);
+				glBindTexture(GL_TEXTURE_2D, self.name);
 				
-				if(_hasMipmaps){
+				if(self.hasMipmaps){
 					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
 				} else {
 					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
@@ -688,9 +697,9 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 			_name = pvr.name;	// texture id
 			_maxS = 1;			// only POT texture are supported
 			_maxT = 1;
-			_width = pvr.width;
-			_height = pvr.height;
-			_sizeInPixels = CGSizeMake(_width, _height);
+			_pixelWidth = pvr.width;
+			_pixelHeight = pvr.height;
+			_sizeInPixels = CGSizeMake(_pixelWidth, _pixelHeight);
 			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
 			_format = pvr.format;
 
@@ -768,12 +777,12 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 			{
 				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Generate Mipmap");
 				
-				NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
-				glBindTexture(GL_TEXTURE_2D, _name);
+				NSAssert(self.pixelWidth == CCNextPOT(self.pixelWidth) && self.pixelHeight == CCNextPOT(self.pixelHeight), @"Mimpap texture only works in POT textures");
+				glBindTexture(GL_TEXTURE_2D, self.name);
 				glGenerateMipmap(GL_TEXTURE_2D);
 				
 				// Update the minification filter.
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiased ? GL_LINEAR_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, self.antialiased ? GL_LINEAR_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
 				
 				CCGL_DEBUG_POP_GROUP_MARKER();
 			}
@@ -789,11 +798,11 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Texture Parameters");
 		
 		NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"Not implemented for Metal.");
-		NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
+		NSAssert( (self.pixelWidth == CCNextPOT(self.pixelWidth) && self.pixelHeight == CCNextPOT(self.pixelHeight)) ||
 					(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 				@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-		glBindTexture(GL_TEXTURE_2D, _name );
+		glBindTexture(GL_TEXTURE_2D, self.name );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );

@@ -112,24 +112,7 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 /**
  CCConfiguration contains some openGL variables
   */
-@interface CCConfiguration : NSObject {
-	CCGraphicsAPI _graphicsAPI;
-	
-	BOOL	_configured;
-	BOOL			_openGLInitialized;
-	
-	GLint			_maxTextureSize;
-	BOOL			_supportsPVRTC;
-	BOOL			_supportsNPOT;
-	BOOL			_supportsBGRA8888;
-	BOOL			_supportsDiscardFramebuffer;
-	BOOL			_supportsShareableVAO;
-	GLint			_maxSamplesAllowed;
-	GLint			_maxTextureUnits;
-    BOOL            _supportsPackedDepthStencil;
-
-	unsigned int	_OSVersion;
-}
+@interface CCConfiguration : NSObject
 
 /** Which graphics API Cococs2D is using. */
 @property (nonatomic, readonly) CCGraphicsAPI graphicsAPI;

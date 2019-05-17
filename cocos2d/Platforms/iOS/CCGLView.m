@@ -148,26 +148,28 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 
 @end
 
+@interface CCGLView()
+
+@property (nonatomic) GLuint defaultFramebuffer;
+@property (nonatomic) GLuint colorRenderbuffer;
+@property (nonatomic) GLuint msaaFramebuffer;
+@property (nonatomic) GLuint msaaColorbuffer;
+@property (nonatomic) GLuint msaaSamples;
+@property (nonatomic) GLint backingWidth;
+@property (nonatomic) GLint backingHeight;
+@property (nonatomic) NSString* pixelFormat;
+@property (nonatomic) GLuint depthBuffer;
+
+@end
+
 @implementation CCGLView {
 	NSMutableArray *_fences;
 	
 	EAGLContext *_context;
 
-	NSString *_pixelFormat;
 	GLuint _depthFormat;
 	BOOL _preserveBackbuffer;
 	BOOL _discardFramebufferSupported;
-
-	GLuint _depthBuffer;
-	GLuint _colorRenderbuffer;
-	GLuint _defaultFramebuffer;
-	
-	GLuint	_msaaSamples;
-	GLuint _msaaFramebuffer;
-	GLuint _msaaColorbuffer;
-	
-	GLint _backingWidth;
-	GLint _backingHeight;
 }
 
 + (Class) layerClass
@@ -275,17 +277,23 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 	
 	CCRenderDispatch(NO, ^{
 		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
-		glGenFramebuffers(1, &_defaultFramebuffer);
-		glBindFramebuffer(GL_FRAMEBUFFER, _defaultFramebuffer);
-		
-		glGenRenderbuffers(1, &_colorRenderbuffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
+        GLuint defaultFramebuffer;
+		glGenFramebuffers(1, &defaultFramebuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+        self.defaultFramebuffer = defaultFramebuffer;
 
-		if (_multiSampling){
+        GLuint colorRenderbuffer;
+		glGenRenderbuffers(1, &colorRenderbuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
+        self.colorRenderbuffer = colorRenderbuffer;
+
+		if (self.multiSampling) {
 			/* Create the MSAA framebuffer (offscreen) */
-			glGenFramebuffers(1, &_msaaFramebuffer);
-			glBindFramebuffer(GL_FRAMEBUFFER, _msaaFramebuffer);
+            GLuint msaaFramebuffer;
+			glGenFramebuffers(1, &msaaFramebuffer);
+			glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer);
+            self.msaaFramebuffer = msaaFramebuffer;
 		}
 
 		CC_CHECK_GL_ERROR_DEBUG();
@@ -307,45 +315,50 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 	CCRenderDispatch(NO, ^{
 		GLint maxSamples;
 		glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamples);
-		GLint msaaSamples = MIN(maxSamples, _msaaSamples);
+		GLint msaaSamples = MIN(maxSamples, self.msaaSamples);
 		
-		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, self.colorRenderbuffer);
 
 		// Allocate color buffer backing based on the current layer size
-		BOOL rb_status = [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];
+		BOOL rb_status = [self.context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];
 		NSAssert(rb_status, @"Failed to create renderbuffer.");
 
-		glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
-		glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+        GLint backingWidth, backingHeight;
+		glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
+		glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);
+		CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth, (int)backingHeight);
+        self.backingWidth = backingWidth;
+        self.backingHeight = backingHeight;
 
-		CCLOG(@"cocos2d: surface size: %dx%d", (int)_backingWidth, (int)_backingHeight);
-
-		if(_multiSampling){
-			glDeleteRenderbuffers(1, &_msaaColorbuffer);
-			glGenRenderbuffers(1, &_msaaColorbuffer);
+		if(self.multiSampling){
+            GLuint msaaColorbuffer = self.msaaColorbuffer;
+			glDeleteRenderbuffers(1, &msaaColorbuffer);
+			glGenRenderbuffers(1, &msaaColorbuffer);
 			
-			glBindRenderbuffer(GL_RENDERBUFFER, _msaaColorbuffer);
-			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaaSamples, [self convertPixelFormat:_pixelFormat] , _backingWidth, _backingHeight);
+			glBindRenderbuffer(GL_RENDERBUFFER, msaaColorbuffer);
+			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaaSamples, [self convertPixelFormat:self.pixelFormat] , backingWidth, backingHeight);
 			
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _msaaColorbuffer);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, msaaColorbuffer);
+            self.msaaColorbuffer = msaaColorbuffer;
 		}
 
-		if(_depthFormat){
-			glDeleteRenderbuffers(1, &_depthBuffer);
-			glGenRenderbuffers(1, &_depthBuffer);
-
-			glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
+		if (self.depthFormat) {
+            GLuint depthBuffer = self.depthBuffer;
+			glDeleteRenderbuffers(1, &depthBuffer);
+			glGenRenderbuffers(1, &depthBuffer);
+			glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+            self.depthBuffer = depthBuffer;
 			
-			if(_multiSampling){
-				glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaaSamples, _depthFormat,_backingWidth, _backingHeight);
+			if (self.multiSampling){
+				glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaaSamples, self.depthFormat, backingWidth, backingHeight);
 			} else {
-				glRenderbufferStorage(GL_RENDERBUFFER, _depthFormat, _backingWidth, _backingHeight);
+				glRenderbufferStorage(GL_RENDERBUFFER, self.depthFormat, backingWidth, backingHeight);
 			}
 			
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
 
-			if(_depthFormat == GL_DEPTH24_STENCIL8_OES){
-				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+			if (self.depthFormat == GL_DEPTH24_STENCIL8_OES){
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
 			}
 		}
 		

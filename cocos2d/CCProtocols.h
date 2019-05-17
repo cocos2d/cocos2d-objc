@@ -82,10 +82,14 @@
 /// The rendering state this node will use when rendering.
 @property(nonatomic, readonly, strong) CCRenderState *renderState;
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 /** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc __attribute__((deprecated));
+-(void) setBlendFunc:(ccBlendFunc)blendFunc CC_DEPRECATED("Deprecated");
 /** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc __attribute__((deprecated));
+-(ccBlendFunc) blendFunc CC_DEPRECATED("Deprecated");
+
+#endif
 
 @end
 

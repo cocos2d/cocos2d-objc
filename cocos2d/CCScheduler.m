@@ -320,7 +320,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		} forTarget:self withDelay:0];
 
 		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-		_fixedUpdateTimer.repeatInterval = 1.0/60.0;
+		_fixedUpdateTimer.repeatInterval = 1.0/CC_DEFAULT_FRAMERATE;
 	}
 	
 	return self;

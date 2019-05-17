@@ -28,7 +28,7 @@
 #import <Foundation/Foundation.h>
 
 @class CCColor;
-#import "CCTypes.h"
+#import "ccTypes.h"
 
 BOOL NSAttributedStringHasAttribute(NSAttributedString *attrString, NSString*attr);
 

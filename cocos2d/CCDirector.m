@@ -72,8 +72,6 @@ CGFloat	__ccContentScaleFactor = 1;
 // XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
 NSUInteger	__ccNumberOfDraws = 0;
 
-#define kDefaultFPS		60.0	// 60 frames per second
-
 extern NSString * cocos2dVersion(void);
 
 
@@ -224,7 +222,7 @@ static CCDirector *_sharedDirector = nil;
 
 		_notificationNode = nil;
 
-		_oldAnimationInterval = _animationInterval = 1.0 / kDefaultFPS;
+		_oldAnimationInterval = _animationInterval = 1.0 / CC_DEFAULT_FRAMERATE;
 		_scenesStack = [[NSMutableArray alloc] initWithCapacity:10];
 
 		// Set default projection (3D)
@@ -390,7 +388,7 @@ static CCDirector *_sharedDirector = nil;
 #if DEBUG
 	// If we are debugging our code, prevent big delta time
 	if( _dt > 0.2f )
-		_dt = 1/60.0f;
+		_dt = 1.f/CC_DEFAULT_FRAMERATE;
 #endif
 
 	_lastUpdate = now;
@@ -756,7 +754,9 @@ static CCDirector *_sharedDirector = nil;
 
 	[self stopAnimation];
 
-	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
+    _FPSLabel = nil;
+    _SPFLabel = nil;
+    _drawsLabel=nil;
 
 	_delegate = nil;
 

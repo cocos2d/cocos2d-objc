@@ -461,7 +461,7 @@
 - (void) update:(CCTime)df
 {
     float fps = 1.0/df;
-    float p = 60/fps;
+    float p = CC_DEFAULT_FRAMERATE/fps;
 
 	if (! CGPointEqualToPoint(_velocity, CGPointZero) ) {
 		[self scrollViewDidScroll];

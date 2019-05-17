@@ -31,6 +31,8 @@
 #import "CCTexture.h"
 #import "CCTextureCache.h"
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 @implementation CCSpriteBatchNode {
 }
 
@@ -81,3 +83,5 @@
 }
 
 @end
+
+#endif

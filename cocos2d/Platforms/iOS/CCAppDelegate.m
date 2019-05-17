@@ -55,6 +55,8 @@ const CGSize FIXED_SIZE = {568, 384};
 @synthesize appDelegate = _appDelegate;
 @synthesize screenOrientation = _screenOrientation;
 
+#if !__TV_OS_VERSION_MAX_ALLOWED
+
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
@@ -91,6 +93,8 @@ const CGSize FIXED_SIZE = {568, 384};
         return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     }
 }
+
+#endif
 
 // Projection delegate is only used if the fixed resolution mode is enabled
 -(GLKMatrix4)updateProjection
@@ -182,10 +186,10 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
 	
 	// set FPS at 60
-	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
+	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/CC_DEFAULT_FRAMERATE)) doubleValue];
 	[director setAnimationInterval:animationInterval];
 	
-	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/CC_DEFAULT_FRAMERATE)) doubleValue];
 	
 	// attach the openglView to the director
 	[director setView:ccview];

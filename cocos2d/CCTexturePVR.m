@@ -264,14 +264,38 @@ typedef struct {
 	uint32_t metadataLength;
 } __attribute__((packed)) ccPVRv3TexHeader ;
 
-@implementation CCTexturePVR
-@synthesize name = _name;
+@interface CCTexturePVR()
+
+// Number of mipmap used.
+@property (nonatomic) NSUInteger numberOfMipmaps;
+@property (nonatomic) GLuint name;
+
+@end
+
+@implementation CCTexturePVR {
+    // Pointer to mipmap images.
+    struct CCPVRMipmap    _mipmaps[CC_PVRMIPMAP_MAX];
+
+    const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
+
+    // Texture bits.
+    uint32_t _width, _height;
+    BOOL    _hasAlpha;
+    BOOL    _hasPremultipliedAlpha;
+    BOOL    _forcePremultipliedAlpha;
+
+    // True to retain texture name.
+    BOOL _retainName;
+
+    // Texture pixel format used.
+    CCTexturePixelFormat _format;
+}
+
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize hasAlpha = _hasAlpha;
 @synthesize hasPremultipliedAlpha = _hasPremultipliedAlpha;
 @synthesize forcePremultipliedAlpha = _forcePremultipliedAlpha;
-@synthesize numberOfMipmaps = _numberOfMipmaps;
 
 // cocos2d integration
 @synthesize retainName = _retainName;
@@ -319,7 +343,7 @@ typedef struct {
 		if( v2_pixel_formathash[i].pixelFormat == formatFlags ) {
 
 			_pixelFormatInfo = v2_pixel_formathash[i].pixelFormatInfo;
-			_numberOfMipmaps = 0;
+			self.numberOfMipmaps = 0;
 
 			_width = width = CFSwapInt32LittleToHost(header->width);
 			_height = height = CFSwapInt32LittleToHost(header->height);
@@ -510,23 +534,23 @@ typedef struct {
 	__block BOOL retVal = NO;
 	
 CCRenderDispatch(NO, ^{
-	GLsizei width = _width;
-	GLsizei height = _height;
+	GLsizei width = self.width;
+	GLsizei height = self.height;
 	GLenum err;
 
-	if (_numberOfMipmaps > 0)
-	{
-		if (_name != 0)
-			glDeleteTextures(1, &_name);
+	if (self.numberOfMipmaps > 0) {
+        GLuint name = self.name;
+        if (name != 0)
+			glDeleteTextures(1, &name);
 
 		// From PVR sources: "PVR files are never row aligned."
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
+		glGenTextures(1, &name);
+		glBindTexture(GL_TEXTURE_2D, name);
 
 		// Default: Anti alias.
-		if( _numberOfMipmaps == 1 )
+		if (self.numberOfMipmaps == 1)
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 		else
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
@@ -534,25 +558,27 @@ CCRenderDispatch(NO, ^{
 		
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+
+        self.name = name;
 	}
 	
 	CC_CHECK_GL_ERROR_DEBUG(); // clean possible GL error
 
-	GLenum internalFormat = _pixelFormatInfo->internalFormat;
-	GLenum format = _pixelFormatInfo->format;
-	GLenum type = _pixelFormatInfo->type;
-	BOOL compressed = _pixelFormatInfo->compressed;
+	GLenum internalFormat = self->_pixelFormatInfo->internalFormat;
+	GLenum format = self->_pixelFormatInfo->format;
+	GLenum type = self->_pixelFormatInfo->type;
+	BOOL compressed = self->_pixelFormatInfo->compressed;
 
 	// Generate textures with mipmaps
-	for (GLint i=0; i < _numberOfMipmaps; i++)
+	for (GLint i=0; i < self->_numberOfMipmaps; i++)
 	{
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
 			retVal = NO; return;
 		}
 
-		unsigned char *data = _mipmaps[i].address;
-		GLsizei datalen = _mipmaps[i].len;
+		unsigned char *data = self->_mipmaps[i].address;
+		GLsizei datalen = self->_mipmaps[i].len;
 
 		if( compressed)
 			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);

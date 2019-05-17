@@ -53,11 +53,11 @@ NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 @implementation CCBlendModeCache
 
--(id)objectForKey:(id<NSCopying>)options
+-(id)objectForKey:(NSDictionary*)options
 {
 	CCBlendMode *blendMode = [self rawObjectForKey:options];
 	if(blendMode) return blendMode;
-	
+
 	// Normalize the blending mode to use for the key.
 	id src = (options[CCBlendFuncSrcColor] ?: @(GL_ONE));
 	id dst = (options[CCBlendFuncDstColor] ?: @(GL_ZERO));

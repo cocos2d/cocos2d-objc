@@ -38,11 +38,7 @@
 /** Singleton that handles the loading of textures.  Once the texture is loaded, the next time it will return
  * a reference of the previously loaded texture reducing GPU & CPU memory.
  */
-@interface CCTextureCache : NSObject {
-	NSMutableDictionary *_textures;
-	dispatch_queue_t _loadingQueue;
-	dispatch_queue_t _dictQueue;
-}
+@interface CCTextureCache : NSObject
 
 /** Returns ths shared instance of the cache. */
 + (CCTextureCache *) sharedTextureCache;

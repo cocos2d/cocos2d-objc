@@ -157,8 +157,8 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
-	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
+	NSUInteger firstVertex = _buffers.vertexBuffer->_count;
+	NSUInteger firstIndex = _buffers.indexBuffer->_count;
 	
 	// Value is 0 unless there a page boundary overlap would occur.
 	NSUInteger vertexPageOffset = PageOffset(firstVertex, vertexCount);
@@ -169,8 +169,8 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 	
 	// Ensure that the buffers have enough storage space.
 	NSUInteger indexCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount + vertexPageOffset);
-	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers.vertexBuffer, vertexCount + vertexPageOffset);
+	uint16_t *elements = CCGraphicsBufferPushElements(_buffers.indexBuffer, indexCount);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder && previous->_vertexPage == vertexPage){
@@ -192,8 +192,8 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
-	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
+	NSUInteger firstVertex = _buffers.vertexBuffer->_count;
+	NSUInteger firstIndex = _buffers.indexBuffer->_count;
 	
 	// Value is 0 unless a page boundary overlap would occur.
 	NSUInteger vertexPageOffset = PageOffset(firstVertex, vertexCount);
@@ -204,8 +204,8 @@ PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
 	
 	// Ensure that the buffers have enough storage space.
 	NSUInteger indexCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount + vertexPageOffset);
-	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers.vertexBuffer, vertexCount + vertexPageOffset);
+	uint16_t *elements = CCGraphicsBufferPushElements(_buffers.indexBuffer, indexCount);
 	
 	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState firstIndex:firstIndex vertexPage:vertexPage count:indexCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];

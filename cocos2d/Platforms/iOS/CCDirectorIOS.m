@@ -186,6 +186,7 @@
 }
 
 #if !defined(__TV_OS_VERSION_MAX_ALLOWED)
+#if CC_ENABLE_DEPRECATED_METHODS
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -195,6 +196,7 @@
 
 	return ret;
 }
+#endif
 #endif
 
 // Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
@@ -265,7 +267,7 @@
 	[super viewDidLoad];
 }
 
-
+#if CC_ENABLE_DEPRECATED_METHODS
 - (void)viewDidUnload
 {
 	CCLOG(@"cocos2d: viewDidUnload");
@@ -274,6 +276,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+#endif
 
 #pragma mark helper
 
@@ -331,13 +334,11 @@
 	gettimeofday( &_lastUpdate, NULL);
 
 	// approximate frame rate
-	// assumes device refreshes at 60 fps
-	int frameInterval = (int) floor(_animationInterval * 60.0f);
-
-	CCLOG(@"cocos2d: animation started with frame interval: %.2f", 60.0f/frameInterval);
+	// assumes device refreshes at CC_DEFAULT_FRAMERATE fps
+	CCLOG(@"cocos2d: animation started with frames per second: %u", CC_DEFAULT_FRAMERATE);
 
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
-	[_displayLink setFrameInterval:frameInterval];
+    [_displayLink setPreferredFramesPerSecond:CC_DEFAULT_FRAMERATE];
 
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
 	//
@@ -396,7 +397,7 @@
 #if DEBUG
 	// If we are debugging our code, prevent big delta time
 	if( _dt > 0.2f )
-		_dt = 1/60.0f;
+		_dt = 1/CC_DEFAULT_FRAMERATE;
 #endif
 }
 

@@ -80,7 +80,7 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 /// @param globalSortOrder rendering sort order
 /// @param debugLabel debugging label
 /// @param threadSafe whether to ensure thread safety
--(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadSafe;
+-(void)enqueueBlock:(void (^)(void))block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadSafe;
 
 /// Enqueue a method that performs GL commands.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.

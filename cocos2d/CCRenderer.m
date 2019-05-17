@@ -138,13 +138,13 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 
 @implementation CCRenderCommandCustom
 {
-	void (^_block)();
+    void (^_block)(void);
 	NSString *_debugLabel;
 	
 	NSInteger _globalSortOrder;
 }
 
--(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
+-(instancetype)initWithBlock:(void (^)(void))block debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_block = block;
@@ -310,7 +310,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_globalShaderUniforms = globalShaderUniforms;
 		
 	// If we are using a uniform buffer (ex: Metal) copy the global uniforms into it.
-	CCGraphicsBuffer *uniformBuffer = _buffers->_uniformBuffer;
+	CCGraphicsBuffer *uniformBuffer = _buffers.uniformBuffer;
 	if(uniformBuffer){
 		NSMutableDictionary *offsets = [NSMutableDictionary dictionary];
 		size_t offset = 0;
@@ -361,7 +361,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 }
 
--(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
+-(void)enqueueBlock:(void (^)(void))block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;

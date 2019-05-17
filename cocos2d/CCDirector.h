@@ -393,8 +393,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Animating the Active Scene */
 
-/** The animation interval is the time per frame. Typically specified as `1.0 / 60.0` where the latter number defines
- the framerate. The lowest value is 0.0166 (1/60).
+/** The animation interval is the time per frame. Typically specified as `1.0 / CC_DEFAULT_FRAMERATE` where the latter number defines
+ the framerate. The lowest value is 1/CC_DEFAULT_FRAMERATE.
  @see fixedUpdateInterval */
 @property (nonatomic, readwrite, assign) CCTime animationInterval;
 /** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine.

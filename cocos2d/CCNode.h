@@ -1043,6 +1043,8 @@
  */
 - (void)updateDisplayedOpacity:(CGFloat)opacity;
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 // purposefully undocumented: method marked deprecated
 /*
  Sets the premultipliedAlphaOpacity property.
@@ -1054,12 +1056,14 @@
  
  @param boolean Enables or disables setting of opacity with color.
  */
--(void) setOpacityModifyRGB:(BOOL)boolean __attribute__((deprecated));
+-(void) setOpacityModifyRGB:(BOOL)boolean CC_DEPRECATED("Deprecated");
 
 // purposefully undocumented: method marked deprecated
 /* Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
  */
--(BOOL) doesOpacityModifyRGB __attribute__((deprecated));
+-(BOOL) doesOpacityModifyRGB CC_DEPRECATED("Deprecated");
+
+#endif
 
 
 /// -----------------------------------------------------------------------

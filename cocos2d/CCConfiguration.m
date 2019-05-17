@@ -65,10 +65,26 @@ NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
 
 @interface CCConfiguration ()
+
+@property (nonatomic) BOOL          configured;
+@property (nonatomic) BOOL          openGLInitialized;
+@property (nonatomic) GLint         maxTextureSize;
+@property (nonatomic) BOOL          supportsPVRTC;
+@property (nonatomic) BOOL          supportsNPOT;
+@property (nonatomic) BOOL          supportsBGRA8888;
+@property (nonatomic) BOOL          supportsDiscardFramebuffer;
+@property (nonatomic) BOOL          supportsShareableVAO;
+@property (nonatomic) GLint         maxSamplesAllowed;
+@property (nonatomic) GLint         maxTextureUnits;
+@property (nonatomic) BOOL          supportsPackedDepthStencil;
+@property (nonatomic) unsigned int  OSVersion;
+
 -(void) getOpenGLvariables;
 @end
 
-@implementation CCConfiguration
+@implementation CCConfiguration {
+    CCGraphicsAPI _graphicsAPI;
+}
 
 @synthesize maxTextureSize = _maxTextureSize, maxTextureUnits=_maxTextureUnits;
 @synthesize supportsPVRTC = _supportsPVRTC;
@@ -232,39 +248,44 @@ static char * glExtensions;
 
 			NSAssert( glExtensions, @"OpenGL not initialized!");
 
+            GLint maxSamplesAllowed = 0;
 #if __CC_PLATFORM_IOS
-			if( _OSVersion >= CCSystemVersion_iOS_4_0 )
-				glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
-			else
-				_maxSamplesAllowed = 0;
+            if( self.OSVersion >= CCSystemVersion_iOS_4_0 ) {
+				glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
+            }
 #elif __CC_PLATFORM_MAC
-			glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
+			glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed);
 #endif
+            self.maxSamplesAllowed = maxSamplesAllowed;
 
-			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
-			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
+            GLint maxTextureSize;
+            GLint maxTextureUnits;
+			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+            self.maxTextureSize = maxTextureSize;
+            self.maxTextureUnits = maxTextureUnits;
 
 #if __CC_PLATFORM_IOS
-		_supportsNPOT = YES;
-        _supportsPackedDepthStencil = YES;
+		self.supportsNPOT = YES;
+        self.supportsPackedDepthStencil = YES;
 #elif __CC_PLATFORM_MAC
-		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
-        _supportsPackedDepthStencil = YES;
+		self.supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
+        self.supportsPackedDepthStencil = YES;
 #endif
-		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
+		self.supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
 #if __CC_PLATFORM_IOS
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
-		_supportsBGRA8888 = bgra8a | bgra8b;
+		self.supportsBGRA8888 = bgra8a | bgra8b;
 #elif __CC_PLATFORM_MAC
-		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
+		self.supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
-			_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
+			self.supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
-			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
+			self.supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
 			
 			// Check if unsynchronized buffers are supported.
 			if(
@@ -274,7 +295,7 @@ static char * glExtensions;
 				CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
 			}
 			
-			_openGLInitialized = YES;
+			self.openGLInitialized = YES;
 		});
 	}
 }

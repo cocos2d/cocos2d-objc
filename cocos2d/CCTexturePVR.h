@@ -92,29 +92,6 @@ enum {
 	(and to save space, save the PVR sprite sheet without mip maps included).
  */
 @interface CCTexturePVR : NSObject
-{
-    // Pointer to mipmap images.
-	struct CCPVRMipmap	_mipmaps[CC_PVRMIPMAP_MAX];
-    
-    // Number of mipmap used.
-	NSUInteger	_numberOfMipmaps;
-
-    // Texture bits.
-	uint32_t _width, _height;
-	GLuint	_name;
-	BOOL	_hasAlpha;
-	BOOL	_hasPremultipliedAlpha;
-	BOOL	_forcePremultipliedAlpha;
-
-    // True to retain texture name.
-	BOOL _retainName;
-    
-    // Texture pixel format used.
-	CCTexturePixelFormat _format;
-	
-	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
-}
-
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCTexturePVR Object

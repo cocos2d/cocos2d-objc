@@ -247,9 +247,13 @@
 	[self updateColor];
 }
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 // Deprecated
 -(BOOL) compressedInterpolation {return YES; }
 -(void) setCompressedInterpolation:(BOOL)compress {}
+
+#endif
 
 @end
 

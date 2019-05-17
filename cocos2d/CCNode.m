@@ -116,7 +116,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
 }
 #endif
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
+// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at CC_DEFAULT_FRAMERATE and each frame sprites are reordered.
 static NSUInteger globalOrderOfArrival = 1;
 
 @synthesize children = _children;
@@ -1817,6 +1817,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	// }
 }
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 -(void) setOpacityModifyRGB:(BOOL)boolean{
 	// Ignored in CCNode. Implemented in subclasses
 }
@@ -1824,6 +1826,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(BOOL) doesOpacityModifyRGB{
 	return YES;
 }
+
+#endif
 
 #pragma mark - RenderState Methods
 
@@ -1915,6 +1919,8 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 	}
 }
 
+#if CC_ENABLE_DEPRECATED_METHODS
+
 -(ccBlendFunc)blendFunc
 {
 	return (ccBlendFunc){
@@ -1930,6 +1936,8 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 		CCBlendFuncDstColor: @(blendFunc.dst),
 	}];
 }
+
+#endif
 
 -(CCTexture*)texture
 {

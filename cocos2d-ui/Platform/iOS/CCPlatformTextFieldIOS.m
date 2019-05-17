@@ -133,6 +133,7 @@
 
 - (void)registerForKeyboardNotifications
 {
+#if !__TV_OS_VERSION_MAX_ALLOWED
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -140,12 +141,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+#endif
 }
 
 - (void) unregisterForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+#if !__TV_OS_VERSION_MAX_ALLOWED
 
 - (void)keyboardWasShown:(NSNotification*)notification
 {
@@ -179,6 +183,7 @@
         [self endFocusingOnTextField];
 }
 
+#endif
 
 #pragma mark Focusing on Text Field
 
